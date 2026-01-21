@@ -1,1 +1,183 @@
-{}
+{
+    "Auth": {
+        "app-name": "appload",
+        "tagline": "Going the extra mile",
+        "sign-in": {
+            "title": "Sign in",
+            "description": "Welcome back! Please fill in your details",
+            "form": {
+                "tabs": {
+                    "title": "Continue with",
+                    "phone-number": {
+                        "title": "Phone number",
+                        "field": {
+                            "label": "Phone number",
+                            "error": "Phone number was not provided"
+                        }
+                    },
+                    "email": {
+                        "title": "Email",
+                        "field": {
+                            "label": "Email",
+                            "placeholder": "name@company.com",
+                            "error": {
+                                "empty": "Email was not provided",
+                                "invalid": "Please enter a valid email address"
+                            }
+                        }
+                    }
+                },
+                "password": {
+                    "label": "Password",
+                    "placeholder": "••••••••••",
+                    "error": "Password was not provided"
+                },
+                "remember-me": "Remember me",
+                "errors": {
+                    "OTHER": "Something went wrong while signing in",
+                    "DOMAIN_EMAIL_INVALID": "Please check the domail email used",
+                    "BOT_DETECTED": "We dectect the present of a bot on this request",
+                    "INVALID_EMAIL": "Please use a valid email to perform this action",
+                    "INVALID_CREDENTIALS": "Your credentials don't match with any user",
+                    "DISPOSABLE_EMAIL_NOT_ALLOWED": "We detect a use of generated emails",
+                    "INVALID_EMAIL_FORMAT": "Please use a valid email format to perform this action",
+                    "TOO_MANY_REQUESTS": "You have exceeded the number of tries, please try again later",
+                    "FORBIDEN_ACCESS": ""
+                },
+                "button": "Sign in"
+            },
+            "links": {
+                "forgot": "Forgot my password",
+                "sign-up": "I don't have an account"
+            }
+        },
+        "sign-up": {
+            "title": "Welcome to appload",
+            "description": "Setting up your appload account",
+            "form": {
+                "step1": {
+                    "title": "Account setup",
+                    "description": "Will start by setting up the type of account you want to create",
+                    "tabs": {
+                        "title": "Select the type of account you wish to create",
+                        "shipper": {
+                            "title": "Shipper",
+                            "description": "As a shipper, you can easily request and keep track of your orders, while accessing a wide range of carriers including your own"
+                        },
+                        "carrier": {
+                            "title": "Carrier",
+                            "description": "As a carrier, you can efficiently manage your trips, fleet and drivers, while accessing a wide range of shippers inclunding your own"
+                        }
+                    },
+                    "button": "Next"
+                },
+                "step2": {
+                    "title": "Contact Information",
+                    "description": "Enter your personal information",
+                    "gender": {
+                        "label": "How do you prefer to be addressed? *",
+                        "placeholder": "Please select an option",
+                        "error": "No title has been selected",
+                        "options": {
+                            "male": "Mr.",
+                            "female": "Ms.",
+                            "other": "Other"
+                        }
+                    },
+                    "name": {
+                        "label": "Full name *",
+                        "placeholder": "John Doe",
+                        "error": "No name was provided"
+                    },
+                    "email": {
+                        "label": "Email *",
+                        "placeholder": "john.doe@company.com",
+                        "error": {
+                            "empty": "No email address was provided",
+                            "invalid": "Please enter a valid email address"
+                        }
+                    },
+                    "phone-number": {
+                        "label": "Phone number *",
+                        "error": {
+                            "empty": "Phone number was not provided",
+                            "invalid": "Invalid phone number was provided"
+                        }
+                    },
+                    "button": {
+                        "next": "Next",
+                        "back": "Back"
+                    }
+                },
+                "step3": {
+                    "title": "Credentials setup",
+                    "description": "Now you will setup the credentials to sign in into your account",
+                    "password": {
+                        "label": "Password *",
+                        "placeholder": "••••••••••",
+                        "error": {
+                            "empty": "Please choose a password for your account",
+                            "invalid": "Password must have between 8 to 32 characters"
+                        }
+                    },
+                    "confirm": {
+                        "label": "Confirm password *",
+                        "placeholder": "••••••••••",
+                        "error": {
+                            "empty": "Reenter the password",
+                            "match": "Password don't match"
+                        }
+                    },
+                    "button": {
+                        "back": "Back",
+                        "sign-up": "Sign up"
+                    }
+                },
+                "step4": {
+                    "title": "OTP Verifivation",
+                    "description": "Enter the 6 digit code we sent to your number",
+                    "code": {
+                        "label": "Verification code *",
+                        "error": {
+                            "empty": "OTP code was not provided",
+                            "invalid": "Invalid OTP code was provided"
+                        },
+                        "SUCCESS": "OTP code resent successfully"
+                    },
+                    "button": {
+                        "verify": "Verify",
+                        "edit": {
+                            "text": "Didn't reciceve the code on {phoneNumber}?",
+                            "action": "Edit"
+                        },
+                        "resend": "Resend"
+                    }
+                },
+                "required": "* Required fields",
+                "errors": {
+                    "CONFLICT_EMAIL": "The provided email is already taken",
+                    "DOMAIN_EMAIL_INVALID": "Please check the domail email used",
+                    "CONFLICT_PHONE": "The provided phone number is already taken",
+                    "BOT_DETECTED": "We dectect the present of a bot on this request",
+                    "INVALID_EMAIL": "Please use a valid email to perform this action",
+                    "INVALID_CREDENTIALS": "Your credentials don't match with any user",
+                    "DISPOSABLE_EMAIL_NOT_ALLOWED": "We detect a use of generated emails",
+                    "OTHER": "Something went wrong while please check your connection and try again",
+                    "INVALID_EMAIL_FORMAT": "Please use a valid email format to perform this action",
+                    "TOO_MANY_REQUESTS": "You have exceeded the number of tries, please try again later",
+                    "MAX_REQUESTS_OTP_REACHED": "You have reached the maximum number of OTP requests, please try again later",
+                    "MAX_VERIFY_OTP_REACHED": "You have reached the maximum number of OTP verification attempts, please try again later"
+                }
+            },
+            "links": {
+                "sign-in": "I already have an account"
+            }
+        },
+        "legal": {
+            "label": "By continuing, you agree to our",
+            "terms": "Terms of service",
+            "and": "and",
+            "privacy": "Privacy policy"
+        }
+    }
+}
