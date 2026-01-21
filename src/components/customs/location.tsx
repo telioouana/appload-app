@@ -2,7 +2,7 @@
 
 import useOnclickOutside from "react-cool-onclickoutside";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IconMapPin } from "@tabler/icons-react";
 import { useDebouncedCallback } from "@tanstack/react-pacer"
 import { PlaceAutocompleteResult } from "@googlemaps/google-maps-services-js";
