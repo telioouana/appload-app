@@ -220,8 +220,8 @@
     /* Success */
     --status-delivered-text: oklch(0.84 0.12 149);
     --status-delivered-bg: oklch(0.31 0.05 149);
-    --status-waiting-documents-text: oklch(0.83 0.02 259);
-    --status-waiting-documents-bg: oklch(34.338% 0.00448 248.16);
+    --status-completed-text: oklch(0.89 0.07 149);
+    --status-completed-bg: oklch(0.31 0.05 149);
     /* Danger */
     --status-cancelled-text: oklch(0.82 0.13 25);
     --status-cancelled-bg: oklch(0.31 0.07 25);

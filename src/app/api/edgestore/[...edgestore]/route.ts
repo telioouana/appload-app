@@ -30,7 +30,7 @@ const edgeStoreRouter = es.router({
     publicImages: es
         .imageBucket({
             maxSize: 1024 * 1024 * 1,
-            accept: ["image/png", "image/jpg"]
+            accept: ["image/png", "image/jpg", "image/jpeg"]
         })
         .input(
             z.object({
@@ -42,8 +42,7 @@ const edgeStoreRouter = es.router({
             { owner: input.owner },
             { type: input.path },
         ])
-        .beforeDelete(({ fileInfo }) => {
-            console.log("beforeDelete", fileInfo);
+        .beforeDelete(() => {
             return true; // allow delete
         }),
 });
