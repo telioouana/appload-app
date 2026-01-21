@@ -38,11 +38,11 @@ export const CargoSchema = z.object({
     temperatureInstructions: z.string().optional(),
     isGroupageAllowed: z.boolean(),
 })
-    .refine((data) => data.isHazardous && !!data.hazchemCode, {
+    .refine((data) => !data.isHazardous || !!data.hazchemCode, {
         error: "Hazchem required",
         path: ["hazchemCode"]
     })
-    .refine((data) => data.isRefrigerated && data.temperature !== undefined, {
+    .refine((data) => !data.isRefrigerated || data.temperature !== undefined, {
         error: "Temperature required",
         path: ["temperature"]
     })
