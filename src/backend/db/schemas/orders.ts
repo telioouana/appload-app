@@ -27,7 +27,7 @@ export const order = pgTable(
         shipperId: text("shipper_id")
             .notNull()
             .references(() => organization.id, { onDelete: "cascade" }),
-        shipperName: text("shipper_name").notNull(), 
+        shipperName: text("shipper_name").notNull(),
 
         loadingAddress: jsonb("loading_address").$type<Location>(),
         expectedLoadingDate: timestamp("expected_loading_date").notNull(),
@@ -58,6 +58,7 @@ export const cargo = pgTable(
     {
         id: text("id").primaryKey().$default(() => randomUUID()),
         orderId: text("order_id")
+            .unique()
             .notNull()
             .references(() => order.id, { onDelete: "cascade" }),
 
@@ -248,7 +249,7 @@ export const orderRelations = relations(order, ({ one, many }) => ({
     trips: many(trip),
 }))
 
-export const cargoRelations = relations(cargo, ({ one })=> ({
+export const cargoRelations = relations(cargo, ({ one }) => ({
     order: one(order, {
         fields: [cargo.orderId],
         references: [order.id]

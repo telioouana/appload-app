@@ -132,6 +132,7 @@ export const kyc = pgTable(
     {
         id: text("id").primaryKey().$default(() => randomUUID()),
         organizationId: text("organization_id")
+            .unique()
             .notNull()
             .references(() => organization.id, { onDelete: "cascade" }),
         fiscalRegime: text("fiscal_regime"),

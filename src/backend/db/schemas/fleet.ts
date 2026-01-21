@@ -11,6 +11,7 @@ export const driver = pgTable(
     {
         id: text("id").primaryKey().$default(() => randomUUID()),
         userId: text("user_id")
+            .unique()
             .notNull()
             .references(() => user.id, { onDelete: "cascade" }),
         carrierId: text("carrier_id")
