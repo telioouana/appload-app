@@ -133,7 +133,7 @@ export const FileInput: ControlFunc<{
                                 {...field}
                                 readOnly
                                 type="text"
-                                value={field.value}
+                                value={field.value ?? ""}
                                 disabled={props.isPending}
                                 placeholder={props.placeholder}
                             />

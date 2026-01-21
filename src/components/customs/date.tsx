@@ -35,7 +35,12 @@ export const DateInput: ControlFunc = (props) => {
                             />
 
                             <InputGroupAddon>
-                                <InputGroupText onClick={() => setOpen(true)}><IconCalendar /></InputGroupText>
+                                <InputGroupText
+                                    onClick={() => !props.isPending && setOpen(true)}
+                                    className={props.isPending ? "cursor-not-allowed opacity-50" : "cursor-pointer"}
+                                >
+                                    <IconCalendar />
+                                </InputGroupText>
                             </InputGroupAddon>
                         </InputGroup>
                     </PopoverTrigger>

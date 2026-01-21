@@ -68,7 +68,7 @@ export const PhoneInput: ControlFunc<{
                     {...field}
                     type="tel"
                     autoComplete="off"
-                    value={field.value}
+                    value={field.value ?? ""}
                     onChange={field.onChange}
                     disabled={props.isPending}
                     placeholder={countryCodes.find((data) => data.country === country)?.placeholder}

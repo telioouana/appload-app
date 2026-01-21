@@ -4,6 +4,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
 
 import { useEffect, useState } from "react";
 import { IconMapPin } from "@tabler/icons-react";
+import { useDebouncedCallback } from "@tanstack/react-pacer"
 import { PlaceAutocompleteResult } from "@googlemaps/google-maps-services-js";
 
 import { Base } from "@/components/customs/base";
@@ -26,15 +27,20 @@ export const LocationInput: ControlFunc<{
         const [places, setPlaces] = useState<PlaceAutocompleteResult[] | []>([])
         const [place, setPlace] = useState<string>("")
 
-        useEffect(() => {
-            async function loadPlaces() {
-                const suggestions = await autoComplete(place)
+        // useEffect(() => {
+        //     async function loadPlaces() {
+        //         const suggestions = await autoComplete(place)
 
-                setPlaces(suggestions ?? [])
-            }
+        //         setPlaces(suggestions ?? [])
+        //     }
 
-            loadPlaces()
-        }, [place])
+        //     loadPlaces()
+        // }, [place])
+
+        const debounced = useDebouncedCallback(async () => {
+            const suggestions = await autoComplete(place)
+            setPlaces(suggestions ?? [])
+        }, { wait: 1500 })
 
         const ref = useOnclickOutside(() => {
             setPlaces([]);
@@ -45,6 +51,7 @@ export const LocationInput: ControlFunc<{
             <Base {...props}>
                 {(field) => {
                     function handleChange(input: string) {
+                        debounced()
                         setPlace(input)
                         field.onChange(input)
                     }
@@ -67,7 +74,7 @@ export const LocationInput: ControlFunc<{
                                     {...field}
                                     type="text"
                                     autoComplete="off"
-                                    value={field.value}
+                                    value={field.value ?? ""}
                                     disabled={props.isPending}
                                     placeholder={props.placeholder}
                                     onChange={(e) => handleChange(e.target.value)}

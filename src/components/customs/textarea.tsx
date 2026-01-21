@@ -15,7 +15,7 @@ export const TextAreaInput: ControlFunc = (props) => {
                         {...field}
                         rows={2}
                         autoComplete="off"
-                        value={field.value}
+                        value={field.value ?? ""}
                         onChange={field.onChange}
                         disabled={props.isPending}
                         placeholder={props.placeholder}

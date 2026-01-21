@@ -20,7 +20,7 @@ export const PasswordInput: ControlFunc = (props) => {
                     <InputGroupInput
                         {...field}
                         autoComplete="off"
-                        value={field.value}
+                        value={field.value ?? ""}
                         onChange={field.onChange}
                         disabled={props.isPending}
                         placeholder={props.placeholder}

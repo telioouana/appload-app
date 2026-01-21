@@ -14,13 +14,13 @@ const montserrat = Montserrat({
     subsets: ["latin"],
 });
 
-const sorceCodePro = Source_Code_Pro({
-    variable: "--font-mono",
+const playfair = Playfair_Display({
+    variable: "--font-serif",
     subsets: ["latin"],
 });
 
-const playfair = Playfair_Display({
-    variable: "--font-serif",
+const sourceCodePro = Source_Code_Pro({
+    variable: "--font-mono",
     subsets: ["latin"],
 });
 
@@ -39,7 +39,7 @@ export default async function RootLayout({
 
     return (
         <html lang={locale} className={montserrat.variable} suppressHydrationWarning>
-            <body className={`${sorceCodePro.variable} ${playfair.variable} antialiased`}>
+            <body className={`${sourceCodePro .variable} ${playfair.variable} antialiased`}>
                 <NextIntlClientProvider messages={messages}>
                     <Main>
                         <Toaster />

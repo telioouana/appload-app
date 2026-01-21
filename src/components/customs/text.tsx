@@ -15,7 +15,7 @@ export const TextInput: ControlFunc = (props) => {
                         {...field}
                         type="text"
                         autoComplete="off"
-                        value={field.value}
+                        value={field.value ?? ""}
                         onChange={field.onChange}
                         disabled={props.isPending}
                         placeholder={props.placeholder}
