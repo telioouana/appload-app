@@ -23,6 +23,7 @@ export const LocationSchema = z.array(z.object({
     address: z.string(),
     placeId: z.string(),
     country: z.string(),
+    state: z.string().nullish(),
 })).length(1)
 
 export const CargoSchema = z.object({
