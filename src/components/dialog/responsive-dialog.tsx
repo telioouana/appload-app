@@ -15,7 +15,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     open: boolean
     onClose: () => void
     title: string
-    type?: "dialog" | "modal"
+    type?: "dialog" | "sheet"
 }
 
 export function ResponsiveDialog({

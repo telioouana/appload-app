@@ -10,12 +10,14 @@ export const SliderInput: ControlFunc<{
     max: number
     min: number
     step: number
+    unit?: string
     message: string
 }> = ({
     max,
     min,
     step,
     message,
+    unit = "º C",
     ...props
 }) => {
         return (
@@ -24,15 +26,15 @@ export const SliderInput: ControlFunc<{
                     <div className="flex flex-col gap-2 w-full">
                         <div className="flex justify-end items-center gap-2 text-end text-sm">
                             <span className="text-muted-foreground">{message}</span>
-                            <span className="text-primary font-semibold">{field.value}º C</span>
+                            <span className="text-primary font-semibold">{field.value}{unit}</span>
                         </div>
                         <Slider
-                            defaultValue={field.value}
+                            defaultValue={[field.value]}
                             min={min}
                             max={max}
                             step={step}
                             onValueChange={(value) => {
-                                onChange(value)
+                                onChange(value[0])
                             }}
                             className={cn("w-full")}
                             disabled={props.isPending}

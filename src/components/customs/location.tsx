@@ -5,7 +5,8 @@ import useOnclickOutside from "react-cool-onclickoutside";
 import { useState } from "react";
 import { IconMapPin } from "@tabler/icons-react";
 import { useDebouncedCallback } from "@tanstack/react-pacer"
-import { PlaceAutocompleteResult } from "@googlemaps/google-maps-services-js";
+
+import type { PlaceAutocompleteResult } from "@googlemaps/google-maps-services-js";
 
 import { Base } from "@/components/customs/base";
 import { ControlFunc } from "@/components/customs/types";
@@ -58,13 +59,12 @@ export const LocationInput: ControlFunc<{
 
                     function handleSelect(suggestion: PlaceAutocompleteResult) {
                         field.onChange(suggestion.description)
-                        const countryTerm = suggestion.terms[suggestion.terms.length - 1]
-                        const stateTerm = suggestion.terms[suggestion.terms.length - 2]
-                        if (countryTerm) setCountry?.(countryTerm.value)
-                        if (stateTerm) setState?.(stateTerm.value)
+                        const terms = suggestion.terms
+                        if (terms.length >= 1) setCountry?.(terms[terms.length - 1].value)
+                        if (terms.length >= 2) setState?.(terms[terms.length - 2].value)
                         setPlaceId?.(suggestion.place_id)
-                        setPlaces([]);
-                        setPlace("");
+                        setPlaces([])
+                        setPlace("")
                     }
 
                     return (

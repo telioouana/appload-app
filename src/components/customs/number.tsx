@@ -16,7 +16,10 @@ export const NumberInput: ControlFunc = (props) => {
                         type="number"
                         autoComplete="off"
                         value={field.value ?? ""}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        onChange={(e) => {
+                            const val = e.target.value;
+                            field.onChange(val === "" ? undefined : Number(val));
+                        }}
                         disabled={props.isPending}
                         placeholder={props.placeholder}
                     />

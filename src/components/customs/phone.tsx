@@ -30,7 +30,7 @@ export const PhoneInput: ControlFunc<{
                 <InputGroupAddon>
                     <Popover>
                         <PopoverTrigger className="flex gap-2 items-center" disabled={props.isPending}>
-                            <Image src={`/flags/${selectedCountry?.iso || "default"}.svg`} alt="flag" width={1} height={1} className="ml-2 size-4" preload />
+                            <Image src={`/flags/${selectedCountry?.iso || "default"}.svg`} alt="flag" width={1} height={1} className="ml-2 size-4" priority />
                             <p className="text-muted-foreground">{selectedCountry?.code}</p>
                             <IconChevronDown className="size-4 opacity-50" />
                         </PopoverTrigger>
@@ -50,7 +50,7 @@ export const PhoneInput: ControlFunc<{
                                             >
                                                 <div className="flex w-full justify-evenly">
                                                     <div className="flex space-x-2 w-full items-center">
-                                                        <Image src={`/flags/${iso}.svg`} alt="flag" width={1} height={1} className="flex w-3 h-2" preload />
+                                                        <Image src={`/flags/${iso}.svg`} alt="flag" width={1} height={1} className="flex w-3 h-2" priority />
                                                         <span>{country}</span>
                                                     </div>
                                                     <span className="text-muted-foreground font-medium w-fit text-nowrap justify-end">{code}</span>
