@@ -43,7 +43,7 @@ export const CargoSchema = z.object({
         error: "Hazchem required",
         path: ["hazchemCode"]
     })
-    .refine((data) => !data.isRefrigerated || data.temperature !=== undefined, {
+    .refine((data) => !data.isRefrigerated || data.temperature !== undefined, {
         error: "Temperature required",
         path: ["temperature"]
     })
