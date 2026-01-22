@@ -180,6 +180,42 @@
             "privacy": "Política de privacidade"
         }
     },
+    "Account": {
+        "navbar": {
+            "site-map": {
+                "title": "Mapa do site",
+                "dashboard": "Painel de controlo",
+                "order": "Encomendas",
+                "offer": "Ofertas"
+            },
+            "title": "Conta Appload",
+            "user": {
+                "type": {
+                    "carrier": "Transportador",
+                    "shipper": "Expedidor"
+                },
+                "buttons": {
+                    "account": "Definições da conta",
+                    "preferences": "Preferências",
+                    "sign-out": "Terminar sessão"
+                }
+            }
+        },
+        "sidebar": {
+            "account": "Conta",
+            "profile": "Os seus dados",
+            "company": "Empresa",
+            "sessions": "Sessões",
+            "subscriptions": "Subscrições",
+            "payment-options": "Opções de pagamento"
+        },
+        "email-verification": {
+            "title": "Email não verificado",
+            "description": "O seu endereço de email ainda não foi verificado. Por favor, verifique-o para evitar a suspensão da sua conta.",
+            "button": "Verificar email",
+            "errors": {}
+        }
+    },
     "Emails": {
         "verify-email": {
             "subject": "Verifique o seu email para ativar a sua conta Appload",

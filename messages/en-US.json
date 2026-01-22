@@ -180,6 +180,42 @@
             "privacy": "Privacy policy"
         }
     },
+    "Account": {
+        "navbar": {
+            "site-map": {
+                "title": "Site map",
+                "dashboard": "Dashboard",
+                "order": "Orders",
+                "offer": "Offers"
+            },
+            "title": "Appload account",
+            "user": {
+                "type": {
+                    "carrier": "Carrier",
+                    "shipper": "Shipper"
+                },
+                "buttons": {
+                    "account": "Account settings",
+                    "preferences": "Preferences",
+                    "sign-out": "Sign Out"
+                }
+            }
+        },
+        "sidebar": {
+            "account": "Account",
+            "profile": "Your info",
+            "company": "Company",
+            "sessions": "Sessions",
+            "subscriptions": "Subscriptions",
+            "payment-options": "Payment options"
+        },
+        "email-verification": {
+            "title": "Email not verified",
+            "description": "Your email address is yet to be verified, please verify it to avoid getting your account suspended.",
+            "button": "Verify email",
+            "errors": {}
+        }
+    },
     "Emails": {
         "verify-email": {
             "subject": "Verify your email to activate your Appload account",
