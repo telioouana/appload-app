@@ -6,7 +6,7 @@ import { admin, organization, phoneNumber } from "better-auth/plugins";
 
 import { db } from "@/backend/db";
 import { sms } from "@/backend/twilio";
-import { member as memberShema } from "@/backend/db/schema";
+import { member as memberSchema } from "@/backend/db/schema";
 import { sendInviteEmail, sendVerificationEmail } from "@/backend/resend";
 import { admin as orgAdmin, oac, owner, member } from "@/backend/auth/permissions/org.permissions";
 import { admin as userAdmin, manager, uac, user } from "@/backend/auth/permissions/user.permissions";
@@ -27,8 +27,8 @@ export const auth = betterAuth({
                         .query
                         .member
                         .findFirst({
-                            where: eq(memberShema.userId, session.userId),
-                            orderBy: desc(memberShema.createdAt),
+                            where: eq(memberSchema.userId, session.userId),
+                            orderBy: desc(memberSchema.createdAt),
                             columns: { organizationId: true }
                         })
 
