@@ -88,6 +88,7 @@ export function OTPVerification({ callbackURL, changeStep }: Props) {
         }, {
             onSuccess: () => {
                 router.push(callbackURL)
+                setPending(false)
             },
             onError: (error) => {
                 console.log("Sign-in error: ", error)

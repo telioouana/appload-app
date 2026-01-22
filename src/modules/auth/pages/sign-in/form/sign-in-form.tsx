@@ -41,7 +41,7 @@ export function SignInForm({
         country: z.string(),
         email: z.email({
             error: (issue) =>
-                issue.input == undefined || issue.input == ""
+                issue.input === undefined || issue.input === ""
                     ? t("form.tabs.email.field.error.empty")
                     : t("form.tabs.email.field.error.invalid")
         }),

@@ -94,7 +94,7 @@ export const auth = betterAuth({
                     to: phoneNumber,
                 })
 
-                if (status !== "pending") {
+                if (status !=== "pending") {
                     let message: string
                     let statusCode: APIError["status"]
 
@@ -120,7 +120,7 @@ export const auth = betterAuth({
                     code: code,
                 })
 
-                if (status !== "approved") {
+                if (status !=== "approved") {
                     let message: string
                     let statusCode: APIError["status"]
 

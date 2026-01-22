@@ -35,14 +35,14 @@
                 "remember-me": "Remember me",
                 "errors": {
                     "OTHER": "Something went wrong while signing in",
-                    "DOMAIN_EMAIL_INVALID": "Please check the domail email used",
-                    "BOT_DETECTED": "We dectect the present of a bot on this request",
+                    "DOMAIN_EMAIL_INVALID": "Please check the domain email used",
+                    "BOT_DETECTED": "We detect the presence of a bot on this request",
                     "INVALID_EMAIL": "Please use a valid email to perform this action",
                     "INVALID_CREDENTIALS": "Your credentials don't match with any user",
                     "DISPOSABLE_EMAIL_NOT_ALLOWED": "We detect a use of generated emails",
                     "INVALID_EMAIL_FORMAT": "Please use a valid email format to perform this action",
                     "TOO_MANY_REQUESTS": "You have exceeded the number of tries, please try again later",
-                    "FORBIDEN_ACCESS": ""
+                    "FORBIDEN_ACCESS": "Access is forbidden"
                 },
                 "button": "Sign in"
             },
@@ -134,7 +134,7 @@
                     }
                 },
                 "step4": {
-                    "title": "OTP Verifivation",
+                    "title": "OTP Verification",
                     "description": "Enter the 6 digit code we sent to your number",
                     "code": {
                         "label": "Verification code *",
@@ -147,7 +147,7 @@
                     "button": {
                         "verify": "Verify",
                         "edit": {
-                            "text": "Didn't reciceve the code on {phoneNumber}?",
+                            "text": "Didn't receive the code on {phoneNumber}?",
                             "action": "Edit"
                         },
                         "resend": "Resend"
@@ -156,9 +156,9 @@
                 "required": "* Required fields",
                 "errors": {
                     "CONFLICT_EMAIL": "The provided email is already taken",
-                    "DOMAIN_EMAIL_INVALID": "Please check the domail email used",
+                    "DOMAIN_EMAIL_INVALID": "Please check the domain email used",
                     "CONFLICT_PHONE": "The provided phone number is already taken",
-                    "BOT_DETECTED": "We dectect the present of a bot on this request",
+                    "BOT_DETECTED": "We detect the presence of a bot on this request",
                     "INVALID_EMAIL": "Please use a valid email to perform this action",
                     "INVALID_CREDENTIALS": "Your credentials don't match with any user",
                     "DISPOSABLE_EMAIL_NOT_ALLOWED": "We detect a use of generated emails",

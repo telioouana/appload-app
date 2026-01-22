@@ -57,7 +57,7 @@ export function SignUpForm({ callbackURL, step }: Props) {
             name: z.string({ error: t("step2.name.error") }).nonempty({ error: t("step2.name.error") }),
             email: z.email({
                 error: (issue) =>
-                    issue.input == undefined || issue.input == ""
+                    issue.input === undefined || issue.input === ""
                         ? t("step2.email.error.empty")
                         : t("step2.email.error.invalid")
             }),

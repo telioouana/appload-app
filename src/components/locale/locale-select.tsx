@@ -4,29 +4,28 @@ import Image from "next/image"
 import { useTranslations } from "next-intl"
 import { useState, useTransition } from "react"
 
-
-import { cn } from "@/lib/utils"
-import { Locale } from "@/i18n/config"
-import { setUserLocale } from "@/i18n/locale"
-
 import { buttonVariants } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
+import { setUserLocale } from "@/i18n/locale"
+import { defaultLocale, Locale } from "@/i18n/config"
+
+import { cn } from "@/lib/utils"
+
 type Props = {
-    defaultValue: string
     items: Array<{ flag: string, locale: string }>
 }
 
 export function LocaleSelect({
-    defaultValue,
     items
 }: Props) {
+
     const [isPending, startTransition] = useTransition()
-    const [locale, setLocale] = useState(defaultValue)
+    const [locale, setLocale] = useState<"pt-PT" | "en-US">(defaultLocale)
 
     const t = useTranslations("Languages")
 
-    function onChange(value: string) {
+    function onChange(value: "pt-PT" | "en-US") {
         startTransition(async () => {
             await setUserLocale(value as Locale)
         })
@@ -34,7 +33,7 @@ export function LocaleSelect({
     }
 
     return (
-        <Select defaultValue={defaultValue} onValueChange={onChange}>
+        <Select defaultValue={defaultLocale} onValueChange={onChange}>
             <SelectTrigger
                 className={cn(buttonVariants({ variant: "outline" }), "flex rounded-md shadow-md border-none bg-background")}
                 disabled={isPending}
@@ -56,7 +55,7 @@ export function LocaleSelect({
                         key={item.locale}
                         className="flex cursor-pointer items-center text-base ring-0 ring-offset-0 rounded-sm"
                         value={item.locale}
-                        disabled={item.locale === defaultValue}
+                        disabled={item.locale === locale}
                     >
                         <Image src={item.flag} alt="flag" width={16} height={16} className="size-4" />
                         <span className="text-sm">{t(item.locale)}</span>

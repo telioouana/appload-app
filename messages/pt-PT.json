@@ -202,11 +202,11 @@
             "address": "Appload, Lda., 73, Rua Jerónimo Osório, Sommerchild, KaMpfumo, Cidade Maputo, Moçambique"
         },
         "invite-email": {
-            "subject": "Foi convidado(a) a juntar-se à organização {{organization_name}} na Appload",
+            "subject": "Foi convidado(a) a juntar-se à organização {{organization}} na Appload",
             "preview": "Aceite o convite para colaborar com a sua organização na plataforma Appload.",
             "greeting": "Exmo.(a) Senhor(a),",
-            "intro": "Foi convidado(a) a juntar-se à organização {{organization_name}} na Appload.",
-            "inviter": "{{inviter_name}} adicionou-o(a) como membro da sua organização, concedendo-lhe acesso à plataforma empresarial da Appload e aos recursos partilhados.",
+            "intro": "Foi convidado(a) a juntar-se à organização {{organization}} na Appload.",
+            "inviter": "{{inviter}} adicionou-o(a) como membro da sua organização, concedendo-lhe acesso à plataforma empresarial da Appload e aos recursos partilhados.",
             "instruction": "Para aceitar o convite e começar a colaborar, utilize o link abaixo:",
             "cta": "Aceitar convite",
             "section-title": "O que vai poder fazer",

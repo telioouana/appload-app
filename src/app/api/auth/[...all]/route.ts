@@ -16,7 +16,7 @@ const aj = arcjet({
 
 const botSettings = { mode: "LIVE", allow: [] } satisfies BotOptions
 
-const restictiveRateLimitSettings = {
+const restrictiveRateLimitSettings = {
     mode: "LIVE",
     max: 3,
     interval: "10m"
@@ -44,7 +44,7 @@ async function checkArcjet(request: Request) {
                 protectSignup({
                     email: emailSettings,
                     bots: botSettings,
-                    rateLimit: restictiveRateLimitSettings
+                    rateLimit: restrictiveRateLimitSettings
                 })
             ).protect(request, { email: body.email, userIdOrIp })
         }
@@ -73,12 +73,8 @@ export async function POST(request: Request) {
             else message = "INVALID_EMAIL"
 
             throw new APIError("BAD_REQUEST", { message })
-        } else return Response.json({ message: "BOT_DETECTED" }, { status: 403 })
-    }
-
-    const session = await auth.api.getSession({ headers: await headers() })
-    if (session) {
-        if (session.user.role == "admin" || session.user.type == "appload" || session.user.type == "driver") throw new APIError("FORBIDDEN", { statusText: "INVALID_CREDENTIALS" })
+        } else if (decision.reason.isBot()) throw new APIError("FORBIDDEN", { message: "BOT_DETECTED" })
+        else throw new APIError("FORBIDDEN", { message: "ACCESS_DENIED" })
     }
 
     return handler.POST(clonedRequest)
