@@ -68,7 +68,7 @@ export function UserButton() {
     return (
         <Popover>
             <PopoverTrigger>
-                {avatar("size-9 items-center justify-center")}
+                {avatar("size-10 items-center justify-center")}
             </PopoverTrigger>
             <PopoverContent align="end" className="border-none mt-4 -mr-2 p-0 w-96">
                 <Card className="border-none w-full">

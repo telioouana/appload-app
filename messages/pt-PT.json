@@ -251,6 +251,132 @@
                     "close": "Encerrar conta"
                 }
             }
+        },
+        "organization": {
+            "empty": {
+                "title": "Nenhuma empresa associada a esta conta",
+                "description": "Por favor, registe a sua empresa ou peça a um colega para o convidar para a conta da empresa",
+                "button": "Registar empresa"
+            },
+            "landing": {
+                "tabs": {
+                    "members": "Membros",
+                    "invitations": "Convites",
+                    "subscriptions": "Planos de subscrição",
+                    "marketplace": {
+                        "shipper": "Rede de transportadores",
+                        "carrier": "Rede de expedidores"
+                    },
+                    "settings": "Definições"
+                },
+                "details": {
+                    "title": "Detalhes da minha empresa",
+                    "status": {
+                        "pending": "Pendente",
+                        "active": "Ativa",
+                        "closed": "Encerrada"
+                    },
+                    "name": "Nome",
+                    "nuit": "Número de identificação fiscal (NIF)",
+                    "email": "Email",
+                    "phone-number": "Contacto",
+                    "billing-address": "Endereço de faturação",
+                    "physical-address": "Endereço físico",
+                    "links": {
+                        "edit-company": "Editar informações da empresa"
+                    }
+                },
+                "members": {
+                    "header": {
+                        "name": "Nome completo",
+                        "email": "Email",
+                        "role": {
+                            "title": "Função",
+                            "owner": "Proprietário",
+                            "admin": "Administrador",
+                            "member": "Membro",
+                            "driver": "Motorista"
+                        },
+                        "created-at": "Registado em",
+                        "actions": {
+                            "title": "Ações"
+                        }
+                    }
+                },
+                "invitations": {
+                    "header": {
+                        "name": "Nome completo",
+                        "email": "Email",
+                        "role": {
+                            "title": "Função",
+                            "owner": "Proprietário",
+                            "admin": "Administrador",
+                            "member": "Membro",
+                            "driver": "Motorista"
+                        },
+                        "status": {
+                            "title": "Estado",
+                            "pending": "Pendente",
+                            "canceled": "Cancelado",
+                            "rejected": "Rejeitado"
+                        },
+                        "created-at": "Registado em",
+                        "expires-at": "Expira em",
+                        "actions": {
+                            "title": "Ações"
+                        }
+                    }
+                },
+                "subscriptions": {},
+                "marketplace": {
+                    "header": {
+                        "name": "Nome da empresa",
+                        "email": "Email da empresa",
+                        "status": {
+                            "title": "Estado do registo",
+                            "pending": "Pendente",
+                            "active": "Ativa",
+                            "closed": "Encerrada"
+                        },
+                        "actions": {
+                            "title": "Ações"
+                        }
+                    }
+                },
+                "security": {},
+                "invite": {
+                    "header": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "form": {
+                        "name": {
+                            "label": "Nome completo *",
+                            "placeholder": "John Doe",
+                            "error": "O nome do membro não foi fornecido"
+                        },
+                        "email": {
+                            "label": "Email *",
+                            "placeholder": "john.doe@company.com",
+                            "error": "O email do membro não foi fornecido"
+                        },
+                        "role": {
+                            "label": "Função *",
+                            "placeholder": "Selecionar a função da conta do membro",
+                            "options": {
+                                "admin": "Administrador",
+                                "member": "Membro"
+                            },
+                            "error": "A função do membro não foi selecionada"
+                        },
+                        "required": "* Campos obrigatórios"
+                    },
+                    "buttons": {
+                        "invite": "Convidar membro",
+                        "send": "Enviar convite"
+                    }
+                }
+            }
         }
     },
     "Emails": {
@@ -294,6 +420,20 @@
             "tagline": "Going the extra mile",
             "address": "Appload, Lda., 73, Rua Jerónimo Osório, Sommerschild, KaMpfumo, Cidade Maputo, Moçambique"
         }
+    },
+    "Table": {
+        "pagination": {
+            "rows": "{rows} linhas por página",
+            "pages": "Página {current} de {total}",
+            "buttons": {
+                "first": "Primeira",
+                "previous": "Anterior",
+                "next": "Seguinte",
+                "last": "Última"
+            }
+        },
+        "filter": "Pesquisar...",
+        "empty": "Não existem dados para apresentar"
     },
     "Languages": {
         "pt-PT": "Português",

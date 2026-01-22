@@ -251,6 +251,132 @@
                     "close": "Close account"
                 }
             }
+        },
+        "organization": {
+            "empty": {
+                "title": "No company associated with this account",
+                "description": "Please register your company or ask a teammate to invite you in to the company account",
+                "button": "Register company"
+            },
+            "landing": {
+                "tabs": {
+                    "members": "Members",
+                    "invitations": "Invitations",
+                    "subscriptions": "Pricing",
+                    "marketplace": {
+                        "shipper": "Carriers network",
+                        "carrier": "Shippers network"
+                    },
+                    "settings": "Settings"
+                },
+                "details": {
+                    "title": "My Company details",
+                    "status": {
+                        "pending": "Pending",
+                        "active": "Active",
+                        "closed": "closed"
+                    },
+                    "name": "Name",
+                    "nuit": "VAT Registration number",
+                    "email": "Email",
+                    "phone-number": "Contact",
+                    "billing-address": "Billing address",
+                    "physical-address": "Physical address",
+                    "links": {
+                        "edit-company": "Edit company info"
+                    }
+                },
+                "members": {
+                    "header": {
+                        "name": "Full name",
+                        "email": "Email",
+                        "role": {
+                            "title": "Role",
+                            "owner": "Owner",
+                            "admin": "Admininstrator",
+                            "member": "Member",
+                            "driver": "Driver"
+                        },
+                        "created-at": "Registered on",
+                        "actions": {
+                            "title": "Actions"
+                        }
+                    }
+                },
+                "invitations": {
+                    "header": {
+                        "name": "Full name",
+                        "email": "Email",
+                        "role": {
+                            "title": "Role",
+                            "owner": "Owner",
+                            "admin": "Admininstrator",
+                            "member": "Member",
+                            "driver": "Driver"
+                        },
+                        "status": {
+                            "title": "Status",
+                            "pending": "Pending",
+                            "canceled": "Canceled",
+                            "rejected": "Rejected"
+                        },
+                        "created-at": "Registered on",
+                        "expires-at": "Expires on",
+                        "actions": {
+                            "title": "Actions"
+                        }
+                    }
+                },
+                "subscriptions": {},
+                "marketplace": {
+                    "header": {
+                        "name": "Company name",
+                        "email": "Company email",
+                        "status": {
+                            "title": "Registration status",
+                            "pending": "Pending",
+                            "active": "Active",
+                            "closed": "closed"
+                        },
+                        "actions": {
+                            "title": "Actions"
+                        }
+                    }
+                },
+                "settings": {},
+                "invite": {
+                    "header": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "form": {
+                        "name": {
+                            "label": "Full name *",
+                            "placeholder": "John Doe",
+                            "error": "Member's name was not provided"
+                        },
+                        "email": {
+                            "label": "Email *",
+                            "placeholder": "john.doe@company.com",
+                            "error": "Member's email was not provided"
+                        },
+                        "role": {
+                            "label": "Role *",
+                            "placeholder": "Select the member's account role",
+                            "options": {
+                                "admin": "Admininstrator",
+                                "member": "Member"
+                            },
+                            "error": "Member's role was not selected"
+                        },
+                        "required": "* Required fields"
+                    },
+                    "buttons": {
+                        "invite": "Invite member",
+                        "send": "Send invitation"
+                    }
+                }
+            }
         }
     },
     "Emails": {
@@ -294,6 +420,20 @@
             "tagline": "Going the extra mile",
             "address": "Appload, Lda., 73, Rua Jerónimo Osório, Sommerschild, KaMpfumo, Cidade Maputo, Moçambique"
         }
+    },
+    "Table": {
+        "pagination": {
+            "rows": "{rows} Rows per page",
+            "pages": "Page {current} of {total}",
+            "buttons": {
+                "first": "First",
+                "previous": "Previous",
+                "next": "Next",
+                "last": "Last"
+            }
+        },
+        "filter": "Search...",
+        "empty": "No data to be shown"
     },
     "Languages": {
         "pt-PT": "Português",
