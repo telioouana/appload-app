@@ -20,7 +20,7 @@ export function PictureAndName({ user }: Props) {
         if (image) {
             return (
                 <Avatar className={className}>
-                    <AvatarImage src={image} alt="avatar" />
+                    <AvatarImage src={image} alt={name ? `${name} avatar` : "User avatar"} />
                 </Avatar>
             )
         }

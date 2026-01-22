@@ -56,7 +56,7 @@ export function AccountSidebar() {
                 className={cn(
                     buttonVariants({ variant: "ghost" }),
                     "flex gap-4 w-full justify-start font-normal text-base items-center",
-                    pathname.startsWith(path) && "bg-accent text-accent-foreground dark:bg-accent/50 border-b border-primary"
+                    pathname.startsWith(path) && "bg-primary text-primary-foreground"
                 )}
             >
                 <Icon />

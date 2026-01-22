@@ -39,9 +39,9 @@ export function EmailVerification() {
     }
 
     return (
-        <Item size="sm" variant="outline" className="bg-secondary/5 border-secondary">
-            <ItemMedia variant="icon" className="bg-primary">
-                <IconMailExclamation />
+        <Item size="sm" variant="outline" className="bg-primary/5 border-primary">
+            <ItemMedia variant="icon" className="bg-primary rounded-full size-10">
+                <IconMailExclamation className="size-6" />
             </ItemMedia>
             <ItemContent>
                 <ItemTitle>{t("title")}</ItemTitle>

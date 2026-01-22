@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { authClient } from "@/backend/auth/auth-client";
 
@@ -11,7 +11,6 @@ import { ProfileHeader } from "@/modules/account/pages/profile/ui/section/profil
 import { PictureAndName } from "@/modules/account/pages/profile/ui/section/picture-and-name";
 
 export function ProfileView() {
-    const router = useRouter()
 
     const { data, isPending } = authClient.useSession()
 
@@ -23,9 +22,8 @@ export function ProfileView() {
         )
     }
 
-    if (!data || !data.user ) { 
-        router.push("/sign-in") 
-        return
+    if (!data?.user ) {
+        redirect("/sign-in") 
     }
 
     const { user } = data

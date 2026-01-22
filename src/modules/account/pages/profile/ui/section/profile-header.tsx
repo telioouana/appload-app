@@ -29,7 +29,7 @@ export function ProfileHeader() {
                 <div className="text-2xl font-semibold">{t("title")}</div>
 
                 <div className="flex gap-4 items-center">
-                    <Skeleton className="bg-secondary dark:bg-seconday/50 rounded-full size-8" />
+                    <Skeleton className="bg-secondary dark:bg-secondary/50 rounded-full size-8" />
 
                     <div className="flex flex-col gap-1">
                         <Skeleton className="h-4 w-32" />
@@ -46,14 +46,14 @@ export function ProfileHeader() {
 
 
             <Link href="/profile/change-password" className="flex gap-4 items-center group">
-                <div className="bg-secondary dark:bg-seconday/50 rounded-full size-8 flex items-center justify-center group-hover:bg-primary group-hover:dark:bg-primary">
+                <div className="bg-secondary dark:bg-secondary/50 rounded-full size-8 flex items-center justify-center group-hover:bg-primary group-hover:dark:bg-primary">
                     <IconKey className="size-4" />
                 </div>
 
                 <div className="flex flex-col gap-1 group-hover:text-primary group-hover:dark:text-primary">
                     <p className="text-xs font-medium">{t("link.label")}</p>
                     <p className="text-xs opacity-60">
-                        {account.updatedAt.getDate !== account.createdAt.getDate
+                        {account.updatedAt.getTime() !== account.createdAt.getTime()
                             ? <span>{t("link.updated", { updated: account.updatedAt })}</span>
                             : <span>{t("link.never")}</span>
                         }
