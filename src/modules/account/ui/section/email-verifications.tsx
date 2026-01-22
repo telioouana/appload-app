@@ -2,8 +2,8 @@
 
 import { toast } from "sonner"
 import { useState } from "react"
-import { IconMailExclamation } from "@tabler/icons-react"
 import { useTranslations } from "next-intl"
+import { IconMailExclamation } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle, } from "@/components/ui/item"

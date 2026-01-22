@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { toast } from "sonner"
 import { useState } from "react"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { IconLogout, IconSettings, IconUserCog } from "@tabler/icons-react"
 
 import { authClient } from "@/backend/auth/auth-client"
@@ -24,6 +24,8 @@ export function UserButton() {
     const [isLoading, setLoading] = useState<boolean>(false)
 
     const t = useTranslations("Account.navbar.user")
+    const router = useRouter()
+
     const { data, isPending } = authClient.useSession()
 
     if (isPending || !data?.user) {
@@ -40,9 +42,12 @@ export function UserButton() {
         await authClient.signOut({
             fetchOptions: {
                 onRequest: () => { setLoading(true) },
-                onSuccess: () => { redirect("/sign-in") },
+                onSuccess: () => {
+                    setLoading(false)
+                    router.replace("/sign-in")
+                },
                 onError: () => {
-                    toast.error("Error signing out")
+                    toast.error(t("errors.sign-out"))
                     setLoading(false)
                 },
             }

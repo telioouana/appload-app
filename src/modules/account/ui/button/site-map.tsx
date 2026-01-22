@@ -21,13 +21,16 @@ export function SiteMap() {
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button size="icon" variant="ghost">
+                <Button size="icon" variant="ghost" aria-label={t("title")}>
                     <IconGrid3x3 className="size-5" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent align="start" className="border-none mt-4 -ml-2 p-0 max-w-120">
                 <Card className="border-none w-full">
-                    <CardHeader><CardTitle>Site map</CardTitle></CardHeader>
+                    <CardHeader>4
+                        <CardTitle>{t("title")}</CardTitle>
+                    </CardHeader>
+                    
                     <CardContent className="flex items-center gap-4 w-full">
                         <ItemGroup className="grid grid-cols-3 gap-8">
                             {links.map(({ href, title, Icon }) => (
