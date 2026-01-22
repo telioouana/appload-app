@@ -14,7 +14,7 @@ import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu
 // import { listSubscribers } from "@/modules/user/pages/company/server/procedures"
 import { SubscribersTableSchema } from "@/modules/account/pages/organization/ui/schema/validation"
 
-export function CompanyMarketplace() {
+export function OrganizationMarketplace() {
     // const [subscribers, setSubscribers] = useState<Company[]>()
     const t = useTranslations("Account.organization.landing.marketplace")
 

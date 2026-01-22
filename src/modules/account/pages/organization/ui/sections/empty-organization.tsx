@@ -7,8 +7,8 @@ import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTi
 
 import { cn } from "@/lib/utils"
 
-export function EmptyCompany() {
-    const t = useTranslations("User.organization.empty")
+export function EmptyOrganization() {
+    const t = useTranslations("Account.organization.empty")
 
     return (
         <div className="h-full w-full items-center justify-center flex flex-col">

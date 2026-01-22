@@ -1,4 +1,4 @@
-export function CompanySubscriptions() {
+export function OrganizationSubscriptions() {
     return (
         <div>company-subscriptions</div>
     )

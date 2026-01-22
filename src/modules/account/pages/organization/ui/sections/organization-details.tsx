@@ -22,7 +22,7 @@ import { OrganizationForm, OrganizationFormSchema } from "@/modules/account/page
 type Props = {
     organization: Organization
 }
-export function CompanyDetails({ organization }: Props) {
+export function OrganizationDetails({ organization }: Props) {
     const t = useTranslations("Account.organization.landing.details")
 
     const length = countryCodes.find(({ code }) => organization.phoneNumber.startsWith(code))?.code.length ?? 4

@@ -19,7 +19,7 @@ type Props = {
     organization: Organization
 }
 
-export function CompanyInvitations({ organization }: Props) {
+export function OrganizationInvitations({ organization }: Props) {
     const t = useTranslations("Account.organization.landing.invitations")
     const f = useFormatter()
 
