@@ -6,7 +6,7 @@ import { UserButton } from "@/modules/account/ui/button/user-button";
 export function AccountNavbar() {
     const t = useTranslations("Account.navbar")
     return (
-        <nav className="m-4 p-2 rounded-sm bg-transparent shadow-md h-14 flex items-center backdrop-blur-md z-50">
+        <nav className="m-4 p-2 bg-sidebar rounded-full shadow-md h-14 flex items-center backdrop-blur-md z-50">
             <div className="w-full max-w-540 mx-auto items-center justify-between flex">
                 <div className="justify-start">
                     <SiteMap />
@@ -16,7 +16,7 @@ export function AccountNavbar() {
                     <h1 className="font-semibold text-lg">{t("title")}</h1>
                 </div>
 
-                <div className="justify-end">
+                <div className="justify-end pt-1">
                     <UserButton />
                 </div>
             </div>

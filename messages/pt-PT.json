@@ -214,6 +214,43 @@
             "description": "O seu endereço de email ainda não foi verificado. Por favor, verifique-o para evitar a suspensão da sua conta.",
             "button": "Verificar email",
             "errors": {}
+        },
+        "profile": {
+            "header": {
+                "title": "Os seus dados",
+                "link": {
+                    "label": "Alterar palavra-passe",
+                    "updated": "Última atualização: {updated, date, medium}",
+                    "never": "Nunca atualizado"
+                }
+            },
+            "picture-and-name": {
+                "description": "Carregar uma nova fotografia de perfil",
+                "instructions": "JPG, PNG ou GIF. Tamanho máximo 2MB",
+                "name": "Nome completo",
+                "buttons": {
+                    "change": "Alterar fotografia",
+                    "remove": "Remover",
+                    "edit-name": "Editar nome"
+                }
+            },
+            "account-info": {
+                "title": "Informações da conta",
+                "email": {
+                    "label": "Endereço de email",
+                    "description": "O endereço de email que utiliza para iniciar sessão na sua conta Appload"
+                },
+                "phone-number": {
+                    "label": "Número de telefone",
+                    "description": "O seu número de telefone é utilizado para iniciar sessão na sua conta Appload"
+                },
+                "links": {
+                    "edit-account": "Editar informações da conta",
+                    "sign-in": "Preferências de início de sessão",
+                    "password": "Alterar palavra-passe",
+                    "close": "Encerrar conta"
+                }
+            }
         }
     },
     "Emails": {

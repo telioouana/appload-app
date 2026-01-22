@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { useTranslations } from "next-intl"
-import { IconGrid3x3, IconDashboard } from "@tabler/icons-react"
+import { IconGridDots, IconDashboard } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -22,12 +22,12 @@ export function SiteMap() {
         <Popover>
             <PopoverTrigger asChild>
                 <Button size="icon" variant="ghost" aria-label={t("title")}>
-                    <IconGrid3x3 className="size-5" />
+                    <IconGridDots className="size-5" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent align="start" className="border-none mt-4 -ml-2 p-0 max-w-120">
+            <PopoverContent align="start" className="border-none mt-4 -ml-2 p-0 w-full max-w-120">
                 <Card className="border-none w-full">
-                    <CardHeader>4
+                    <CardHeader>
                         <CardTitle>{t("title")}</CardTitle>
                     </CardHeader>
                     
@@ -35,7 +35,7 @@ export function SiteMap() {
                         <ItemGroup className="grid grid-cols-3 gap-8">
                             {links.map(({ href, title, Icon }) => (
                                 <Item asChild key={href} className="hover:shadow-md">
-                                    <Link href={href}>
+                                    <Link href={href} >
                                         <ItemHeader className="justify-center">
                                             <Icon className="size-12" />
                                         </ItemHeader>

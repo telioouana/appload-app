@@ -214,6 +214,43 @@
             "description": "Your email address is yet to be verified, please verify it to avoid getting your account suspended.",
             "button": "Verify email",
             "errors": {}
+        },
+        "profile": {
+            "header": {
+                "title": "Your info",
+                "link": {
+                    "label": "Change password",
+                    "updated": "Last updated: {updated, date, medium}",
+                    "never": "Never updated"
+                }
+            },
+            "picture-and-name": {
+                "description": "Upload a new profile picture",
+                "instructions": "JPG, PNG or GIF. Max size 2MB",
+                "name": "Full name",
+                "buttons": {
+                    "change": "Change photo",
+                    "remove": "Remove",
+                    "edit-name": "Edit name"
+                }
+            },
+            "account-info": {
+                "title": "Account info",
+                "email": {
+                    "label": "Email address",
+                    "description": "The email address you use to sign in to your appload account"
+                },
+                "phone-number": {
+                    "label": "Phone number",
+                    "description": "Your phone number is used to sign in to your appload account"
+                },
+                "links": {
+                    "edit-account": "Edit account info",
+                    "sign-in": "Sign-in preferences",
+                    "password": "Change password",
+                    "close": "Close account"
+                }
+            }
         }
     },
     "Emails": {
