@@ -53,7 +53,7 @@ export function ProfileHeader() {
                 <div className="flex flex-col gap-1 group-hover:text-primary group-hover:dark:text-primary">
                     <p className="text-xs font-medium">{t("link.label")}</p>
                     <p className="text-xs opacity-60">
-                        {account.updatedAt.getTime() !== account.createdAt.getTime()
+                        {new Date(account.updatedAt).getTime() !== new Date(account.createdAt).getTime()
                             ? <span>{t("link.updated", { updated: account.updatedAt })}</span>
                             : <span>{t("link.never")}</span>
                         }
