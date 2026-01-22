@@ -179,5 +179,52 @@
             "and": "and",
             "privacy": "Privacy policy"
         }
+    },
+    "Emails": {
+        "verify-email": {
+            "subject": "Verify your email to activate your Appload account",
+            "preview": "Activate your Appload account and access secure, scalable enterprise solutions.",
+            "greeting": "Dear, {username}",
+            "intro": "Thank you for registering with Appload.",
+            "instruction": "To activate your account and ensure secure access to our enterprise platform, please verify your email address using the link below:",
+            "cta": "Verify email address",
+            "section-title": "Designed for enterprise teams",
+            "features": {
+                "one": "Security-first architecture, built to meet compliance requirements",
+                "two": "Scalable solutions that grow with your organization",
+                "three": "High reliability and performance for mission-critical applications",
+                "four": "Flexible integrations that fit seamlessly into your existing systems and workflows"
+            },
+            "value-proposition": "Appload enables enterprises to accelerate product development and delivery while maintaining control, reliability, and operational excellence.",
+            "disclaimer": "If you did not initiate this request, you may safely ignore this email.",
+            "signature": "The Appload Team",
+            "tagline": "Going the extra mile",
+            "address": "Appload, Lda., 73, Rua Jerónimo Osório, Sommerschild, KaMpfumo, Cidade Maputo, Moçambique"
+        },
+        "invite-email": {
+            "subject": "You've been invited to join the {organization} organization on Appload",
+            "preview": "Accept the invitation to collaborate with your organization on Appload.",
+            "greeting": "Dear Sir or Madam",
+            "intro": "You have been invited to join the {organization} organization on Appload.",
+            "inviter": "{inviter} has added you as a member of their organization, granting you access to Appload's enterprise platform and shared resources.",
+            "instruction": "To accept the invitation and start collaborating, please use the link below:",
+            "cta": "Accept invitation",
+            "section-title": "What you'll be able to do",
+            "features": {
+                "one": "Collaborate securely within your organization's workspace",
+                "two": "Access shared enterprise tools, settings, and integrations",
+                "three": "Contribute to projects built for scalability and reliability",
+                "four": "Work within a controlled, compliance-ready environment"
+            },
+            "disclaimer": "If you were not expecting this invitation, you may safely ignore this email.",
+            "signature": "The Appload Team",
+            "tagline": "Going the extra mile",
+            "address": "Appload, Lda., 73, Rua Jerónimo Osório, Sommerschild, KaMpfumo, Cidade Maputo, Moçambique"
+        }
+    },
+    "Languages": {
+        "pt-PT": "Português",
+        "en-US": "English",
+        "label": "Language"
     }
 }

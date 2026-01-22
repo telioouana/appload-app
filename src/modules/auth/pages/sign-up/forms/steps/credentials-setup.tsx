@@ -29,7 +29,7 @@ export function CredentialsSetup({ changeStep }: Props) {
 
     async function handleVerify(values: SignUpForm) {
         clearErrors()
-        const output = await trigger(["step2.country"], { shouldFocus: true })
+        const output = await trigger(["step3.password", "step3.confirm"], { shouldFocus: true })
         if (!output) return
 
         setPending(true)

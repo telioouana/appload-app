@@ -22,7 +22,7 @@ export async function sendVerificationEmail({ email, url, name }: VerificationPr
         from: FROM,
         to: email,
         subject: t("subject"),
-        react: VerificationEmail({ name, url })
+        react: await VerificationEmail({ name, url })
     })
 
     if (error) throw new APIError("INTERNAL_SERVER_ERROR")
@@ -43,7 +43,7 @@ export async function sendInviteEmail({ email, inviter, invitationId, organizati
         from: FROM,
         to: email,
         subject: t("subject", { organization: organization }),
-        react: InvitationEmail({ inviter, organization, url })
+        react: await InvitationEmail({ inviter, organization, url })
     })
 
     if (error) throw new APIError("INTERNAL_SERVER_ERROR")

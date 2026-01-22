@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IconLogin, IconAlertOctagon } from "@tabler/icons-react"
@@ -35,6 +35,7 @@ export function SignInForm({
     const [status, setStatus] = useState<string | undefined>(undefined)
 
     const t = useTranslations("Auth.sign-in")
+    const router = useRouter()
 
     const SignInFormSchema = z.object({
         country: z.string(),
@@ -102,7 +103,7 @@ export function SignInForm({
             return
         }
 
-        redirect(callbackURL)
+        router.push(callbackURL)
     }
 
     return (
@@ -111,8 +112,8 @@ export function SignInForm({
                 <Tabs defaultValue={tab} className="w-full">
                     <FieldTitle>{t("form.tabs.title")}</FieldTitle>
                     <TabsList className="w-full">
-                        <TabsTrigger value="email" onClick={() => setTab("email")}>{t("form.tabs.email.title")}</TabsTrigger>
-                        <TabsTrigger value="phone" onClick={() => setTab("phone")}>{t("form.tabs.phone-number.title")}</TabsTrigger>
+                        <TabsTrigger disabled={isPending} value="email" onClick={() => setTab("email")}>{t("form.tabs.email.title")}</TabsTrigger>
+                        <TabsTrigger disabled={isPending} value="phone" onClick={() => setTab("phone")}>{t("form.tabs.phone-number.title")}</TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="email" className="w-full">

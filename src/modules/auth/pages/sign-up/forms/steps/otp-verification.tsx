@@ -1,6 +1,6 @@
 import { toast } from "sonner"
 import { useState } from "react"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useFormContext } from "react-hook-form"
 import { IconCheck, IconSend } from "@tabler/icons-react"
@@ -24,6 +24,8 @@ export function OTPVerification({ callbackURL, changeStep }: Props) {
     const [isPending, setPending] = useState<boolean>(false)
 
     const t = useTranslations("Auth.sign-up.form")
+    const router = useRouter()
+
     const { control, clearErrors, getValues, trigger } = useFormContext<SignUpForm>()
 
     function handleBack() {
@@ -85,10 +87,13 @@ export function OTPVerification({ callbackURL, changeStep }: Props) {
             callbackURL
         }, {
             onSuccess: () => {
-                redirect(callbackURL)
+                router.push(callbackURL)
             },
             onError: (error) => {
                 console.log("Sign-in error: ", error)
+                // TODO: Create proper message on translation file
+                toast.error(t("errors.SIGN_IN_FAILED"))
+                setPending(false)
             }
         })
     }

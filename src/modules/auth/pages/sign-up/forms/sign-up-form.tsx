@@ -10,6 +10,7 @@ import { CardDescription } from "@/components/ui/card"
 
 import { GENDER, Step, TYPE } from "@/modules/auth/pages/sign-up/schema/validation"
 import { AccountType } from "@/modules/auth/pages/sign-up/forms/steps/account-type"
+import { UpdatePhone } from "@/modules/auth/pages/sign-up/forms/steps/update-phone"
 import { PersonalDetails } from "@/modules/auth/pages/sign-up/forms/steps/personal-details"
 import { OTPVerification } from "@/modules/auth/pages/sign-up/forms/steps/otp-verification"
 import { CredentialsSetup } from "@/modules/auth/pages/sign-up/forms/steps/credentials-setup"
@@ -39,7 +40,11 @@ export function SignUpForm({ callbackURL, step }: Props) {
         {
             id: "otp-verification",
             render: <OTPVerification key={"otp-verification"} callbackURL={callbackURL} changeStep={changeStep} />
-        }
+        },
+        {
+            id: "update-phone",
+            render: <UpdatePhone key={"update-phone"} changeStep={changeStep} />
+        },
     ]
 
     const SignUpFormSchema = z.object({

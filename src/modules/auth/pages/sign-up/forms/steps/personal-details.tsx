@@ -46,10 +46,10 @@ export function PersonalDetails({ changeStep }: Props) {
         const emailCheck = await checkUser(values.step2.email, "email").catch(() => {
             toast.error(t("errors.OTHER"))
             setPending(false)
-            return
+            return null
         })
 
-        if (emailCheck) {
+        if (emailCheck === null) {
             setError("step2.email", { message: t("errors.CONFLICT_EMAIL") }, { shouldFocus: true })
             setPending(false)
             return
@@ -58,10 +58,10 @@ export function PersonalDetails({ changeStep }: Props) {
         const phoneCheck = await checkUser(phoneNumber, "phoneNumber").catch(() => {
             toast.error(t("errors.OTHER"))
             setPending(false)
-            return
+            return null
         })
 
-        if (phoneCheck) {
+        if (phoneCheck === null) {
             setError("step2.phoneNumber", { message: t("errors.CONFLICT_PHONE") }, { shouldFocus: true })
             setPending(false)
             return

@@ -19,13 +19,17 @@ interface Props {
     changeStep: (step: Step) => void
 }
 
-export function PersonalDetails({ changeStep }: Props) {
+export function UpdatePhone({ changeStep }: Props) {
     const [isPending, setPending] = useState<boolean>(false)
 
     const t = useTranslations("Auth.sign-up.form")
     const { control, clearErrors, getValues, setError, setValue, trigger } = useFormContext<SignUpForm>()
 
-    const oldPhone = `${countryCodes.find(({ country }) => country === getValues().step2.country)?.code}${getValues().step2.phoneNumber}`
+    const [initialPhone] = useState(() => {
+        const country = getValues().step2.country
+        const code = countryCodes.find((c) => c.country === country)?.code ?? ""
+        return `${code}${getValues().step2.phoneNumber}`
+    })
 
     function updateCountry(country: string) {
         setValue("step2.country", country)
@@ -39,17 +43,20 @@ export function PersonalDetails({ changeStep }: Props) {
         setPending(true)
         const phoneNumber = `${countryCodes.find(({ country }) => country === values.step2.country)?.code}${values.step2.phoneNumber}`
 
-        if (phoneNumber !== oldPhone) {
+        if (phoneNumber === initialPhone) {
             setError("step2.phoneNumber", { message: t("errors.NO_CHANGES_DETECTED") }, { shouldFocus: true })
             setPending(false)
             return
         }
 
-        const phoneCheck = await updatePhoneNumber(oldPhone, phoneNumber).catch(() => {
+        let phoneCheck
+        try {
+            phoneCheck = await updatePhoneNumber(initialPhone, phoneNumber)
+        } catch {
             toast.error(t("errors.OTHER"))
             setPending(false)
             return
-        })
+        }
 
         if (phoneCheck) {
             setError("step2.phoneNumber", { message: t("errors.CONFLICT_PHONE") }, { shouldFocus: true })

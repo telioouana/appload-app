@@ -10,7 +10,13 @@ export async function checkUser(value: string, type: "email" | "phoneNumber") {
     let person: typeof user.$inferSelect[][0] | undefined
 
     if (type === "email") { [person] = await db.select().from(user).where(eq(user.email, value)).limit(1) }
-    else { [person] = await db.select().from(user).where(eq(user.phoneNumber, value)).limit(1) }
+    else {
+        [person] = await db
+            .select()
+            .from(user)
+            .where(eq(user.phoneNumber, value))
+            .limit(1)
+    }
 
     if (!person) return false
     else if (person) return true
@@ -22,7 +28,8 @@ export async function updatePhoneNumber(oldPhone: string, phoneNumber: string) {
 
     if (person) return true
 
-    const [updatedUser] = await db.update(user)
+    const [updatedUser] = await db
+        .update(user)
         .set({ phoneNumber })
         .where(eq(user.phoneNumber, oldPhone))
         .returning()

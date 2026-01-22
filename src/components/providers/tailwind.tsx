@@ -7,52 +7,71 @@ export function TailwindProvider({ children }: TailwindProps) {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ["var(--font-sans)"],
+                        sans: ["Montserrat", "ui-sans-serif", "system-ui", "sans-serif"],
                     },
                     colors: {
                         brand: "#EE7623",
-                        muted: "hsl(var(--muted))",
-                        background: "hsl(var(--background))",
-                        foreground: "hsl(var(--foreground))",
+                        background: "#ffffff",
+                        foreground: "#1c1c1c",
+
                         card: {
-                            DEFAULT: "hsl(var(--card))",
-                            foreground: "hsl(var(--card-foreground))",
+                            DEFAULT: "#ffffff",
+                            foreground: "#1c1c1c",
                         },
+
                         popover: {
-                            DEFAULT: "hsl(var(--popover))",
-                            foreground: "hsl(var(--popover-foreground))",
+                            DEFAULT: "#ffffff",
+                            foreground: "#1c1c1c",
                         },
+
                         primary: {
-                            DEFAULT: "hsl(var(--primary))",
-                            foreground: "hsl(var(--primary-foreground))",
+                            DEFAULT: "#EE7623",
+                            foreground: "#FFF7ED",
                         },
+
                         secondary: {
-                            DEFAULT: "hsl(var(--secondary))",
-                            foreground: "hsl(var(--secondary-foreground))",
+                            DEFAULT: "#F5F5F5",
+                            foreground: "#2A2A2A",
                         },
+
+                        muted: {
+                            DEFAULT: "#F5F5F5",
+                            foreground: "#6B7280",
+                        },
+
                         accent: {
-                            DEFAULT: "hsl(var(--accent))",
-                            foreground: "hsl(var(--accent-foreground))",
+                            DEFAULT: "#EE7623",
+                            foreground: "#FFF7ED",
                         },
+
                         destructive: {
-                            DEFAULT: "hsl(var(--destructive))",
-                            foreground: "hsl(var(--destructive-foreground))",
+                            DEFAULT: "#DC2626",
                         },
-                        border: "hsl(var(--border))",
-                        input: "hsl(var(--input))",
-                        ring: "hsl(var(--ring))",
+
+                        border: "#E5E7EB",
+                        input: "#E5E7EB",
+                        ring: "#9CA3AF",
+
                         chart: {
-                            "1": "hsl(var(--chart-1))",
-                            "2": "hsl(var(--chart-2))",
-                            "3": "hsl(var(--chart-3))",
-                            "4": "hsl(var(--chart-4))",
-                            "5": "hsl(var(--chart-5))",
+                            1: "#FACC15",
+                            2: "#FB923C",
+                            3: "#EE7623",
+                            4: "#EA580C",
+                            5: "#C2410C",
                         },
                     },
                     borderRadius: {
-                        lg: "var(--radius)",
-                        md: "calc(var(--radius) - 3.5px)",
-                        sm: "calc(var(--radius) - 4px)",
+                        sm: "4px",
+                        md: "8px",
+                        lg: "10px",
+                        xl: "14px",
+                    },
+
+                    boxShadow: {
+                        sm: "0 1px 2px rgba(0,0,0,0.05)",
+                        DEFAULT: "0 2px 4px rgba(0,0,0,0.05)",
+                        md: "0 4px 6px rgba(0,0,0,0.05)",
+                        lg: "0 8px 10px rgba(0,0,0,0.05)",
                     },
                 },
             },
