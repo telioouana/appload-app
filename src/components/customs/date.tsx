@@ -24,6 +24,7 @@ export const DateInput: ControlFunc = (props) => {
                             <InputGroupInput
                                 {...field}
                                 type="text"
+                                autoComplete="off"
                                 value={field.value ? f.dateTime(field.value, {
                                     day: "2-digit",
                                     month: "short",
