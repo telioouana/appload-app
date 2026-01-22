@@ -31,7 +31,7 @@ export function UserButton() {
     if (isPending || !data?.user) {
         return (
             <div className="w-full h-full flex items-center justify-center">
-                <Skeleton className="size-9 rounded-full" />
+                <Skeleton className="size-10 rounded-full" />
             </div>
         )
     }
