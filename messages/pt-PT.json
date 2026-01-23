@@ -394,7 +394,7 @@
                             "error": "O nome da empresa não foi fornecido"
                         },
                         "nuit": {
-                            "label": "Número de Identificação Fiscal (NUIT)",
+                            "label": "NUIT",
                             "placeholder": "Introduza o número de identificação fiscal",
                             "error": {
                                 "empty": "O número de identificação fiscal não foi fornecido",
@@ -407,14 +407,16 @@
                             "placeholder": "exemplo@empresa.com",
                             "error": {
                                 "empty": "Campo de email da empresa continua vazio",
-                                "invalid": "O email introduzido não é válido"
+                                "invalid": "O email introduzido não é válido",
+                                "conflict": "Já existe uma empresa registada com o email fornecido"
                             }
                         },
                         "phone-number": {
                             "label": "Contacto da empresa",
                             "error": {
                                 "empty": "O número de telefone não foi fornecido",
-                                "length": "O número de telefone deve ter pelo menos 9 dígitos e no máximo 11 dígitos"
+                                "length": "O número de telefone deve ter pelo menos 9 dígitos e no máximo 11 dígitos",
+                                "conflict": "Já existe uma empresa registada com o contacto fornecido"
                             }
                         },
                         "billing-address": {
@@ -442,7 +444,7 @@
                                 "simplified-5": "Simplificado 5%",
                                 "simplified-3": "Simplificado 3%"
                             },
-                            "error": ""
+                            "error": "Não selecionou o regime fiscal aplicável à sua empresa"
                         },
                         "id-card": {
                             "label": "Documento de Identidade",
@@ -455,13 +457,13 @@
                             }
                         },
                         "nuit": {
-                            "label": "Registo Fiscal (NUIT)",
+                            "label": "Regime Fiscal (NUIT)",
                             "description": "Apenas ficheiros PDF com tamanho máximo de 2MB cada e até um máximo de 2 ficheiros",
                             "placeholder": "",
                             "placeholder-page": " {page}",
                             "error": {
-                                "empty": "",
-                                "length": ""
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
                             }
                         },
                         "alvara": {
@@ -470,8 +472,8 @@
                             "placeholder": "",
                             "placeholder-page": " {page}",
                             "error": {
-                                "empty": "",
-                                "length": ""
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
                             }
                         },
                         "bank-letter": {
@@ -480,8 +482,8 @@
                             "placeholder": "",
                             "placeholder-page": " {page}",
                             "error": {
-                                "empty": "",
-                                "length": ""
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
                             }
                         },
                         "republic-bulletin": {
@@ -490,8 +492,8 @@
                             "placeholder": "",
                             "placeholder-page": " {page}",
                             "error": {
-                                "empty": "",
-                                "length": ""
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
                             }
                         },
                         "commercial-exercise": {
@@ -500,8 +502,8 @@
                             "placeholder": "",
                             "placeholder-page": " {page}",
                             "error": {
-                                "empty": "",
-                                "length": ""
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
                             }
                         },
                         "commercial-certificate": {
@@ -510,8 +512,8 @@
                             "placeholder": "",
                             "placeholder-page": " {page}",
                             "error": {
-                                "empty": "",
-                                "length": ""
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
                             }
                         },
                         "button": {

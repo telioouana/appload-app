@@ -1,5 +1,8 @@
-import { CardHeader, CardTitle } from "@/components/ui/card";
+"use client"
+
 import { useTranslations } from "next-intl";
+
+import { CardHeader, CardTitle } from "@/components/ui/card";
 
 export function CreacteOrganizationHeaderSection() {
     const t = useTranslations("Account.organization.create.header")

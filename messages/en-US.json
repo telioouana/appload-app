@@ -399,7 +399,7 @@
                             "error": {
                                 "empty": "VAT Registration number was not provided",
                                 "length": "VAT Registration number must have 9 digits",
-                                "conflict": "An company with the provided VAT was already registered"
+                                "conflict": "A company with the provided VAT was already registered"
                             }
                         },
                         "email": {
@@ -407,14 +407,16 @@
                             "placeholder": "example@company.com",
                             "error": {
                                 "empty": "Company's email was not provided",
-                                "invalid": "Please enter a valid email address"
+                                "invalid": "Please enter a valid email address",
+                                "conflict": "A company with the provided email was already registered"
                             }
                         },
                         "phone-number": {
                             "label": "Company Contact",
                             "error": {
                                 "empty": "Phone number was not provided",
-                                "length": "Phone number must be atleast 9 digits long and less than 11 digits"
+                                "length": "Phone number must be at least 9 digits long and fewer than 11 digits",
+                                "conflict": "A company with the provided phone number was already registered"
                             }
                         },
                         "billing-address": {
@@ -424,7 +426,7 @@
                         },
                         "physical-address": {
                             "label": "Physical address",
-                            "placeholder": "Enter your company's physical address ",
+                            "placeholder": "Enter your company's physical address",
                             "error": "Physical address was not provided"
                         },
                         "button": {
@@ -442,7 +444,7 @@
                                 "simplified-5": "Simplified 5%",
                                 "simplified-3": "Simplified 3%"
                             },
-                            "error": ""
+                            "error": "You did not select the fiscal regime your company operates under"
                         },
                         "id-card": {
                             "label": "ID Card",
@@ -451,7 +453,7 @@
                             "placeholder-page": " {page}",
                             "error": {
                                 "empty": "Empty",
-                                "length": "Lenght"
+                                "length": "Length"
                             }
                         },
                         "nuit": {
@@ -460,8 +462,8 @@
                             "placeholder": "",
                             "placeholder-page": " {page}",
                             "error": {
-                                "empty": "",
-                                "length": ""
+                                "empty": "Empty",
+                                "length": "Length"
                             }
                         },
                         "alvara": {
@@ -470,8 +472,8 @@
                             "placeholder": "",
                             "placeholder-page": " {page}",
                             "error": {
-                                "empty": "",
-                                "length": ""
+                                "empty": "Empty",
+                                "length": "Length"
                             }
                         },
                         "bank-letter": {
@@ -480,8 +482,8 @@
                             "placeholder": "",
                             "placeholder-page": " {page}",
                             "error": {
-                                "empty": "",
-                                "length": ""
+                                "empty": "Empty",
+                                "length": "Length"
                             }
                         },
                         "republic-bulletin": {
@@ -490,8 +492,8 @@
                             "placeholder": "",
                             "placeholder-page": " {page}",
                             "error": {
-                                "empty": "",
-                                "length": ""
+                                "empty": "Empty",
+                                "length": "Length"
                             }
                         },
                         "commercial-exercise": {
@@ -500,8 +502,8 @@
                             "placeholder": "",
                             "placeholder-page": " {page}",
                             "error": {
-                                "empty": "",
-                                "length": ""
+                                "empty": "Empty",
+                                "length": "Length"
                             }
                         },
                         "commercial-certificate": {
@@ -510,8 +512,8 @@
                             "placeholder": "",
                             "placeholder-page": " {page}",
                             "error": {
-                                "empty": "",
-                                "length": ""
+                                "empty": "Empty",
+                                "length": "Length"
                             }
                         },
                         "button": {

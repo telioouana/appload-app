@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 import { useState, useRef } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEdgeStore } from "@/lib/edgestore";
 import { FieldPath, useFieldArray, useFormContext } from "react-hook-form"
@@ -28,6 +28,7 @@ export function KYCInfo({ changeView }: Props) {
     const [isSubmitting, setSubmitting] = useState<boolean>(false)
 
     const t = useTranslations("Account.organization.create.form.kyc")
+    const router = useRouter()
     const { edgestore } = useEdgeStore()
 
     const { clearErrors, control, formState: { errors }, getValues, trigger, watch } = useFormContext<CreateOrganizationForm>()
@@ -251,7 +252,7 @@ export function KYCInfo({ changeView }: Props) {
                 organizationId: data.id
             })
 
-            redirect("/company")
+            router.replace("/company")
         }
     }
 

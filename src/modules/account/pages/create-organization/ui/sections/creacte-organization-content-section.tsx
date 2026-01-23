@@ -64,13 +64,16 @@ export function CreacteOrganizationContentSection({ user, view }: Props) {
             kyc: {
                 idCard: [{ url: "" }],
                 nuit: [{ url: "" }],
-                alvara: [{ url: "" }],
-                bankLetter: [{ url: "" }],
-                republicBulletin: [{ url: "" }],
-                commercialExercise: [{ url: "" }],
                 commercialCertificate: [{ url: "" }],
+                ...(user.type === "carrier"
+                    ? {
+                        alvara: [{ url: "" }],
+                        bankLetter: [{ url: "" }],
+                        republicBulletin: [{ url: "" }],
+                        commercialExercise: [{ url: "" }],
+                    }
+                    : {})
             }
-
         }
     })
 
@@ -84,7 +87,7 @@ export function CreacteOrganizationContentSection({ user, view }: Props) {
 
     const views = [
         {
-            id: "organizatino-info",
+            id: "organization-info",
             render: <OrganizationInfo key={"account-and-phone"} changeView={changeView} />
         },
         {
