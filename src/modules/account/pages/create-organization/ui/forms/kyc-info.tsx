@@ -184,16 +184,7 @@ export function KYCInfo({ changeView }: Props) {
             }
 
             organizationId = data.id
-            const { status } = await inferKYC(values, data.id)
-
-            if (!status) {
-                await authClient.organization.delete({
-                    organizationId: data.id
-                })
-                // TODO: Customize message
-                toast.error("Something went wrong")
-                return
-            }
+            await inferKYC(values, data.id)
 
             await Promise.all(
                 values.kyc.idCard.map(({ url }) =>
@@ -303,9 +294,9 @@ export function KYCInfo({ changeView }: Props) {
                     </Button>
                 </div>
 
-                {ids.map((_, index) => (
+                {ids.map((field, index) => (
                     <FileInput
-                        key={index}
+                        key={field.id}
                         control={control}
                         inputRef={idRef[index]}
                         isPending={isSubmitting}
@@ -341,9 +332,9 @@ export function KYCInfo({ changeView }: Props) {
                     </Button>
                 </div>
 
-                {nuits.map((_, index) => (
+                {nuits.map((field, index) => (
                     <FileInput
-                        key={index}
+                        key={field.id}
                         control={control}
                         inputRef={nuitRef[index]}
                         isPending={isSubmitting}
@@ -382,9 +373,9 @@ export function KYCInfo({ changeView }: Props) {
                     </Button>
                 </div>
 
-                {commercialCertificates.map((_, index) => (
+                {commercialCertificates.map((field, index) => (
                     <FileInput
-                        key={index}
+                        key={field.id}
                         control={control}
                         inputRef={commercialCertificateRef[index]}
                         isPending={isSubmitting}
@@ -425,9 +416,9 @@ export function KYCInfo({ changeView }: Props) {
                             </Button>
                         </div>
 
-                        {alvaras.map((_, index) => (
+                        {alvaras.map((field, index) => (
                             <FileInput
-                                key={index}
+                                key={field.id}
                                 control={control}
                                 inputRef={alvaraRef[index]}
                                 isPending={isSubmitting}
@@ -466,9 +457,9 @@ export function KYCInfo({ changeView }: Props) {
                             </Button>
                         </div>
 
-                        {bankLetters.map((_, index) => (
+                        {bankLetters.map((field, index) => (
                             <FileInput
-                                key={index}
+                                key={field.id}
                                 control={control}
                                 inputRef={bankLetterRef[index]}
                                 isPending={isSubmitting}
@@ -507,9 +498,9 @@ export function KYCInfo({ changeView }: Props) {
                             </Button>
                         </div>
 
-                        {commercialExercises.map((_, index) => (
+                        {commercialExercises.map((field, index) => (
                             <FileInput
-                                key={index}
+                                key={field.id}
                                 control={control}
                                 inputRef={commercialExerciseRef[index]}
                                 isPending={isSubmitting}
@@ -548,9 +539,9 @@ export function KYCInfo({ changeView }: Props) {
                             </Button>
                         </div>
 
-                        {republicBulletins.map((_, index) => (
+                        {republicBulletins.map((field, index) => (
                             <FileInput
-                                key={index}
+                                key={field.id}
                                 control={control}
                                 inputRef={republicBulletinRef[index]}
                                 isPending={isSubmitting}

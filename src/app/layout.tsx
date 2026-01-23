@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale, getMessages } from "next-intl/server"
 import { Montserrat, Playfair_Display, Source_Code_Pro } from "next/font/google";
@@ -40,6 +41,7 @@ export default async function RootLayout({
     return (
         <html lang={locale} className={montserrat.variable} suppressHydrationWarning>
             <body className={`${sourceCodePro.variable} ${playfair.variable} antialiased`}>
+                <Analytics />
                 <NextIntlClientProvider messages={messages}>
                     <Main>
                         <Toaster />
