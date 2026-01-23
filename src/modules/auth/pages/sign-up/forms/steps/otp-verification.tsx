@@ -36,7 +36,7 @@ export function OTPVerification({ callbackURL, changeStep }: Props) {
         setPending(true)
 
         const { error } = await authClient.phoneNumber.sendOtp({
-            phoneNumber: `${countryCodes.find(({ country }) => country === values.step2.country)?.code}${values.step2.phoneNumber}`
+            phoneNumber: `${countryCodes.find(({ country }) => country === values.step2.country)?.code ?? ""}${values.step2.phoneNumber}`
         })
 
         if (error) {
@@ -58,7 +58,7 @@ export function OTPVerification({ callbackURL, changeStep }: Props) {
 
         setPending(true)
         const { error } = await authClient.phoneNumber.verify({
-            phoneNumber: `${countryCodes.find(({ country }) => country === values.step2.country)?.code}${values.step2.phoneNumber}`,
+            phoneNumber: `${countryCodes.find(({ country }) => country === values.step2.country)?.code ?? ""}${values.step2.phoneNumber}`,
             code: values.step4.code,
             disableSession: true
         })
@@ -113,7 +113,7 @@ export function OTPVerification({ callbackURL, changeStep }: Props) {
                 />
 
                 <FieldDescription className="space-x-2 text-xs leading-0.5">
-                    <span className="text-justify">{t("step4.button.edit.text", { phoneNumber: `${countryCodes.find(({ country }) => country === getValues().step2.country)?.code}${getValues().step2.phoneNumber}` })}</span>
+                    <span className="text-justify">{t("step4.button.edit.text", { phoneNumber: `${countryCodes.find(({ country }) => country === getValues().step2.country)?.code ?? ""}${getValues().step2.phoneNumber}` })}</span>
                     <Button
                         type="button"
                         variant="link"

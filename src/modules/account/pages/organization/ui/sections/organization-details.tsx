@@ -25,7 +25,7 @@ type Props = {
 export function OrganizationDetails({ organization }: Props) {
     const t = useTranslations("Account.organization.landing.details")
 
-    const length = countryCodes.find(({ code }) => organization.phoneNumber.startsWith(code))?.code.length ?? 4
+    const length = countryCodes.find(({ code }) => organization.phoneNumber.startsWith(code))?.code ?? "".length ?? 4
     const country = countryCodes.find(({ code }) => organization.phoneNumber.startsWith(code))?.country ?? "Mozambique"
     const { control } = useForm<OrganizationForm>({
         resolver: zodResolver(OrganizationFormSchema),

@@ -86,7 +86,7 @@ export function SignInForm({
             const output = await form.trigger(["country", "phoneNumber", "password"], { shouldFocus: true })
             if (!output) return
 
-            values.phoneNumber = `${countryCodes.find(({ country }) => country === form.getValues().country)?.code}${values.phoneNumber}`
+            values.phoneNumber = `${countryCodes.find(({ country }) => country === form.getValues().country)?.code ?? ""}${values.phoneNumber}`
 
             result = await authClient.signIn.phoneNumber(values, {
                 onRequest: () => setPending(true),

@@ -41,7 +41,7 @@ export function UpdatePhone({ changeStep }: Props) {
         if (!output) return
 
         setPending(true)
-        const phoneNumber = `${countryCodes.find(({ country }) => country === values.step2.country)?.code}${values.step2.phoneNumber}`
+        const phoneNumber = `${countryCodes.find(({ country }) => country === values.step2.country)?.code ?? ""}${values.step2.phoneNumber}`
 
         if (phoneNumber === initialPhone) {
             setError("step2.phoneNumber", { message: t("errors.NO_CHANGES_DETECTED") }, { shouldFocus: true })

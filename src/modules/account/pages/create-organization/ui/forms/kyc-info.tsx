@@ -171,7 +171,7 @@ export function KYCInfo({ changeView }: Props) {
                 slug: values.info.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-"),
                 nuit: values.info.nuit,
                 email: values.info.email,
-                phoneNumber: `${countryCodes.find(({ country }) => country === values.info.country)?.code}${values.info.phoneNumber}`,
+                phoneNumber: `${countryCodes.find(({ country }) => country === values.info.country)?.code ?? ""}${values.info.phoneNumber}`,
                 billingAddress: values.info.billingAddress,
                 physicalAddress: values.info.physicalAddress,
                 subscriptionPlan: "free",

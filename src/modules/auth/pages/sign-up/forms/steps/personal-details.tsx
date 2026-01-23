@@ -41,7 +41,7 @@ export function PersonalDetails({ changeStep }: Props) {
         if (!output) return
 
         setPending(true)
-        const phoneNumber = `${countryCodes.find(({ country }) => country === values.step2.country)?.code}${values.step2.phoneNumber}`
+        const phoneNumber = `${countryCodes.find(({ country }) => country === values.step2.country)?.code ?? ""}${values.step2.phoneNumber}`
 
         const emailCheck = await checkUser(values.step2.email, "email").catch(() => {
             toast.error(t("errors.OTHER"))
