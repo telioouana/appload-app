@@ -1,25 +1,25 @@
-import { FileText, Handshake, ClipboardCheck, Package, Truck, CheckCircle2, BadgeCheck, Ban, AlertTriangle, PackageCheck, Forklift, Columns4, PackageSearch, } from "lucide-react";
+import { IconAlertTriangle, IconCancel, IconClock, IconContract, IconFileTime, IconForklift, IconInvoice, IconPencilMinus, IconRosetteDiscountCheck, IconRoute, IconTruckDelivery, IconTruckLoading, IconUrgent, } from "@tabler/icons-react";
 
 import { Badge } from "@/components/ui/badge";
 
-export type StatusKey = "drafted" | "prospect" | "pending" | "booked" | "at-loading" | "loading" | "in-trasit" | "at-border" | "stopped" | "at-offloading" | "offloading" | "delivered" | "completed" | "cancelled" | "waiting-documents";
+export type StatusKey = "drafted" | "prospect" | "pending" | "booked" | "at-loading" | "loading" | "in-transit" | "at-border" | "stopped" | "at-offloading" | "offloading" | "delivered" | "completed" | "cancelled" | "waiting-documents";
 
 const statusIcons: Record<StatusKey, React.ReactNode> = {
-    drafted: <FileText size={14} />,
-    prospect: <PackageSearch size={14} />,
-    pending: <Handshake size={14} />,
-    booked: <PackageCheck size={14} />,
-    "at-loading": <Columns4 size={14} />,
-    loading: <Forklift size={14} />,
-    "in-trasit": <Truck size={14} />,
-    "waiting-documents": <ClipboardCheck size={14} />,
-    stopped: <AlertTriangle size={14} />,
-    "at-border": <Package size={14} />,
-    "at-offloading": <Columns4 size={14} />,
-    offloading: <Forklift size={14} />,
-    delivered: <CheckCircle2 size={14} />,
-    completed: <BadgeCheck size={14} />,
-    cancelled: <Ban size={14} />,
+    drafted: <IconPencilMinus size={14} />,
+    prospect: <IconInvoice size={14} />,
+    pending: <IconClock size={14} />,
+    booked: <IconContract size={14} />,
+    "at-loading": <IconTruckLoading size={14} />,
+    loading: <IconForklift size={14} />,
+    "in-transit": <IconRoute size={14} />,
+    "waiting-documents": <IconFileTime size={14} />,
+    stopped: <IconAlertTriangle size={14} />,
+    "at-border": <IconUrgent size={14} />,
+    "at-offloading": <IconTruckLoading size={14} />,
+    offloading: <IconForklift size={14} />,
+    delivered: <IconTruckDelivery size={14} />,
+    completed: <IconRosetteDiscountCheck size={14} />,
+    cancelled: <IconCancel size={14} />,
 };
 
 interface Props {

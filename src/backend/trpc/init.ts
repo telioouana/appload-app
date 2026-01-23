@@ -10,6 +10,7 @@ export const createTRPCContext = cache(async () => {
     /**
      * @see: https://trpc.io/docs/server/context
      */
+    return {}
 })
 
 // Initialize tRPC with the context we just created and the SuperJSON transformer.
