@@ -178,7 +178,7 @@ export function KYCInfo({ changeView }: Props) {
 
         if (error) {
             setSubmitting(false)
-                // TODO: Customize message
+            // TODO: Customize message
             toast.error("Something went wrong")
             return
         }
@@ -196,55 +196,55 @@ export function KYCInfo({ changeView }: Props) {
                 return
             }
 
-            values.kyc.idCard.forEach(async ({ url }) => {
-                await edgestore.apploadFiles.confirmUpload({
-                    url
-                })
-            })
+            await Promise.all(
+                values.kyc.idCard.map(({ url }) =>
+                    edgestore.apploadFiles.confirmUpload({ url })
+                )
+            )
 
-            values.kyc.nuit.forEach(async ({ url }) => {
-                await edgestore.apploadFiles.confirmUpload({
-                    url
-                })
-            })
+            await Promise.all(
+                values.kyc.nuit.map(({ url }) =>
+                    edgestore.apploadFiles.confirmUpload({ url })
+                )
+            )
 
             if (values.info.type == "shipper") {
-                values.kyc.commercialCertificate.forEach(async ({ url }) => {
-                    await edgestore.apploadFiles.confirmUpload({
-                        url
-                    })
-                })
+                await Promise.all(
+                    values.kyc.commercialCertificate.map(({ url }) =>
+                        edgestore.apploadFiles.confirmUpload({ url })
+                    )
+                )
             } else {
-                values.kyc.alvara.forEach(async ({ url }) => {
-                    await edgestore.apploadFiles.confirmUpload({
-                        url
-                    })
-                })
+                await Promise.all(
+                    values.kyc.alvara.map(({ url }) =>
+                        edgestore.apploadFiles.confirmUpload({ url })
+                    )
+                )
 
-                values.kyc.bankLetter.forEach(async ({ url }) => {
-                    await edgestore.apploadFiles.confirmUpload({
-                        url
-                    })
-                })
+                await Promise.all(
+                    values.kyc.bankLetter.map(({ url }) =>
+                        edgestore.apploadFiles.confirmUpload({ url })
+                    )
+                )
 
-                values.kyc.republicBulletin.forEach(async ({ url }) => {
-                    await edgestore.apploadFiles.confirmUpload({
-                        url
-                    })
-                })
+                await Promise.all(
+                    values.kyc.republicBulletin.map(({ url }) =>
+                        edgestore.apploadFiles.confirmUpload({ url })
+                    )
+                )
 
-                values.kyc.commercialExercise.forEach(async ({ url }) => {
-                    await edgestore.apploadFiles.confirmUpload({
-                        url
-                    })
-                })
+                await Promise.all(
+                    values.kyc.commercialExercise.map(({ url }) =>
+                        edgestore.apploadFiles.confirmUpload({ url })
+                    )
+                )
 
                 if (values.kyc.commercialCertificate.length > 0) {
-                    values.kyc.commercialCertificate.forEach(async ({ url }) => {
-                        await edgestore.apploadFiles.confirmUpload({
-                            url
-                        })
-                    })
+                    await Promise.all(
+                        values.kyc.commercialCertificate.map(({ url }) =>
+                            edgestore.apploadFiles.confirmUpload({ url })
+                        )
+                    )
                 }
             }
 
