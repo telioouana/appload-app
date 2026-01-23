@@ -526,6 +526,46 @@
             }
         }
     },
+    "Main": {
+        "sidebar": {
+            "dashboard": {
+                "label": "Dashboard",
+                "kpis": "KPI's"
+            },
+            "shipper": {
+                "orders": {
+                    "label": "All orders",
+                    "drafted": "Drafted",
+                    "pending": "Pending",
+                    "on-going": "On going",
+                    "delivered": "Delivered"
+                },
+                "marketplace": "Marketplace",
+                "quote": "Quote requests",
+                "offers": "Offers",
+                "history": "History"
+            },
+            "carrier": {
+                "orders": {
+                    "label": "All orders",
+                    "marketplace": "My Clients",
+                    "pending": "Pending",
+                    "on-going": "On going",
+                    "delivered": "Delivered"
+                },
+                "trips": "My trips",
+                "quote": "Quote requests",
+                "history": "history",
+                "fleet": {
+                    "label": "Fleet",
+                    "drivers": "Drivers",
+                    "trucks": "Trucks",
+                    "trailers": "Trailers",
+                    "links": "Links"
+                }
+            }
+        }
+    },
     "Emails": {
         "verify-email": {
             "subject": "Verify your email to activate your Appload account",
@@ -581,6 +621,11 @@
         },
         "filter": "Search...",
         "empty": "No data to be shown"
+    },
+    "Tooltips": {
+        "upload-file": "Upload file",
+        "delete-file": "Delete file",
+        "delete-field": "Delete field"
     },
     "Languages": {
         "pt-PT": "Português",

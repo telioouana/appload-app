@@ -526,6 +526,46 @@
             }
         }
     },
+    "Main": {
+        "sidebar": {
+            "dashboard": {
+                "label": "Painel de controlo",
+                "kpis": "KPIs"
+            },
+            "shipper": {
+                "orders": {
+                    "label": "Todas as encomendas",
+                    "drafted": "Rascunho",
+                    "pending": "Pendente",
+                    "on-going": "Em curso",
+                    "delivered": "Entregue"
+                },
+                "marketplace": "Marketplace",
+                "quote": "Pedidos de cotação",
+                "offers": "Ofertas",
+                "history": "Histórico"
+            },
+            "carrier": {
+                "orders": {
+                    "label": "Todas as encomendas",
+                    "marketplace": "Os meus clientes",
+                    "pending": "Pendente",
+                    "on-going": "Em curso",
+                    "delivered": "Entregue"
+                },
+                "trips": "As minhas viagens",
+                "quote": "Pedidos de cotação",
+                "history": "Histórico",
+                "fleet": {
+                    "label": "Frota",
+                    "drivers": "Motoristas",
+                    "trucks": "Camiões",
+                    "trailers": "Reboques",
+                    "links": "Ligações"
+                }
+            }
+        }
+    },
     "Emails": {
         "verify-email": {
             "subject": "Verifique o seu email para ativar a sua conta Appload",
@@ -581,6 +621,11 @@
         },
         "filter": "Pesquisar...",
         "empty": "Não existem dados para apresentar"
+    },
+    "Tooltips": {
+        "upload-file": "Carregar ficheiro",
+        "delete-file": "Eliminar ficheiro",
+        "delete-field": "Eliminar campo"
     },
     "Languages": {
         "pt-PT": "Português",
