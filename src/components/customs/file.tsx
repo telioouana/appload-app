@@ -14,14 +14,14 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "
 import { useEdgeStore } from "@/lib/edgestore";
 
 export const FileInput: ControlFunc<{
-    inpuRef: React.RefObject<HTMLInputElement | null>
+    inputRef: React.RefObject<HTMLInputElement | null>
     path: string
     owner: string
     index: number
     length: number
     remove: (path: string, index: number) => void
 }> = ({
-    inpuRef,
+    inputRef,
     path,
     index,
     owner,
@@ -78,7 +78,7 @@ export const FileInput: ControlFunc<{
                                                 type="button"
                                                 variant="default"
                                                 disabled={isDisabled}
-                                                onClick={() => inpuRef.current?.click()}
+                                                onClick={() => inputRef.current?.click()}
                                             >
                                                 Upload{isSubmitting ? <Spinner /> : <IconUpload />}
                                             </InputGroupButton>
@@ -91,7 +91,7 @@ export const FileInput: ControlFunc<{
                             </InputGroupAddon>
 
                             <InputGroupInput
-                                ref={inpuRef}
+                                ref={inputRef}
                                 onChange={async (e) => {
                                     const file = e.target.files?.[0]
                                     if (!file) return
@@ -119,8 +119,8 @@ export const FileInput: ControlFunc<{
                                         console.log(error)
                                     } finally {
                                         setSubmitting(false)
-                                        if (inpuRef.current) {
-                                            inpuRef.current.value = ""
+                                        if (inputRef.current) {
+                                            inputRef.current.value = ""
                                         }
                                     }
                                 }}

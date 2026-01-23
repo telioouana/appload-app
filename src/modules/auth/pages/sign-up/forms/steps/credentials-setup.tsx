@@ -33,7 +33,7 @@ export function CredentialsSetup({ changeStep }: Props) {
         if (!output) return
 
         setPending(true)
-        const phoneNumber = `${countryCodes.find(({ country }) => country === values.step2.country)?.code}${values.step2.phoneNumber}`
+        const phoneNumber = `${countryCodes.find(({ country }) => country === values.step2.country)?.code ?? ""}${values.step2.phoneNumber}`
 
         const result = await authClient.signUp.email({
             email: values.step2.email,

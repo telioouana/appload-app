@@ -358,7 +358,10 @@
                         "email": {
                             "label": "Email *",
                             "placeholder": "john.doe@company.com",
-                            "error": "O email do membro não foi fornecido"
+                            "error": {
+                                "empty": "Campo de email do membro continua vazio",
+                                "invalid": "O email introduzido não é válido"
+                            }
                         },
                         "role": {
                             "label": "Função *",
@@ -374,6 +377,150 @@
                     "buttons": {
                         "invite": "Convidar membro",
                         "send": "Enviar convite"
+                    }
+                }
+            },
+            "create": {
+                "header": {
+                    "title": "Registar a sua empresa"
+                },
+                "form": {
+                    "info": {
+                        "title": "Detalhes da empresa",
+                        "description": "Introduza as informações legais e operacionais da sua empresa. Isto ajuda-nos a validar a sua organização, garantir a conformidade e oferecer uma experiência segura e personalizada",
+                        "name": {
+                            "label": "Nome",
+                            "placeholder": "Introduza o nome da sua empresa",
+                            "error": "O nome da empresa não foi fornecido"
+                        },
+                        "nuit": {
+                            "label": "NUIT",
+                            "placeholder": "Introduza o número de identificação fiscal",
+                            "error": {
+                                "empty": "O número de identificação fiscal não foi fornecido",
+                                "length": "O número de identificação fiscal deve ter 9 dígitos",
+                                "conflict": "Já existe uma empresa registada com o NUIT fornecido"
+                            }
+                        },
+                        "email": {
+                            "label": "Email da empresa",
+                            "placeholder": "exemplo@empresa.com",
+                            "error": {
+                                "empty": "Campo de email da empresa continua vazio",
+                                "invalid": "O email introduzido não é válido",
+                                "conflict": "Já existe uma empresa registada com o email fornecido"
+                            }
+                        },
+                        "phone-number": {
+                            "label": "Contacto da empresa",
+                            "error": {
+                                "empty": "O número de telefone não foi fornecido",
+                                "length": "O número de telefone deve ter pelo menos 9 dígitos e no máximo 11 dígitos",
+                                "conflict": "Já existe uma empresa registada com o contacto fornecido"
+                            }
+                        },
+                        "billing-address": {
+                            "label": "Endereço de faturação",
+                            "placeholder": "Introduza o endereço de faturação da sua empresa",
+                            "error": "O endereço de faturação não foi fornecido"
+                        },
+                        "physical-address": {
+                            "label": "Endereço físico",
+                            "placeholder": "Introduza o endereço físico da sua empresa",
+                            "error": "O endereço físico não foi fornecido"
+                        },
+                        "button": {
+                            "next": "Seguinte"
+                        }
+                    },
+                    "kyc": {
+                        "title": "Conheça o Seu Cliente (KYC)",
+                        "description": "Forneça as informações de identificação necessárias para concluir a verificação KYC. Este processo ajuda-nos a cumprir obrigações regulamentares e a manter uma plataforma segura e em conformidade",
+                        "fiscal-regime": {
+                            "label": "",
+                            "placeholder": "Selecione o regime fiscal em que a sua empresa opera",
+                            "options": {
+                                "normal": "Normal",
+                                "simplified-5": "Simplificado 5%",
+                                "simplified-3": "Simplificado 3%"
+                            },
+                            "error": "Não selecionou o regime fiscal aplicável à sua empresa"
+                        },
+                        "id-card": {
+                            "label": "Documento de Identidade",
+                            "description": "Apenas ficheiros PDF com tamanho máximo de 2MB cada e até um máximo de 2 ficheiros",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
+                            }
+                        },
+                        "nuit": {
+                            "label": "Regime Fiscal (NUIT)",
+                            "description": "Apenas ficheiros PDF com tamanho máximo de 2MB cada e até um máximo de 2 ficheiros",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
+                            }
+                        },
+                        "alvara": {
+                            "label": "Alvará de transporte",
+                            "description": "Apenas ficheiros PDF com tamanho máximo de 2MB cada e até um máximo de 5 ficheiros",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
+                            }
+                        },
+                        "bank-letter": {
+                            "label": "Carta bancária",
+                            "description": "Apenas ficheiros PDF com tamanho máximo de 2MB cada e até um máximo de 2 ficheiros",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
+                            }
+                        },
+                        "republic-bulletin": {
+                            "label": "Boletim da República (BR)",
+                            "description": "Apenas ficheiros PDF com tamanho máximo de 2MB cada e até um máximo de 2 ficheiros",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
+                            }
+                        },
+                        "commercial-exercise": {
+                            "label": "Exercício comercial",
+                            "description": "Apenas ficheiros PDF com tamanho máximo de 2MB cada e até um máximo de 2 ficheiros",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
+                            }
+                        },
+                        "commercial-certificate": {
+                            "label": "Certidão comercial",
+                            "description": "Apenas ficheiros PDF com tamanho máximo de 2MB cada e até um máximo de 5 ficheiros",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Vazio",
+                                "length": "Tamanho inválido"
+                            }
+                        },
+                        "button": {
+                            "add-page": "Adicionar página",
+                            "back": "Voltar",
+                            "register": "Registar empresa"
+                        }
                     }
                 }
             }

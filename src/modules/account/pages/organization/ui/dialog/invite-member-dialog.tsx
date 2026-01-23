@@ -22,7 +22,12 @@ export function InviteMemberDialog() {
 
     const InviteMemberSchema = z.object({
         name: z.string({ error: t("form.name.error") }),
-        email: z.email({ error: t("form.email.error") }),
+        email: z.email({
+            error: (issue) =>
+                issue.input === undefined || issue.input === ""
+                    ? t("form.email.error.empty")
+                    : t("form.email.error.invalid")
+        }),
         role: z.enum(INVITE_ROLE, { error: t("form.role.error") }),
     })
 

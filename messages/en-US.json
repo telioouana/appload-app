@@ -358,7 +358,10 @@
                         "email": {
                             "label": "Email *",
                             "placeholder": "john.doe@company.com",
-                            "error": "Member's email was not provided"
+                            "error": {
+                                "empty": "Member's email was not provided",
+                                "invalid": "Please enter a valid email address"
+                            }
                         },
                         "role": {
                             "label": "Role *",
@@ -374,6 +377,150 @@
                     "buttons": {
                         "invite": "Invite member",
                         "send": "Send invitation"
+                    }
+                }
+            },
+            "create": {
+                "header": {
+                    "title": "Register your company"
+                },
+                "form": {
+                    "info": {
+                        "title": "Company details",
+                        "description": "Enter your company's legal and operational information. This helps us validate your organization, ensure compliance, and deliver a secure, tailored experience",
+                        "name": {
+                            "label": "Name",
+                            "placeholder": "Enter your company name",
+                            "error": "Company name was not provided"
+                        },
+                        "nuit": {
+                            "label": "VAT Registration number",
+                            "placeholder": "Enter VAT Registration number",
+                            "error": {
+                                "empty": "VAT Registration number was not provided",
+                                "length": "VAT Registration number must have 9 digits",
+                                "conflict": "A company with the provided VAT was already registered"
+                            }
+                        },
+                        "email": {
+                            "label": "Company Email",
+                            "placeholder": "example@company.com",
+                            "error": {
+                                "empty": "Company's email was not provided",
+                                "invalid": "Please enter a valid email address",
+                                "conflict": "A company with the provided email was already registered"
+                            }
+                        },
+                        "phone-number": {
+                            "label": "Company Contact",
+                            "error": {
+                                "empty": "Phone number was not provided",
+                                "length": "Phone number must be at least 9 digits long and fewer than 11 digits",
+                                "conflict": "A company with the provided phone number was already registered"
+                            }
+                        },
+                        "billing-address": {
+                            "label": "Billing address",
+                            "placeholder": "Enter your company's billing address",
+                            "error": "Billing address was not provided"
+                        },
+                        "physical-address": {
+                            "label": "Physical address",
+                            "placeholder": "Enter your company's physical address",
+                            "error": "Physical address was not provided"
+                        },
+                        "button": {
+                            "next": "Next"
+                        }
+                    },
+                    "kyc": {
+                        "title": "Know Your Customer",
+                        "description": "Provide the required identity information to complete our KYC verification. This process helps us meet regulatory obligations and maintain a secure, compliant platform",
+                        "fiscal-regime": {
+                            "label": "",
+                            "placeholder": "Select the fiscal regime your company operates under",
+                            "options": {
+                                "normal": "Normal",
+                                "simplified-5": "Simplified 5%",
+                                "simplified-3": "Simplified 3%"
+                            },
+                            "error": "You did not select the fiscal regime your company operates under"
+                        },
+                        "id-card": {
+                            "label": "ID Card",
+                            "description": "Only PDF Files with 2MB size each and max of 2 files",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Empty",
+                                "length": "Length"
+                            }
+                        },
+                        "nuit": {
+                            "label": "VAT Registration (NUIT)",
+                            "description": "Only PDF Files with 2MB size each and max of 2 files",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Empty",
+                                "length": "Length"
+                            }
+                        },
+                        "alvara": {
+                            "label": "Transport license",
+                            "description": "Only PDF Files with 2MB size each and max of 5 files",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Empty",
+                                "length": "Length"
+                            }
+                        },
+                        "bank-letter": {
+                            "label": "Bank Letter",
+                            "description": "Only PDF Files with 2MB size each and max of 2 files",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Empty",
+                                "length": "Length"
+                            }
+                        },
+                        "republic-bulletin": {
+                            "label": "Republic Bulletin (BR)",
+                            "description": "Only PDF Files with 2MB size each and max of 2 files",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Empty",
+                                "length": "Length"
+                            }
+                        },
+                        "commercial-exercise": {
+                            "label": "Commercial Exercise",
+                            "description": "Only PDF Files with 2MB size each and max of 2 files",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Empty",
+                                "length": "Length"
+                            }
+                        },
+                        "commercial-certificate": {
+                            "label": "Commercial Certificate",
+                            "description": "Only PDF Files with 2MB size each and max of 5 files",
+                            "placeholder": "",
+                            "placeholder-page": " {page}",
+                            "error": {
+                                "empty": "Empty",
+                                "length": "Length"
+                            }
+                        },
+                        "button": {
+                            "add-page": "Add page",
+                            "back": "Back",
+                            "register": "Register company"
+                        }
                     }
                 }
             }
