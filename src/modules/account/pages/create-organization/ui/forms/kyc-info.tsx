@@ -162,32 +162,31 @@ export function KYCInfo({ changeView }: Props) {
         if (!output) return
 
         setSubmitting(true)
+        let organizationId: string | undefined
 
-        const { data, error } = await authClient.organization.create({
-            type: values.info.type,
-            name: values.info.name,
-            slug: values.info.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-            nuit: values.info.nuit,
-            email: values.info.email,
-            phoneNumber: `${countryCodes.find(({ country }) => country === values.info.country)?.code}${values.info.phoneNumber}`,
-            billingAddress: values.info.billingAddress,
-            physicalAddress: values.info.physicalAddress,
-            subscriptionPlan: "free",
-            status: "pending"
-        })
+        try {
+            const { data, error } = await authClient.organization.create({
+                type: values.info.type,
+                name: values.info.name,
+                slug: values.info.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+                nuit: values.info.nuit,
+                email: values.info.email,
+                phoneNumber: `${countryCodes.find(({ country }) => country === values.info.country)?.code}${values.info.phoneNumber}`,
+                billingAddress: values.info.billingAddress,
+                physicalAddress: values.info.physicalAddress,
+                subscriptionPlan: "free",
+                status: "pending"
+            })
+            if (error || !data) {
+                // TODO: Customize message
+                toast.error("Something went wrong")
+                return
+            }
 
-        if (error) {
-            setSubmitting(false)
-            // TODO: Customize message
-            toast.error("Something went wrong")
-            return
-        }
-
-        if (data) {
+            organizationId = data.id
             const { status } = await inferKYC(values, data.id)
 
             if (!status) {
-                setSubmitting(false)
                 await authClient.organization.delete({
                     organizationId: data.id
                 })
@@ -252,7 +251,17 @@ export function KYCInfo({ changeView }: Props) {
                 organizationId: data.id
             })
 
-            router.replace("/company")
+            router.push("/company")
+
+        } catch (err) {
+            console.error(err)
+            if (organizationId) {
+                await authClient.organization.delete({ organizationId })
+            }
+            // TODO: Customize message
+            toast.error("Something went wrong")
+        } finally {
+            setSubmitting(false)
         }
     }
 
