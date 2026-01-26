@@ -581,7 +581,7 @@
                 },
                 "carrier": {
                     "title": "There are no new orders available on appload",
-                    "description": "All orders that where posted on the marketplace where either accepted or cancelled. Please check back later for new orders",
+                    "description": "All orders that were posted on the marketplace where either accepted or cancelled. Please check back later for new orders",
                     "note": "This may vary based on filters applied"
                 }
             },

@@ -8,7 +8,7 @@ export function OrdersLoadingFallback() {
                 <div><Skeleton className="h-8 w-54" /></div>
                 <div><Skeleton className="h-8 w-16" /></div>
             </div>
-            <div className="grid col-auto xl:grid-cols-4 gap-8 h-full w-full">
+            <div className="grid grid-cols-1 xl:grid-cols-4 gap-8 h-full w-full">
                 {Array.from({ length: 8 }).map((_, index) => (
                     <Card className="w-full max-w-md" key={index}>
                         <CardHeader className="flex items-center justify-between gap-4">

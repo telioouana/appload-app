@@ -5,7 +5,7 @@ import { IconRefresh } from "@tabler/icons-react"
 import { Button } from "@/components/ui/button"
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
 
-export function ErrorFallback() {
+export function OrdersErrorFallback() {
     const t = useTranslations(`Main.error.orders`)
 
     return (
