@@ -64,11 +64,11 @@ export function CreateOrderDialog({ filter, filterBy }: Props) {
         })
             .refine((data) => !data.isHazardous || !!data.hazchemCode, {
                 error: t("form.cargo.hazchem-code.error"),
-                path: ["form.cargo.hazchem-code"]
+                path: ["hazchemCode"]
             })
             .refine((data) => !data.isRefrigerated || data.temperature !== undefined, {
                 error: t("form.cargo.temperature.error"),
-                path: ["form.cargo.temperature"]
+                path: ["temperature"]
             }),
 
         share: z.enum(SHARE, { error: t("form.share.error") })
