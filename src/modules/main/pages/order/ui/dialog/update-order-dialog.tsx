@@ -125,7 +125,10 @@ export function UpdateOrderDialog({ action, className, filter, filterBy, cargo, 
                 }))
                 onClose()
             },
-            onError: () => { }
+            onError: (error) => {
+                // TODO: Show error feedback to user
+                console.error("Order operation failed:", error)
+            }
         }),
     )
 

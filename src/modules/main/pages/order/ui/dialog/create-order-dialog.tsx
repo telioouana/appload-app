@@ -92,7 +92,7 @@ export function CreateOrderDialog({ filter, filterBy }: Props) {
         }
     })
 
-    const save = useMutation(
+    const orderMutation = useMutation(
         trpc.order.create.mutationOptions({
             onSuccess: () => {
                 queryClient.invalidateQueries(trpc.orders.all.queryOptions({
@@ -102,30 +102,20 @@ export function CreateOrderDialog({ filter, filterBy }: Props) {
                 }))
                 onClose()
             },
-            onError: () => { }
+            onError: (error) => {
+                // TODO: Show error feedback to user
+                console.error("Order operation failed:", error)
+            }
         }),
     )
 
     async function handleSave(values: CreateOrderForm) {
-        await save.mutateAsync({
+        form.clearErrors()
+        await orderMutation.mutateAsync({
             status: "drafted",
             values
         })
     }
-
-    const create = useMutation(
-        trpc.order.create.mutationOptions({
-            onSuccess: () => {
-                queryClient.invalidateQueries(trpc.orders.all.queryOptions({
-                    filter,
-                    filterBy,
-                    limit: 8,
-                }))
-                onClose()
-            },
-            onError: () => { }
-        }),
-    )
 
     async function handleSubmit(values: CreateOrderForm, status: "prospect" | "drafted" | "pending") {
         form.clearErrors()
@@ -142,7 +132,7 @@ export function CreateOrderDialog({ filter, filterBy }: Props) {
         const output = await form.trigger(fields, { shouldFocus: true })
         if (!output) return
 
-        await create.mutateAsync({
+        await orderMutation.mutateAsync({
             status,
             values
         })
@@ -168,7 +158,7 @@ export function CreateOrderDialog({ filter, filterBy }: Props) {
             >
                 <FormProvider {...form}>
                     <form className="flex flex-col gap-6" >
-                        <OrderForm isPending={create.isPending} />
+                        <OrderForm isPending={orderMutation.isPending} />
 
                         <div className="flex justify-between items-center gap-4">
                             <Button
@@ -178,40 +168,40 @@ export function CreateOrderDialog({ filter, filterBy }: Props) {
                                     form.reset()
                                     onClose()
                                 }}
-                                disabled={save.isPending || create.isPending}
+                                disabled={orderMutation.isPending}
                             >{t("button.cancel")}</Button>
 
                             <div className="flex gap-4">
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    disabled={save.isPending || create.isPending}
+                                    disabled={orderMutation.isPending}
                                     onClick={() => handleSave(form.getValues())}
                                 >
                                     {t("button.save")}
-                                    {save.isPending ? <Spinner /> : <IconDeviceFloppy />}
+                                    {orderMutation.isPending ? <Spinner /> : <IconDeviceFloppy />}
                                 </Button>
 
-                                <ButtonGroup aria-disabled={save.isPending || create.isPending}>
+                                <ButtonGroup aria-disabled={orderMutation.isPending}>
                                     <Button
                                         type="button"
-                                        disabled={save.isPending || create.isPending}
+                                        disabled={orderMutation.isPending}
                                         onClick={() => handleSubmit(form.getValues(), "pending")}
                                     >
                                         {t("button.publish")}
-                                        {create.isPending ? <Spinner /> : <IconSend />}
+                                        {orderMutation.isPending ? <Spinner /> : <IconSend />}
                                     </Button>
                                     <ButtonGroupSeparator />
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
-                                            <Button type="button" size="icon" disabled={save.isPending || create.isPending} ><IconDots /></Button>
+                                            <Button type="button" size="icon" disabled={orderMutation.isPending} ><IconDots /></Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end">
                                             <DropdownMenuItem asChild>
                                                 <Button
                                                     type="button"
                                                     variant="ghost"
-                                                    disabled={create.isPending}
+                                                    disabled={orderMutation.isPending}
                                                     onClick={() => handleSubmit(form.getValues(), "prospect")}
                                                 >{t("button.quote")}</Button>
                                             </DropdownMenuItem>
