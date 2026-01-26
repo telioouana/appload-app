@@ -564,6 +564,84 @@
                     "links": "Ligações"
                 }
             }
+        },
+        "orders": {
+            "empty": {
+                "shipper": {
+                    "title": "Nenhum pedido de transporte associado a esta conta",
+                    "description": "Comece por criar novos pedidos de transporte e estes serão listados aqui",
+                    "note": "A listagem pode variar consoante os filtros aplicados"
+                },
+                "carrier": {
+                    "title": "Não existem novos pedidos disponíveis na Appload",
+                    "description": "Todos os pedidos publicados no marketplace foram ou aceites ou cancelados. Por favor, volte mais tarde para novos pedidos",
+                    "note": "A listagem pode variar consoante os filtros aplicados"
+                }
+            },
+            "pagination": {
+                "first": "Primeira",
+                "previous": "Anterior",
+                "next": "Seguinte",
+                "last": "Última"
+            },
+            "card": {
+                "header": {
+                    "id": "PED{id}",
+                    "subscribers": "Da sua rede",
+                    "status": {
+                        "drafted": "Rascunho",
+                        "prospect": "Proposta",
+                        "pending": "Pendente",
+                        "booked": "Confirmado",
+                        "at-loading": "No ponto de carga",
+                        "loading": "Em carregamento",
+                        "in-transit": "Em trânsito",
+                        "at-border": "Na fronteira",
+                        "stopped": "Parado",
+                        "at-offloading": "No ponto de descarga",
+                        "offloading": "Em descarga",
+                        "delivered": "Entregue",
+                        "completed": "Concluído",
+                        "cancelled": "Cancelado",
+                        "waiting-documents": "A aguardar documentação"
+                    }
+                },
+                "content": {
+                    "category": {
+                        "label": "Tipo de carga",
+                        "options": {
+                            "agriculture-inputs": "Insumos agrícolas",
+                            "agriculture-products": "Produtos agrícolas",
+                            "construction": "Materiais de construção",
+                            "machinery-equipment": "Máquinas e equipamentos",
+                            "fmcg": "Bens de consumo (FMCG)",
+                            "general-cargo": "Carga geral",
+                            "medicine": "Medicamentos",
+                            "mining": "Mineração",
+                            "oil-gas": "Petróleo e gás",
+                            "vehicles": "Viaturas",
+                            "other": "Outros"
+                        }
+                    },
+                    "quantity": {
+                        "label": "Quantidade"
+                    },
+                    "shipping": {
+                        "label": "Janela prevista de transporte",
+                        "from": "De",
+                        "to": "Até"
+                    },
+                    "distance": "Distância aproximada da viagem (km)"
+                },
+                "footer": {
+                    "buttons": {
+                        "details": "Detalhes",
+                        "accept": "Aceitar",
+                        "offer": "Fazer proposta",
+                        "quote": "Enviar cotação"
+                    }
+                }
+            }
         }
     },
     "Emails": {

@@ -564,6 +564,84 @@
                     "links": "Links"
                 }
             }
+        },
+        "orders": {
+            "empty": {
+                "shipper": {
+                    "title": "No orders associated with this account",
+                    "description": "Start create a new orders and they will be listed here",
+                    "note": "This may vary based on filters applied"
+                },
+                "carrier": {
+                    "title": "There are no new orders available on appload",
+                    "description": "All orders that where posted on the marketplace where either accepted or cancelled. Please check back later for new orders",
+                    "note": "This may vary based on filters applied"
+                }
+            },
+            "pagination": {
+                "first": "First",
+                "previous": "Previous",
+                "next": "Next",
+                "last": "Last"
+            },
+            "card": {
+                "header": {
+                    "id": "IDX{id}",
+                    "subscribers": "From your network",
+                    "status": {
+                        "drafted": "Drafted",
+                        "prospect": "Prospect",
+                        "pending": "Pending",
+                        "booked": "Booked",
+                        "at-loading": "At loading",
+                        "loading": "Loading",
+                        "in-trasit": "In trasit",
+                        "at-border": "At border",
+                        "stopped": "Stopped",
+                        "at-offloading": "At offloading",
+                        "offloading": "Offloading",
+                        "delivered": "Delivered",
+                        "completed": "Completed",
+                        "cancelled": "Cancelled",
+                        "waiting-documents": "Waiting documents"
+                    }
+                },
+                "content": {
+                    "category": {
+                        "label": "Cargo category",
+                        "options": {
+                            "agriculture-inputs": "Agriculture Inputs",
+                            "agriculture-products": "Agriculture Products",
+                            "construction": "Construction",
+                            "machinery-equipment": "Machinery Equipment",
+                            "fmcg": "FMCG",
+                            "general-cargo": "General Cargo",
+                            "medicine": "Medicine",
+                            "mining": "Mining",
+                            "oil-gas": "Oil & Gas",
+                            "vehicles": "Vhicles",
+                            "other": "Other"
+                        }
+                    },
+                    "quantity": {
+                        "label": "Quantity"
+                    },
+                    "shipping": {
+                        "label": "Expected shipping window",
+                        "from": "From",
+                        "to": "To"
+                    },
+                    "distance": "Aproximate travel distance"
+                },
+                "footer": {
+                    "buttons": {
+                        "details": "Details",
+                        "accept": "Accept",
+                        "offer": "Make offer",
+                        "quote": "Send quote"
+                    }
+                }
+            }
         }
     },
     "Emails": {

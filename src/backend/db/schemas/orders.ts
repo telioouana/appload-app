@@ -1,5 +1,4 @@
 import { randomUUID } from "crypto";
-import { relations } from "drizzle-orm";
 import { boolean, decimal, index, integer, jsonb, pgEnum, pgTable, numeric, text, timestamp, serial, } from "drizzle-orm/pg-core";
 
 import { organization } from "@/backend/db/schemas/users";
@@ -238,58 +237,3 @@ export const offer = pgTable(
             .notNull(),
     }
 )
-
-export const orderRelations = relations(order, ({ one, many }) => ({
-    shipper: one(organization, {
-        fields: [order.shipperId],
-        references: [organization.id]
-    }),
-    cargo: one(cargo),
-    offer: many(offer),
-    trips: many(trip),
-}))
-
-export const cargoRelations = relations(cargo, ({ one }) => ({
-    order: one(order, {
-        fields: [cargo.orderId],
-        references: [order.id]
-    })
-}))
-
-export const offerRelations = relations(offer, ({ one }) => ({
-    order: one(order, {
-        fields: [offer.orderId],
-        references: [order.id]
-    }),
-    carrier: one(organization, {
-        fields: [offer.carrierId],
-        references: [organization.id]
-    })
-}))
-
-export const tripRelations = relations(trip, ({ one }) => ({
-    order: one(order, {
-        fields: [trip.orderId],
-        references: [order.id]
-    }),
-    carrier: one(organization, {
-        fields: [trip.carrierId],
-        references: [organization.id]
-    }),
-    driver: one(driver, {
-        fields: [trip.driverId],
-        references: [driver.id]
-    }),
-    truck: one(truck, {
-        fields: [trip.truckPlate],
-        references: [truck.regPlate]
-    }),
-    trailer: one(trailer, {
-        fields: [trip.trailerPlate],
-        references: [trailer.regPlate]
-    }),
-    link: one(link, {
-        fields: [trip.linkPlate],
-        references: [link.regPlate]
-    })
-}))

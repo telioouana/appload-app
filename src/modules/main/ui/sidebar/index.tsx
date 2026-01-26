@@ -224,7 +224,7 @@ export function MainSidebar({
                             {middle.map(({ id, items }) => {
                                 return id === type && (
                                     items.map((item) => (
-                                        <SidebarMenuItem key={item.url}>
+                                        <SidebarMenuItem key={item.url} className="mb-2">
                                             <SidebarMenuButton
                                                 asChild
                                                 tooltip={item.label}
