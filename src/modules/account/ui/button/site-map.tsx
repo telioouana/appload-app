@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { useTranslations } from "next-intl"
-import { IconGridDots, IconDashboard } from "@tabler/icons-react"
+import { IconGridDots, IconDashboard, IconPackages } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -14,8 +14,12 @@ export function SiteMap() {
             href: "/dashboard",
             title: t("dashboard"),
             Icon: IconDashboard
+        },
+        {
+            href: "/orders",
+            title: t("order"),
+            Icon: IconPackages
         }
-
     ]
 
     return (
@@ -30,7 +34,7 @@ export function SiteMap() {
                     <CardHeader>
                         <CardTitle>{t("title")}</CardTitle>
                     </CardHeader>
-                    
+
                     <CardContent className="flex items-center gap-4 w-full">
                         <ItemGroup className="grid grid-cols-3 gap-8">
                             {links.map(({ href, title, Icon }) => (

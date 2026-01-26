@@ -181,7 +181,7 @@ export function MainSidebar({
                                             pathname.startsWith(item.url) && "bg-linear-to-r/oklch border-[#E67623]/10"
                                         )}
                                     >
-                                        <Link href={`${item.url}?session=${type}`}>
+                                        <Link href={item.url}>
                                             <item.Icon className="size-5" />
                                             <span className="text-sm font-medium tracking-tight">
                                                 {item.label}
@@ -201,7 +201,7 @@ export function MainSidebar({
                                                             pathname.startsWith(item.url) && "bg-linear-to-r/oklch border-[#E67623]/10"
                                                         )}
                                                     >
-                                                        <Link href={`${item.url}?session=${type}`}>
+                                                        <Link href={item.url}>
                                                             <item.Icon className="size-5" />
                                                             <span className="text-sm font-medium tracking-tight">
                                                                 {item.label}
@@ -224,7 +224,7 @@ export function MainSidebar({
                             {middle.map(({ id, items }) => {
                                 return id === type && (
                                     items.map((item) => (
-                                        <SidebarMenuItem key={item.url}>
+                                        <SidebarMenuItem key={item.url} className="mb-2">
                                             <SidebarMenuButton
                                                 asChild
                                                 tooltip={item.label}
@@ -234,7 +234,7 @@ export function MainSidebar({
                                                     pathname.startsWith(item.url) && "bg-linear-to-r/oklch border-[#E67623]/10"
                                                 )}
                                             >
-                                                <Link href={`${item.url}?session=${type}`}>
+                                                <Link href={item.url}>
                                                     <item.Icon className="size-5" />
                                                     <span className="text-sm font-medium tracking-tight">
                                                         {item.label}
@@ -254,7 +254,7 @@ export function MainSidebar({
                                                                     pathname.startsWith(item.url) && "bg-linear-to-r/oklch border-[#E67623]/10"
                                                                 )}
                                                             >
-                                                                <Link href={`${item.url}?session=${type}`}>
+                                                                <Link href={item.url}>
                                                                     <item.Icon className="size-5" />
                                                                     <span className="text-sm font-medium tracking-tight">
                                                                         {item.label}

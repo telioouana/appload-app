@@ -20,13 +20,13 @@ export function MainView({ children }: PropsWithChildren) {
     if (!organization) redirect("/company")
 
     return (
-        <div className="[--header-height:calc(--spacing(14))] w-full h-full">
+        <div className="[--header-height:calc(--spacing(14))] w-full h-full overflow-hidden">
             <SidebarProvider className="flex flex-col w-full h-full">
                 <MainNavbar />
                 <div className="flex flex-1 w-full h-full">
                     <MainSidebar type={session.user.type} />
-                    <SidebarInset className="flex flex-1 flex-col h-full gap-4 p-4 overflow-hidden">
-                        <div className="h-full w-[calc(100svh-var(--sidebar-width))]">
+                    <SidebarInset className="flex flex-1 flex-col gap-4 p-4">
+                        <div className="h-full w-full overflow-y-scroll container-snap">
                             {children}
                         </div>
                     </SidebarInset>

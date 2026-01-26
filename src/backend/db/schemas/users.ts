@@ -3,8 +3,6 @@ import { relations } from "drizzle-orm";
 import { pgTable, text, timestamp, boolean, integer, index, uniqueIndex, jsonb, primaryKey, } from "drizzle-orm/pg-core";
 
 import { Urls } from "@/backend/db/types";
-import { offer, order } from "@/backend/db/schemas/orders";
-import { driver, link, truck } from "@/backend/db/schemas/fleet";
 
 export const user = pgTable(
     "user",
@@ -189,8 +187,7 @@ export const invitation = pgTable(
     ],
 );
 
-export const userRelations = relations(user, ({ one, many }) => ({
-    driver: one(driver),
+export const userRelations = relations(user, ({ many }) => ({
     members: many(member),
     sessions: many(session),
     accounts: many(account),
@@ -215,11 +212,6 @@ export const organizationRelations = relations(
     organization,
     ({ one, many }) => ({
         kyc: one(kyc),
-        link: many(link),
-        order: many(order),
-        offer: many(offer),
-        trucks: many(truck),
-        drivers: many(driver),
         members: many(member),
         invitations: many(invitation),
     }),
@@ -246,10 +238,3 @@ export const invitationRelations = relations(invitation, ({ one }) => ({
         references: [user.id],
     }),
 }));
-
-export const kycRelations = relations(kyc, ({ one }) => ({
-    organization: one(organization, {
-        fields: [kyc.organizationId],
-        references: [organization.id],
-    })
-}))

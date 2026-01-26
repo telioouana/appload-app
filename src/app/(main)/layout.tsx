@@ -6,10 +6,10 @@ import { MainLayout } from "@/modules/main/ui/layout/main-layout";
 
 export default function Layout({ children }: PropsWithChildren) {
     return (
-        <TRPCReactProvider>
-            <MainLayout>
+        <MainLayout>
+            <TRPCReactProvider>
                 {children}
-            </MainLayout>
-        </TRPCReactProvider>
+            </TRPCReactProvider>
+        </MainLayout>
     )
 }
