@@ -24,8 +24,15 @@ export default async function Page({
     const { user: { type: sessionType } } = session
     const { filterBy } = await searchParams
 
-    const userType = sessionType as UserType
+    const userType: UserType | undefined = sessionType === "shipper" || sessionType === "carrier"
+        ? sessionType
+        : undefined
 
+    if (!userType) {
+        await auth.api.signOut()
+        return redirect("/sign-in")
+    }
+    
     const client = getQueryClient()
 
     await client.prefetchInfiniteQuery(
