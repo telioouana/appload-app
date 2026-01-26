@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
 
 export function ErrorFallback() {
-    const t = useTranslations(`Main.error-fallback`)
+    const t = useTranslations(`Main.error.orders`)
 
     return (
         <div className="h-full w-full items-center justify-center flex flex-col">
@@ -17,12 +17,11 @@ export function ErrorFallback() {
                     </EmptyMedia>
                     <EmptyTitle>{t("title")}</EmptyTitle>
                     <EmptyDescription>{t("description")}</EmptyDescription>
-                    <EmptyDescription>{t("note")}</EmptyDescription>
                 </EmptyHeader>
 
                 <EmptyContent>
                     <Button onClick={() => window.location.reload()}>
-                        {t("button-refresh")}
+                        {t("button")}
                         <IconRefresh />
                     </Button>
                 </EmptyContent>

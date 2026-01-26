@@ -25,7 +25,7 @@ export function MainView({ children }: PropsWithChildren) {
                 <MainNavbar />
                 <div className="flex flex-1 w-full h-full">
                     <MainSidebar type={session.user.type} />
-                    <SidebarInset className="flex flex-1 flex-col h-fullw-[calc(100svh-var(--sidebar-width))] gap-4 p-4">
+                    <SidebarInset className="flex flex-1 flex-col gap-4 p-4">
                         <div className="h-full w-full overflow-y-scroll container-snap">
                             {children}
                         </div>

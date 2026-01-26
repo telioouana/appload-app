@@ -565,6 +565,13 @@
                 }
             }
         },
+        "error": {
+            "orders": {
+                "title": "Não foi possível carregar os pedidos",
+                "description": "Ocorreu um erro ao carregar os pedidos. Verifique a ligação à internet e tente novamente",
+                "button": "Recarregar"
+            }
+        },
         "orders": {
             "empty": {
                 "shipper": {
@@ -631,7 +638,12 @@
                         "from": "De",
                         "to": "Até"
                     },
-                    "distance": "Distância aproximada da viagem (km)"
+                    "distance": "Distância aproximada da viagem (km)",
+                    "location": {
+                        "label": "Rota de transporte",
+                        "from": "De",
+                        "to": "Para"
+                    }
                 },
                 "footer": {
                     "buttons": {

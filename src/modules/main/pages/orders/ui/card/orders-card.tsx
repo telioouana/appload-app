@@ -26,12 +26,12 @@ type Props = {
     organizationId: string
     organizationName: string
     fiscalRegime: string | null
-    session: UserType
+    userType: UserType
     filter?: FilterType
     filterBy?: FilterByType
 }
 
-export function OrdersCard({ cargo, order, trip, organizationId, organizationName, fiscalRegime, session, filter, filterBy }: Props) {
+export function OrdersCard({ cargo, order, trip, organizationId, organizationName, fiscalRegime, userType, filter, filterBy }: Props) {
     const t = useTranslations("Main.orders.card")
     const f = useFormatter()
 
@@ -148,12 +148,12 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
             <CardHeader className="flex items-center justify-between gap-4">
                 <div className="flex flex-col gap-2">
                     <CardTitle>{t("header.id", { id: order.legacyId.toString().padStart(5, '0') })}</CardTitle>
-                    {order.share == "subscribers" && session == "carrier" && (<CardDescription className="font-semibold text-primary">{order.shipperName}</CardDescription>)}
+                    {order.share == "subscribers" && userType == "carrier" && (<CardDescription className="font-semibold text-primary">{order.shipperName}</CardDescription>)}
                 </div>
 
                 <div className="flex gap-2">
                     <StatusBadge label={t(`header.status.${status}`)} status={status as StatusKey} />
-                    {order.share == "subscribers" && session == "carrier" && (
+                    {order.share == "subscribers" && userType == "carrier" && (
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Badge variant="destructive"><IconFlag /></Badge>
@@ -246,7 +246,7 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                         </Button>
                     </div>
 
-                    {session == "carrier" &&
+                    {userType == "carrier" &&
                         (order.share == "subscribers" && order.status == "pending" && !trip
                             ? (
                                 <div className="w-full">
@@ -297,7 +297,7 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                             )
                         )
                     }
-                    {session == "shipper" &&
+                    {userType == "shipper" &&
                         (order.status == "drafted"
                             ? (
                                 <div className="w-full">

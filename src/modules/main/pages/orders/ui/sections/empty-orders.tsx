@@ -7,11 +7,11 @@ import { UserType } from "@/modules/main/ui/types"
 // import { CreateOrderDialog } from "@/modules/main/pages/orders/ui/dialog/create-order-dialog"
 
 type Props = {
-    session: UserType
+    userType: UserType
 }
 
-export function EmptyOrders({ session }: Props) {
-    const t = useTranslations(`Main.orders.empty.${session}`)
+export function EmptyOrders({ userType }: Props) {
+    const t = useTranslations(`Main.orders.empty.${userType}`)
 
     return (
         <div className="h-full w-full items-center justify-center flex flex-col">
@@ -24,7 +24,7 @@ export function EmptyOrders({ session }: Props) {
                     <EmptyDescription>{t("description")}</EmptyDescription>
                     <EmptyDescription>{t("note")}</EmptyDescription>
                 </EmptyHeader>
-                {session == "shipper" && (
+                {userType == "shipper" && (
                     <EmptyContent>
                         {/* <CreateOrderDialog /> */}
                     </EmptyContent>

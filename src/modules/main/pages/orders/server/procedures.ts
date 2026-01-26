@@ -18,7 +18,7 @@ export const ordersRouter = createTRPCRouter({
                 filter: z.string().nullish(),
                 filterBy: z.string().nullish(),
                 cursor: z.object({
-                    id: z.string(),
+                    id: z.number(),
                     updatedAt: z.date(),
                 }).nullish(),
             })
@@ -71,7 +71,7 @@ export const ordersRouter = createTRPCRouter({
                                 lt(order.updatedAt, cursor.updatedAt),
                                 and(
                                     eq(order.updatedAt, cursor.updatedAt),
-                                    lt(order.id, cursor.id),
+                                    lt(order.legacyId, cursor.id),
                                 )
                             )
                             : undefined,
@@ -88,7 +88,7 @@ export const ordersRouter = createTRPCRouter({
                 const nextCursor =
                     hasMore
                         ? {
-                            id: lastItem.order.id,
+                            id: lastItem.order.legacyId,
                             updatedAt: lastItem.order.updatedAt,
                         }
                         : null
@@ -138,12 +138,15 @@ export const ordersRouter = createTRPCRouter({
                                     )
                                     : eq(order.status, filter)
                             : undefined,
+                        filterBy
+                            ? eq(trip.status, filterBy)
+                            : undefined,
                         cursor
                             ? or(
                                 lt(order.updatedAt, cursor.updatedAt),
                                 and(
                                     eq(order.updatedAt, cursor.updatedAt),
-                                    lt(order.id, cursor.id),
+                                    lt(order.legacyId, cursor.id),
                                 )
                             )
                             : undefined,
@@ -160,7 +163,7 @@ export const ordersRouter = createTRPCRouter({
                 const nextCursor =
                     hasMore
                         ? {
-                            id: lastItem.order.id,
+                            id: lastItem.order.legacyId,
                             updatedAt: lastItem.order.updatedAt,
                         }
                         : null

@@ -6,7 +6,7 @@ interface Props {
     onClose: () => void
 }
 
-export const useCreateOrder = create<Props>(( set) => ({
+export const useCreateOffer = create<Props>(( set) => ({
     isOpen: false,
     onOpenChange: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false }),

@@ -1,19 +1,31 @@
+import { headers } from "next/headers"
+import { redirect } from "next/navigation"
 import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server"
 
 import { FilterByType, FilterType, UserType } from "@/modules/main/ui/types"
 import { OrdersView } from "@/modules/main/pages/orders/ui/views/orders-view"
+import { auth } from "@/backend/auth"
 
 interface Props {
     params: Promise<{ filter: FilterType }>
-    searchParams: Promise<{ session: UserType, filterBy?: FilterByType }>
+    searchParams: Promise<{ filterBy?: FilterByType }>
 }
 
 export default async function Page({
     params,
     searchParams
 }: Props) {
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    if (!session) return redirect("/sign-in")
+
+    const { user: { type: sessionType } } = session
+    const { filterBy } = await searchParams
     const { filter } = await params
-    const { session, filterBy } = await searchParams
+
+    const userType = sessionType as UserType
 
     const client = getQueryClient()
 
@@ -27,7 +39,7 @@ export default async function Page({
 
     return (
         <HydrateClient>
-            <OrdersView session={session} filter={filter} filterBy={filterBy} />
+            <OrdersView userType={userType} filter={filter} filterBy={filterBy} />
         </HydrateClient>
     )
 }

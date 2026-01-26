@@ -565,11 +565,18 @@
                 }
             }
         },
+        "error": {
+            "orders": {
+                "title": "Failed to load orders",
+                "description": "There was an error while trying to load the orders, please check your connection and try again",
+                "button": "Retry"
+            }
+        },
         "orders": {
             "empty": {
                 "shipper": {
                     "title": "No orders associated with this account",
-                    "description": "Start create a new orders and they will be listed here",
+                    "description": "Start creating new orders and they will be listed here",
                     "note": "This may vary based on filters applied"
                 },
                 "carrier": {
@@ -595,7 +602,7 @@
                         "booked": "Booked",
                         "at-loading": "At loading",
                         "loading": "Loading",
-                        "in-trasit": "In trasit",
+                        "in-transit": "In transit",
                         "at-border": "At border",
                         "stopped": "Stopped",
                         "at-offloading": "At offloading",
@@ -619,7 +626,7 @@
                             "medicine": "Medicine",
                             "mining": "Mining",
                             "oil-gas": "Oil & Gas",
-                            "vehicles": "Vhicles",
+                            "vehicles": "Vehicles",
                             "other": "Other"
                         }
                     },
@@ -631,7 +638,12 @@
                         "from": "From",
                         "to": "To"
                     },
-                    "distance": "Aproximate travel distance"
+                    "distance": "Approximate travel distance",
+                    "location": {
+                        "label": "Shipping route",
+                        "from": "From",
+                        "to": "To"
+                    }
                 },
                 "footer": {
                     "buttons": {

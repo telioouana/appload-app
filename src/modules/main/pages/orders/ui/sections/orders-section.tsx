@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl"
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
-import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from "@tabler/icons-react"
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react"
 
 import { useTRPC } from "@/backend/trpc/client"
 
@@ -14,12 +14,12 @@ import { EmptyOrders } from "@/modules/main/pages/orders/ui/sections/empty-order
 // import { CreateOrderDialog } from "@/modules/main/pages/orders/ui/dialog/create-order-dialog"
 
 type Props = {
-    session: UserType
+    userType: UserType
     filter?: FilterType
     filterBy?: FilterByType
 }
 
-export function OrdersSection({ filter, filterBy, session }: Props) {
+export function OrdersSection({ filter, filterBy, userType }: Props) {
     const t = useTranslations("Main.orders")
     const trpc = useTRPC()
     const {
@@ -38,7 +38,7 @@ export function OrdersSection({ filter, filterBy, session }: Props) {
         })
     )
 
-    if (data.pages[0].items.length === 0) return <EmptyOrders session={session} />
+    if (data.pages[0].items.length === 0) return <EmptyOrders userType={userType} />
 
     return (
         <div className="flex flex-col gap-8 h-full w-full p-4">
@@ -49,7 +49,7 @@ export function OrdersSection({ filter, filterBy, session }: Props) {
                     <CreateOrderDialog />
                 )} */}
             </div>
-            <div className="grid col-auto xl:grid-cols-4 gap-8 h-full w-full">
+            <div className="grid grid-cols-1 xl:grid-cols-4 gap-8 h-full w-full">
                 {data.pages.flatMap((page) => page.items)
                     .map(({ order, cargo, trip, organizationId, organizationName, fiscalRegime }, index) => {
                         return (
@@ -62,7 +62,7 @@ export function OrdersSection({ filter, filterBy, session }: Props) {
                                     organizationName={organizationName}
                                     fiscalRegime={fiscalRegime}
                                     filter={filter}
-                                    session={session}
+                                    userType={userType}
                                     filterBy={filterBy}
                                 />
                             </div>
@@ -73,15 +73,6 @@ export function OrdersSection({ filter, filterBy, session }: Props) {
 
             <div className="flex justify-end">
                 <div className="flex items-center gap-x-2">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => data.pages[0]}
-                        disabled={!hasPreviousPage}
-                    >
-                        <span className="sr-only">{t("pagination.first")}</span>
-                        <IconChevronsLeft className="size-4" />
-                    </Button>
                     <Button
                         variant="outline"
                         size="sm"
@@ -99,15 +90,6 @@ export function OrdersSection({ filter, filterBy, session }: Props) {
                     >
                         <span className="sr-only">{t("pagination.next")}</span>
                         <IconChevronRight className="size-4" />
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => data.pages[data.pages.length - 1]}
-                        disabled={!hasNextPage}
-                    >
-                        <span className="sr-only">{t("pagination.last")}</span>
-                        <IconChevronsRight className="size-4" />
                     </Button>
                 </div>
             </div>
