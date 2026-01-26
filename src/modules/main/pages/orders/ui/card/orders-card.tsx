@@ -36,7 +36,6 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
     const f = useFormatter()
 
     const status = trip ? trip.status : order.status
-    console.log("Filter Type:", filter, "Filter By Type:", filterBy);
 
     const queryClient = useQueryClient()
     const trpc = useTRPC()
@@ -137,7 +136,6 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
             shipperFullPaymentDate: null,
         }
 
-        console.log("Accepting order with values:", values);
         await accept.mutateAsync({
             values
         })
@@ -305,6 +303,8 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                                         cargo={cargo}
                                         order={order}
                                         className="w-full"
+                                        filter={filter}
+                                        filterBy={filterBy}
                                     />
                                 </div>
                             )
@@ -316,6 +316,8 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                                             cargo={cargo}
                                             order={order}
                                             className="w-full"
+                                            filter={filter}
+                                            filterBy={filterBy}
                                         />
                                     </div>
                                 )

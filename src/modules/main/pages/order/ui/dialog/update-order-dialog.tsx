@@ -66,11 +66,11 @@ export function UpdateOrderDialog({ action, className, filter, filterBy, cargo, 
             temperatureInstructions: z.string().optional(),
             isGroupageAllowed: z.boolean(),
         })
-            .refine((data) => data.isHazardous, {
+            .refine((data) => !data.isHazardous || !!data.hazchemCode, {
                 error: t("form.cargo.hazchem-code.error"),
                 path: ["form.cargo.hazchem-code"]
             })
-            .refine((data) => data.isRefrigerated, {
+            .refine((data) => !data.isRefrigerated || data.temperature !== undefined, {
                 error: t("form.cargo.temperature.error"),
                 path: ["form.cargo.temperature"]
             }),
@@ -134,11 +134,11 @@ export function UpdateOrderDialog({ action, className, filter, filterBy, cargo, 
         const fields: FieldPath<CreateOrderForm>[] = ["loadingAddress", "expectedLoadingDate", "offloadingAddress", "expectedOffloadingDate", "expectedTrucks", "cargo.category", "cargo.description", "cargo.quantity", "cargo.unit", "cargo.packing", "share"]
 
         if (values.cargo.isHazardous) {
-            fields.concat("cargo.hazchemCode")
+            fields.push("cargo.hazchemCode")
         }
 
         if (values.cargo.isRefrigerated) {
-            fields.concat("cargo.temperature")
+            fields.push("cargo.temperature")
         }
 
         const output = await form.trigger(fields, { shouldFocus: true })

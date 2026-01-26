@@ -711,7 +711,7 @@
                         },
                         "quantity": {
                             "label": "Quantity",
-                            "placeholder": "Enter the quantity available to load",
+                            "placeholder": "Select the unit of the quantity",
                             "error": "Cargo quantity was not provided"
                         },
                         "unit": {
@@ -745,13 +745,13 @@
                             },
                             "error": "No packing was selected"
                         },
-                        "is-hazardous": "Is it an Hazarduos cargo",
+                        "is-hazardous": "Is it a hazardous cargo",
                         "hazchem-code": {
                             "label": "Hazchem code",
                             "placeholder": "Enter hazchem code",
                             "error": "Hazchem code was not provided"
                         },
-                        "is-refrigerated": "It need a refrigerated truck",
+                        "is-refrigerated": "It needs a refrigerated truck",
                         "temperature": {
                             "label": "Cargo temperature",
                             "message": "Selected temperature",
@@ -761,11 +761,11 @@
                             "label": "Temperature instructions",
                             "placeholder": "Enter temperature instructions"
                         },
-                        "is-groupage-allowed": "The cargo can be mixed with other type of load"
+                        "is-groupage-allowed": "The cargo can be mixed with other types of load"
                     },
                     "share": {
                         "label": "How should appload handle this order?",
-                        "placeholder": "Select the an share option",
+                         "placeholder": "Select a sharing option",
                         "options": {
                             "subscribers": "Share to my transporters only",
                             "non-subscribers": "Share to any transporter on appload"
@@ -837,7 +837,7 @@
                         },
                         "unit": {
                             "label": "Unit",
-                            "placeholder": "Select the unit of the quatity",
+                            "placeholder": "Select the unit of the quantity",
                             "error": "No unit was selected"
                         },
                         "packing": {
@@ -866,13 +866,13 @@
                             },
                             "error": "No packing was selected"
                         },
-                        "is-hazardous": "Is it an Hazarduos cargo?",
+                        "is-hazardous": "Is it a hazardous cargo",
                         "hazchem-code": {
                             "label": "Hazchem code",
                             "placeholder": "Enter hazchem code",
                             "error": "Hazchem code was not provided"
                         },
-                        "is-refrigerated": "Does it need a refrigerated truck?",
+                        "is-refrigerated": "It needs a refrigerated truck",
                         "temperature": {
                             "label": "Cargo temperature",
                             "message": "Selected temperature",
@@ -882,11 +882,11 @@
                             "label": "Temperature instructions",
                             "placeholder": "Enter temperature instructions"
                         },
-                        "is-groupage-allowed": "Can your load be mixed with other type of load?"
+                        "is-groupage-allowed": "The cargo can be mixed with other types of load"
                     },
                     "share": {
                         "label": "How should appload handle this order?",
-                        "placeholder": "Select the an share option",
+                        "placeholder": "Select a sharing option",
                         "options": {
                             "subscribers": "Share to my transporters only",
                             "non-subscribers": "Share to any transporter on appload"
