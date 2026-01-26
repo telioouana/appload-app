@@ -22,7 +22,13 @@ export default async function Page({
     if (!session) return redirect("/sign-in")
 
     const { user: { type: sessionType } } = session
-    const { filterBy } = await searchParams
+    const { filterBy: rawFilterBy } = await searchParams
+    
+    const filterBy = Array.isArray(rawFilterBy) ? rawFilterBy[0] : rawFilterBy
+    // Validate against FilterByType union values; set to undefined if invalid
+    const validFilterBy = filterBy && ["booked", "at-loading", "loading", "waiting-documents", "in-transit", "stopped", "at-border", "completed"].includes(filterBy as string)
+        ? (filterBy as FilterByType)
+        : undefined
 
     const userType: UserType | undefined = sessionType === "shipper" || sessionType === "carrier"
         ? sessionType
@@ -32,13 +38,13 @@ export default async function Page({
         await auth.api.signOut()
         return redirect("/sign-in")
     }
-    
+
     const client = getQueryClient()
 
     await client.prefetchInfiniteQuery(
         trpc.orders.all.infiniteQueryOptions({
             limit: 8,
-            filterBy,
+            filterBy: validFilterBy,
         })
     )
 
