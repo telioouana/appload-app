@@ -23,7 +23,7 @@ export default async function Page({
 
     const { user: { type: sessionType } } = session
     const { filterBy: rawFilterBy } = await searchParams
-    
+
     const filterBy = Array.isArray(rawFilterBy) ? rawFilterBy[0] : rawFilterBy
     // Validate against FilterByType union values; set to undefined if invalid
     const validFilterBy = filterBy && ["booked", "at-loading", "loading", "waiting-documents", "in-transit", "stopped", "at-border", "completed"].includes(filterBy as string)
@@ -50,7 +50,7 @@ export default async function Page({
 
     return (
         <HydrateClient>
-            <OrdersView userType={userType} filterBy={filterBy} />
+            <OrdersView userType={userType} filterBy={validFilterBy} />
         </HydrateClient>
     )
 }
