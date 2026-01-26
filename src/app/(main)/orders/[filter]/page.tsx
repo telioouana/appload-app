@@ -43,7 +43,7 @@ export default async function Page({
 
     const client = getQueryClient()
 
-    await client.prefetchInfiniteQuery(
+    void client.prefetchInfiniteQuery(
         trpc.orders.all.infiniteQueryOptions({
             limit: 8,
             filter,

@@ -32,7 +32,7 @@ export async function distanceCalculator(origins: string, destinations: string) 
                 origins: [`place_id:${origins}`],
                 destinations: [`place_id:${destinations}`],
                 mode: TravelMode.driving,
-                key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API!,
+                key: process.env.GOOGLE_MAPS_API_KEY!,
                 language: locale,
                 units: UnitSystem.metric
             }

@@ -4,19 +4,19 @@ import { alias } from "drizzle-orm/pg-core"
 import { and, desc, eq, lt, ne, or } from "drizzle-orm"
 
 import { db } from "@/backend/db"
+import { TRIP_STATUS } from "@/backend/db/types"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
 import { cargo, kyc, network, order, organization, trip } from "@/backend/db/schema"
 
-type ORDER_STATUS = "prospect" | "drafted" | "pending" | "on-going" | "delivered" | "marketplace" | "history"
-type TRIP_STATUS = "booked" | "at-loading" | "loading" | "waiting-documents" | "in-transit" | "stopped" | "at-border" | "at-offloading" | "offloading" | "completed"
+const ORDER_STATUS = ["prospect", "drafted", "pending", "on-going", "delivered", "marketplace", "history"] as const
 
 export const ordersRouter = createTRPCRouter({
     all: protectedProcedure
         .input(
             z.object({
                 limit: z.number().min(1).max(8),
-                filter: z.string().nullish(),
-                filterBy: z.string().nullish(),
+                filter: z.enum(ORDER_STATUS).nullish(),
+                filterBy: z.enum(TRIP_STATUS).nullish(),
                 cursor: z.object({
                     id: z.number(),
                     updatedAt: z.date(),
@@ -25,18 +25,15 @@ export const ordersRouter = createTRPCRouter({
         )
         .query(async ({ ctx, input }) => {
             const { user, session } = ctx.auth
-            const { cursor, filter: filterType, filterBy: filterByType, limit } = input
-            
-            const filter = filterType as ORDER_STATUS | undefined
-            const filterBy = filterByType as TRIP_STATUS | undefined
+            const { cursor, filter, filterBy, limit } = input
 
             const userType = user.type as "shipper" | "carrier"
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
-            const shippers = alias(organization, "shippers")
-
             if (userType == "shipper") {
+                const shippers = alias(organization, "shippers")
+                
                 const orders = await db
                     .select({
                         order: order,
@@ -77,13 +74,13 @@ export const ordersRouter = createTRPCRouter({
                             : undefined,
                     ))
                     .orderBy(desc(order.legacyId), desc(order.updatedAt))
-                    // Checking if there are more purchases from the current user
+                    // Checking if there are more orders from the current user
                     .limit(limit + 1)
 
                 const hasMore = orders.length > limit
-                // Removing the last item if there are more purchases
+                // Removing the last item if there are more orders
                 const items = hasMore ? orders.slice(0, - 1) : orders
-                // Setting the next cursor to the last item if there are more purchases
+                // Setting the next cursor to the last item if there are more orders
                 const lastItem = items[items.length - 1]
                 const nextCursor =
                     hasMore
@@ -152,13 +149,13 @@ export const ordersRouter = createTRPCRouter({
                             : undefined,
                     ))
                     .orderBy(desc(order.legacyId), desc(order.updatedAt))
-                    // Checking if there are more purchases from the current user
+                    // Checking if there are more orders from the current user
                     .limit(limit + 1)
 
                 const hasMore = orders.length > limit
-                // Removing the last item if there are more purchases
+                // Removing the last item if there are more orders
                 const items = hasMore ? orders.slice(0, - 1) : orders
-                // Setting the next cursor to the last item if there are more purchases
+                // Setting the next cursor to the last item if there are more orders
                 const lastItem = items[items.length - 1]
                 const nextCursor =
                     hasMore

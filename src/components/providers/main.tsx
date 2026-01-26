@@ -1,8 +1,10 @@
+import { PropsWithChildren } from "react"
+
 import { ThemeProvider } from "@/components/providers/theme-provider"
 
 import { EdgeStoreProvider } from "@/lib/edgestore"
 
-export function Main({ children }: { children: React.ReactNode }) {
+export function Main({ children }: PropsWithChildren) {
     return (
         <ThemeProvider
             attribute="class"

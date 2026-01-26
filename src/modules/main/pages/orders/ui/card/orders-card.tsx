@@ -2,22 +2,22 @@
 
 import { z } from "zod";
 import { useFormatter, useTranslations } from "next-intl";
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IconChecks, IconFlag, IconInvoice, IconContract, IconSearch } from "@tabler/icons-react";
 
-// import { useTRPC } from "@/backend/trpc/client";
+import { useTRPC } from "@/backend/trpc/client";
 import { cargo, order, trip } from "@/backend/db/schema";
 import { FISCAL_REGIME, TripSchema, WEIGHT_UNIT } from "@/backend/db/types";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-// import { Spinner } from "@/components/ui/spinner";
+import { Spinner } from "@/components/ui/spinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { FilterByType, FilterType, UserType } from "@/modules/main/ui/types";
 import { StatusBadge, StatusKey } from "@/modules/main/ui/badge/status-badge";
-// import { UpdateOrderDialog } from "@/modules/main/pages/orders/ui/dialog/update-order-dialog";
+import { UpdateOrderDialog } from "@/modules/main/pages/order/ui/dialog/update-order-dialog";
 
 type Props = {
     cargo: typeof cargo.$inferSelect
@@ -38,21 +38,20 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
     const status = trip ? trip.status : order.status
     console.log("Filter Type:", filter, "Filter By Type:", filterBy);
 
-    // const queryClient = useQueryClient()
-    // const trpc = useTRPC()
+    const queryClient = useQueryClient()
+    const trpc = useTRPC()
 
-    // const accept = useMutation(
-    //     trpc.order.accept.mutationOptions({
-    //         onSuccess: () => {
-    //             queryClient.invalidateQueries(trpc.orders.all.queryOptions({
-    //                 limit: 8,
-    //                 filter,
-    //                 filterBy,
-    //                 userType: session,
-    //             }))
-    //         }
-    //     })
-    // )
+    const accept = useMutation(
+        trpc.order.accept.mutationOptions({
+            onSuccess: () => {
+                queryClient.invalidateQueries(trpc.orders.all.queryOptions({
+                    limit: 8,
+                    filter,
+                    filterBy,
+                }))
+            }
+        })
+    )
 
     async function handleAccept() {
         const values: z.input<typeof TripSchema> = {
@@ -139,9 +138,9 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
         }
 
         console.log("Accepting order with values:", values);
-        // await accept.mutateAsync({
-        //     values
-        // })
+        await accept.mutateAsync({
+            values
+        })
     }
     return (
         <Card className="w-full max-w-md">
@@ -239,7 +238,7 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                             type="button"
                             variant="outline"
                             className="w-full"
-                            // disabled={accept.isPending}
+                            disabled={accept.isPending}
                         >
                             {t("footer.buttons.details")}
                             <IconContract />
@@ -255,10 +254,10 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                                         variant="success"
                                         className="w-full"
                                         onClick={handleAccept}
-                                        // disabled={accept.isPending}
+                                        disabled={accept.isPending}
                                     >
                                         {t("footer.buttons.accept")}
-                                        {/* {accept.isPending ? <Spinner /> :  */<IconChecks />}
+                                        {accept.isPending ? <Spinner /> : <IconChecks />}
                                     </Button>
                                 </div>
                             )
@@ -269,7 +268,7 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                                         <Button
                                             type="button"
                                             className="w-full"
-                                            // disabled={accept.isPending}
+                                            disabled={accept.isPending}
                                         >
                                             {t("footer.buttons.offer")}
                                             <IconInvoice />
@@ -283,7 +282,7 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                                             <Button
                                                 type="button"
                                                 className="w-full"
-                                                // disabled={accept.isPending}
+                                                disabled={accept.isPending}
                                             >
                                                 {t("footer.buttons.quote")}
                                                 <IconSearch />
@@ -301,23 +300,23 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                         (order.status == "drafted"
                             ? (
                                 <div className="w-full">
-                                    {/* <UpdateOrderDialog
+                                    <UpdateOrderDialog
                                         action="continue"
                                         cargo={cargo}
                                         order={order}
                                         className="w-full"
-                                    /> */}
+                                    />
                                 </div>
                             )
                             : (order.status == "prospect" || order.status == "pending"
                                 ? (
                                     <div className="w-full">
-                                        {/* <UpdateOrderDialog
+                                        <UpdateOrderDialog
                                             action="update"
                                             cargo={cargo}
                                             order={order}
                                             className="w-full"
-                                        /> */}
+                                        />
                                     </div>
                                 )
                                 : (
