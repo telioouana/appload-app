@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button"
 import { OrdersCard } from "@/modules/main/pages/orders/ui/card/orders-card"
 import { FilterByType, FilterType, UserType } from "@/modules/main/ui/types"
 import { EmptyOrders } from "@/modules/main/pages/orders/ui/sections/empty-orders"
-// import { CreateOrderDialog } from "@/modules/main/pages/orders/ui/dialog/create-order-dialog"
+import { CreateOrderDialog } from "@/modules/main/pages/order/ui/dialog/create-order-dialog"
 
 type Props = {
     userType: UserType
@@ -24,10 +24,12 @@ export function OrdersSection({ filter, filterBy, userType }: Props) {
     const trpc = useTRPC()
     const {
         data,
-        hasPreviousPage,
-        hasNextPage,
-        fetchPreviousPage,
         fetchNextPage,
+        fetchPreviousPage,
+        isFetchingNextPage,
+        isFetchingPreviousPage,
+        hasNextPage,
+        hasPreviousPage,
     } = useSuspenseInfiniteQuery(
         trpc.orders.all.infiniteQueryOptions({
             filter,
@@ -45,9 +47,9 @@ export function OrdersSection({ filter, filterBy, userType }: Props) {
             <div className="flex justify-between items-center gap-4">
                 <div />
 
-                {/* {session == "shipper" && (
+                {userType === "shipper" && (
                     <CreateOrderDialog />
-                )} */}
+                )}
             </div>
             <div className="grid grid-cols-1 xl:grid-cols-4 gap-8 h-full w-full">
                 {data.pages.flatMap((page) => page.items)
@@ -77,18 +79,18 @@ export function OrdersSection({ filter, filterBy, userType }: Props) {
                         variant="outline"
                         size="sm"
                         onClick={() => fetchPreviousPage()}
-                        disabled={!hasPreviousPage}
+                        disabled={!hasPreviousPage || isFetchingPreviousPage}
                     >
-                        <span className="sr-only">{t("pagination.previous")}</span>
                         <IconChevronLeft className="size-4" />
+                        {t("pagination.previous")}
                     </Button>
                     <Button
                         variant="outline"
                         size="sm"
                         onClick={() => fetchNextPage()}
-                        disabled={!hasNextPage}
+                        disabled={!hasNextPage || isFetchingNextPage}
                     >
-                        <span className="sr-only">{t("pagination.next")}</span>
+                        {t("pagination.next")}
                         <IconChevronRight className="size-4" />
                     </Button>
                 </div>

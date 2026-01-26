@@ -1,8 +1,10 @@
+"use client" 
+
 import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 
-import { OrdersErrorFallback } from "@/modules/main/ui/states/orders-error-fallback"
 import { FilterByType, FilterType, UserType } from "@/modules/main/ui/types"
+import { OrdersErrorFallback } from "@/modules/main/ui/states/orders-error-fallback"
 import { OrdersSection } from "@/modules/main/pages/orders/ui/sections/orders-section"
 import { OrdersLoadingFallback } from "@/modules/main/ui/states/orders-loading-fallback"
 

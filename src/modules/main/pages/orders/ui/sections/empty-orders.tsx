@@ -4,7 +4,7 @@ import { IconPackages } from "@tabler/icons-react"
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
 
 import { UserType } from "@/modules/main/ui/types"
-// import { CreateOrderDialog } from "@/modules/main/pages/orders/ui/dialog/create-order-dialog"
+import { CreateOrderDialog } from "@/modules/main/pages/order/ui/dialog/create-order-dialog"
 
 type Props = {
     userType: UserType
@@ -26,7 +26,7 @@ export function EmptyOrders({ userType }: Props) {
                 </EmptyHeader>
                 {userType == "shipper" && (
                     <EmptyContent>
-                        {/* <CreateOrderDialog /> */}
+                        <CreateOrderDialog />
                     </EmptyContent>
                 )}
             </Empty>

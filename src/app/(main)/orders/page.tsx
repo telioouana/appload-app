@@ -7,9 +7,7 @@ import { OrdersView } from "@/modules/main/pages/orders/ui/views/orders-view"
 import { auth } from "@/backend/auth"
 
 interface Props {
-    searchParams: Promise<{
-        filterBy?: FilterByType
-    }>
+    searchParams: Promise<{ filterBy?: FilterByType }>
 }
 
 export default async function Page({
@@ -41,7 +39,7 @@ export default async function Page({
 
     const client = getQueryClient()
 
-    await client.prefetchInfiniteQuery(
+    void client.prefetchInfiniteQuery(
         trpc.orders.all.infiniteQueryOptions({
             limit: 8,
             filterBy: validFilterBy,

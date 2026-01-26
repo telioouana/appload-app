@@ -654,6 +654,247 @@
                     }
                 }
             }
+        },
+        "order": {
+            "create": {
+                "button": {
+                    "create": "Create new order",
+                    "cancel": "Cancel",
+                    "save": "Finish later",
+                    "quote": "Request quote",
+                    "publish": "Publish"
+                },
+                "form": {
+                    "loading-address": {
+                        "label": "Loading address",
+                        "placeholder": "Enter loading address",
+                        "error": "Loading address location was not provided"
+                    },
+                    "expected-loading-date": {
+                        "label": "Ideal loading date",
+                        "placeholder": "Select the ideal loading date",
+                        "error": "Ideal loading date was not provided"
+                    },
+                    "offloading-address": {
+                        "label": "Offloading address",
+                        "placeholder": "Enter offloading address",
+                        "error": "Offloading address location was not provided"
+                    },
+                    "expected-offloading-date": {
+                        "label": "Ideal offloading date",
+                        "placeholder": "Select the ideal offloading date",
+                        "error": "Ideal offloading date was not provided"
+                    },
+                    "cargo": {
+                        "category": {
+                            "label": "Cargo category",
+                            "placeholder": "Select the cargo category",
+                            "options": {
+                                "agriculture-inputs": "Agriculture Inputs",
+                                "agriculture-products": "Agriculture Products",
+                                "construction": "Construction",
+                                "machinery-equipment": "Machinery Equipment",
+                                "fmcg": "FMCG",
+                                "general-cargo": "General Cargo",
+                                "medicine": "Medicine",
+                                "mining": "Mining",
+                                "oil-gas": "Oil & Gas",
+                                "vehicles": "Vehicles",
+                                "other": "Other"
+                            },
+                            "error": "No cargo category was selected"
+                        },
+                        "description": {
+                            "label": "Cargo description",
+                            "placeholder": "Give a brief description of the cargo",
+                            "error": "Cargo description was not provided"
+                        },
+                        "quantity": {
+                            "label": "Quantity",
+                            "placeholder": "Select the unit of the quantity",
+                            "error": "Cargo quantity was not provided"
+                        },
+                        "unit": {
+                            "label": "Unit",
+                            "placeholder": "Select the unit of the quatity",
+                            "error": "No unit was selected"
+                        },
+                        "packing": {
+                            "label": "How is the cargo packed",
+                            "placeholder": "Select the packing option",
+                            "options": {
+                                "bags-1kg": "Bags of 1kg",
+                                "bags-2kg": "Bags of 2kg",
+                                "bags-5kg": "Bags of 5kg",
+                                "bags-25kg": "Bags of 25kg",
+                                "bags-30kg": "Bags of 30kg",
+                                "bags-50kg": "Bags of 50kg",
+                                "bags-100kg": "Bags of 100kg",
+                                "bags-1ton": "Bags of 1ton",
+                                "bottle-1l": "Bottles of 1l",
+                                "bottle-5l": "Bottles of 5l",
+                                "bottle-10l": "Bottles of 10l",
+                                "bottle-20l": "Bottles of 20l",
+                                "bottle-25l": "Bottles of 25l",
+                                "container-20ft": "20ft container",
+                                "container-40ft": "40ft container",
+                                "boxes": "Boxes",
+                                "pallets": "Pallets",
+                                "noPacking": "Not packed",
+                                "other": "Other"
+                            },
+                            "error": "No packing was selected"
+                        },
+                        "is-hazardous": "Is it a hazardous cargo",
+                        "hazchem-code": {
+                            "label": "Hazchem code",
+                            "placeholder": "Enter hazchem code",
+                            "error": "Hazchem code was not provided"
+                        },
+                        "is-refrigerated": "It needs a refrigerated truck",
+                        "temperature": {
+                            "label": "Cargo temperature",
+                            "message": "Selected temperature",
+                            "error": "There was an error with the temperature selection"
+                        },
+                        "temperature-instructions": {
+                            "label": "Temperature instructions",
+                            "placeholder": "Enter temperature instructions"
+                        },
+                        "is-groupage-allowed": "The cargo can be mixed with other types of load"
+                    },
+                    "share": {
+                        "label": "How should appload handle this order?",
+                         "placeholder": "Select a sharing option",
+                        "options": {
+                            "subscribers": "Share to my transporters only",
+                            "non-subscribers": "Share to any transporter on appload"
+                        },
+                        "error": "Sharing options not provided"
+                    }
+                }
+            },
+            "update": {
+                "button": {
+                    "continue": "Resume order",
+                    "update": "Update order",
+                    "cancel": "Cancel",
+                    "quote": "Request quote",
+                    "publish": {
+                        "continue": "Publish",
+                        "update": "Save changes"
+                    }
+                },
+                "form": {
+                    "loading-address": {
+                        "label": "Loading address",
+                        "placeholder": "Enter loading address",
+                        "error": "Loading address location was not provided"
+                    },
+                    "expected-loading-date": {
+                        "label": "Ideal loading date",
+                        "placeholder": "Select the ideal loading date",
+                        "error": "Ideal loading date was not provided"
+                    },
+                    "offloading-address": {
+                        "label": "Offloading address",
+                        "placeholder": "Enter offloading address",
+                        "error": "Offloading address location was not provided"
+                    },
+                    "expected-offloading-date": {
+                        "label": "Ideal offloading date",
+                        "placeholder": "Select the ideal offloading date",
+                        "error": "Ideal offloading date was not provided"
+                    },
+                    "cargo": {
+                        "category": {
+                            "label": "Cargo category",
+                            "placeholder": "Select the cargo category",
+                            "options": {
+                                "agriculture-inputs": "Agriculture Inputs",
+                                "agriculture-products": "Agriculture Products",
+                                "construction": "Construction",
+                                "machinery-equipment": "Machinery Equipment",
+                                "fmcg": "FMCG",
+                                "general-cargo": "General Cargo",
+                                "medicine": "Medicine",
+                                "mining": "Mining",
+                                "oil-gas": "Oil & Gas",
+                                "vehicles": "Vehicles",
+                                "other": "Other"
+                            },
+                            "error": "No cargo category was selected"
+                        },
+                        "description": {
+                            "label": "Cargo description",
+                            "placeholder": "Give a brief description of the cargo",
+                            "error": "Cargo description was not provided"
+                        },
+                        "quantity": {
+                            "label": "Quantity",
+                            "placeholder": "Enter the quantity available to load",
+                            "error": "Cargo quantity was not provided"
+                        },
+                        "unit": {
+                            "label": "Unit",
+                            "placeholder": "Select the unit of the quantity",
+                            "error": "No unit was selected"
+                        },
+                        "packing": {
+                            "label": "How is the cargo packed",
+                            "placeholder": "Select the packing option",
+                            "options": {
+                                "bags-1kg": "Bags of 1kg",
+                                "bags-2kg": "Bags of 2kg",
+                                "bags-5kg": "Bags of 5kg",
+                                "bags-25kg": "Bags of 25kg",
+                                "bags-30kg": "Bags of 30kg",
+                                "bags-50kg": "Bags of 50kg",
+                                "bags-100kg": "Bags of 100kg",
+                                "bags-1ton": "Bags of 1ton",
+                                "bottle-1l": "Bottles of 1l",
+                                "bottle-5l": "Bottles of 5l",
+                                "bottle-10l": "Bottles of 10l",
+                                "bottle-20l": "Bottles of 20l",
+                                "bottle-25l": "Bottles of 25l",
+                                "container-20ft": "20ft container",
+                                "container-40ft": "40ft container",
+                                "boxes": "Boxes",
+                                "pallets": "Pallets",
+                                "noPacking": "Not packed",
+                                "other": "Other"
+                            },
+                            "error": "No packing was selected"
+                        },
+                        "is-hazardous": "Is it a hazardous cargo",
+                        "hazchem-code": {
+                            "label": "Hazchem code",
+                            "placeholder": "Enter hazchem code",
+                            "error": "Hazchem code was not provided"
+                        },
+                        "is-refrigerated": "It needs a refrigerated truck",
+                        "temperature": {
+                            "label": "Cargo temperature",
+                            "message": "Selected temperature",
+                            "error": "There was an error with the temperature selection"
+                        },
+                        "temperature-instructions": {
+                            "label": "Temperature instructions",
+                            "placeholder": "Enter temperature instructions"
+                        },
+                        "is-groupage-allowed": "The cargo can be mixed with other types of load"
+                    },
+                    "share": {
+                        "label": "How should appload handle this order?",
+                        "placeholder": "Select a sharing option",
+                        "options": {
+                            "subscribers": "Share to my transporters only",
+                            "non-subscribers": "Share to any transporter on appload"
+                        },
+                        "error": "Sharing options not provided"
+                    }
+                }
+            }
         }
     },
     "Emails": {

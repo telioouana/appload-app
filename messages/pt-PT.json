@@ -654,6 +654,247 @@
                     }
                 }
             }
+        },
+        "order": {
+            "create": {
+                "button": {
+                    "create": "Criar novo pedido",
+                    "cancel": "Cancelar",
+                    "save": "Concluir mais tarde",
+                    "quote": "Solicitar cotação",
+                    "publish": "Publicar"
+                },
+                "form": {
+                    "loading-address": {
+                        "label": "Local de carregamento",
+                        "placeholder": "Introduza o local de carregamento",
+                        "error": "O local de carregamento não foi indicado"
+                    },
+                    "expected-loading-date": {
+                        "label": "Data prevista de carregamento",
+                        "placeholder": "Selecione a data prevista de carregamento",
+                        "error": "A data prevista de carregamento não foi indicada"
+                    },
+                    "offloading-address": {
+                        "label": "Local de descarga",
+                        "placeholder": "Introduza o local de descarregamento",
+                        "error": "O local de descarregamento não foi indicado"
+                    },
+                    "expected-offloading-date": {
+                        "label": "Data prevista de descarregamento",
+                        "placeholder": "Selecione a data prevista de descarregamento",
+                        "error": "A data prevista de descarregamento não foi indicada"
+                    },
+                    "cargo": {
+                        "category": {
+                            "label": "Categoria da carga",
+                            "placeholder": "Selecione a categoria da carga",
+                            "options": {
+                                "agriculture-inputs": "Insumos agrícolas",
+                                "agriculture-products": "Produtos agrícolas",
+                                "construction": "Materiais de construção",
+                                "machinery-equipment": "Máquinas e equipamentos",
+                                "fmcg": "Bens de consumo rápido (FMCG)",
+                                "general-cargo": "Carga geral",
+                                "medicine": "Medicamentos",
+                                "mining": "Mineração",
+                                "oil-gas": "Petróleo e gás",
+                                "vehicles": "Veículos",
+                                "other": "Outro"
+                            },
+                            "error": "Nenhuma categoria de carga foi selecionada"
+                        },
+                        "description": {
+                            "label": "Descrição da carga",
+                            "placeholder": "Introduza uma breve descrição da carga",
+                            "error": "A descrição da carga não foi indicada"
+                        },
+                        "quantity": {
+                            "label": "Quantidade",
+                            "placeholder": "Introduza a quantidade a carregar",
+                            "error": "A quantidade da carga não foi indicada"
+                        },
+                        "unit": {
+                            "label": "Unidade",
+                            "placeholder": "Selecione a unidade de medida",
+                            "error": "Nenhuma unidade foi selecionada"
+                        },
+                        "packing": {
+                            "label": "Tipo de acondicionamento",
+                            "placeholder": "Selecione o tipo de acondicionamento",
+                            "options": {
+                                "bags-1kg": "Sacos de 1 kg",
+                                "bags-2kg": "Sacos de 2 kg",
+                                "bags-5kg": "Sacos de 5 kg",
+                                "bags-25kg": "Sacos de 25 kg",
+                                "bags-30kg": "Sacos de 30 kg",
+                                "bags-50kg": "Sacos de 50 kg",
+                                "bags-100kg": "Sacos de 100 kg",
+                                "bags-1ton": "Sacos de 1 tonelada",
+                                "bottle-1l": "Garrafas de 1 L",
+                                "bottle-5l": "Garrafas de 5 L",
+                                "bottle-10l": "Garrafas de 10 L",
+                                "bottle-20l": "Garrafas de 20 L",
+                                "bottle-25l": "Garrafas de 25 L",
+                                "container-20ft": "Contentor 20 pés",
+                                "container-40ft": "Contentor 40 pés",
+                                "boxes": "Caixas",
+                                "pallets": "Paletes",
+                                "noPacking": "Sem acondicionamento",
+                                "other": "Outro"
+                            },
+                            "error": "Nenhum tipo de acondicionamento foi selecionado"
+                        },
+                        "is-hazardous": "Carga perigosa",
+                        "hazchem-code": {
+                            "label": "Código Hazchem",
+                            "placeholder": "Introduza o código Hazchem",
+                            "error": "O código Hazchem não foi indicado"
+                        },
+                        "is-refrigerated": "Requer transporte refrigerado",
+                        "temperature": {
+                            "label": "Temperatura da carga",
+                            "message": "Temperatura selecionada",
+                            "error": "Erro na seleção da temperatura"
+                        },
+                        "temperature-instructions": {
+                            "label": "Instruções de temperatura",
+                            "placeholder": "Introduza instruções de temperatura"
+                        },
+                        "is-groupage-allowed": "Carga compatível com grupagem"
+                    },
+                    "share": {
+                        "label": "Como deve o appload tratar este pedido?",
+                        "placeholder": "Selecione uma opção de partilha",
+                        "options": {
+                            "subscribers": "Partilhar apenas com os meus transportadores",
+                            "non-subscribers": "Partilhar com qualquer transportador no appload"
+                        },
+                        "error": "A opção de partilha não foi indicada"
+                    }
+                }
+            },
+            "update": {
+                "button": {
+                    "continue": "Retomar pedido",
+                    "update": "Atualizar pedido",
+                    "cancel": "Cancelar",
+                    "quote": "Solicitar cotação",
+                    "publish": {
+                        "continue": "Publicar",
+                        "update": "Guardar alterações"
+                    }
+                },
+                "form": {
+                    "loading-address": {
+                        "label": "Local de carregamento",
+                        "placeholder": "Introduza o local de carregamento",
+                        "error": "O local de carregamento não foi indicado"
+                    },
+                    "expected-loading-date": {
+                        "label": "Data prevista de carregamento",
+                        "placeholder": "Selecione a data prevista de carregamento",
+                        "error": "A data prevista de carregamento não foi indicada"
+                    },
+                    "offloading-address": {
+                        "label": "Local de descarga",
+                        "placeholder": "Introduza o local de descarregamento",
+                        "error": "O local de descarregamento não foi indicado"
+                    },
+                    "expected-offloading-date": {
+                        "label": "Data prevista de descarregamento",
+                        "placeholder": "Selecione a data prevista de descarregamento",
+                        "error": "A data prevista de descarregamento não foi indicada"
+                    },
+                    "cargo": {
+                        "category": {
+                            "label": "Categoria da carga",
+                            "placeholder": "Selecione a categoria da carga",
+                            "options": {
+                                "agriculture-inputs": "Insumos agrícolas",
+                                "agriculture-products": "Produtos agrícolas",
+                                "construction": "Materiais de construção",
+                                "machinery-equipment": "Máquinas e equipamentos",
+                                "fmcg": "Bens de consumo rápido (FMCG)",
+                                "general-cargo": "Carga geral",
+                                "medicine": "Medicamentos",
+                                "mining": "Mineração",
+                                "oil-gas": "Petróleo e gás",
+                                "vehicles": "Veículos",
+                                "other": "Outro"
+                            },
+                            "error": "Nenhuma categoria de carga foi selecionada"
+                        },
+                        "description": {
+                            "label": "Descrição da carga",
+                            "placeholder": "Introduza uma breve descrição da carga",
+                            "error": "A descrição da carga não foi indicada"
+                        },
+                        "quantity": {
+                            "label": "Quantidade",
+                            "placeholder": "Introduza a quantidade a carregar",
+                            "error": "A quantidade da carga não foi indicada"
+                        },
+                        "unit": {
+                            "label": "Unidade",
+                            "placeholder": "Selecione a unidade de medida",
+                            "error": "Nenhuma unidade foi selecionada"
+                        },
+                        "packing": {
+                            "label": "Tipo de acondicionamento",
+                            "placeholder": "Selecione o tipo de acondicionamento",
+                            "options": {
+                                "bags-1kg": "Sacos de 1 kg",
+                                "bags-2kg": "Sacos de 2 kg",
+                                "bags-5kg": "Sacos de 5 kg",
+                                "bags-25kg": "Sacos de 25 kg",
+                                "bags-30kg": "Sacos de 30 kg",
+                                "bags-50kg": "Sacos de 50 kg",
+                                "bags-100kg": "Sacos de 100 kg",
+                                "bags-1ton": "Sacos de 1 tonelada",
+                                "bottle-1l": "Garrafas de 1 L",
+                                "bottle-5l": "Garrafas de 5 L",
+                                "bottle-10l": "Garrafas de 10 L",
+                                "bottle-20l": "Garrafas de 20 L",
+                                "bottle-25l": "Garrafas de 25 L",
+                                "container-20ft": "Contentor 20 pés",
+                                "container-40ft": "Contentor 40 pés",
+                                "boxes": "Caixas",
+                                "pallets": "Paletes",
+                                "noPacking": "Sem acondicionamento",
+                                "other": "Outro"
+                            },
+                            "error": "Nenhum tipo de acondicionamento foi selecionado"
+                        },
+                        "is-hazardous": "Carga perigosa",
+                        "hazchem-code": {
+                            "label": "Código Hazchem",
+                            "placeholder": "Introduza o código Hazchem",
+                            "error": "O código Hazchem não foi indicado"
+                        },
+                        "is-refrigerated": "Requer transporte refrigerado",
+                        "temperature": {
+                            "label": "Temperatura da carga",
+                            "message": "Temperatura selecionada",
+                            "error": "Erro na seleção da temperatura"
+                        },
+                        "temperature-instructions": {
+                            "label": "Instruções de temperatura",
+                            "placeholder": "Introduza instruções de temperatura"
+                        },
+                        "is-groupage-allowed": "Carga compatível com grupagem"
+                    },
+                    "share": {
+                        "label": "Como deve o appload tratar este pedido?",
+                        "placeholder": "Selecione uma opção de partilha",
+                        "options": {
+                            "subscribers": "Partilhar apenas com os meus transportadores",
+                            "non-subscribers": "Partilhar com qualquer transportador no appload"
+                        },
+                        "error": "A opção de partilha não foi indicada"
+                    }
+                }
+            }
         }
     },
     "Emails": {
