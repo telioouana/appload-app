@@ -21,7 +21,7 @@ export function EmptyOrganization() {
                     <EmptyDescription>{t("description")}</EmptyDescription>
                 </EmptyHeader>
                 <EmptyContent>
-                    <Link href="/company/create?view=company-info" className={cn(buttonVariants())}>{t("button")}</Link>
+                    <Link href="/company/create?view=organization-info" className={cn(buttonVariants())}>{t("button")}</Link>
                 </EmptyContent>
             </Empty>
         </div >

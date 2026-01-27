@@ -1,10 +1,10 @@
 "use server"
 
 import { eq } from "drizzle-orm"
+import { APIError } from "better-auth"
 
 import { db } from "@/backend/db"
 import { user } from "@/backend/db/schema"
-import { APIError } from "better-auth"
 
 export async function checkUser(value: string, type: "email" | "phoneNumber") {
     let person: typeof user.$inferSelect[][0] | undefined

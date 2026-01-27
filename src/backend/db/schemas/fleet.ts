@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 import { pgTable, text, timestamp, integer, index, jsonb, } from "drizzle-orm/pg-core";
 
 import { Urls } from "@/backend/db/types";
-import { organization, user } from "@/backend/db/schemas/users";
+import { organization, user } from "@/backend/db/schema";
 
 export const driver = pgTable(
     "driver",

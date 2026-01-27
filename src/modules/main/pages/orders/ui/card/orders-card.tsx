@@ -168,15 +168,16 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                     </div>
                     <div className="flex flex-col gap-1 items-end">
                         <span className="text-xs text-muted-foreground">{t("content.quantity.label")}</span>
-                        <span className="text-sm font-semibold">{t(`content.quantity.units.${cargo.unit}`, { quantity: cargo.quantity })}</span>
+                        <span className="text-sm font-semibold">{`${cargo.quantity} ${cargo.unit}`}</span>
                     </div>
                 </div>
 
                 <div className="flex flex-col gap-1">
-                    <span className="text-xs text-muted-foreground">{t("content.shipping.label")}</span>
+                    {/* <span className="text-xs text-muted-foreground">{t("content.location.label")}</span> */}
                     <div className="grid grid-cols-2 items-center">
                         <div className="flex flex-col gap-1">
-                            <span className="text-xs text-muted-foreground">{t("content.shipping.from")}</span>
+                            <span className="text-xs text-muted-foreground">{t("content.location.from")}</span>
+                            <span className="text-sm font-semibold">{order.loadingAddress?.[0].state}</span>
                             <span className="text-sm font-semibold">
                                 {f.dateTime(order.expectedLoadingDate, {
                                     day: "numeric",
@@ -187,7 +188,8 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                         </div>
 
                         <div className="flex flex-col gap-1 items-end">
-                            <span className="text-xs text-muted-foreground">{t("content.shipping.to")}</span>
+                            <span className="text-xs text-muted-foreground">{t("content.location.to")}</span>
+                            <span className="text-sm font-semibold">{order.offloadingAddress?.[0].state}</span>
                             <span className="text-sm font-semibold">
                                 {f.dateTime(order.expectedOffloadingDate, {
                                     day: "numeric",
@@ -207,25 +209,6 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                             maximumFractionDigits: 0,
                         })} Km
                     </span>
-                </div>
-
-                <div className="flex flex-col gap-1">
-                    <span className="text-xs text-muted-foreground">{t("content.location.label")}</span>
-                    <div className="grid grid-cols-2 items-center">
-                        <div className="flex flex-col gap-1">
-                            <span className="text-xs text-muted-foreground">{t("content.location.from")}</span>
-                            <span className="text-sm font-semibold">
-                                {order.loadingAddress?.[0].state}
-                            </span>
-                        </div>
-
-                        <div className="flex flex-col gap-1 items-end">
-                            <span className="text-xs text-muted-foreground">{t("content.location.to")}</span>
-                            <span className="text-sm font-semibold">
-                                {order.offloadingAddress?.[0].state}
-                            </span>
-                        </div>
-                    </div>
                 </div>
             </CardContent>
 

@@ -1,10 +1,11 @@
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
+
+import { auth } from "@/backend/auth"
 import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server"
 
 import { FilterByType, FilterType, UserType } from "@/modules/main/ui/types"
 import { OrdersView } from "@/modules/main/pages/orders/ui/views/orders-view"
-import { auth } from "@/backend/auth"
 
 interface Props {
     params: Promise<{ filter: FilterType }>
@@ -45,9 +46,9 @@ export default async function Page({
 
     void client.prefetchInfiniteQuery(
         trpc.orders.all.infiniteQueryOptions({
-            limit: 8,
             filter,
             filterBy: validFilterBy,
+            limit: 8,
         })
     )
 
