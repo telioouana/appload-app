@@ -44,7 +44,7 @@ export function UserButton() {
                 onRequest: () => { setLoading(true) },
                 onSuccess: () => {
                     setLoading(false)
-                    router.replace("/sign-in")
+                    router.push("/sign-in")
                 },
                 onError: () => {
                     toast.error(t("errors.sign-out"))

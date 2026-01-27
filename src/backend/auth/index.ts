@@ -17,20 +17,20 @@ export const auth = betterAuth({
     appName: "Appload App",
     baseURL: BETTER_AUTH_SITE_URL,
     database: drizzleAdapter(db, {
-        provider: "pg",
+        provider: "pg"
     }),
     databaseHooks: {
         session: {
             create: {
                 before: async (session) => {
-                    const membership = await db
-                        .query
-                        .member
-                        .findFirst({
-                            where: eq(memberSchema.userId, session.userId),
-                            orderBy: desc(memberSchema.createdAt),
-                            columns: { organizationId: true }
+                    const [membership] = await db
+                        .select({
+                            organizationId: memberSchema.organizationId,
                         })
+                        .from(memberSchema)
+                        .where(eq(memberSchema.userId, session.userId))
+                        .orderBy(desc(memberSchema.createdAt))
+                        .limit(1)
 
                     return {
                         data: {

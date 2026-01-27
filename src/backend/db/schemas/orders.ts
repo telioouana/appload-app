@@ -1,8 +1,7 @@
 import { randomUUID } from "crypto";
 import { boolean, decimal, index, integer, jsonb, pgEnum, pgTable, numeric, text, timestamp, serial, } from "drizzle-orm/pg-core";
 
-import { organization } from "@/backend/db/schemas/users";
-import { driver, link, trailer, truck } from "@/backend/db/schemas/fleet";
+import { driver, link, organization, trailer, truck } from "@/backend/db/schema";
 import { INSURANCE_PAYMENT_STATUS, Location, PAYMENT_STATUS, FISCAL_REGIME, ORDER_STATUS, TRIP_STATUS, TRIP_TYPE, ROUTE_TYPE, TRUCK_AGE, WEIGHT_UNIT, POD_STATUS, CURRENCY, SHARE } from "@/backend/db/types";
 
 export const shareEnum = pgEnum("share_enum", SHARE)

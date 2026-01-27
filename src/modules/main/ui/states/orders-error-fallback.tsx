@@ -13,7 +13,7 @@ export function OrdersErrorFallback() {
             <Empty>
                 <EmptyHeader>
                     <EmptyMedia>
-                        <Image src="/error/oops.svg" alt="oops" width={200} height={200} className="h-full w-full" />
+                        <Image src="/error/oops.svg" alt="oops" width={200} height={200} className="h-full w-full" loading="eager" preload/>
                     </EmptyMedia>
                     <EmptyTitle>{t("title")}</EmptyTitle>
                     <EmptyDescription>{t("description")}</EmptyDescription>
