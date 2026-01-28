@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IconDots, IconPlus, IconSend } from "@tabler/icons-react";
+import { IconDots, IconEdit, IconSend } from "@tabler/icons-react";
 import { FieldPath, FormProvider, useForm } from "react-hook-form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
@@ -18,8 +18,8 @@ import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 import { FilterByType, FilterType } from "@/modules/main/ui/types";
-import { useUpdateOrder } from "@/modules/main/pages/order/hooks/use-update-order";
 import { OrderForm } from "@/modules/main/pages/order/ui/forms/order-form";
+import { useUpdateOrder } from "@/modules/main/pages/order/hooks/use-update-order";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     action: "continue" | "update" | "publish"
@@ -163,7 +163,7 @@ export function UpdateOrderDialog({ action, className, filter, filterBy, cargo, 
                 onClick={onOpenChange}
             >
                 {t(`button.${action}`)}
-                <IconPlus />
+                <IconEdit />
             </Button>
 
             <ResponsiveDialog

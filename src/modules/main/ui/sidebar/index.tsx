@@ -107,6 +107,11 @@ export function MainSidebar({
                             Icon: IconClock,
                         },
                         {
+                            label: t("carrier.orders.on-going"),
+                            url: "/orders/on-going",
+                            Icon: IconTruck,
+                        },
+                        {
                             label: t("carrier.orders.delivered"),
                             url: "/orders/delivered",
                             Icon: IconChecks,

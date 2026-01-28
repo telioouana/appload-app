@@ -534,7 +534,7 @@
             },
             "shipper": {
                 "orders": {
-                    "label": "All orders",
+                    "label": "Posted orders",
                     "drafted": "Drafted",
                     "pending": "Pending",
                     "on-going": "On going",
@@ -565,6 +565,105 @@
                 }
             }
         },
+        "dashboard": {
+            "main": {
+                "title": "Welcome back, {name}!",
+                "description": {
+                    "shipper": "Here's what's happening with your orders today.",
+                    "carrier": "Here's what's happening with your trips today."
+                }
+            },
+            "activity": {
+                "all": {
+                    "carrier": "Assigned orders",
+                    "shipper": "Published orders"
+                },
+                "drafted": "Drafted",
+                "prospect": "Quote requests",
+                "pending": "Pending",
+                "on-going": "On going",
+                "delivered": "Delivered",
+                "link": "View all"
+            },
+            "resume": {
+                "tabs": {
+                    "week": "Last 7 days",
+                    "month": "Last 30 days",
+                    "year": "Last 12 months"
+                },
+                "card": {
+                    "title": "Activity overview",
+                    "shipper": {
+                        "trips": {
+                            "label": "Analyzed trips",
+                            "unit": "trips"
+                        },
+                        "deliveries": {
+                            "label": "Number of deliveries",
+                            "unit": "deliveries"
+                        },
+                        "total-amount": {
+                            "label": "Total amount paid",
+                            "unit": "MZN"
+                        },
+                        "average-price": {
+                            "label": "Average price per trip",
+                            "unit": "MZN"
+                        },
+                        "loaded-weight": {
+                            "label": "Total weight shipped",
+                            "unit": "ton"
+                        },
+                        "average-weight": {
+                            "label": "Average weight per trip",
+                            "unit": "ton"
+                        },
+                        "total-distance": {
+                            "label": "Total distance covered",
+                            "unit": "km"
+                        },
+                        "average-distance": {
+                            "label": "Average distance per trip",
+                            "unit": "km"
+                        }
+                    },
+                    "carrier": {
+                        "trips": {
+                            "label": "Analyzed trips",
+                            "unit": "trips"
+                        },
+                        "deliveries": {
+                            "label": "Number of deliveries",
+                            "unit": "deliveries"
+                        },
+                        "total-amount": {
+                            "label": "Total amount earned",
+                            "unit": "MZN"
+                        },
+                        "average-price": {
+                            "label": "Average price per trip",
+                            "unit": "MZN"
+                        },
+                        "loaded-weight": {
+                            "label": "Total weight shipped",
+                            "unit": "ton"
+                        },
+                        "average-weight": {
+                            "label": "Average weight per trip",
+                            "unit": "ton"
+                        },
+                        "total-distance": {
+                            "label": "Total distance covered",
+                            "unit": "km"
+                        },
+                        "average-distance": {
+                            "label": "Average distance per trip",
+                            "unit": "km"
+                        }
+                    }
+                }
+            }
+        },
         "error": {
             "orders": {
                 "title": "Failed to load orders",
@@ -583,6 +682,21 @@
                     "title": "There are no new orders available on appload",
                     "description": "All orders that were posted on the marketplace where either accepted or cancelled. Please check back later for new orders",
                     "note": "This may vary based on filters applied"
+                }
+            },
+            "header": {
+                "shipper": {
+                    "main": "My orders",
+                    "drafted": "Drafted orders",
+                    "pending": "Pending orders",
+                    "on-going": "On going orders",
+                    "delivered": "Completed orders"
+                },
+                "carrier": {
+                    "main": "Available orders",
+                    "pending": "Pending orders",
+                    "on-going": "On going orders",
+                    "delivered": "Completed orders"
                 }
             },
             "pagination": {
@@ -765,7 +879,7 @@
                     },
                     "share": {
                         "label": "How should appload handle this order?",
-                         "placeholder": "Select a sharing option",
+                        "placeholder": "Select a sharing option",
                         "options": {
                             "subscribers": "Share to my transporters only",
                             "non-subscribers": "Share to any transporter on appload"

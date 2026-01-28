@@ -141,9 +141,9 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
         })
     }
     return (
-        <Card className="w-full max-w-md">
-            <CardHeader className="flex items-center justify-between gap-4">
-                <div className="flex flex-col gap-2">
+        <Card className="w-full max-w-md gap-3">
+            <CardHeader className="flex items-start justify-between gap-4 h-12">
+                <div className="flex flex-col">
                     <CardTitle>{t("header.id", { id: order.legacyId.toString().padStart(5, '0') })}</CardTitle>
                     {order.share == "subscribers" && userType == "carrier" && (<CardDescription className="font-semibold text-primary">{order.shipperName}</CardDescription>)}
                 </div>
@@ -160,7 +160,7 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                     )}
                 </div>
             </CardHeader>
-            <CardContent className="flex flex-col gap-4">
+            <CardContent className="flex flex-col gap-3">
                 <div className="flex justify-between items-center">
                     <div className="flex flex-col gap-1">
                         <span className="text-xs text-muted-foreground">{t("content.category.label")}</span>
@@ -170,6 +170,18 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                         <span className="text-xs text-muted-foreground">{t("content.quantity.label")}</span>
                         <span className="text-sm font-semibold">{`${cargo.quantity} ${cargo.unit}`}</span>
                     </div>
+                </div>
+
+                <div className="flex flex-col">
+                    <span className="text-xs text-muted-foreground">{t("content.distance")}</span>
+                    <span className="text-sm font-semibold">
+                        {order.distance == null
+                            ? "—"
+                            : `${f.number(order.distance / 1000, {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0,
+                            })} km`}
+                    </span>
                 </div>
 
                 <div className="flex flex-col gap-1">
@@ -199,16 +211,6 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                             </span>
                         </div>
                     </div>
-                </div>
-
-                <div className="flex flex-col">
-                    <span className="text-xs text-muted-foreground">{t("content.distance")}</span>
-                    <span className="text-sm font-semibold">
-                        {f.number((order.distance ? order.distance / 1000 : 0), {
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 0,
-                        })} Km
-                    </span>
                 </div>
             </CardContent>
 
