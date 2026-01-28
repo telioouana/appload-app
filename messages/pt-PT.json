@@ -565,6 +565,53 @@
                 }
             }
         },
+        "dashboard": {
+            "main": {
+                "title": "Bem-vindo de volta, {name}!",
+                "description": {
+                    "shipper": "Estado atual dos seus pedidos.",
+                    "carrier": "Estado atual das suas viagens."
+                }
+            },
+            "activity": {
+                "all": "Viagens iniciadas",
+                "drafted": "Em rascunho",
+                "prospect": "Pedidos de cotação",
+                "pending": "Pendente",
+                "on-going": "Em curso",
+                "delivered": "Entregue"
+            },
+            "resume": {
+                "tabs": {
+                    "week": "Últimos 7 dias",
+                    "month": "Últimos 30 dias",
+                    "year": "Últimos 12 meses"
+                },
+                "card": {
+                    "title": "Resumo de atividade",
+                    "shipper": {
+                        "trips": "Viagens analisadas",
+                        "deliveries": "Número de entregas",
+                        "total-amout": "Total pago",
+                        "average-price": "Preço médio por viagem",
+                        "loaded-weight": "Peso total expedido",
+                        "average-weight": "Peso médio por viagem",
+                        "total-distance": "Distância total percorrida",
+                        "average-distance": "Distância média por viagem"
+                    },
+                    "carrier": {
+                        "trips": "Viagens analisadas",
+                        "deliveries": "Número de entregas",
+                        "total-amout": "Total recebido",
+                        "average-price": "Preço médio por viagem",
+                        "loaded-weight": "Peso total transportado",
+                        "average-weight": "Peso médio por viagem",
+                        "total-distance": "Distância total percorrida",
+                        "average-distance": "Distância média por viagem"
+                    }
+                }
+            }
+        },
         "error": {
             "orders": {
                 "title": "Não foi possível carregar os pedidos",
@@ -583,6 +630,21 @@
                     "title": "Não existem novos pedidos disponíveis na Appload",
                     "description": "Todos os pedidos publicados no marketplace foram ou aceites ou cancelados. Por favor, volte mais tarde para novos pedidos",
                     "note": "A listagem pode variar consoante os filtros aplicados"
+                }
+            },
+            "header": {
+                "shipper": {
+                    "main": "Os meus pedidos",
+                    "drafted": "Pedidos em rascunho",
+                    "pending": "Pedidos pendentes",
+                    "on-going": "Pedidos em curso",
+                    "delivered": "Pedidos concluídos"
+                },
+                "carrier": {
+                    "main": "Pedidos disponíveis",
+                    "pending": "Pedidos pendentes",
+                    "on-going": "Pedidos em curso",
+                    "delivered": "Pedidos concluídos"
                 }
             },
             "pagination": {

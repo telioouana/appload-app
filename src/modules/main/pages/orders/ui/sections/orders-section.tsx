@@ -43,15 +43,17 @@ export function OrdersSection({ filter, filterBy, userType }: Props) {
     if (data.pages[0].items.length === 0) return <EmptyOrders userType={userType} />
 
     return (
-        <div className="flex flex-col gap-8 h-full w-full p-4">
+        <div className="flex flex-col gap-4 h-full w-full p-4">
             <div className="flex justify-between items-center gap-4">
-                <div />
+                <div >
+                    <h2 className="text-2xl font-bold">{t(`header.${userType}.${filter ?? "main"}`)}</h2>
+                </div>
 
                 {userType === "shipper" && (
                     <CreateOrderDialog />
                 )}
             </div>
-            <div className="grid grid-cols-1 xl:grid-cols-4 gap-8 h-full w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 h-full w-full">
                 {data.pages.flatMap((page) => page.items)
                     .map(({ order, cargo, trip, organizationId, organizationName, fiscalRegime }, index) => {
                         return (

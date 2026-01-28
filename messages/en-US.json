@@ -534,7 +534,7 @@
             },
             "shipper": {
                 "orders": {
-                    "label": "All orders",
+                    "label": "Posted orders",
                     "drafted": "Drafted",
                     "pending": "Pending",
                     "on-going": "On going",
@@ -565,6 +565,53 @@
                 }
             }
         },
+        "dashboard": {
+            "main": {
+                "title": "Welcoma back, {name}!",
+                "description": {
+                    "shipper": "Here's what's happening with your orders today.",
+                    "carrier": "Here's what's happening with your trips today."
+                }
+            },
+            "activity": {
+                "all": "All orders",
+                "drafted": "Drafted",
+                "prospect": "Quote requests",
+                "pending":"Pending",
+                "on-going":"On going",
+                "delivered": "Delivered"
+            },
+            "resume": {
+                "tabs": {
+                    "week": "Last 7 days",
+                    "month": "Last 30 days",
+                    "year": "Last 12 months"
+                },
+                "card": {
+                    "title": "Activity overview",
+                    "shipper": {
+                        "trips": "Analyzed trips",
+                        "deliveries": "Number of deliveries",
+                        "total-amout": "Total amount paid",
+                        "average-price": "Avarage price per trip",
+                        "loaded-weight": "Total weight shipped",
+                        "average-weight": "Avarage weight per trip",
+                        "total-distance": "Total distance covered",
+                        "average-distance": "Avarage distance per trip"
+                    },
+                    "carrier": {
+                        "trips": "Analyzed trips",
+                        "deliveries": "Number of deliveries",
+                        "total-amout": "Total amount earned",
+                        "average-price": "Avarage price per trip",
+                        "loaded-weight": "Total weight shipped",
+                        "average-weight": "Avarage weight per trip",
+                        "total-distance": "Total distance covered",
+                        "average-distance": "Avarage distance per trip"
+                    }
+                }
+            }
+        },
         "error": {
             "orders": {
                 "title": "Failed to load orders",
@@ -583,6 +630,21 @@
                     "title": "There are no new orders available on appload",
                     "description": "All orders that were posted on the marketplace where either accepted or cancelled. Please check back later for new orders",
                     "note": "This may vary based on filters applied"
+                }
+            },
+            "header": {
+                "shipper": {
+                    "main": "My orders",
+                    "drafted": "Drafted orders",
+                    "pending": "Pending orders",
+                    "on-going": "On going orders",
+                    "delivered": "Completed orders"
+                },
+                "carrier": {
+                    "main": "Available orders",
+                    "pending": "Pending orders",
+                    "on-going": "On going orders",
+                    "delivered": "Completed orders"
                 }
             },
             "pagination": {
@@ -765,7 +827,7 @@
                     },
                     "share": {
                         "label": "How should appload handle this order?",
-                         "placeholder": "Select a sharing option",
+                        "placeholder": "Select a sharing option",
                         "options": {
                             "subscribers": "Share to my transporters only",
                             "non-subscribers": "Share to any transporter on appload"
