@@ -175,10 +175,12 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                 <div className="flex flex-col">
                     <span className="text-xs text-muted-foreground">{t("content.distance")}</span>
                     <span className="text-sm font-semibold">
-                        {f.number((order.distance ? order.distance / 1000 : 0), {
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 0,
-                        })} Km
+                        {order.distance == null
+                            ? "—"
+                            : `${f.number(order.distance / 1000, {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0,
+                            })} km`}
                     </span>
                 </div>
 

@@ -51,8 +51,8 @@ export const dashboardRouter = createTRPCRouter({
                     deliveries: sum(trip.deliveries).mapWith(Number),
                     totalWeight: sum(trip.loadedWeight).mapWith(Number),
                     averageWeight: avg(trip.loadedWeight).mapWith(Number),
-                    distanceCovered: sum(order.distance).mapWith(Number),
-                    averageDistance: avg(order.distance).mapWith(Number),
+                    distanceCovered: sql<number>`sum(distinct ${order.distance})`.mapWith(Number),
+                    averageDistance: sql<number>`avg(distinct ${order.distance})`.mapWith(Number),
 
                 })
                 .from(order)
