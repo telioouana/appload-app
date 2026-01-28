@@ -567,19 +567,23 @@
         },
         "dashboard": {
             "main": {
-                "title": "Welcoma back, {name}!",
+                "title": "Welcome back, {name}!",
                 "description": {
                     "shipper": "Here's what's happening with your orders today.",
                     "carrier": "Here's what's happening with your trips today."
                 }
             },
             "activity": {
-                "all": "All orders",
+                "all": {
+                    "carrier": "Assigned orders",
+                    "shipper": "Published orders"
+                },
                 "drafted": "Drafted",
                 "prospect": "Quote requests",
-                "pending":"Pending",
-                "on-going":"On going",
-                "delivered": "Delivered"
+                "pending": "Pending",
+                "on-going": "On going",
+                "delivered": "Delivered",
+                "link": "View all"
             },
             "resume": {
                 "tabs": {
@@ -590,24 +594,72 @@
                 "card": {
                     "title": "Activity overview",
                     "shipper": {
-                        "trips": "Analyzed trips",
-                        "deliveries": "Number of deliveries",
-                        "total-amout": "Total amount paid",
-                        "average-price": "Avarage price per trip",
-                        "loaded-weight": "Total weight shipped",
-                        "average-weight": "Avarage weight per trip",
-                        "total-distance": "Total distance covered",
-                        "average-distance": "Avarage distance per trip"
+                        "trips": {
+                            "label": "Analyzed trips",
+                            "unit": "trips"
+                        },
+                        "deliveries": {
+                            "label": "Number of deliveries",
+                            "unit": "deliveries"
+                        },
+                        "total-amount": {
+                            "label": "Total amount paid",
+                            "unit": "MZN"
+                        },
+                        "average-price": {
+                            "label": "Average price per trip",
+                            "unit": "MZN"
+                        },
+                        "loaded-weight": {
+                            "label": "Total weight shipped",
+                            "unit": "ton"
+                        },
+                        "average-weight": {
+                            "label": "Average weight per trip",
+                            "unit": "ton"
+                        },
+                        "total-distance": {
+                            "label": "Total distance covered",
+                            "unit": "km"
+                        },
+                        "average-distance": {
+                            "label": "Average distance per trip",
+                            "unit": "km"
+                        }
                     },
                     "carrier": {
-                        "trips": "Analyzed trips",
-                        "deliveries": "Number of deliveries",
-                        "total-amout": "Total amount earned",
-                        "average-price": "Avarage price per trip",
-                        "loaded-weight": "Total weight shipped",
-                        "average-weight": "Avarage weight per trip",
-                        "total-distance": "Total distance covered",
-                        "average-distance": "Avarage distance per trip"
+                        "trips": {
+                            "label": "Analyzed trips",
+                            "unit": "trips"
+                        },
+                        "deliveries": {
+                            "label": "Number of deliveries",
+                            "unit": "deliveries"
+                        },
+                        "total-amount": {
+                            "label": "Total amount earned",
+                            "unit": "MZN"
+                        },
+                        "average-price": {
+                            "label": "Average price per trip",
+                            "unit": "MZN"
+                        },
+                        "loaded-weight": {
+                            "label": "Total weight shipped",
+                            "unit": "ton"
+                        },
+                        "average-weight": {
+                            "label": "Average weight per trip",
+                            "unit": "ton"
+                        },
+                        "total-distance": {
+                            "label": "Total distance covered",
+                            "unit": "km"
+                        },
+                        "average-distance": {
+                            "label": "Average distance per trip",
+                            "unit": "km"
+                        }
                     }
                 }
             }

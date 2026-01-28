@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { and, avg, count, eq, sql, sum, between } from "drizzle-orm";
+import { and, avg, count, eq, sql, sum } from "drizzle-orm";
 
 import { db } from "@/backend/db";
 import { order, trip } from "@/backend/db/schema";
@@ -17,12 +17,12 @@ export const dashboardRouter = createTRPCRouter({
 
             const [stats] = await db
                 .select({
-                    all: count().mapWith(Number),
-                    drafted: sql<number>`count(*) filter (where ${order.status} = 'drafted')`.mapWith(Number),
-                    prospect: sql<number>`count(*) filter (where ${order.status} = 'prospect')`.mapWith(Number),
-                    pending: sql<number>`count(*) filter (where ${order.status} = 'pending')`.mapWith(Number),
-                    shipped: sql<number>`count(*) filter (where ${order.status} = 'on-going')`.mapWith(Number),
-                    delivered: sql<number>`count(*) filter (where ${order.status} = 'delivered')`.mapWith(Number),
+                    all: sql<number>`count(distinct ${order.id})`.mapWith(Number),
+                    drafted: sql<number>`count(distinct ${order.id}) filter (where ${order.status} = 'drafted')`.mapWith(Number),
+                    prospect: sql<number>`count(distinct ${order.id}) filter (where ${order.status} = 'prospect')`.mapWith(Number),
+                    pending: sql<number>`count(distinct ${order.id}) filter (where ${order.status} = 'pending')`.mapWith(Number),
+                    shipped: sql<number>`count(distinct ${order.id}) filter (where ${order.status} = 'on-going')`.mapWith(Number),
+                    delivered: sql<number>`count(distinct ${order.id}) filter (where ${order.status} = 'delivered')`.mapWith(Number),
                 })
                 .from(order)
                 .leftJoin(trip, eq(trip.orderId, order.id))

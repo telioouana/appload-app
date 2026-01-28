@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 import { auth } from "@/backend/auth"
 import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server";
 
+import { UserType } from "@/modules/main/ui/types";
 import { ActivityView } from "@/modules/main/pages/dashboard/ui/views/activity-view";
 
 export default async function Page() {
@@ -12,6 +13,15 @@ export default async function Page() {
     })
 
     if (!session) return redirect("/sign-in")
+    const { user: { type: sessionType } } = session
+    const userType: UserType | undefined = sessionType === "shipper" || sessionType === "carrier"
+        ? sessionType
+        : undefined
+
+    if (!userType) {
+        await auth.api.signOut()
+        return redirect("/sign-in")
+    }
 
     const client = getQueryClient()
 
@@ -21,7 +31,7 @@ export default async function Page() {
 
     return (
         <HydrateClient>
-            <ActivityView />
+            <ActivityView userType={userType} />
         </HydrateClient>
     )
 }

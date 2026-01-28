@@ -18,7 +18,7 @@ export function DashboardSection() {
     
     return (
         <Card className="bg-primary/30 w-full">
-            <CardContent className="flex justify-between items-center py-6">
+            <CardContent className="flex justify-between items-center py-5">
                 <div className="flex flex-col gap-2">
                 <CardTitle className="font-bold text-3xl">{t("title", { name: data?.user.name ?? ""})}</CardTitle>
                 <CardDescription>{t(`description.${data?.user.type}`)}</CardDescription>

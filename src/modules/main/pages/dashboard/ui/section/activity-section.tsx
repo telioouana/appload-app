@@ -1,13 +1,17 @@
 "use client"
 
-import { useTRPC } from "@/backend/trpc/client";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { IconLink, IconPackages } from "@tabler/icons-react";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { IconChecks, IconClock, IconInvoice, IconLink, IconPackages, IconPencilMinus, IconTruckDelivery } from "@tabler/icons-react";
 
-export function ActivitySection() {
+import { useTRPC } from "@/backend/trpc/client";
+import { Card, CardContent } from "@/components/ui/card";
+
+import { cn } from "@/lib/utils";
+import { UserType } from "@/modules/main/ui/types";
+
+export function ActivitySection({ userType }: { userType: UserType }) {
     const t = useTranslations("Main.dashboard.activity")
     const trpc = useTRPC()
 
@@ -16,9 +20,12 @@ export function ActivitySection() {
     )
     return (
         <div className="flex flex-col gap-8 w-full">
-            <div className="grid grid-cols-6 gap-8">
+            <div className={cn(
+                "grid gap-8",
+                userType === "shipper" ? "grid-cols-6" : "grid-cols-5"
+            )}>
                 <Card>
-                    <CardContent className="h-16">
+                    <CardContent className="flex flex-col gap-4">
                         <div className="flex justify-between items-start">
                             <div className="rounded-md bg-primary/25 size-10 items-center justify-center flex">
                                 <IconPackages className="size-6 text-primary" />
@@ -26,40 +33,48 @@ export function ActivitySection() {
 
                             <div className="flex flex-col gap-2 justify-end">
                                 <span className="font-semibold text-primary text-end">{data.all}</span>
-                                <span className="text-muted-foreground text-xs">{t("all")}</span>
+                                <span className="text-muted-foreground text-xs">{t(`all.${userType}`)}</span>
                             </div>
                         </div>
-                    </CardContent>
 
-                    <CardFooter className="flex justify-end">
-                        <Link href="#" className="text-xs flex gap-1 items-center">View all <IconLink className="size-3" /></Link>
-                    </CardFooter>
-                </Card>
-
-                <Card>
-                    <CardContent className="h-16">
-                        <div className="flex justify-between items-start">
-                            <div className="rounded-md bg-primary/25 size-10 items-center justify-center flex">
-                                <IconPackages className="size-6 text-primary" />
-                            </div>
-
-                            <div className="flex flex-col gap-2 justify-end">
-                                <span className="font-semibold text-primary text-end">{data.drafted}</span>
-                                <span className="text-muted-foreground text-xs">{t("drafted")}</span>
-                            </div>
+                        <div className="flex justify-end">
+                            <Link href="/orders" className="text-xs flex gap-2 items-center hover:text-primary hover:cursor-pointer hover:underline-offset-4 hover:underline">
+                                <span>{t("link")}</span>
+                                <IconLink className="size-3" />
+                            </Link>
                         </div>
                     </CardContent>
-
-                    <CardFooter className="flex justify-end">
-                        <Link href="#" className="text-xs flex gap-1 items-center">View all <IconLink className="size-3" /></Link>
-                    </CardFooter>
                 </Card>
 
+                {userType === "shipper" && (
+                    <Card>
+                        <CardContent className="flex flex-col gap-4">
+                            <div className="flex justify-between items-start">
+                                <div className="rounded-md bg-primary/25 size-10 items-center justify-center flex">
+                                    <IconPencilMinus className="size-6 text-primary" />
+                                </div>
+
+                                <div className="flex flex-col gap-2 justify-end">
+                                    <span className="font-semibold text-primary text-end">{data.drafted}</span>
+                                    <span className="text-muted-foreground text-xs">{t("drafted")}</span>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end">
+                                <Link href="/orders/drafted" className="text-xs flex gap-2 items-center hover:text-primary hover:cursor-pointer hover:underline-offset-4 hover:underline">
+                                    <span>{t("link")}</span>
+                                    <IconLink className="size-3" />
+                                </Link>
+                            </div>
+                        </CardContent>
+                    </Card>
+                )}
+
                 <Card>
-                    <CardContent className="h-16">
+                    <CardContent className="flex flex-col gap-4">
                         <div className="flex justify-between items-start">
                             <div className="rounded-md bg-primary/25 size-10 items-center justify-center flex">
-                                <IconPackages className="size-6 text-primary" />
+                                <IconInvoice className="size-6 text-primary" />
                             </div>
 
                             <div className="flex flex-col gap-2 justify-end">
@@ -67,18 +82,21 @@ export function ActivitySection() {
                                 <span className="text-muted-foreground text-xs">{t("prospect")}</span>
                             </div>
                         </div>
-                    </CardContent>
 
-                    <CardFooter className="flex justify-end">
-                        <Link href="#" className="text-xs flex gap-1 items-center">View all <IconLink className="size-3" /></Link>
-                    </CardFooter>
+                        <div className="flex justify-end">
+                            <Link href="/quote-requests" className="text-xs flex gap-2 items-center hover:text-primary hover:cursor-pointer hover:underline-offset-4 hover:underline">
+                                <span>{t("link")}</span>
+                                <IconLink className="size-3" />
+                            </Link>
+                        </div>
+                    </CardContent>
                 </Card>
 
                 <Card>
-                    <CardContent className="h-16">
+                    <CardContent className="flex flex-col gap-4">
                         <div className="flex justify-between items-start">
                             <div className="rounded-md bg-primary/25 size-10 items-center justify-center flex">
-                                <IconPackages className="size-6 text-primary" />
+                                <IconClock className="size-6 text-primary" />
                             </div>
 
                             <div className="flex flex-col gap-2 justify-end">
@@ -86,18 +104,21 @@ export function ActivitySection() {
                                 <span className="text-muted-foreground text-xs">{t("pending")}</span>
                             </div>
                         </div>
-                    </CardContent>
 
-                    <CardFooter className="flex justify-end">
-                        <Link href="#" className="text-xs flex gap-1 items-center">View all <IconLink className="size-3" /></Link>
-                    </CardFooter>
+                        <div className="flex justify-end">
+                            <Link href="/orders/pending" className="text-xs flex gap-2 items-center hover:text-primary hover:cursor-pointer hover:underline-offset-4 hover:underline">
+                                <span>{t("link")}</span>
+                                <IconLink className="size-3" />
+                            </Link>
+                        </div>
+                    </CardContent>
                 </Card>
 
                 <Card>
-                    <CardContent className="h-16">
+                    <CardContent className="flex flex-col gap-4">
                         <div className="flex justify-between items-start">
                             <div className="rounded-md bg-primary/25 size-10 items-center justify-center flex">
-                                <IconPackages className="size-6 text-primary" />
+                                <IconTruckDelivery className="size-6 text-primary" />
                             </div>
 
                             <div className="flex flex-col gap-2 justify-end">
@@ -105,18 +126,21 @@ export function ActivitySection() {
                                 <span className="text-muted-foreground text-xs">{t("on-going")}</span>
                             </div>
                         </div>
-                    </CardContent>
 
-                    <CardFooter className="flex justify-end">
-                        <Link href="#" className="text-xs flex gap-1 items-center">View all <IconLink className="size-3" /></Link>
-                    </CardFooter>
+                        <div className="flex justify-end">
+                            <Link href="/orders/on-going" className="text-xs flex gap-2 items-center hover:text-primary hover:cursor-pointer hover:underline-offset-4 hover:underline">
+                                <span>{t("link")}</span>
+                                <IconLink className="size-3" />
+                            </Link>
+                        </div>
+                    </CardContent>
                 </Card>
 
                 <Card>
-                    <CardContent className="h-16">
+                    <CardContent className="flex flex-col gap-4">
                         <div className="flex justify-between items-start">
                             <div className="rounded-md bg-primary/25 size-10 items-center justify-center flex">
-                                <IconPackages className="size-6 text-primary" />
+                                <IconChecks className="size-6 text-primary" />
                             </div>
 
                             <div className="flex flex-col gap-2 justify-end">
@@ -124,11 +148,14 @@ export function ActivitySection() {
                                 <span className="text-muted-foreground text-xs">{t("delivered")}</span>
                             </div>
                         </div>
-                    </CardContent>
 
-                    <CardFooter className="flex justify-end">
-                        <Link href="#" className="text-xs flex gap-1 items-center">View all <IconLink className="size-3" /></Link>
-                    </CardFooter>
+                        <div className="flex justify-end">
+                            <Link href="/orders/delivered" className="text-xs flex gap-2 items-center hover:text-primary hover:cursor-pointer hover:underline-offset-4 hover:underline">
+                                <span>{t("link")}</span>
+                                <IconLink className="size-3" />
+                            </Link>
+                        </div>
+                    </CardContent>
                 </Card>
             </div>
         </div>

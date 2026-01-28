@@ -537,7 +537,7 @@
                     "label": "Todas as encomendas",
                     "drafted": "Rascunho",
                     "pending": "Pendente",
-                    "on-going": "Em curso",
+                    "on-going": "Em transito",
                     "delivered": "Entregue"
                 },
                 "marketplace": "Marketplace",
@@ -550,7 +550,7 @@
                     "label": "Todas as encomendas",
                     "marketplace": "Os meus clientes",
                     "pending": "Pendente",
-                    "on-going": "Em curso",
+                    "on-going": "Em transito",
                     "delivered": "Entregue"
                 },
                 "trips": "As minhas viagens",
@@ -574,12 +574,16 @@
                 }
             },
             "activity": {
-                "all": "Viagens iniciadas",
-                "drafted": "Em rascunho",
+                "all": {
+                    "carrier": "Pedidos atribuídos",
+                    "shipper": "Pedidos publicados"
+                },
+                "drafted": "Rascunhos",
                 "prospect": "Pedidos de cotação",
-                "pending": "Pendente",
-                "on-going": "Em curso",
-                "delivered": "Entregue"
+                "pending": "Pendentes",
+                "on-going": "Em transito",
+                "delivered": "Entregues",
+                "link": "Ver todos"
             },
             "resume": {
                 "tabs": {
@@ -590,24 +594,72 @@
                 "card": {
                     "title": "Resumo de atividade",
                     "shipper": {
-                        "trips": "Viagens analisadas",
-                        "deliveries": "Número de entregas",
-                        "total-amout": "Total pago",
-                        "average-price": "Preço médio por viagem",
-                        "loaded-weight": "Peso total expedido",
-                        "average-weight": "Peso médio por viagem",
-                        "total-distance": "Distância total percorrida",
-                        "average-distance": "Distância média por viagem"
+                        "trips": {
+                            "label": "Viagens analisadas",
+                            "unit": "viagens"
+                        },
+                        "deliveries": {
+                            "label": "Número de entregas",
+                            "unit": "entregas"
+                        },
+                        "total-amount": {
+                            "label": "Total pago",
+                            "unit": "MZN"
+                        },
+                        "average-price": {
+                            "label": "Preço médio por viagem",
+                            "unit": "MZN"
+                        },
+                        "loaded-weight": {
+                            "label": "Peso total expedido",
+                            "unit": "ton"
+                        },
+                        "average-weight": {
+                            "label": "Peso médio por viagem",
+                            "unit": "ton"
+                        },
+                        "total-distance": {
+                            "label": "Distância total percorrida",
+                            "unit": "km"
+                        },
+                        "average-distance": {
+                            "label": "Distância média por viagem",
+                            "unit": "km"
+                        }
                     },
                     "carrier": {
-                        "trips": "Viagens analisadas",
-                        "deliveries": "Número de entregas",
-                        "total-amout": "Total recebido",
-                        "average-price": "Preço médio por viagem",
-                        "loaded-weight": "Peso total transportado",
-                        "average-weight": "Peso médio por viagem",
-                        "total-distance": "Distância total percorrida",
-                        "average-distance": "Distância média por viagem"
+                        "trips": {
+                            "label": "Viagens analisadas",
+                            "unit": "viagens"
+                        },
+                        "deliveries": {
+                            "label": "Número de entregas",
+                            "unit": "entregas"
+                        },
+                        "total-amount": {
+                            "label": "Total recebido",
+                            "unit": "MZN"
+                        },
+                        "average-price": {
+                            "label": "Preço médio por viagem",
+                            "unit": "MZN"
+                        },
+                        "loaded-weight": {
+                            "label": "Peso total transportado",
+                            "unit": "ton"
+                        },
+                        "average-weight": {
+                            "label": "Peso médio por viagem",
+                            "unit": "ton"
+                        },
+                        "total-distance": {
+                            "label": "Distância total percorrida",
+                            "unit": "km"
+                        },
+                        "average-distance": {
+                            "label": "Distância média por viagem",
+                            "unit": "km"
+                        }
                     }
                 }
             }
