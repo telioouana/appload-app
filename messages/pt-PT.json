@@ -52,125 +52,125 @@
             }
         },
         "sign-up": {
-            "title": "Welcome to appload",
-            "description": "Create a new account",
+            "title": "Bem-vindo à Appload",
+            "description": "Criar nova conta",
             "form": {
                 "step1": {
-                    "title": "Account setup",
-                    "description": "Will start by setting up the type of account you want to create",
+                    "title": "Configuração da conta",
+                    "description": "Comece por selecionar o tipo de conta que pretende criar",
                     "tabs": {
-                        "title": "Select the type of account you wish to create",
+                        "title": "Selecione o tipo de conta",
                         "shipper": {
-                            "title": "Shipper",
-                            "description": "As a shipper, you can easily request and keep track of your orders, while accessing a wide range of carriers including your own"
+                            "title": "Expedidor",
+                            "description": "Como expedidor, pode criar, acompanhar e gerir pedidos de transporte, acedendo à sua rede de transportadores ou ao marketplace."
                         },
                         "carrier": {
-                            "title": "Carrier",
-                            "description": "As a carrier, you can efficiently manage your trips, fleet and drivers, while accessing a wide range of shippers inclunding your own"
+                            "title": "Transportador",
+                            "description": "Como transportador, pode gerir viagens, frota e motoristas, bem como receber pedidos de carga de vários expedidores."
                         }
                     },
-                    "button": "Next"
+                    "button": "Seguinte"
                 },
                 "step2": {
-                    "title": "Contact Information",
-                    "description": "Enter your personal information",
+                    "title": "Informação de contacto",
+                    "description": "Introduza os seus dados pessoais",
                     "gender": {
-                        "label": "How do you prefer to be addressed? *",
-                        "placeholder": "Please select an option",
-                        "error": "No title has been selected",
+                        "label": "Forma de tratamento preferida *",
+                        "placeholder": "Selecione uma opção",
+                        "error": "Nenhuma forma de tratamento foi selecionada",
                         "options": {
-                            "male": "Mr.",
-                            "female": "Ms.",
-                            "other": "Other"
+                            "male": "Sr.",
+                            "female": "Sra.",
+                            "other": "Outro"
                         }
                     },
                     "name": {
-                        "label": "Full name *",
-                        "placeholder": "John Doe",
-                        "error": "No name was provided"
+                        "label": "Nome completo *",
+                        "placeholder": "João Silva",
+                        "error": "O nome não foi indicado"
                     },
                     "email": {
                         "label": "Email *",
-                        "placeholder": "john.doe@company.com",
+                        "placeholder": "joao.silva@empresa.com",
                         "error": {
-                            "empty": "No email address was provided",
-                            "invalid": "Please enter a valid email address"
+                            "empty": "O endereço de email não foi indicado",
+                            "invalid": "Introduza um endereço de email válido"
                         }
                     },
                     "phone-number": {
-                        "label": "Phone number *",
+                        "label": "Número de telefone *",
                         "error": {
-                            "empty": "Phone number was not provided",
-                            "invalid": "Invalid phone number was provided"
+                            "empty": "O número de telefone não foi indicado",
+                            "invalid": "O número de telefone indicado é inválido"
                         }
                     },
                     "button": {
-                        "next": "Next",
-                        "back": "Back"
+                        "next": "Seguinte",
+                        "back": "Voltar"
                     }
                 },
                 "step3": {
-                    "title": "Credentials setup",
-                    "description": "Now you will setup the credentials to sign in into your account",
+                    "title": "Definição de credenciais",
+                    "description": "Configure as credenciais de acesso à sua conta",
                     "password": {
-                        "label": "Password *",
+                        "label": "Palavra-passe *",
                         "placeholder": "••••••••••",
                         "error": {
-                            "empty": "Please choose a password for your account",
-                            "invalid": "Password must have between 8 to 32 characters"
+                            "empty": "Defina uma palavra-passe",
+                            "invalid": "A palavra-passe deve conter entre 8 e 32 caracteres"
                         }
                     },
                     "confirm": {
-                        "label": "Confirm password *",
+                        "label": "Confirmar palavra-passe *",
                         "placeholder": "••••••••••",
                         "error": {
-                            "empty": "Reenter the password",
-                            "match": "Password don't match"
+                            "empty": "Confirme a palavra-passe",
+                            "match": "As palavras-passe não coincidem"
                         }
                     },
                     "button": {
-                        "back": "Back",
-                        "sign-up": "Sign up"
+                        "back": "Voltar",
+                        "sign-up": "Criar conta"
                     }
                 },
                 "step4": {
-                    "title": "OTP Verifivation",
-                    "description": "Enter the 6 digit code we sent to your number",
+                    "title": "Verificação por OTP",
+                    "description": "Introduza o código de 6 dígitos enviado para o seu número",
                     "code": {
-                        "label": "Verification code *",
+                        "label": "Código de verificação *",
                         "error": {
-                            "empty": "OTP code was not provided",
-                            "invalid": "Invalid OTP code was provided"
+                            "empty": "O código OTP não foi introduzido",
+                            "invalid": "O código OTP introduzido é inválido"
                         },
-                        "SUCCESS": "OTP code resent successfully"
+                        "SUCCESS": "Código OTP reenviado com sucesso"
                     },
                     "button": {
-                        "verify": "Verify",
+                        "verify": "Verificar",
                         "edit": {
-                            "text": "Didn't reciceve the code on {phoneNumber}?",
-                            "action": "Edit"
+                            "text": "Não recebeu o código no número {phoneNumber}?",
+                            "action": "Editar"
                         },
-                        "resend": "Resend"
+                        "resend": "Reenviar"
                     }
                 },
-                "required": "* Required fields",
+                "required": "* Campos obrigatórios",
                 "errors": {
-                    "CONFLICT_EMAIL": "The provided email is already taken",
-                    "DOMAIN_EMAIL_INVALID": "Please check the domail email used",
-                    "CONFLICT_PHONE": "The provided phone number is already taken",
-                    "BOT_DETECTED": "We dectect the present of a bot on this request",
-                    "INVALID_EMAIL": "Please use a valid email to perform this action",
-                    "INVALID_CREDENTIALS": "Your credentials don't match with any user",
-                    "DISPOSABLE_EMAIL_NOT_ALLOWED": "We detect a use of generated emails",
-                    "OTHER": "Something went wrong while please check your connection and try again",
-                    "INVALID_EMAIL_FORMAT": "Please use a valid email format to perform this action",
-                    "TOO_MANY_REQUESTS": "You have exceeded the number of tries, please try again later",
-                    "MAX_REQUESTS_OTP_REACHED": "You have reached the maximum number of OTP requests, please try again later",
-                    "MAX_VERIFY_OTP_REACHED": "You have reached the maximum number of OTP verification attempts, please try again later"
+                    "CONFLICT_EMAIL": "O endereço de email já se encontra registado",
+                    "DOMAIN_EMAIL_INVALID": "Verifique o domínio do email utilizado",
+                    "CONFLICT_PHONE": "O número de telefone já se encontra registado",
+                    "BOT_DETECTED": "Foi detetada atividade automatizada neste pedido",
+                    "INVALID_EMAIL": "Utilize um endereço de email válido",
+                    "INVALID_CREDENTIALS": "As credenciais não correspondem a nenhum utilizador",
+                    "DISPOSABLE_EMAIL_NOT_ALLOWED": "Não são permitidos endereços de email temporários",
+                    "OTHER": "Erro no sistema. Verifique a ligação e tente novamente",
+                    "INVALID_EMAIL_FORMAT": "Formato de email inválido",
+                    "TOO_MANY_REQUESTS": "Número máximo de tentativas excedido. Tente novamente mais tarde",
+                    "MAX_REQUESTS_OTP_REACHED": "Limite máximo de pedidos de OTP atingido",
+                    "MAX_VERIFY_OTP_REACHED": "Limite máximo de tentativas de verificação OTP atingido"
                 }
             },
             "links": {
-                "sign-in": "I already have an account"
+                "sign-in": "Já tenho uma conta"
             }
         },
         "legal": {

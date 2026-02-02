@@ -20,7 +20,7 @@ export default async function Page({ params }: { params: Promise<{ inviteId: str
         },
         headers: await headers(),
     }).catch((error) => {
-        console.log(error)
+        console.error("Failed to fetch invitation:", error)
         return undefined
     })
 

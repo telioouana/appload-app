@@ -1,9 +1,11 @@
+"use client"
+
 import { useTranslations } from "next-intl";
 
 import { CardHeader, CardTitle } from "@/components/ui/card"
 import { AvatarGenerator } from "@/components/customs/avatar"
 
-import { Invitation } from "@/modules/account/pages/invites/types/intivation-type";
+import { Invitation } from "@/modules/account/pages/invites/types/invitation-type";
 
 type Props = {
     invitation: Invitation

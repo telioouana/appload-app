@@ -9,7 +9,7 @@ import { authClient } from "@/backend/auth/auth-client";
 import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
 
-import { Invitation } from "@/modules/account/pages/invites/types/intivation-type";
+import { Invitation } from "@/modules/account/pages/invites/types/invitation-type";
 import { useState } from "react";
 
 export function InvitesFooter({ invitation }: { invitation: Invitation }) {
@@ -50,12 +50,17 @@ export function InvitesFooter({ invitation }: { invitation: Invitation }) {
                         invitationId: invitation.id
                     }, {
                         onRequest: () => setPending(true),
-                        onSuccess: () => {
-                            setPending(false)
-                            authClient.organization.setActive({
-                                organizationId: invitation.organizationId
-                            })
-                            router.push("/company")
+                        onSuccess: async () => {
+                            try {
+                                await authClient.organization.setActive({
+                                    organizationId: invitation.organizationId
+                                })
+                                router.push("/company")
+                            } catch (error) {
+                                console.error("Failed to set active organization:", error)
+                            } finally {
+                                setPending(false)
+                            }
                         },
                         onError: () => setPending(false)
                     })}

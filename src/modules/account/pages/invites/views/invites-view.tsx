@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 
-import { Invitation } from "@/modules/account/pages/invites/types/intivation-type";
+import { Invitation } from "@/modules/account/pages/invites/types/invitation-type";
 import { InvitesHeader } from "@/modules/account/pages/invites/section/invites-header";
 import { InvitesFooter } from "@/modules/account/pages/invites/section/invites-footer";
 import { InvitesContent } from "@/modules/account/pages/invites/section/invites-content";

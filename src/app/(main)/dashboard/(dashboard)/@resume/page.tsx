@@ -35,7 +35,7 @@ export default async function Page() {
     )
     return (
         <HydrateClient>
-            <ResumeView endDate={endDate} userType={userType} />
+            <ResumeView endDate={endDate} startDate={startDate} userType={userType} />
         </HydrateClient>
     )
 }

@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import { CardContent } from "@/components/ui/card";
-import { Invitation } from "@/modules/account/pages/invites/types/intivation-type";
+import { Invitation } from "@/modules/account/pages/invites/types/invitation-type";
 
 export function InvitesContent({ invitation }: { invitation: Invitation }) {
     const t = useTranslations("Account.organization.invites.content")
