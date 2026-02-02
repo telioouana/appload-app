@@ -523,6 +523,33 @@
                         }
                     }
                 }
+            },
+            "invites": {
+                "header": {
+                    "title": "Join {organization}'s account on appload"
+                },
+                "content": {
+                    "inviter": "has added you as a member of their organization, granting you access to Appload's enterprise platform and shared resources.",
+                    "features": {
+                        "label": "By accepting this invitation, you will be able to:",
+                        "one": {
+                            "title": "Centralize Operations:",
+                            "description": "Manage all your logistics activities from a single, unified dashboard."
+                        },
+                        "two": {
+                            "title": "Enhance Collaboration:",
+                            "description": "Share real-time updates and documentation with your colleagues and partners."
+                        },
+                        "three": {
+                            "title": "Streamline Workflows:",
+                            "description": "Reduce manual tasks and stay in sync with the latest movement in your supply chain."
+                        }
+                    }
+                },
+                "footer": {
+                    "button-reject": "Reject invitation",
+                    "button-accept": "Accept invitation"
+                }
             }
         }
     },
@@ -1039,7 +1066,7 @@
             "intro": "You have been invited to join the {organization} organization on Appload.",
             "inviter": "{inviter} has added you as a member of their organization, granting you access to Appload's enterprise platform and shared resources.",
             "instruction": "To accept the invitation and start collaborating, please use the link below:",
-            "cta": "Accept invitation",
+            "cta": "View invitation",
             "section-title": "What you'll be able to do",
             "features": {
                 "one": "Collaborate securely within your organization's workspace",

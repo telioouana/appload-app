@@ -31,7 +31,7 @@ export function OrganizationView({ tab }: Props) {
 
     if (!organization) return <EmptyOrganization />
 
-    function changeTab(tab: string) {
+    function changeTab(tab: CompanyTab) {
         const url = new URL(window.location.href)
         url.searchParams.set("tab", tab)
         router.replace(url.href)
@@ -42,7 +42,7 @@ export function OrganizationView({ tab }: Props) {
             <OrganizationDetails organization={organization} />
 
             <Card>
-                <Tabs className="w-full" value={tab} onValueChange={changeTab}>
+                <Tabs className="w-full" value={tab} onValueChange={(value) => changeTab(value as CompanyTab)}>
                     <CardHeader>
                         <TabsList className="w-full">
                             <TabsTrigger value="members">{t("members")}</TabsTrigger>

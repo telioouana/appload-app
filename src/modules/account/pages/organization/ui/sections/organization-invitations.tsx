@@ -107,7 +107,7 @@ export function OrganizationInvitations({ organization }: Props) {
 
 
     return (
-        <DataTable columns={columns} data={organization.invitations.filter(invite => invite.status !== "accepted")}>
+        <DataTable columns={columns} data={organization.invitations.filter(invite => invite.status === "pending")}>
             <InviteMemberDialog />
         </DataTable>
     )

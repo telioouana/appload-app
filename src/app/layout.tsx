@@ -40,7 +40,7 @@ export default async function RootLayout({
 
     return (
         <html lang={locale} className={montserrat.variable} suppressHydrationWarning>
-            <body className={`${sourceCodePro.variable} ${playfair.variable} antialiased`}>
+            <body className={`${sourceCodePro.variable} ${playfair.variable} antialiased h-screen w-screen overflow-clip`}>
                 <NextIntlClientProvider messages={messages}>
                     <Main>
                         <Analytics />
