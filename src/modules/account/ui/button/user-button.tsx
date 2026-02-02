@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { toast } from "sonner"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { redirect } from "next/navigation"
 import { IconLogout, IconSettings, IconUserCog } from "@tabler/icons-react"
 
 import { authClient } from "@/backend/auth/auth-client"
@@ -24,7 +24,6 @@ export function UserButton() {
     const [isLoading, setLoading] = useState<boolean>(false)
 
     const t = useTranslations("Account.navbar.user")
-    const router = useRouter()
 
     const { data, isPending } = authClient.useSession()
 
@@ -44,7 +43,7 @@ export function UserButton() {
                 onRequest: () => { setLoading(true) },
                 onSuccess: () => {
                     setLoading(false)
-                    router.push("/sign-in")
+                    redirect("/sign-in")
                 },
                 onError: () => {
                     toast.error(t("errors.sign-out"))
@@ -86,7 +85,7 @@ export function UserButton() {
                         <div><Badge className="text-xs">{t(`type.${type}`)}</Badge></div>
                     </CardHeader>
                     <CardContent className="flex flex-col items-center gap-4 w-full">
-                        <Link href="/account" className={cn(buttonVariants({ variant: "outline" }), "w-full justify-start")}><IconUserCog />{t("buttons.account")}</Link>
+                        <Link href="/profile" className={cn(buttonVariants({ variant: "outline" }), "w-full justify-start")}><IconUserCog />{t("buttons.account")}</Link>
                         <Button variant="outline" className="w-full justify-start" disabled={isLoading}><IconSettings />{t("buttons.preferences")}</Button>
                     </CardContent>
                     <CardFooter>

@@ -523,6 +523,33 @@
                         }
                     }
                 }
+            },
+            "invites": {
+                "header": {
+                    "title": "Junte-se a conta da {organization} na appload"
+                },
+                "content": {
+                    "inviter": "adicionou-o(a) como membro da sua organização, concedendo-lhe acesso à plataforma empresarial da Appload e aos recursos partilhados.",
+                    "features": {
+                        "label": "Ao aceitar este convite, poderá:",
+                        "one": {
+                            "title": "Centralizar operações:",
+                            "description": "Gerir todas as atividades logísticas a partir de um único painel de controlo."
+                        },
+                        "two": {
+                            "title": "Melhorar a colaboração:",
+                            "description": "Partilhar atualizações e documentação em tempo real com colegas e parceiros."
+                        },
+                        "three": {
+                            "title": "Otimizar fluxos de trabalho:",
+                            "description": "Reduzir tarefas manuais e manter-se alinhado com os movimentos mais recentes da cadeia logística."
+                        }
+                    }
+                },
+                "footer": {
+                    "button-reject": "Recusar convite",
+                    "button-accept": "Aceitar convite"
+                }
             }
         }
     },
@@ -834,8 +861,8 @@
                             "error": "Nenhuma unidade foi selecionada"
                         },
                         "packing": {
-                            "label": "Tipo de acondicionamento",
-                            "placeholder": "Selecione o tipo de acondicionamento",
+                            "label": "Tipo de embalagem",
+                            "placeholder": "Selecione o tipo de embalagem",
                             "options": {
                                 "bags-1kg": "Sacos de 1 kg",
                                 "bags-2kg": "Sacos de 2 kg",
@@ -854,10 +881,10 @@
                                 "container-40ft": "Contentor 40 pés",
                                 "boxes": "Caixas",
                                 "pallets": "Paletes",
-                                "noPacking": "Sem acondicionamento",
+                                "noPacking": "Sem embalagem",
                                 "other": "Outro"
                             },
-                            "error": "Nenhum tipo de acondicionamento foi selecionado"
+                            "error": "Nenhum tipo de embalagem foi selecionado"
                         },
                         "is-hazardous": "Carga perigosa",
                         "hazchem-code": {
@@ -955,8 +982,8 @@
                             "error": "Nenhuma unidade foi selecionada"
                         },
                         "packing": {
-                            "label": "Tipo de acondicionamento",
-                            "placeholder": "Selecione o tipo de acondicionamento",
+                            "label": "Tipo de embalagem",
+                            "placeholder": "Selecione o tipo de embalagem",
                             "options": {
                                 "bags-1kg": "Sacos de 1 kg",
                                 "bags-2kg": "Sacos de 2 kg",
@@ -975,10 +1002,10 @@
                                 "container-40ft": "Contentor 40 pés",
                                 "boxes": "Caixas",
                                 "pallets": "Paletes",
-                                "noPacking": "Sem acondicionamento",
+                                "noPacking": "Sem embalagem",
                                 "other": "Outro"
                             },
-                            "error": "Nenhum tipo de acondicionamento foi selecionado"
+                            "error": "Nenhum tipo de embalagem foi selecionado"
                         },
                         "is-hazardous": "Carga perigosa",
                         "hazchem-code": {
@@ -1039,7 +1066,7 @@
             "intro": "Foi convidado(a) a juntar-se à organização {organization} na Appload.",
             "inviter": "{inviter} adicionou-o(a) como membro da sua organização, concedendo-lhe acesso à plataforma empresarial da Appload e aos recursos partilhados.",
             "instruction": "Para aceitar o convite e começar a colaborar, utilize o link abaixo:",
-            "cta": "Aceitar convite",
+            "cta": "Verificar convite",
             "section-title": "O que vai poder fazer",
             "features": {
                 "one": "Colaborar de forma segura no espaço de trabalho da sua organização",

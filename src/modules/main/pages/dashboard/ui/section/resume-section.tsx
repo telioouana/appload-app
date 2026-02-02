@@ -11,9 +11,13 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { UserType } from "@/modules/main/ui/types";
 
-
-export function ResumeSection({ userType }: { userType: UserType }) {
-    const [date, setDate] = useState<Date>(new Date())
+type Props = {
+    endDate: Date
+    startDate: Date
+    setStartDate: (startDate: Date) => void
+    userType: UserType
+}
+export function ResumeSection({ endDate, startDate, setStartDate, userType }: Props) {
     const [tab, setTab] = useState("month")
 
     const t = useTranslations("Main.dashboard.resume")
@@ -21,20 +25,28 @@ export function ResumeSection({ userType }: { userType: UserType }) {
     const trpc = useTRPC()
 
     const { data } = useSuspenseQuery(
-        trpc.dashboard.resume.queryOptions()
+        trpc.dashboard.resume.queryOptions({
+            startDate,
+            endDate
+        })
     )
 
-    function tabChange(tab: string) {
-        if (tab === "week") setDate(new Date(date.getDate() - 7))
-        if (tab === "month") setDate(new Date(date.getDate() - 30))
-        if (tab === "year") setDate(new Date(date.getDate() - 365))
+    function tabChange(tab: "week" | "month" | "year") {
+        const referenceDate = new Date()
+        let daysToSubtract: number = 30
+        if (tab === "week") daysToSubtract = 7
+        else if (tab === "month") daysToSubtract = 30
+        else daysToSubtract = 365
+
+        referenceDate.setDate(referenceDate.getDate() - daysToSubtract)
+        setStartDate(new Date(referenceDate))
         setTab(tab)
     }
 
     return (
         <div className="flex flex-col gap-8 w-full">
             <div className="flex w-full justify-center items-center">
-                <Tabs value={tab} onValueChange={tabChange}>
+                <Tabs value={tab} onValueChange={(value) => tabChange(value as "week" | "month" | "year")}>
                     <TabsList>
                         <TabsTrigger value="week" >{t("tabs.week")}</TabsTrigger>
                         <TabsTrigger value="month" >{t("tabs.month")}</TabsTrigger>
@@ -59,7 +71,7 @@ export function ResumeSection({ userType }: { userType: UserType }) {
                         <CardContent className="flex flex-col gap-4">
                             <div className="font-semibold text-sm">{t(`card.${userType}.deliveries.label`)}</div>
                             <div className="font-medium text-primary">
-                            {data.deliveries}
+                                {data.deliveries}
                             </div>
                             <div className="text-xs text-muted-foreground">{t(`card.${userType}.deliveries.unit`)}</div>
                         </CardContent>

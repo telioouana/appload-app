@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { usePathname } from "next/navigation"
-import { IconCreditCard, IconBuildingFactory, IconHome, IconDeviceDesktopAnalytics, IconUser } from "@tabler/icons-react"
+import { IconCreditCard, IconBuildingFactory, IconDeviceDesktopAnalytics, IconUser } from "@tabler/icons-react"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import { buttonVariants } from "@/components/ui/button"
@@ -20,11 +20,6 @@ export function AccountSidebar() {
     const pathname = usePathname()
 
     const links = [
-        {
-            path: "/account",
-            label: t("account"),
-            Icon: IconHome
-        },
         {
             path: "/profile",
             label: t("profile"),

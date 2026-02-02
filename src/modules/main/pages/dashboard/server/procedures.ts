@@ -1,9 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { and, avg, count, eq, sql, sum } from "drizzle-orm";
+import { and, avg, between, count, eq, sql, sum } from "drizzle-orm";
 
 import { db } from "@/backend/db";
 import { order, trip } from "@/backend/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init";
+import z from "zod";
 
 
 export const dashboardRouter = createTRPCRouter({
@@ -36,8 +37,15 @@ export const dashboardRouter = createTRPCRouter({
         }),
 
     resume: protectedProcedure
-        .query(async ({ ctx }) => {
+    .input(
+        z.object({
+            startDate: z.date(),
+            endDate: z.date(),
+        })
+    )
+        .query(async ({ ctx, input }) => {
             const { user, session } = ctx.auth
+            const { startDate, endDate } = input
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
@@ -61,6 +69,7 @@ export const dashboardRouter = createTRPCRouter({
                     and(
                         eq(order.status, "completed"),
                         eq(trip.status, "completed"),
+                        between(trip.createdAt, startDate, endDate),
                         userType === "shipper"
                             ? eq(order.shipperId, session.activeOrganizationId)
                             : eq(trip.carrierId, session.activeOrganizationId)
