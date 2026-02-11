@@ -90,7 +90,7 @@ export function IncidentsTab({ data }: { data: { [x: string]: unknown } }) {
                 <CardContent className="flex flex-col gap-4">
                     <div className="font-semibold text-sm h-8">{t("percentage-damaged-cargo.label")}</div>
                     <div className="font-medium text-primary">
-                        {f.number(!Number.isNaN(PDC) ? PDC : 0, {
+                        {f.number(Number.isFinite(PDC) ? PDC : 0, {
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 0
                         })}
@@ -103,7 +103,7 @@ export function IncidentsTab({ data }: { data: { [x: string]: unknown } }) {
                 <CardContent className="flex flex-col gap-4">
                     <div className="font-semibold text-sm h-8">{t("percentage-complains.label")}</div>
                     <div className="font-medium text-primary">
-                        {f.number(!Number.isNaN(PC) ? PC : 0, {
+                        {f.number(!Number.isFinite(PC) ? PC : 0, {
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 0
                         })}

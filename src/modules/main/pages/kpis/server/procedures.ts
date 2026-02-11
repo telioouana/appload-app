@@ -35,7 +35,7 @@ export const kpisRouter = createTRPCRouter({
                             onTimeAtLoading: sql`sum(case when ${trip.arrivalOnTimeLoading} then 1 else 0 end)`.mapWith(Number),
                             averageLoadingTime: avg(trip.daysSpendLoading).mapWith(Number),
                             averageTravelTime: avg(trip.daysSpendTraveling).mapWith(Number),
-                            distance: sum(order.distance).mapWith(Number),
+                            distance: sql<number>`sum(distinct ${order.distance})`.mapWith(Number),
                             onTimeAtOffloading: sql`sum(case when ${trip.arrivalOnTimeOffloading} then 1 else 0 end)`.mapWith(Number),
                             averageOffloadingTime: avg(trip.daysSpendOffloading).mapWith(Number),
                             demuragesOccurrences: sql`sum(case when ${trip.demurageCharged} then 1 else 0 end)`.mapWith(Number),
@@ -54,14 +54,14 @@ export const kpisRouter = createTRPCRouter({
                             : section === "costs"
                                 ? {
                                     trips: count().mapWith(Number),
-                                    distance: sum(order.distance).mapWith(Number),
+                                    distance: sql<number>`sum(distinct ${order.distance})`.mapWith(Number),
                                     weight: sum(trip.loadedWeight).mapWith(Number),
                                     total: userType === "shipper" ? sum(trip.shipperTotal).mapWith(Number) : sum(trip.carrierTotal).mapWith(Number),
                                 }
                                 : {
                                     trips: count().mapWith(Number),
                                     backload: sql<number>`count(${trip.id}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
-                                    backloadDistance: sql<number>`sum(${order.distance}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
+                                    backloadDistance: sql<number>`sum(distinct ${order.distance}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
                                     ageFactor: sql<number>`sum(${trip.ageFactor}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
                                     loadFactor: sql<number>`sum(${trip.loadFactor}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
                                     defaultCoefficient: sql<number>`sum(${trip.defaultCoefficient}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),

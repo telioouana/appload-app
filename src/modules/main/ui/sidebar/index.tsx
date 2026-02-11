@@ -165,12 +165,12 @@ export function MainSidebar({
                         },
                         {
                             label: t("carrier.trips.in-transit"),
-                            url: "/orders/in-transit",
+                            url: "/trips/in-transit",
                             Icon: IconGlobe,
                         },
                         {
                             label: t("carrier.trips.delivered"),
-                            url: "/orders/delivered",
+                            url: "/trips/delivered",
                             Icon: IconGlobe,
                         },
 

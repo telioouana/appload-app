@@ -19,7 +19,9 @@ export default async function Page() {
         : undefined
 
     if (!userType) {
-        await auth.api.signOut()
+        await auth.api.signOut({
+            headers: await headers()
+        })
         return redirect("/sign-in")
     }
 
@@ -27,13 +29,13 @@ export default async function Page() {
     const startDate = new Date(new Date().setDate(endDate.getDate() - 30))
     const client = getQueryClient()
 
-    void client.prefetchQuery(
+    await client.prefetchQuery(
         trpc.dashboard.resume.queryOptions({
             startDate,
             endDate
         })
     )
-    
+
     return (
         <HydrateClient>
             <ResumeView endDate={endDate} startDate={startDate} userType={userType} />

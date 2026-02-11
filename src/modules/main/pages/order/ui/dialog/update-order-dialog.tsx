@@ -10,6 +10,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTRPC } from "@/backend/trpc/client";
 import { CATEGORIES, CURRENCY, PACKING, SHARE, WEIGHT_UNIT } from "@/backend/db/types";
 
+import { DEFAULT_PAGE_LIMIT } from "@/constants"
+
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { ResponsiveDialog } from "@/components/dialog/responsive-dialog"
@@ -112,7 +114,7 @@ export function UpdateOrderDialog({ filter, source }: Props) {
                 queryClient.invalidateQueries(trpc.orders.all.infiniteQueryOptions({
                     filter,
                     source,
-                    limit: 8,
+                    limit: DEFAULT_PAGE_LIMIT,
                 }))
                 onClose()
             },

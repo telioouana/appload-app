@@ -9,6 +9,8 @@ import { useTRPC } from "@/backend/trpc/client";
 import { cargo, order, trip } from "@/backend/db/schema";
 import { CATEGORIES, FISCAL_REGIME, PACKING, SHARE, TripSchema, WEIGHT_UNIT } from "@/backend/db/types";
 
+import { DEFAULT_PAGE_LIMIT } from "@/constants"
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -79,7 +81,7 @@ export function OrdersCard({ defaultValues: { cargo, order, trip, organizationId
         trpc.order.accept.mutationOptions({
             onSuccess: () => {
                 queryClient.invalidateQueries(trpc.orders.all.queryOptions({
-                    limit: 8,
+                    limit: DEFAULT_PAGE_LIMIT,
                     filter,
                     source,
                 }))

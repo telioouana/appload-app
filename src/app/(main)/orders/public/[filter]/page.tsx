@@ -4,6 +4,8 @@ import { redirect } from "next/navigation"
 import { auth } from "@/backend/auth"
 import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server"
 
+import { DEFAULT_PAGE_LIMIT } from "@/constants"
+
 import { FilterType, SourceType, UserType } from "@/modules/main/ui/types"
 import { OrdersView } from "@/modules/main/pages/orders/ui/views/orders-view"
 
@@ -31,7 +33,9 @@ export default async function Page({
         : undefined
 
     if (!userType) {
-        await auth.api.signOut()
+        await auth.api.signOut({
+            headers: await headers()
+        })
         return redirect("/sign-in")
     }
 
@@ -41,7 +45,7 @@ export default async function Page({
         trpc.orders.all.infiniteQueryOptions({
             filter,
             source,
-            limit: 8,
+            limit: DEFAULT_PAGE_LIMIT,
         }, {
             getNextPageParam: (lastPage) => lastPage.nextCursor
         })

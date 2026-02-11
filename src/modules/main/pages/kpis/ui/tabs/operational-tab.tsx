@@ -19,11 +19,16 @@ export function OperationalTab({ data }: { data: { [x: string]: unknown } }) {
         damuragesChargedDays,
     } = data
 
-    const DC = Number(demuragesOccurrences) / Number(trips)
-    const OTL = Number(onTimeAtLoading) / Number(trips) * 100
-    const OTO = Number(onTimeAtOffloading) / Number(trips) * 100
-    const ADCD = Number(distance) / Number(trips) / Number(averageTravelTime) / 1000
-    
+    const rawDC = Number(demuragesOccurrences) / Number(trips)
+    const rawOTL = Number(onTimeAtLoading) / Number(trips) * 100
+    const rawOTO = Number(onTimeAtOffloading) / Number(trips) * 100
+    const rawADCD = Number(distance) / Number(trips) / Number(averageTravelTime) / 1000
+
+    const DC = Number.isFinite(rawDC) ? rawDC : 0
+    const OTL = Number.isFinite(rawOTL) ? rawOTL : 0
+    const OTO = Number.isFinite(rawOTO) ? rawOTO : 0
+    const ADCD = Number.isFinite(rawADCD) ? rawADCD : 0
+
     return (
         <div className="grid grid-cols-3 gap-8 pt-4 pb-2">
             <Card>

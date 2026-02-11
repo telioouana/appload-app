@@ -19,7 +19,9 @@ export default async function Page() {
         : undefined
 
     if (!userType) {
-        await auth.api.signOut()
+        await auth.api.signOut({
+            headers: await headers()
+        })
         return redirect("/sign-in")
     }
 
@@ -30,10 +32,10 @@ export default async function Page() {
     // Logic for default "Last Month"
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 0);
-    
+
     const client = getQueryClient()
 
-    void client.prefetchQuery(
+    await client.prefetchQuery(
         trpc.kpis.all.queryOptions({
             endDate,
             startDate,

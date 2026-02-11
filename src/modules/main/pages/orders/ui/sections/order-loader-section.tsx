@@ -1,10 +1,13 @@
 "use client"
 
+import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react"
 
 import { useTRPC } from "@/backend/trpc/client"
+
+import { DEFAULT_PAGE_LIMIT } from "@/constants"
 
 import { Button } from "@/components/ui/button"
 
@@ -20,6 +23,7 @@ type Props = {
 }
 
 export function OrderLoaderSection({ filter, source, userType }: Props) {
+    const [page, setPage] = useState<number>(0)
     const t = useTranslations("Main.orders.pagination")
 
     const trpc = useTRPC()
@@ -35,9 +39,9 @@ export function OrderLoaderSection({ filter, source, userType }: Props) {
         trpc.orders.all.infiniteQueryOptions({
             filter,
             source,
-            limit: 8,
+            limit: DEFAULT_PAGE_LIMIT,
         }, {
-            getNextPageParam: (lastPage) => lastPage.nextCursor
+            getNextPageParam: (lastPage) => lastPage.nextCursor,
         })
     )
 
@@ -48,14 +52,17 @@ export function OrderLoaderSection({ filter, source, userType }: Props) {
             <div className="flex flex-col gap-4 h-full w-full p-4">
                 <OrdersHeaderSection filter={filter} source={source} userType={userType} />
 
-                <OrdersListSection filter={filter} source={source} userType={userType} orders={data.pages.flatMap(page => page.items)} />
+                <OrdersListSection filter={filter} source={source} userType={userType} orders={data.pages[page].items} />
 
                 <div className="flex justify-end">
                     <div className="flex items-center gap-x-2">
                         <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => fetchPreviousPage()}
+                            onClick={() => {
+                                setPage(page - 1)
+                                fetchPreviousPage()
+                            }}
                             disabled={!hasPreviousPage || isFetchingPreviousPage}
                         >
                             <IconChevronLeft className="size-4" />
@@ -64,7 +71,10 @@ export function OrderLoaderSection({ filter, source, userType }: Props) {
                         <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => fetchNextPage()}
+                            onClick={() => {
+                                setPage(page + 1)
+                                fetchNextPage()
+                            }}
                             disabled={!hasNextPage || isFetchingNextPage}
                         >
                             {t("next")}
