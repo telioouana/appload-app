@@ -19,7 +19,9 @@ export default async function Page() {
         : undefined
 
     if (!userType) {
-        await auth.api.signOut()
+        await auth.api.signOut({
+            headers: await headers()
+        })
         return redirect("/sign-in")
     }
 

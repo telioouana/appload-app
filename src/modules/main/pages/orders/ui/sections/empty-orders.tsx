@@ -26,7 +26,7 @@ export function EmptyOrders({ userType }: Props) {
                 </EmptyHeader>
                 {userType == "shipper" && (
                     <EmptyContent>
-                        <CreateOrderDialog />
+                        <CreateOrderDialog publishTo="non-subscribers" />
                     </EmptyContent>
                 )}
             </Empty>

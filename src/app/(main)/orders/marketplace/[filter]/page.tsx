@@ -4,17 +4,17 @@ import { redirect } from "next/navigation"
 import { auth } from "@/backend/auth"
 import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server"
 
-import { FilterByType, FilterType, UserType } from "@/modules/main/ui/types"
+import { DEFAULT_PAGE_LIMIT } from "@/constants"
+
+import { FilterType, SourceType, UserType } from "@/modules/main/ui/types"
 import { OrdersView } from "@/modules/main/pages/orders/ui/views/orders-view"
 
 interface Props {
     params: Promise<{ filter: FilterType }>
-    searchParams: Promise<{ filterBy?: FilterByType }>
 }
 
 export default async function Page({
     params,
-    searchParams
 }: Props) {
     const session = await auth.api.getSession({
         headers: await headers()
@@ -23,22 +23,19 @@ export default async function Page({
     if (!session) return redirect("/sign-in")
 
     const { user: { type: sessionType } } = session
-    const { filterBy: rawFilterBy } = await searchParams
-
-    const filterBy = Array.isArray(rawFilterBy) ? rawFilterBy[0] : rawFilterBy
-    // Validate against FilterByType union values; set to undefined if invalid
-    const validFilterBy = filterBy && ["booked", "at-loading", "loading", "waiting-documents", "in-transit", "stopped", "at-border", "completed"].includes(filterBy as string)
-        ? (filterBy as FilterByType)
-        : undefined
 
     const { filter } = await params
+
+    const source: SourceType | undefined = "private"
 
     const userType: UserType | undefined = sessionType === "shipper" || sessionType === "carrier"
         ? sessionType
         : undefined
 
     if (!userType) {
-        await auth.api.signOut()
+        await auth.api.signOut({
+            headers: await headers()
+        })
         return redirect("/sign-in")
     }
 
@@ -47,14 +44,16 @@ export default async function Page({
     await client.prefetchInfiniteQuery(
         trpc.orders.all.infiniteQueryOptions({
             filter,
-            filterBy: validFilterBy,
-            limit: 8,
+            source,
+            limit: DEFAULT_PAGE_LIMIT,
+        }, {
+            getNextPageParam: (lastPage) => lastPage.nextCursor
         })
     )
 
     return (
         <HydrateClient>
-            <OrdersView userType={userType} filter={filter} filterBy={validFilterBy} />
+            <OrdersView userType={userType} filter={filter} source={source} />
         </HydrateClient>
     )
 }

@@ -1,22 +1,21 @@
 import { z } from "zod"
 import { TRPCError } from "@trpc/server"
 import { alias } from "drizzle-orm/pg-core"
-import { and, desc, eq, lt, ne, or } from "drizzle-orm"
+import { and, desc, eq, lt, or } from "drizzle-orm"
 
 import { db } from "@/backend/db"
-import { TRIP_STATUS } from "@/backend/db/types"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
 import { cargo, kyc, network, order, organization, trip } from "@/backend/db/schema"
 
-const ORDER_STATUS = ["prospect", "drafted", "pending", "on-going", "delivered", "marketplace", "history"] as const
+const ORDER_STATUS = ["drafted", "pending", "on-going", "delivered"] as const
 
 export const ordersRouter = createTRPCRouter({
     all: protectedProcedure
         .input(
             z.object({
                 limit: z.number().min(1).max(8),
+                source: z.enum(["private", "public"]).nullish(),
                 filter: z.enum(ORDER_STATUS).nullish(),
-                filterBy: z.enum(TRIP_STATUS).nullish(),
                 cursor: z.object({
                     id: z.number(),
                     updatedAt: z.date(),
@@ -25,7 +24,7 @@ export const ordersRouter = createTRPCRouter({
         )
         .query(async ({ ctx, input }) => {
             const { user, session } = ctx.auth
-            const { cursor, filter, filterBy, limit } = input
+            const { cursor, filter, limit, source } = input
 
             const userType = user.type as "shipper" | "carrier"
 
@@ -33,7 +32,7 @@ export const ordersRouter = createTRPCRouter({
 
             if (userType == "shipper") {
                 const shippers = alias(organization, "shippers")
-                
+
                 const orders = await db
                     .select({
                         order: order,
@@ -50,18 +49,13 @@ export const ordersRouter = createTRPCRouter({
                     .leftJoin(trip, eq(trip.orderId, order.id))
                     .where(and(
                         eq(order.shipperId, session.activeOrganizationId),
-                        filter
-                            ? filter == "marketplace"
+                        source
+                            ? source === "private"
                                 ? eq(order.share, "subscribers")
-                                : filter == "history"
-                                    ? or(
-                                        eq(order.status, "completed"),
-                                        eq(order.status, "cancelled")
-                                    )
-                                    : eq(order.status, filter)
+                                : eq(order.share, "non-subscribers")
                             : undefined,
-                        filterBy
-                            ? eq(trip.status, filterBy)
+                        filter
+                            ? eq(order.status, filter)
                             : undefined,
                         cursor
                             ? or(
@@ -119,24 +113,14 @@ export const ordersRouter = createTRPCRouter({
                         eq(trip.carrierId, session.activeOrganizationId)
                     ))
                     .where(and(
-                        or(
-                            eq(order.share, "non-subscribers"),
-                            eq(trip.carrierId, session.activeOrganizationId),
-                            eq(network.carrierId, session.activeOrganizationId),
-                        ),
-                        ne(order.status, "drafted"),
-                        filter
-                            ? filter == "marketplace"
-                                ? eq(order.share, "subscribers")
-                                : filter == "history"
-                                    ? or(
-                                        eq(order.status, "completed"),
-                                        eq(order.status, "cancelled")
-                                    )
-                                    : eq(order.status, filter)
-                            : undefined,
-                        filterBy
-                            ? eq(trip.status, filterBy)
+                        eq(order.status, "pending"),
+                        source
+                            ? source === "private"
+                                ? and(
+                                    eq(order.share, "subscribers"),
+                                    eq(network.carrierId, session.activeOrganizationId)
+                                )
+                                : eq(order.share, "non-subscribers")
                             : undefined,
                         cursor
                             ? or(

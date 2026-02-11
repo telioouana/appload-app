@@ -1,27 +1,25 @@
-"use client" 
+"use client"
 
 import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 
-import { FilterByType, FilterType, UserType } from "@/modules/main/ui/types"
+import { FilterType, SourceType, UserType } from "@/modules/main/ui/types"
 import { OrdersErrorFallback } from "@/modules/main/ui/states/orders-error-fallback"
-import { OrdersSection } from "@/modules/main/pages/orders/ui/sections/orders-section"
 import { OrdersLoadingFallback } from "@/modules/main/ui/states/orders-loading-fallback"
+import { OrderLoaderSection } from "@/modules/main/pages/orders/ui/sections/order-loader-section"
 
 type Props = {
     userType: UserType
     filter?: FilterType
-    filterBy?: FilterByType
+    source?: SourceType
 }
 
-export function OrdersView({ filter, filterBy, userType }: Props) {
+export function OrdersView({ filter, source, userType }: Props) {
     return (
         <Suspense fallback={<OrdersLoadingFallback />}>
             <ErrorBoundary fallback={<OrdersErrorFallback />}>
-                <div className="w-full h-full flex flex-col gap-y-6">
-                    <OrdersSection filter={filter} filterBy={filterBy} userType={userType}/>
-                </div>
+                <OrderLoaderSection filter={filter} source={source} userType={userType} />
             </ErrorBoundary>
-        </Suspense>   
+        </Suspense>
     )
 }

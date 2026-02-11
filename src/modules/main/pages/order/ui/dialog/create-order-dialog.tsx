@@ -2,13 +2,15 @@
 
 import { z } from "zod";
 import { useTranslations } from "next-intl"
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldPath, FormProvider, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FormProvider, useForm } from "react-hook-form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { IconDots, IconPlus, IconDeviceFloppy, IconSend } from "@tabler/icons-react";
 
 import { useTRPC } from "@/backend/trpc/client";
-import { CATEGORIES, PACKING, SHARE, WEIGHT_UNIT } from "@/backend/db/types";
+import { CATEGORIES, CURRENCY, PACKING, SHARE, WEIGHT_UNIT } from "@/backend/db/types";
+
+import { DEFAULT_PAGE_LIMIT } from "@/constants"
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -16,17 +18,20 @@ import { ResponsiveDialog } from "@/components/dialog/responsive-dialog"
 import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-import { FilterByType, FilterType } from "@/modules/main/ui/types";
-import { useCreateOrder } from "@/modules/main/pages/order/hooks/use-create-order";
+import { FilterType } from "@/modules/main/ui/types";
 import { OrderForm } from "@/modules/main/pages/order/ui/forms/order-form";
+import { useCreateOrder } from "@/modules/main/pages/order/hooks/use-create-order";
+
+import { useTheme } from "next-themes";
 
 type Props = {
     filter?: FilterType
-    filterBy?: FilterByType
+    publishTo: typeof SHARE[number]
 }
 
-export function CreateOrderDialog({ filter, filterBy }: Props) {
+export function CreateOrderDialog({ filter, publishTo }: Props) {
     const { isOpen, onClose, onOpenChange } = useCreateOrder()
+
     const t = useTranslations("Main.order.create")
     const queryClient = useQueryClient()
     const trpc = useTRPC()
@@ -71,8 +76,29 @@ export function CreateOrderDialog({ filter, filterBy }: Props) {
                 path: ["temperature"]
             }),
 
-        share: z.enum(SHARE, { error: t("form.share.error") })
+        share: z.enum(SHARE, { error: t("form.share.error") }),
+        price: z.number().optional(),
+        currency: z.enum(CURRENCY).optional(),
     })
+        .superRefine((data, ctx) => {
+            // If share is "subscribers", price and currency MUST exist
+            if (data.share === "subscribers") {
+                if (!data.price || data.price <= 0) {
+                    ctx.addIssue({
+                        code: "custom",
+                        message: t("form.price.error"),
+                        path: ["price"],
+                    });
+                }
+                if (!data.currency) {
+                    ctx.addIssue({
+                        code: "custom",
+                        message: t("form.currency.error"),
+                        path: ["currency"],
+                    });
+                }
+            }
+        })
 
     type CreateOrderForm = z.infer<typeof CreateOrderSchema>
 
@@ -88,17 +114,17 @@ export function CreateOrderDialog({ filter, filterBy }: Props) {
                 temperatureInstructions: "",
                 isGroupageAllowed: false
             },
-            share: "non-subscribers"
-        }
+            share: publishTo
+        },
+        shouldUnregister: false,
     })
 
     const orderMutation = useMutation(
         trpc.order.create.mutationOptions({
             onSuccess: () => {
-                queryClient.invalidateQueries(trpc.orders.all.queryOptions({
+                queryClient.invalidateQueries(trpc.orders.all.infiniteQueryOptions({
                     filter,
-                    filterBy,
-                    limit: 8,
+                    limit: DEFAULT_PAGE_LIMIT,
                 }))
                 onClose()
             },
@@ -119,17 +145,24 @@ export function CreateOrderDialog({ filter, filterBy }: Props) {
 
     async function handleSubmit(values: CreateOrderForm, status: "prospect" | "drafted" | "pending") {
         form.clearErrors()
-        const fields: FieldPath<CreateOrderForm>[] = ["loadingAddress", "expectedLoadingDate", "offloadingAddress", "expectedOffloadingDate", "expectedTrucks", "cargo.category", "cargo.description", "cargo.quantity", "cargo.unit", "cargo.packing", "share"]
 
-        if (values.cargo.isHazardous) {
-            fields.push("cargo.hazchemCode")
-        }
-
-        if (values.cargo.isRefrigerated) {
-            fields.push("cargo.temperature")
-        }
-
-        const output = await form.trigger(fields, { shouldFocus: true })
+        const output = await form.trigger([
+            "loadingAddress",
+            "expectedLoadingDate",
+            "offloadingAddress",
+            "expectedOffloadingDate",
+            "expectedTrucks",
+            "cargo.category",
+            "cargo.description",
+            "cargo.quantity",
+            "cargo.unit",
+            "cargo.packing",
+            "cargo.hazchemCode",
+            "cargo.temperature",
+            "share",
+            "price",
+            "currency"
+        ], { shouldFocus: true })
         if (!output) return
 
         await orderMutation.mutateAsync({
@@ -137,6 +170,8 @@ export function CreateOrderDialog({ filter, filterBy }: Props) {
             values
         })
     }
+
+    const { setTheme } = useTheme()
 
     return (
         <>
@@ -149,12 +184,27 @@ export function CreateOrderDialog({ filter, filterBy }: Props) {
             </Button>
 
             <ResponsiveDialog
-                title={"Publish new order"}
-                description={""}
+                title={t("title")}
+                description={t(`description.${form.watch().share}`)}
                 onClose={onClose}
                 open={isOpen}
                 type="dialog"
                 className="md:max-w-5xl"
+                button={(
+                    <Button
+                        onClick={() => {
+                            // eslint-disable-next-line react-hooks/incompatible-library
+                            if (form.watch().share === "non-subscribers") {
+                                form.setValue("share", "subscribers")
+                                setTheme("light")
+                            } else {
+                                form.setValue("share", "non-subscribers")
+                                setTheme("dark")
+                            }
+                        }}>
+                        {t(`button.${form.watch().share}`)}
+                    </Button>
+                )}
             >
                 <FormProvider {...form}>
                     <form className="flex flex-col gap-6" >

@@ -35,7 +35,7 @@ export const CargoSchema = z.object({
     isHazardous: z.boolean(),
     hazchemCode: z.string().optional(),
     isRefrigerated: z.boolean(),
-    temperature: z.number().optional(),
+    temperature: z.number(),
     temperatureInstructions: z.string().optional(),
     isGroupageAllowed: z.boolean(),
 })
@@ -152,8 +152,29 @@ export const CreateOrderSchema = z.object({
 
     cargo: CargoSchema,
 
-    share: z.enum(SHARE)
+    share: z.enum(SHARE),
+    price: z.number().optional(),
+    currency: z.enum(CURRENCY).optional(),
 })
+    .superRefine((data, ctx) => {
+        // If share is "subscribers", price and currency MUST exist
+        if (data.share === "subscribers") {
+            if (!data.price || data.price <= 0) {
+                ctx.addIssue({
+                    code: "custom",
+                    message: "Price required",
+                    path: ["price"]
+                });
+            }
+            if (!data.currency) {
+                ctx.addIssue({
+                    code: "custom",
+                    message: "Currency required",
+                    path: ["currency"]
+                });
+            }
+        }
+    })
 
 export const TripsTableSchema = z.object({
     order: OrderSchema,

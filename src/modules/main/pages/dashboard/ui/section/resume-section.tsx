@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react";
-import { useFormatter, useTranslations } from "next-intl";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useFormatter, useTranslations } from "next-intl";
 
 import { useTRPC } from "@/backend/trpc/client";
 
