@@ -80,7 +80,7 @@ export function OrdersCard({ defaultValues: { cargo, order, trip, organizationId
     const accept = useMutation(
         trpc.order.accept.mutationOptions({
             onSuccess: () => {
-                queryClient.invalidateQueries(trpc.orders.all.queryOptions({
+                queryClient.invalidateQueries(trpc.orders.all.infiniteQueryOptions({
                     limit: DEFAULT_PAGE_LIMIT,
                     filter,
                     source,
