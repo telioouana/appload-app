@@ -2,8 +2,7 @@
 import { useTranslations } from "next-intl"
 import { useFormContext } from "react-hook-form";
 
-import { CreateOrderForm as COF, SHARE } from "@/backend/db/types";
-import { CATEGORIES, PACKING, WEIGHT_UNIT } from "@/backend/db/types";
+import { CreateOrderForm as COF, CATEGORIES, CURRENCY, PACKING, WEIGHT_UNIT } from "@/backend/db/types";
 
 import { FieldGroup } from "@/components/ui/field";
 import { SelectItem } from "@/components/ui/select";
@@ -15,7 +14,6 @@ import { SliderInput } from "@/components/customs/slider";
 import { CheckboxInput } from "@/components/customs/checkbox";
 import { LocationInput } from "@/components/customs/location";
 import { TextAreaInput } from "@/components/customs/textarea";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function OrderForm({ isPending }: { isPending: boolean }) {
     const t = useTranslations("Main.order.create.form")
@@ -167,19 +165,27 @@ export function OrderForm({ isPending }: { isPending: boolean }) {
                 </>
             )}
 
-            <Tabs className="w-full" value={form.watch().share}>
-                <TabsList className="w-full">
-                    {SHARE.map((item, index) => (
-                        <TabsTrigger
-                            key={index}
-                            value={item}
-                            onClick={() => form.setValue("share", item)}
-                        >
-                            {t(`share.options.${item}`)}
-                        </TabsTrigger>
-                    ))}
-                </TabsList>
-            </Tabs>
+            {form.watch().share === "subscribers" && (
+                <div className="grid grid-cols-2 gap-4">
+                    <NumberInput
+                        control={form.control}
+                        name="price"
+                        label={t("price.label")}
+                        placeholder={t("price.placeholder")}
+                        isPending={form.formState.isSubmitting || isPending}
+                    />
+
+                    <SelectInput
+                        control={form.control}
+                        name="currency"
+                        label={t("currency.label")}
+                        placeholder={t("currency.placeholder")}
+                        isPending={form.formState.isSubmitting || isPending}
+                    >
+                        {CURRENCY.map((item, index) => <SelectItem key={index} value={item}>{item}</SelectItem>)}
+                    </SelectInput>
+                </div>
+            )}
         </FieldGroup>
     )
 }

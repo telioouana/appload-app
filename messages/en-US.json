@@ -561,26 +561,36 @@
             },
             "shipper": {
                 "orders": {
-                    "label": "Posted orders",
+                    "label": "Public Marketplace",
                     "drafted": "Drafted",
                     "pending": "Pending",
                     "on-going": "On going",
                     "delivered": "Delivered"
                 },
-                "marketplace": "Marketplace",
+                "marketplace": {
+                    "label": "Private Marketplace",
+                    "transporters": "My transporters",
+                    "drafted": "Drafted",
+                    "pending": "Pending",
+                    "on-going": "On going",
+                    "delivered": "Delivered"
+                },
                 "quote": "Quote requests",
                 "offers": "Offers",
                 "history": "History"
             },
             "carrier": {
                 "orders": {
-                    "label": "All orders",
-                    "marketplace": "My Clients",
+                    "label": "Orders",
+                    "marketplace": "Partner Network",
+                    "public": "Public Marketplace"
+                },
+                "trips": {
+                    "label": "My trips",
                     "pending": "Pending",
-                    "on-going": "On going",
+                    "in-transit": "In transit",
                     "delivered": "Delivered"
                 },
-                "trips": "My trips",
                 "quote": "Quote requests",
                 "history": "history",
                 "fleet": {
@@ -691,6 +701,127 @@
                 }
             }
         },
+        "kpis": {
+            "main": {
+                "tabs": {
+                    "triggers": {
+                        "title": {
+                            "operational": "Operational",
+                            "incidents": "Incidents",
+                            "costs": "Costs",
+                            "efficiency": "Efficiency"
+                        },
+                        "period": {
+                            "month": "Last month",
+                            "quarter": "Last quarter",
+                            "year": "Last year"
+                        }
+                    },
+                    "content": {
+                        "operational": {
+                            "on-time-loading": {
+                                "label": "Percentage of on-time arrival at loading ",
+                                "unit": "%"
+                            },
+                            "average-loading-time": {
+                                "label": "Average loading duration per trip",
+                                "unit": "Days"
+                            },
+                            "average-travel-time": {
+                                "label": "Average transport duration",
+                                "unit": "Days"
+                            },
+                            "average-daily-distance": {
+                                "label": "Average Distance Covered per Day",
+                                "unit": "km"
+                            },
+                            "on-time-offloading": {
+                                "label": "Percentage of on-time arrival at offloading",
+                                "unit": "%"
+                            },
+                            "average-offloading-time": {
+                                "label": "Average offloading duration",
+                                "unit": "Days"
+                            },
+                            "demurages-occurrences": {
+                                "label": "Percentage of demurrage occurrences",
+                                "unit": "%"
+                            },
+                            "damurages-charged-days": {
+                                "label": "Total number of demurrage days charged ",
+                                "unit": "Days"
+                            }
+                        },
+                        "incidents": {
+                            "total-accidents": {
+                                "label": "Total accidents occured during transportation",
+                                "unit": "Cases"
+                            },
+                            "mechanical-issues": {
+                                "label": "Total mechanical issues encountered during transportation.",
+                                "unit": "Cases"
+                            },
+                            "documentation-issues": {
+                                "label": "Total documentation issues (missing or incorrect documentation causing delays)",
+                                "unit": "Cases"
+                            },
+                            "police-issues": {
+                                "label": "Total stops caused by inspections, fines, or authority actions.",
+                                "unit": "Cases"
+                            },
+                            "total-delays": {
+                                "label": "Total delay time caused by all issues above",
+                                "unit": "Days"
+                            },
+                            "percentage-damaged-cargo": {
+                                "label": "Percentage of trips with cargo damage incidents.",
+                                "unit": "%"
+                            },
+                            "percentage-complains": {
+                                "label": "Percentage of trips with client or third-party complaints",
+                                "unit": "%"
+                            }
+                        },
+                        "costs": {
+                            "cost-per-km": {
+                                "label": "Cost per km",
+                                "unit": "km"
+                            },
+                            "cost-per-unit": {
+                                "label": "Cost per ton",
+                                "unit": "ton"
+                            },
+                            "cost-per-unit-km": {
+                                "label": "Cost per ton-km",
+                                "unit": "ton/km"
+                            }
+                        },
+                        "efficiency": {
+                            "backload": {
+                                "label": "Backload trip",
+                                "unit": "%"
+                            },
+                            "emissions": {
+                                "label": "CO2 emissions reductions from Backload trips",
+                                "unit": "g/km"
+                            },
+                            "margin-over-fuel": {
+                                "label": "Margin over fuel cost on backload trips",
+                                "unit": "%"
+                            },
+                            "saved-with-backload": {
+                                "label": "Total cost savings from Backload optimization",
+                                "unit": {
+                                    "MZN": "MZN",
+                                    "ZAR": "ZAR",
+                                    "USD": "USD"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "error": {
             "orders": {
                 "title": "Failed to load orders",
@@ -698,19 +829,72 @@
                 "button": "Retry"
             }
         },
-        "orders": {
-            "empty": {
-                "shipper": {
-                    "title": "No orders associated with this account",
-                    "description": "Start creating new orders and they will be listed here",
-                    "note": "This may vary based on filters applied"
-                },
-                "carrier": {
-                    "title": "There are no new orders available on appload",
-                    "description": "All orders that were posted on the marketplace where either accepted or cancelled. Please check back later for new orders",
-                    "note": "This may vary based on filters applied"
+        "card": {
+            "header": {
+                "id": "IDX{id}",
+                "subscribers": "From your network",
+                "status": {
+                    "drafted": "Drafted",
+                    "prospect": "Prospect",
+                    "pending": "Pending",
+                    "booked": "Booked",
+                    "at-loading": "At loading",
+                    "loading": "Loading",
+                    "in-transit": "In transit",
+                    "at-border": "At border",
+                    "stopped": "Stopped",
+                    "at-offloading": "At offloading",
+                    "offloading": "Offloading",
+                    "delivered": "Delivered",
+                    "completed": "Completed",
+                    "cancelled": "Cancelled",
+                    "waiting-documents": "Waiting documents"
                 }
             },
+            "content": {
+                "category": {
+                    "label": "Cargo category",
+                    "options": {
+                        "agriculture-inputs": "Agriculture Inputs",
+                        "agriculture-products": "Agriculture Products",
+                        "construction": "Construction",
+                        "machinery-equipment": "Machinery Equipment",
+                        "fmcg": "FMCG",
+                        "general-cargo": "General Cargo",
+                        "medicine": "Medicine",
+                        "mining": "Mining",
+                        "oil-gas": "Oil & Gas",
+                        "vehicles": "Vehicles",
+                        "other": "Other"
+                    }
+                },
+                "quantity": {
+                    "label": "Quantity"
+                },
+                "shipping": {
+                    "label": "Expected shipping window",
+                    "from": "From",
+                    "to": "To"
+                },
+                "distance": "Approximate travel distance",
+                "location": {
+                    "label": "Shipping route",
+                    "from": "From",
+                    "to": "To"
+                }
+            },
+            "footer": {
+                "buttons": {
+                    "continue": "Resume order",
+                    "update": "Update order",
+                    "details": "Details",
+                    "accept": "Accept",
+                    "offer": "Make offer",
+                    "quote": "Send quote"
+                }
+            }
+        },
+        "orders": {
             "header": {
                 "shipper": {
                     "main": "My orders",
@@ -726,84 +910,40 @@
                     "delivered": "Completed orders"
                 }
             },
+            "empty": {
+                "shipper": {
+                    "title": "No orders associated with this account",
+                    "description": "Start creating new orders and they will be listed here",
+                    "note": "This may vary based on filters applied"
+                },
+                "carrier": {
+                    "title": "There are no new orders available on appload",
+                    "description": "All orders that were posted on the marketplace where either accepted or cancelled. Please check back later for new orders",
+                    "note": "This may vary based on filters applied"
+                }
+            },
             "pagination": {
                 "first": "First",
                 "previous": "Previous",
                 "next": "Next",
                 "last": "Last"
-            },
-            "card": {
-                "header": {
-                    "id": "IDX{id}",
-                    "subscribers": "From your network",
-                    "status": {
-                        "drafted": "Drafted",
-                        "prospect": "Prospect",
-                        "pending": "Pending",
-                        "booked": "Booked",
-                        "at-loading": "At loading",
-                        "loading": "Loading",
-                        "in-transit": "In transit",
-                        "at-border": "At border",
-                        "stopped": "Stopped",
-                        "at-offloading": "At offloading",
-                        "offloading": "Offloading",
-                        "delivered": "Delivered",
-                        "completed": "Completed",
-                        "cancelled": "Cancelled",
-                        "waiting-documents": "Waiting documents"
-                    }
-                },
-                "content": {
-                    "category": {
-                        "label": "Cargo category",
-                        "options": {
-                            "agriculture-inputs": "Agriculture Inputs",
-                            "agriculture-products": "Agriculture Products",
-                            "construction": "Construction",
-                            "machinery-equipment": "Machinery Equipment",
-                            "fmcg": "FMCG",
-                            "general-cargo": "General Cargo",
-                            "medicine": "Medicine",
-                            "mining": "Mining",
-                            "oil-gas": "Oil & Gas",
-                            "vehicles": "Vehicles",
-                            "other": "Other"
-                        }
-                    },
-                    "quantity": {
-                        "label": "Quantity"
-                    },
-                    "shipping": {
-                        "label": "Expected shipping window",
-                        "from": "From",
-                        "to": "To"
-                    },
-                    "distance": "Approximate travel distance",
-                    "location": {
-                        "label": "Shipping route",
-                        "from": "From",
-                        "to": "To"
-                    }
-                },
-                "footer": {
-                    "buttons": {
-                        "details": "Details",
-                        "accept": "Accept",
-                        "offer": "Make offer",
-                        "quote": "Send quote"
-                    }
-                }
             }
         },
         "order": {
             "create": {
+                "title": "Create a new order",
+                "description": {
+                    "subscribers": "Orders created within this form will be sent only to the registered transporters on your network",
+                    "non-subscribers": "Orders created within this form will be sent to all registered transporters on appload"
+                },
                 "button": {
                     "create": "Create new order",
                     "cancel": "Cancel",
                     "save": "Finish later",
                     "quote": "Request quote",
-                    "publish": "Publish"
+                    "publish": "Publish",
+                    "subscribers": "Send to all transporters",
+                    "non-subscribers": "Send to my transporters"
                 },
                 "form": {
                     "loading-address": {
@@ -912,13 +1052,21 @@
                             "non-subscribers": "Share to any transporter on appload"
                         },
                         "error": "Sharing options not provided"
+                    },
+                    "price": {
+                        "label": "Shipping price",
+                        "placeholder": "Enter the amount to be paid for each this trip",
+                        "error": "Shipping price was not provided"
+                    },
+                    "currency": {
+                        "label": "Currency",
+                        "placeholder": "Select the currency of the quatity",
+                        "error": "No currency was selected"
                     }
                 }
             },
             "update": {
                 "button": {
-                    "continue": "Resume order",
-                    "update": "Update order",
                     "cancel": "Cancel",
                     "quote": "Request quote",
                     "publish": {
@@ -1033,6 +1181,16 @@
                             "non-subscribers": "Share to any transporter on appload"
                         },
                         "error": "Sharing options not provided"
+                    },
+                    "price": {
+                        "label": "Shipping price",
+                        "placeholder": "Enter the amount to be paid for each this trip",
+                        "error": "Shipping price was not provided"
+                    },
+                    "currency": {
+                        "label": "Currency",
+                        "placeholder": "Select the currency of the quatity",
+                        "error": "No currency was selected"
                     }
                 }
             }

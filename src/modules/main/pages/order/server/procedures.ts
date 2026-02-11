@@ -25,6 +25,7 @@ export const orderRouter = createTRPCRouter({
             const result = await distanceCalculator(values.loadingAddress[0].placeId, values.offloadingAddress[0].placeId)
 
             const distance = result?.[0].elements[0].distance.value ?? 0
+            values.price = values.price ?? 0
 
             if (orderId) {
                 await db

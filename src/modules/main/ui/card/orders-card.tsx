@@ -3,11 +3,11 @@
 import { z } from "zod";
 import { useFormatter, useTranslations } from "next-intl";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { IconChecks, IconFlag, IconInvoice, IconContract, IconSearch } from "@tabler/icons-react";
+import { IconChecks, IconFlag, IconInvoice, IconContract, IconSearch, IconEdit } from "@tabler/icons-react";
 
 import { useTRPC } from "@/backend/trpc/client";
 import { cargo, order, trip } from "@/backend/db/schema";
-import { FISCAL_REGIME, TripSchema, WEIGHT_UNIT } from "@/backend/db/types";
+import { CATEGORIES, FISCAL_REGIME, PACKING, SHARE, TripSchema, WEIGHT_UNIT } from "@/backend/db/types";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,27 +15,62 @@ import { Spinner } from "@/components/ui/spinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { FilterByType, FilterType, UserType } from "@/modules/main/ui/types";
+import { FilterType, SourceType, UserType } from "@/modules/main/ui/types";
 import { StatusBadge, StatusKey } from "@/modules/main/ui/badge/status-badge";
+import { useUpdateOrder } from "@/modules/main/pages/order/hooks/use-update-order";
 import { UpdateOrderDialog } from "@/modules/main/pages/order/ui/dialog/update-order-dialog";
 
 type Props = {
-    cargo: typeof cargo.$inferSelect
-    order: typeof order.$inferSelect
-    trip: typeof trip.$inferSelect | null
-    organizationId: string
-    organizationName: string
-    fiscalRegime: string | null
+    defaultValues: {
+        cargo: typeof cargo.$inferSelect
+        order: typeof order.$inferSelect
+        trip: typeof trip.$inferSelect | null
+        organizationId: string
+        organizationName: string
+        fiscalRegime: string | null
+    }
     userType: UserType
     filter?: FilterType
-    filterBy?: FilterByType
+    source?: SourceType
 }
 
-export function OrdersCard({ cargo, order, trip, organizationId, organizationName, fiscalRegime, userType, filter, filterBy }: Props) {
-    const t = useTranslations("Main.orders.card")
+export function OrdersCard({ defaultValues: { cargo, order, trip, organizationId, organizationName, fiscalRegime }, filter, source, userType }: Props) {
+    const { onOpenChange } = useUpdateOrder()
+    const t = useTranslations("Main.card")
     const f = useFormatter()
 
     const status = trip ? trip.status : order.status
+    const defaultValues = {
+        loadingAddress: [{
+            address: order.loadingAddress?.[0].address ?? "",
+            country: order.loadingAddress?.[0].country ?? "",
+            placeId: order.loadingAddress?.[0].placeId ?? "",
+            state: order.loadingAddress?.[0].state ?? "",
+        }],
+        offloadingAddress: [{
+            address: order.offloadingAddress?.[0].address ?? "",
+            country: order.offloadingAddress?.[0].country ?? "",
+            placeId: order.offloadingAddress?.[0].placeId ?? "",
+            state: order.offloadingAddress?.[0].state ?? "",
+        }],
+        expectedLoadingDate: order.expectedLoadingDate,
+        expectedOffloadingDate: order.expectedOffloadingDate,
+        expectedTrucks: order.expectedTrucks ?? 1,
+        cargo: {
+            category: cargo.category as typeof CATEGORIES[number],
+            description: cargo.description,
+            quantity: Number(cargo.quantity),
+            unit: cargo.unit as typeof WEIGHT_UNIT[number],
+            packing: cargo.packing as typeof PACKING[number],
+            isHazardous: cargo.isHazardous ?? false,
+            hazchemCode: cargo.hazchemCode ?? "",
+            isRefrigerated: cargo.isRefrigerated ?? false,
+            temperature: Number(cargo.temperature) ?? 0,
+            temperatureInstructions: cargo.temperatureInstructions ?? "",
+            isGroupageAllowed: cargo.isGroupageAllowed ?? false
+        },
+        share: order.share as typeof SHARE[number]
+    }
 
     const queryClient = useQueryClient()
     const trpc = useTRPC()
@@ -46,7 +81,7 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                 queryClient.invalidateQueries(trpc.orders.all.queryOptions({
                     limit: 8,
                     filter,
-                    filterBy,
+                    source,
                 }))
             }
         })
@@ -140,8 +175,9 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
             values
         })
     }
+
     return (
-        <Card className="w-full max-w-md gap-3">
+        <Card className="w-full max-w-md gap-3 h-fit">
             <CardHeader className="flex items-start justify-between gap-4 h-12">
                 <div className="flex flex-col">
                     <CardTitle>{t("header.id", { id: order.legacyId.toString().padStart(5, '0') })}</CardTitle>
@@ -161,6 +197,7 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                 </div>
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
+                <UpdateOrderDialog filter={filter} source={source} />
                 <div className="flex justify-between items-center">
                     <div className="flex flex-col gap-1">
                         <span className="text-xs text-muted-foreground">{t("content.category.label")}</span>
@@ -283,27 +320,37 @@ export function OrdersCard({ cargo, order, trip, organizationId, organizationNam
                         (order.status == "drafted"
                             ? (
                                 <div className="w-full">
-                                    <UpdateOrderDialog
-                                        action="continue"
-                                        cargo={cargo}
-                                        order={order}
+                                    <Button
+                                        type="button"
+                                        variant="outline"
                                         className="w-full"
-                                        filter={filter}
-                                        filterBy={filterBy}
-                                    />
+                                        onClick={() => onOpenChange(
+                                            defaultValues,
+                                            "continue",
+                                            order.id
+                                        )}
+                                    >
+                                        {t("footer.buttons.continue")}
+                                        <IconEdit />
+                                    </Button>
                                 </div>
                             )
-                            : (order.status == "prospect" || order.status == "pending"
+                            : (order.status == "pending"
                                 ? (
                                     <div className="w-full">
-                                        <UpdateOrderDialog
-                                            action="update"
-                                            cargo={cargo}
-                                            order={order}
+                                        <Button
+                                            type="button"
+                                            variant="outline"
                                             className="w-full"
-                                            filter={filter}
-                                            filterBy={filterBy}
-                                        />
+                                            onClick={() => onOpenChange(
+                                                defaultValues,
+                                                "update",
+                                                order.id
+                                            )}
+                                        >
+                                            {t("footer.buttons.update")}
+                                            <IconEdit />
+                                        </Button>
                                     </div>
                                 )
                                 : (

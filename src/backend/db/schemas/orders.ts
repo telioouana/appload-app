@@ -38,6 +38,8 @@ export const order = pgTable(
         status: orderStatusEnum("status"),
         route: routeTypeEnum("route").default("national"),
         share: shareEnum("share").default("non-subscribers"),
+        price: integer("price"),
+        currency: currencyEnum("currency").default("MZN"),
 
         createdAt: timestamp("created_at").defaultNow().notNull(),
         updatedAt: timestamp("updated_at")

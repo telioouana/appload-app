@@ -561,14 +561,20 @@
             },
             "shipper": {
                 "orders": {
-                    "label": "Todas as encomendas",
+                    "label": "Mercado público",
                     "drafted": "Rascunho",
                     "pending": "Pendente",
                     "on-going": "Em trânsito",
                     "delivered": "Entregue"
                 },
-                "marketplace": "Marketplace",
-                "quote": "Pedidos de cotação",
+                "marketplace": {
+                    "label": "Mercado privado",
+                    "drafted": "Rascunho",
+                    "pending": "Pendente",
+                    "on-going": "Em trânsito",
+                    "delivered": "Entregue"
+                },
+                "quote": "Avaliação custos",
                 "offers": "Ofertas",
                 "history": "Histórico"
             },
@@ -576,11 +582,14 @@
                 "orders": {
                     "label": "Todas as encomendas",
                     "marketplace": "Os meus clientes",
+                    "public": "Mercado aberto"
+                },
+                "trips": {
+                    "label": "As minhas viagens",
                     "pending": "Pendente",
-                    "on-going": "Em trânsito",
+                    "in-transit": "Em trânsito",
                     "delivered": "Entregue"
                 },
-                "trips": "As minhas viagens",
                 "quote": "Pedidos de cotação",
                 "history": "Histórico",
                 "fleet": {
@@ -691,6 +700,127 @@
                 }
             }
         },
+        "kpis": {
+            "main": {
+                "tabs": {
+                    "triggers": {
+                        "title": {
+                            "operational": "Operacional",
+                            "incidents": "Incidentes",
+                            "costs": "Custos",
+                            "efficiency": "Eficiência"
+                        },
+                        "period": {
+                            "month": "Último mês",
+                            "quarter": "Último trimestre",
+                            "year": "Último ano"
+                        }
+                    },
+                    "content": {
+                        "operational": {
+                            "on-time-loading": {
+                                "label": "Percentagem de chegada pontual ao local de carga",
+                                "unit": "%"
+                            },
+                            "average-loading-time": {
+                                "label": "Duração média de carga por viagem",
+                                "unit": "Dias"
+                            },
+                            "average-travel-time": {
+                                "label": "Duração média do transporte",
+                                "unit": "Dias"
+                            },
+                            "average-daily-distance": {
+                                "label": "Distância média percorrida por dia",
+                                "unit": "km"
+                            },
+                            "on-time-offloading": {
+                                "label": "Percentagem de chegada pontual ao local de descarga",
+                                "unit": "%"
+                            },
+                            "average-offloading-time": {
+                                "label": "Duração média de descarga",
+                                "unit": "Dias"
+                            },
+                            "demurages-occurrences": {
+                                "label": "Percentagem de ocorrências de demurrage",
+                                "unit": "%"
+                            },
+                            "damurages-charged-days": {
+                                "label": "Total de dias de demurrage faturados",
+                                "unit": "Dias"
+                            }
+                        },
+                        "incidents": {
+                            "total-accidents": {
+                                "label": "Total de acidentes ocorridos durante o transporte",
+                                "unit": "Casos"
+                            },
+                            "mechanical-issues": {
+                                "label": "Total de avarias mecânicas durante o transporte",
+                                "unit": "Casos"
+                            },
+                            "documentation-issues": {
+                                "label": "Total de problemas de documentação (em falta ou incorreta)",
+                                "unit": "Casos"
+                            },
+                            "police-issues": {
+                                "label": "Total de paragens por inspeções, multas ou ações das autoridades",
+                                "unit": "Casos"
+                            },
+                            "total-delays": {
+                                "label": "Tempo total de atraso causado pelos incidentes",
+                                "unit": "Dias"
+                            },
+                            "percentage-damaged-cargo": {
+                                "label": "Percentagem de viagens com danos na carga",
+                                "unit": "%"
+                            },
+                            "percentage-complains": {
+                                "label": "Percentagem de viagens com reclamações de clientes ou terceiros",
+                                "unit": "%"
+                            }
+                        },
+                        "costs": {
+                            "cost-per-km": {
+                                "label": "Custo por km",
+                                "unit": "km"
+                            },
+                            "cost-per-unit": {
+                                "label": "Custo por tonelada",
+                                "unit": "ton"
+                            },
+                            "cost-per-unit-km": {
+                                "label": "Custo por tonelada-km",
+                                "unit": "ton/km"
+                            }
+                        },
+                        "efficiency": {
+                            "backload": {
+                                "label": "Percentagem de viagens com backload",
+                                "unit": "%"
+                            },
+                            "emissions": {
+                                "label": "Redução de emissões de CO₂ em viagens com backload",
+                                "unit": "g/km"
+                            },
+                            "margin-over-fuel": {
+                                "label": "Margem sobre custo de combustível em viagens com backload",
+                                "unit": "%"
+                            },
+                            "saved-with-backload": {
+                                "label": "Poupança total obtida com otimização de backload",
+                                "unit": {
+                                    "MZN": "MZN",
+                                    "ZAR": "ZAR",
+                                    "USD": "USD"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "error": {
             "orders": {
                 "title": "Não foi possível carregar os pedidos",
@@ -698,19 +828,72 @@
                 "button": "Recarregar"
             }
         },
-        "orders": {
-            "empty": {
-                "shipper": {
-                    "title": "Nenhum pedido de transporte associado a esta conta",
-                    "description": "Comece por criar novos pedidos de transporte e estes serão listados aqui",
-                    "note": "A listagem pode variar consoante os filtros aplicados"
-                },
-                "carrier": {
-                    "title": "Não existem novos pedidos disponíveis na Appload",
-                    "description": "Todos os pedidos publicados no marketplace foram ou aceites ou cancelados. Por favor, volte mais tarde para novos pedidos",
-                    "note": "A listagem pode variar consoante os filtros aplicados"
+        "card": {
+            "header": {
+                "id": "PED{id}",
+                "subscribers": "Da sua rede",
+                "status": {
+                    "drafted": "Rascunho",
+                    "prospect": "Proposta",
+                    "pending": "Pendente",
+                    "booked": "Confirmado",
+                    "at-loading": "No ponto de carga",
+                    "loading": "Em carregamento",
+                    "in-transit": "Em trânsito",
+                    "at-border": "Na fronteira",
+                    "stopped": "Parado",
+                    "at-offloading": "No ponto de descarga",
+                    "offloading": "Em descarga",
+                    "delivered": "Entregue",
+                    "completed": "Concluído",
+                    "cancelled": "Cancelado",
+                    "waiting-documents": "A aguardar documentação"
                 }
             },
+            "content": {
+                "category": {
+                    "label": "Tipo de carga",
+                    "options": {
+                        "agriculture-inputs": "Insumos agrícolas",
+                        "agriculture-products": "Produtos agrícolas",
+                        "construction": "Materiais de construção",
+                        "machinery-equipment": "Máquinas e equipamentos",
+                        "fmcg": "Bens de consumo (FMCG)",
+                        "general-cargo": "Carga geral",
+                        "medicine": "Medicamentos",
+                        "mining": "Mineração",
+                        "oil-gas": "Petróleo e gás",
+                        "vehicles": "Viaturas",
+                        "other": "Outros"
+                    }
+                },
+                "quantity": {
+                    "label": "Quantidade"
+                },
+                "shipping": {
+                    "label": "Janela prevista de transporte",
+                    "from": "De",
+                    "to": "Até"
+                },
+                "distance": "Distância aproximada da viagem (km)",
+                "location": {
+                    "label": "Rota de transporte",
+                    "from": "De",
+                    "to": "Para"
+                }
+            },
+            "footer": {
+                "buttons": {
+                    "continue": "Retomar pedido",
+                    "update": "Atualizar pedido",
+                    "details": "Detalhes",
+                    "accept": "Aceitar",
+                    "offer": "Fazer proposta",
+                    "quote": "Enviar cotação"
+                }
+            }
+        },
+        "orders": {
             "header": {
                 "shipper": {
                     "main": "Os meus pedidos",
@@ -726,78 +909,32 @@
                     "delivered": "Pedidos concluídos"
                 }
             },
+            "empty": {
+                "shipper": {
+                    "title": "Nenhum pedido de transporte associado a esta conta",
+                    "description": "Comece por criar novos pedidos de transporte e estes serão listados aqui",
+                    "note": "A listagem pode variar consoante os filtros aplicados"
+                },
+                "carrier": {
+                    "title": "Não existem novos pedidos disponíveis na Appload",
+                    "description": "Todos os pedidos publicados no marketplace foram ou aceites ou cancelados. Por favor, volte mais tarde para novos pedidos",
+                    "note": "A listagem pode variar consoante os filtros aplicados"
+                }
+            },
             "pagination": {
                 "first": "Primeira",
                 "previous": "Anterior",
                 "next": "Seguinte",
                 "last": "Última"
-            },
-            "card": {
-                "header": {
-                    "id": "PED{id}",
-                    "subscribers": "Da sua rede",
-                    "status": {
-                        "drafted": "Rascunho",
-                        "prospect": "Proposta",
-                        "pending": "Pendente",
-                        "booked": "Confirmado",
-                        "at-loading": "No ponto de carga",
-                        "loading": "Em carregamento",
-                        "in-transit": "Em trânsito",
-                        "at-border": "Na fronteira",
-                        "stopped": "Parado",
-                        "at-offloading": "No ponto de descarga",
-                        "offloading": "Em descarga",
-                        "delivered": "Entregue",
-                        "completed": "Concluído",
-                        "cancelled": "Cancelado",
-                        "waiting-documents": "A aguardar documentação"
-                    }
-                },
-                "content": {
-                    "category": {
-                        "label": "Tipo de carga",
-                        "options": {
-                            "agriculture-inputs": "Insumos agrícolas",
-                            "agriculture-products": "Produtos agrícolas",
-                            "construction": "Materiais de construção",
-                            "machinery-equipment": "Máquinas e equipamentos",
-                            "fmcg": "Bens de consumo (FMCG)",
-                            "general-cargo": "Carga geral",
-                            "medicine": "Medicamentos",
-                            "mining": "Mineração",
-                            "oil-gas": "Petróleo e gás",
-                            "vehicles": "Viaturas",
-                            "other": "Outros"
-                        }
-                    },
-                    "quantity": {
-                        "label": "Quantidade"
-                    },
-                    "shipping": {
-                        "label": "Janela prevista de transporte",
-                        "from": "De",
-                        "to": "Até"
-                    },
-                    "distance": "Distância aproximada da viagem (km)",
-                    "location": {
-                        "label": "Rota de transporte",
-                        "from": "De",
-                        "to": "Para"
-                    }
-                },
-                "footer": {
-                    "buttons": {
-                        "details": "Detalhes",
-                        "accept": "Aceitar",
-                        "offer": "Fazer proposta",
-                        "quote": "Enviar cotação"
-                    }
-                }
             }
         },
         "order": {
             "create": {
+                "title": "Criar novo pedido",
+                "description": {
+                    "subscribers": "Os pedidos criados neste formulário serão enviados apenas aos transportadores registados na sua rede.",
+                    "non-subscribers": "Os pedidos criados neste formulário serão enviados a todos os transportadores registados na Appload."
+                },
                 "button": {
                     "create": "Criar novo pedido",
                     "cancel": "Cancelar",
@@ -912,13 +1049,21 @@
                             "non-subscribers": "Partilhar com qualquer transportador no appload"
                         },
                         "error": "A opção de partilha não foi indicada"
+                    },
+                    "price": {
+                        "label": "Preço do transporte",
+                        "placeholder": "Introduza o valor a pagar por esta viagem",
+                        "error": "O preço do transporte não foi indicado"
+                    },
+                    "currency": {
+                        "label": "Moeda",
+                        "placeholder": "Selecione a moeda do valor",
+                        "error": "Nenhuma moeda foi selecionada"
                     }
                 }
             },
             "update": {
                 "button": {
-                    "continue": "Retomar pedido",
-                    "update": "Atualizar pedido",
                     "cancel": "Cancelar",
                     "quote": "Solicitar cotação",
                     "publish": {
@@ -1033,6 +1178,16 @@
                             "non-subscribers": "Partilhar com qualquer transportador no appload"
                         },
                         "error": "A opção de partilha não foi indicada"
+                    },
+                    "price": {
+                        "label": "Preço do transporte",
+                        "placeholder": "Introduza o valor a pagar por esta viagem",
+                        "error": "O preço do transporte não foi indicado"
+                    },
+                    "currency": {
+                        "label": "Moeda",
+                        "placeholder": "Selecione a moeda do valor",
+                        "error": "Nenhuma moeda foi selecionada"
                     }
                 }
             }

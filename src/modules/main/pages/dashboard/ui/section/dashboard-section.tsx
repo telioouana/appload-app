@@ -24,7 +24,7 @@ export function DashboardSection() {
                 <CardDescription>{t(`description.${data?.user.type}`)}</CardDescription>
                 </div>
                 
-                <CreateOrderDialog />
+                {/* <CreateOrderDialog /> */}
             </CardContent>
         </Card>
     )

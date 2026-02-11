@@ -1,10 +1,10 @@
+import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { and, avg, between, count, eq, sql, sum } from "drizzle-orm";
 
 import { db } from "@/backend/db";
 import { order, trip } from "@/backend/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init";
-import z from "zod";
 
 
 export const dashboardRouter = createTRPCRouter({
@@ -37,12 +37,12 @@ export const dashboardRouter = createTRPCRouter({
         }),
 
     resume: protectedProcedure
-    .input(
-        z.object({
-            startDate: z.date(),
-            endDate: z.date(),
-        })
-    )
+        .input(
+            z.object({
+                startDate: z.date(),
+                endDate: z.date(),
+            })
+        )
         .query(async ({ ctx, input }) => {
             const { user, session } = ctx.auth
             const { startDate, endDate } = input

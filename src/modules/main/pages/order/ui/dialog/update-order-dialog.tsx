@@ -3,13 +3,12 @@
 import { z } from "zod";
 import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IconDots, IconEdit, IconSend } from "@tabler/icons-react";
+import { IconDots, IconSend } from "@tabler/icons-react";
 import { FieldPath, FormProvider, useForm } from "react-hook-form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { useTRPC } from "@/backend/trpc/client";
-import { cargo, order } from "@/backend/db/schema";
-import { CATEGORIES, PACKING, SHARE, WEIGHT_UNIT } from "@/backend/db/types";
+import { CATEGORIES, CURRENCY, PACKING, SHARE, WEIGHT_UNIT } from "@/backend/db/types";
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -17,20 +16,17 @@ import { ResponsiveDialog } from "@/components/dialog/responsive-dialog"
 import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-import { FilterByType, FilterType } from "@/modules/main/ui/types";
+import { FilterType, SourceType } from "@/modules/main/ui/types";
 import { OrderForm } from "@/modules/main/pages/order/ui/forms/order-form";
 import { useUpdateOrder } from "@/modules/main/pages/order/hooks/use-update-order";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-    action: "continue" | "update" | "publish"
+type Props = {
     filter?: FilterType
-    filterBy?: FilterByType
-    cargo: typeof cargo.$inferSelect
-    order: typeof order.$inferSelect
+    source?: SourceType
 }
 
-export function UpdateOrderDialog({ action, className, filter, filterBy, cargo, order }: Props) {
-    const { isOpen, onClose, onOpenChange } = useUpdateOrder()
+export function UpdateOrderDialog({ filter, source }: Props) {
+    const { action, defaultValues, isOpen, orderId, onClose } = useUpdateOrder()
     const t = useTranslations("Main.order.update")
     const queryClient = useQueryClient()
     const trpc = useTRPC()
@@ -40,7 +36,7 @@ export function UpdateOrderDialog({ action, className, filter, filterBy, cargo, 
             address: z.string({ error: t("form.loading-address.error") }),
             placeId: z.string(),
             country: z.string(),
-            state: z.string(),
+            state: z.string()
         })),
         expectedLoadingDate: z.date({ error: t("form.expected-loading-date.error") }),
         offloadingAddress: z.array(z.object({
@@ -75,44 +71,39 @@ export function UpdateOrderDialog({ action, className, filter, filterBy, cargo, 
                 path: ["temperature"]
             }),
 
-        share: z.enum(SHARE, { error: t("form.share.error") })
+        share: z.enum(SHARE, { error: t("form.share.error") }),
+        price: z.number().optional(),
+        currency: z.enum(CURRENCY).optional(),
     })
+        .superRefine((data, ctx) => {
+            // If share is "subscribers", price and currency MUST exist
+            if (data.share === "subscribers") {
+                if (!data.price || data.price <= 0) {
+                    ctx.addIssue({
+                        code: "custom",
+                        message: t("form.price.error"),
+                        path: ["price"],
+                    });
+                }
+                if (!data.currency) {
+                    ctx.addIssue({
+                        code: "custom",
+                        message: t("form.currency.error"),
+                        path: ["currency"],
+                    });
+                }
+            }
+        })
 
     type CreateOrderForm = z.infer<typeof CreateOrderSchema>
 
     const form = useForm<CreateOrderForm>({
         resolver: zodResolver(CreateOrderSchema),
-        defaultValues: {
-            loadingAddress: [{
-                address: order.loadingAddress?.[0].address,
-                country: order.loadingAddress?.[0].country,
-                placeId: order.loadingAddress?.[0].placeId,
-                state: order.loadingAddress?.[0].state,
-            }],
-            offloadingAddress: [{
-                address: order.offloadingAddress?.[0].address,
-                country: order.offloadingAddress?.[0].country,
-                placeId: order.offloadingAddress?.[0].placeId,
-                state: order.offloadingAddress?.[0].state,
-            }],
-            expectedLoadingDate: order.expectedLoadingDate,
-            expectedOffloadingDate: order.expectedOffloadingDate,
-            expectedTrucks: order.expectedTrucks ?? 1,
-            cargo: {
-                category: cargo.category as typeof CATEGORIES[number],
-                description: cargo.description,
-                quantity: Number(cargo.quantity),
-                unit: cargo.unit as typeof WEIGHT_UNIT[number],
-                packing: cargo.packing as typeof PACKING[number],
-                isHazardous: cargo.isHazardous ?? false,
-                hazchemCode: cargo.hazchemCode ?? "",
-                isRefrigerated: cargo.isRefrigerated ?? false,
-                temperature: Number(cargo.temperature) ?? 0,
-                temperatureInstructions: cargo.temperatureInstructions ?? "",
-                isGroupageAllowed: cargo.isGroupageAllowed ?? false
-            },
-            share: order.share as typeof SHARE[number]
-        }
+        values: defaultValues,
+        resetOptions: {
+            keepDefaultValues: false, // Ensure it overwrites old state
+        },
+        shouldUnregister: false,
     })
 
     const create = useMutation(
@@ -120,7 +111,7 @@ export function UpdateOrderDialog({ action, className, filter, filterBy, cargo, 
             onSuccess: () => {
                 queryClient.invalidateQueries(trpc.orders.all.queryOptions({
                     filter,
-                    filterBy,
+                    source,
                     limit: 8,
                 }))
                 onClose()
@@ -150,76 +141,64 @@ export function UpdateOrderDialog({ action, className, filter, filterBy, cargo, 
         await create.mutateAsync({
             status,
             values,
-            orderId: order.id,
+            orderId,
         })
     }
 
     return (
-        <>
-            <Button
-                type="button"
-                variant="outline"
-                className={className}
-                onClick={onOpenChange}
-            >
-                {t(`button.${action}`)}
-                <IconEdit />
-            </Button>
+        <ResponsiveDialog
+            title={"Publish new order"}
+            description={""}
+            onClose={onClose}
+            open={isOpen}
+            type="dialog"
+            className="md:max-w-5xl"
+        >
+            <FormProvider {...form}>
+                <form className="flex flex-col gap-6" >
+                    <OrderForm isPending={create.isPending} />
 
-            <ResponsiveDialog
-                title={"Publish new order"}
-                description={""}
-                onClose={onClose}
-                open={isOpen}
-                type="dialog"
-                className="md:max-w-5xl"
-            >
-                <FormProvider {...form}>
-                    <form className="flex flex-col gap-6" >
-                        <OrderForm isPending={create.isPending} />
+                    <div className="flex justify-between items-center gap-4">
+                        <Button
+                            variant="destructive"
+                            type="button"
+                            onClick={() => {
+                                form.reset()
+                                onClose()
+                            }}
+                        >{t("button.cancel")}</Button>
 
-                        <div className="flex justify-between items-center gap-4">
-                            <Button
-                                variant="destructive"
-                                type="button"
-                                onClick={() => {
-                                    form.reset()
-                                    onClose()
-                                }}
-                            >{t("button.cancel")}</Button>
-
-                            <div className="flex gap-4">
-                                <ButtonGroup aria-disabled={create.isPending}>
-                                    <Button
-                                        type="button"
-                                        disabled={create.isPending}
-                                        onClick={() => handleSubmit(form.getValues(), "pending")}
-                                    >
-                                        {t(`button.publish.${action}`)}
-                                        {create.isPending ? <Spinner /> : <IconSend />}
-                                    </Button>
-                                    <ButtonGroupSeparator />
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Button type="button" size="icon" disabled={create.isPending} ><IconDots /></Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end">
-                                            <DropdownMenuItem asChild>
-                                                <Button
-                                                    type="button"
-                                                    variant="ghost"
-                                                    disabled={create.isPending}
-                                                    onClick={() => handleSubmit(form.getValues(), "prospect")}
-                                                >{t("button.quote")}</Button>
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </ButtonGroup>
-                            </div>
+                        <div className="flex gap-4">
+                            <ButtonGroup aria-disabled={create.isPending}>
+                                <Button
+                                    type="button"
+                                    disabled={create.isPending}
+                                    onClick={() => handleSubmit(form.getValues(), "pending")}
+                                >
+                                    {t(`button.publish.${action}`)}
+                                    {create.isPending ? <Spinner /> : <IconSend />}
+                                </Button>
+                                <ButtonGroupSeparator />
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button type="button" size="icon" disabled={create.isPending} ><IconDots /></Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                        <DropdownMenuItem asChild>
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                disabled={create.isPending}
+                                                onClick={() => handleSubmit(form.getValues(), "prospect")}
+                                            >{t("button.quote")}</Button>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </ButtonGroup>
                         </div>
-                    </form>
-                </FormProvider>
-            </ResponsiveDialog>
-        </>
+                    </div>
+                </form>
+            </FormProvider>
+        </ResponsiveDialog>
     )
 }
