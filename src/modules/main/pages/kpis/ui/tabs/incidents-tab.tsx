@@ -8,13 +8,13 @@ export function IncidentsTab({ data }: { data: { [x: string]: unknown } }) {
     const t = useTranslations("Main.kpis.main.tabs.content.incidents")
     const f = useFormatter()
     const {
-        trips,
-        totalAccidents,
-        mechanicalIssues,
-        documentationIssues,
-        policeIssues,
-        percentageDamagedCargo,
-        percentageComplains,
+        trips = 0,
+        totalAccidents = 0,
+        mechanicalIssues = 0,
+        documentationIssues = 0,
+        policeIssues = 0,
+        percentageDamagedCargo = 0,
+        percentageComplains = 0,
     } = data
 
     const PDC = Number(percentageDamagedCargo) / Number(trips)

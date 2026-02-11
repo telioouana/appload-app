@@ -33,6 +33,8 @@ export default async function Page() {
         trpc.orders.all.infiniteQueryOptions({
             limit: 8,
             source
+        }, {
+            getNextPageParam: (lastPage) => lastPage.nextCursor
         })
     )
 

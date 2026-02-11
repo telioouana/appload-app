@@ -1,6 +1,6 @@
 "use client"
 
-import { cargo, order, trip } from "@/backend/db/schema";
+import type { cargo, order, trip } from "@/backend/db/schema";
 
 import { OrdersCard } from "@/modules/main/ui/card/orders-card"
 import { FilterType, SourceType, UserType } from "@/modules/main/ui/types"

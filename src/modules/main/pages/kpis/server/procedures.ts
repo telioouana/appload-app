@@ -35,10 +35,10 @@ export const kpisRouter = createTRPCRouter({
                             onTimeAtLoading: sql`sum(case when ${trip.arrivalOnTimeLoading} then 1 else 0 end)`.mapWith(Number),
                             averageLoadingTime: avg(trip.daysSpendLoading).mapWith(Number),
                             averageTravelTime: avg(trip.daysSpendTraveling).mapWith(Number),
-                            averageDailyDistance: sum(order.distance).mapWith(Number),
+                            distance: sum(order.distance).mapWith(Number),
                             onTimeAtOffloading: sql`sum(case when ${trip.arrivalOnTimeOffloading} then 1 else 0 end)`.mapWith(Number),
                             averageOffloadingTime: avg(trip.daysSpendOffloading).mapWith(Number),
-                            demuragesOccurrences: sql`sum(case when ${trip.arrivalOnTimeOffloading} then 1 else 0 end)`.mapWith(Number),
+                            demuragesOccurrences: sql`sum(case when ${trip.demurageCharged} then 1 else 0 end)`.mapWith(Number),
                             damuragesChargedDays: sum(trip.totalDemurageChargedDays).mapWith(Number)
                         }
                         : section === "incidents"
@@ -70,7 +70,7 @@ export const kpisRouter = createTRPCRouter({
                                     invoiceTotal: userType === "shipper"
                                         ? sql<number>`sum(${trip.shipperTotal}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number)
                                         : sql<number>`sum(${trip.carrierTotal}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
-                                    total: sum(trip.shipperTotal).mapWith(Number),
+                                    total: userType === "shipper" ? sum(trip.shipperTotal).mapWith(Number) : sum(trip.carrierTotal).mapWith(Number),
                                 }
                 )
                 .from(order)

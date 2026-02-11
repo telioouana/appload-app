@@ -109,7 +109,7 @@ export function UpdateOrderDialog({ filter, source }: Props) {
     const create = useMutation(
         trpc.order.create.mutationOptions({
             onSuccess: () => {
-                queryClient.invalidateQueries(trpc.orders.all.queryOptions({
+                queryClient.invalidateQueries(trpc.orders.all.infiniteQueryOptions({
                     filter,
                     source,
                     limit: 8,

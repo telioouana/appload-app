@@ -12,7 +12,7 @@ export function OperationalTab({ data }: { data: { [x: string]: unknown } }) {
         onTimeAtLoading,
         averageLoadingTime,
         averageTravelTime,
-        averageDailyDistance,
+        distance,
         onTimeAtOffloading,
         averageOffloadingTime,
         demuragesOccurrences,
@@ -22,7 +22,7 @@ export function OperationalTab({ data }: { data: { [x: string]: unknown } }) {
     const DC = Number(demuragesOccurrences) / Number(trips)
     const OTL = Number(onTimeAtLoading) / Number(trips) * 100
     const OTO = Number(onTimeAtOffloading) / Number(trips) * 100
-    const ADCD = Number(averageDailyDistance) / Number(trips) / Number(averageTravelTime) / 1000
+    const ADCD = Number(distance) / Number(trips) / Number(averageTravelTime) / 1000
     
     return (
         <div className="grid grid-cols-3 gap-8 pt-4 pb-2">
@@ -43,7 +43,7 @@ export function OperationalTab({ data }: { data: { [x: string]: unknown } }) {
                 <CardContent className="flex flex-col gap-4">
                     <div className="font-semibold text-sm h-8">{t("average-loading-time.label")}</div>
                     <div className="font-medium text-primary">
-                        {f.number(Number(averageLoadingTime), {
+                        {f.number(!Number.isNaN(Number(averageLoadingTime)) ? Number(averageLoadingTime) : 0, {
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 0
                         })}
@@ -56,7 +56,7 @@ export function OperationalTab({ data }: { data: { [x: string]: unknown } }) {
                 <CardContent className="flex flex-col gap-4">
                     <div className="font-semibold text-sm h-8">{t("average-travel-time.label")}</div>
                     <div className="font-medium text-primary">
-                        {f.number(Number(averageTravelTime), {
+                        {f.number(!Number.isNaN(Number(averageTravelTime)) ? Number(averageTravelTime) : 0, {
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 0
                         })}
@@ -95,7 +95,7 @@ export function OperationalTab({ data }: { data: { [x: string]: unknown } }) {
                 <CardContent className="flex flex-col gap-4">
                     <div className="font-semibold text-sm h-8">{t("average-offloading-time.label")}</div>
                     <div className="font-medium text-primary">
-                        {f.number(Number(averageOffloadingTime), {
+                        {f.number(!Number.isNaN(Number(averageOffloadingTime)) ? Number(averageOffloadingTime) : 0, {
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 0
                         })}
@@ -121,7 +121,7 @@ export function OperationalTab({ data }: { data: { [x: string]: unknown } }) {
                 <CardContent className="flex flex-col gap-4">
                     <div className="font-semibold text-sm h-8">{t("damurages-charged-days.label")}</div>
                     <div className="font-medium text-primary">
-                        {f.number(Number(damuragesChargedDays), {
+                        {f.number(!Number.isNaN(Number(damuragesChargedDays)) ? Number(damuragesChargedDays) : 0, {
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 0
                         })}

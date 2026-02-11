@@ -14,9 +14,13 @@ export function CostsTab({ data }: { data: { [x: string]: unknown } }) {
         total,
     } = data
 
-    const CPK = (Number(total) / (Number(distance) / 1000)) / Number(trips)
-    const CPU = (Number(total) / Number(weight)) / Number(trips)
-    const CPUK = Number(total) / ((Number(distance) / 1000) * Number(weight))
+    const rawCPK = (Number(total) / (Number(distance) / 1000)) / Number(trips)
+    const rawCPU = (Number(total) / Number(weight)) / Number(trips)
+    const rawCPUK = Number(total) / ((Number(distance) / 1000) * Number(weight))
+
+    const CPK = Number.isFinite(rawCPK) ? rawCPK : 0
+    const CPU = Number.isFinite(rawCPU) ? rawCPU : 0
+    const CPUK = Number.isFinite(rawCPUK) ? rawCPUK : 0
 
     return (
         <div className="grid grid-cols-3 gap-8 pt-4 pb-2">

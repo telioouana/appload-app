@@ -42,6 +42,8 @@ export default async function Page({
             filter,
             source,
             limit: 8,
+        }, {
+            getNextPageParam: (lastPage) => lastPage.nextCursor
         })
     )
 

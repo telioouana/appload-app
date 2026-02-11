@@ -27,15 +27,19 @@ export function EfficiencyTab({ currency, data, userType }: { currency: typeof C
 
     const BT = Number(backload) / Number(trips) * 100
     const EM = Number(defaultCoefficient) * Number(loadFactor) * Number(ageFactor) * (Number(backloadDistance) / 1000) * Number(loadedWeight)
-    const MOF = ((Number(invoiceTotal) - Number(amountFuel)) / Number(amountFuel)) * 100
-    const SWB = (Number(total) / 0.7) - Number(total)
+    const MOF = Number(amountFuel) !== 0
+        ? ((Number(invoiceTotal) - Number(amountFuel)) / Number(amountFuel)) * 100
+        : 0
+    const BACKLOAD_RATIO = 0.7 // ratio of backload cost to normal cost
+    const SWB = (Number(total) / BACKLOAD_RATIO) - Number(total)
+
     return (
         <div className="grid grid-cols-3 gap-8 pt-4 pb-2">
             <Card>
                 <CardContent className="flex flex-col gap-4">
                     <div className="font-semibold text-sm h-8">{t("backload.label")}</div>
                     <div className="font-medium text-primary">
-                        {f.number(!Number.isNaN(BT) ? BT : 0, {
+                        {f.number(Number.isFinite(BT) ? BT : 0, {
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 0
                         })}

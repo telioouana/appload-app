@@ -16,19 +16,20 @@ import { ResponsiveDialog } from "@/components/dialog/responsive-dialog"
 import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-import { FilterByType, FilterType } from "@/modules/main/ui/types";
-import { useCreateOrder } from "@/modules/main/pages/order/hooks/use-create-order";
+import { FilterType } from "@/modules/main/ui/types";
 import { OrderForm } from "@/modules/main/pages/order/ui/forms/order-form";
+import { useCreateOrder } from "@/modules/main/pages/order/hooks/use-create-order";
+
 import { useTheme } from "next-themes";
 
 type Props = {
     filter?: FilterType
-    filterBy?: FilterByType
     publishTo: typeof SHARE[number]
 }
 
 export function CreateOrderDialog({ filter, publishTo }: Props) {
     const { isOpen, onClose, onOpenChange } = useCreateOrder()
+
     const t = useTranslations("Main.order.create")
     const queryClient = useQueryClient()
     const trpc = useTRPC()
@@ -119,7 +120,7 @@ export function CreateOrderDialog({ filter, publishTo }: Props) {
     const orderMutation = useMutation(
         trpc.order.create.mutationOptions({
             onSuccess: () => {
-                queryClient.invalidateQueries(trpc.orders.all.queryOptions({
+                queryClient.invalidateQueries(trpc.orders.all.infiniteQueryOptions({
                     filter,
                     limit: 8,
                 }))

@@ -30,6 +30,8 @@ export default async function Page() {
     await client.prefetchInfiniteQuery(
         trpc.orders.all.infiniteQueryOptions({
             limit: 8,
+        }, {
+            getNextPageParam: (lastPage) => lastPage.nextCursor
         })
     )
 

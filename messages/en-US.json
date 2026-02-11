@@ -562,6 +562,7 @@
             "shipper": {
                 "orders": {
                     "label": "Public Marketplace",
+                    "all": "All orders",
                     "drafted": "Drafted",
                     "pending": "Pending",
                     "on-going": "On going",
@@ -570,6 +571,7 @@
                 "marketplace": {
                     "label": "Private Marketplace",
                     "transporters": "My transporters",
+                    "all": "All orders",
                     "drafted": "Drafted",
                     "pending": "Pending",
                     "on-going": "On going",
@@ -582,6 +584,7 @@
             "carrier": {
                 "orders": {
                     "label": "Orders",
+                    "all": "All",
                     "marketplace": "Partner Network",
                     "public": "Public Marketplace"
                 },
