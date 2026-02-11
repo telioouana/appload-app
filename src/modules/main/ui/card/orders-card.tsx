@@ -228,7 +228,7 @@ export function OrdersCard({ defaultValues: { cargo, order, trip, organizationId
                     <div className="grid grid-cols-2 items-center">
                         <div className="flex flex-col gap-1">
                             <span className="text-xs text-muted-foreground">{t("content.location.from")}</span>
-                            <span className="text-sm font-semibold">{order.loadingAddress?.[0].state}</span>
+                            <span className="text-sm font-semibold">{order.loadingAddress?.[0]?.state}</span>
                             <span className="text-sm font-semibold">
                                 {f.dateTime(order.expectedLoadingDate, {
                                     day: "numeric",
@@ -240,7 +240,7 @@ export function OrdersCard({ defaultValues: { cargo, order, trip, organizationId
 
                         <div className="flex flex-col gap-1 items-end">
                             <span className="text-xs text-muted-foreground">{t("content.location.to")}</span>
-                            <span className="text-sm font-semibold">{order.offloadingAddress?.[0].state}</span>
+                            <span className="text-sm font-semibold">{order.offloadingAddress?.[0]?.state}</span>
                             <span className="text-sm font-semibold">
                                 {f.dateTime(order.expectedOffloadingDate, {
                                     day: "numeric",
