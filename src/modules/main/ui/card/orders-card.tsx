@@ -44,16 +44,16 @@ export function OrdersCard({ defaultValues: { cargo, order, trip, organizationId
     const status = trip ? trip.status : order.status
     const defaultValues = {
         loadingAddress: [{
-            address: order.loadingAddress?.[0].address ?? "",
-            country: order.loadingAddress?.[0].country ?? "",
-            placeId: order.loadingAddress?.[0].placeId ?? "",
-            state: order.loadingAddress?.[0].state ?? "",
+            address: order.loadingAddress?.[0]?.address ?? "",
+            country: order.loadingAddress?.[0]?.country ?? "",
+            placeId: order.loadingAddress?.[0]?.placeId ?? "",
+            state: order.loadingAddress?.[0]?.state ?? "",
         }],
         offloadingAddress: [{
-            address: order.offloadingAddress?.[0].address ?? "",
-            country: order.offloadingAddress?.[0].country ?? "",
-            placeId: order.offloadingAddress?.[0].placeId ?? "",
-            state: order.offloadingAddress?.[0].state ?? "",
+            address: order.offloadingAddress?.[0]?.address ?? "",
+            country: order.offloadingAddress?.[0]?.country ?? "",
+            placeId: order.offloadingAddress?.[0]?.placeId ?? "",
+            state: order.offloadingAddress?.[0]?.state ?? "",
         }],
         expectedLoadingDate: order.expectedLoadingDate,
         expectedOffloadingDate: order.expectedOffloadingDate,
