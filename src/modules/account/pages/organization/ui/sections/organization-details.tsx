@@ -47,7 +47,7 @@ export function OrganizationDetails({ organization }: Props) {
                 <CardTitle>{t("title")}</CardTitle>
 
                 {organization.status == "active"
-                    ? (<Badge variant="success">{t("status.active")}</Badge>)
+                    ? (<Badge variant="default">{t("status.active")}</Badge>)
                     : organization.status == "pending"
                         ? (<Badge variant="default">{t("status.pending")}</Badge>)
                         : (<Badge variant="destructive">{t("status.closed")}</Badge>)

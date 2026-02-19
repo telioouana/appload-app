@@ -28,16 +28,6 @@ export function UserButton() {
 
     const { data, isPending } = authClient.useSession()
 
-    if (isPending || !data?.user) {
-        return (
-            <div className="w-full h-full flex items-center justify-center">
-                <Skeleton className="size-10 rounded-full" />
-            </div>
-        )
-    }
-
-    const { name, image, email, phoneNumber, type } = data.user
-
     async function handleSignOut() {
         await authClient.signOut({
             fetchOptions: {
@@ -53,6 +43,16 @@ export function UserButton() {
             }
         })
     }
+
+    if (isPending || !data?.user) {
+        return (
+            <div className="w-full h-full flex items-center justify-center">
+                <Skeleton className="size-10 rounded-full" />
+            </div>
+        )
+    }
+
+    const { name, image, email, phoneNumber, type } = data.user
 
     function avatar(className?: string) {
         if (image) {

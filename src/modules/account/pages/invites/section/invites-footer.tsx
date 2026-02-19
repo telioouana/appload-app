@@ -43,7 +43,7 @@ export function InvitesFooter({ invitation }: { invitation: Invitation }) {
 
             <div className="w-full">
                 <Button
-                    variant="success"
+                    variant="default"
                     className="w-full"
                     disabled={isPending}
                     onClick={() => authClient.organization.acceptInvitation({
