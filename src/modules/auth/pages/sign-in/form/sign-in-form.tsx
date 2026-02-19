@@ -74,12 +74,7 @@ export function SignInForm({
             const output = await form.trigger(["email", "password"], { shouldFocus: true })
             if (!output) return
 
-            result = await authClient.signIn.email({
-                callbackURL,
-                email: values.email,
-                password: values.password,
-                rememberMe: values.rememberMe,
-            }, {
+            result = await authClient.signIn.email(values, {
                 onRequest: () => setPending(true),
             })
         } else {
@@ -103,7 +98,7 @@ export function SignInForm({
             return
         }
 
-        router.push(callbackURL)
+        router.push(`/u/redirect?callback=${callbackURL}`)
     }
 
     return (

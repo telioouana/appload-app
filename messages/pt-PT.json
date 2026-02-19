@@ -180,6 +180,401 @@
             "privacy": "Política de privacidade"
         }
     },
+    "Shipper": {
+        "account": {
+            "header": {
+                "title": "Perfil e Definições",
+                "description": "Gerir a sua conta, empresa e preferências",
+                "buttons": {
+                    "back": "Voltar"
+                },
+                "pages": {
+                    "profile": "Os seus dados",
+                    "company": "Empresa",
+                    "security-and-privacy": "Segurança e Privacidade",
+                    "billing": "Facturação"
+                }
+            }
+        },
+        "preferences": {
+            "header": {
+                "title": "Preferências",
+                "description": "Gerir a sua conta, empresa e preferências",
+                "buttons": {
+                    "back": "Voltar"
+                }
+            }
+        },
+        "support": {
+            "header": {
+                "title": "Suporte",
+                "description": "Obtenha ajuda e suporte para a sua conta Appload",
+                "buttons": {
+                    "back": "Voltar"
+                }
+            }
+        },
+        "main": {
+            "header": {
+                "buttons": {
+                    "user": {
+                        "profile": "Perfil",
+                        "preferences": "Preferências",
+                        "support": "Suporte",
+                        "sign-out": "Sair"
+                    }
+                }
+            },
+            "sidebar": {
+                "header": {
+                    "app-name": "appload",
+                    "slogan": "Indo mais além"
+                },
+                "content": {
+                    "dashboard": "Painel",
+                    "kpis": "KPIs e Insights",
+                    "marketplace": {
+                        "private": {
+                            "label": "Mercado Privado",
+                            "transporters": "Meus transportadores",
+                            "all": "Todos os pedidos",
+                            "drafted": "Pedidos em rascunho",
+                            "pending": "Pedidos pendentes",
+                            "on-going": "Pedidos em curso",
+                            "delivered": "Pedidos entregues"
+                        },
+                        "public": {
+                            "label": "Mercado Público",
+                            "all": "Todos os pedidos",
+                            "drafted": "Pedidos em rascunho",
+                            "pending": "Pedidos pendentes",
+                            "on-going": "Pedidos em curso",
+                            "delivered": "Pedidos entregues"
+                        }
+                    },
+                    "other": {
+                        "history": "Histórico",
+                        "market-data": "Dados de mercado"
+                    }
+                }
+            },
+            "dashboard": {
+                "page": {
+                    "title": "Bem-vindo de volta, {name}!",
+                    "description": "Veja o que está a acontecer com as seus pedidos hoje."
+                },
+                "activity": {
+                    "title": "Visão geral dos pedidos activas",
+                    "private": "Mercado Privado",
+                    "public": "Mercado Público",
+                    "orders": "Pedidos publicadas",
+                    "drafted": "Rascunhos",
+                    "prospect": "Pedidos de cotação",
+                    "pending": "Pendentes",
+                    "on-going": "Em curso",
+                    "delivered": "Entregues",
+                    "link": "Ver tudo"
+                },
+                "resume": {
+                    "tabs": {
+                        "month": "Últimos 30 dias",
+                        "quarter": "Últimos 3 meses",
+                        "year": "Últimos 12 meses"
+                    },
+                    "card": {
+                        "title": "Resumo de actividade",
+                        "trips": {
+                            "label": "Viagens analisadas",
+                            "unit": "viagens"
+                        },
+                        "deliveries": {
+                            "label": "Número de entregas",
+                            "unit": "entregas"
+                        },
+                        "total-amount": {
+                            "label": "Valor total pago",
+                            "unit": "MZN"
+                        },
+                        "average-price": {
+                            "label": "Preço médio por viagem",
+                            "unit": "MZN"
+                        },
+                        "loaded-weight": {
+                            "label": "Peso total expedido",
+                            "unit": "ton"
+                        },
+                        "average-weight": {
+                            "label": "Peso médio por viagem",
+                            "unit": "ton"
+                        },
+                        "total-distance": {
+                            "label": "Distância total percorrida",
+                            "unit": "km"
+                        },
+                        "average-distance": {
+                            "label": "Distância média por viagem",
+                            "unit": "km"
+                        }
+                    }
+                }
+            },
+            "kpis": {
+                "page": {
+                    "header": {
+                        "title": "KPIs e Insights",
+                        "description": "Análise de desempenho e relatórios",
+                        "button": "Gerar Relatório de KPI"
+                    },
+                    "data-window": {
+                        "month": "Mês passado",
+                        "quarter": "Trimestre passado",
+                        "year": "Ano passado"
+                    },
+                    "data": {
+                        "triggers": {
+                            "operational": "Operacional",
+                            "incidents": "Incidentes",
+                            "costs": "Custos",
+                            "efficiency": "Eficiência"
+                        },
+                        "tabs": {
+                            "operational": {
+                                "on-time-loading": {
+                                    "label": "Chegada pontual à carga",
+                                    "unit": "%"
+                                },
+                                "average-loading-time": {
+                                    "label": "Duração média de carga",
+                                    "unit": "dias/viagem"
+                                },
+                                "average-travel-time": {
+                                    "label": "Duração média de transporte",
+                                    "unit": "Dias"
+                                },
+                                "average-daily-distance": {
+                                    "label": "Distância média diária",
+                                    "unit": "km"
+                                },
+                                "on-time-offloading": {
+                                    "label": "Chegada pontual à descarga",
+                                    "unit": "%"
+                                },
+                                "average-offloading-time": {
+                                    "label": "Duração média de descarga",
+                                    "unit": "dias/viagem"
+                                },
+                                "demurages-occurrences": {
+                                    "label": "Ocorrências de estadia (demurrage)",
+                                    "unit": "%"
+                                },
+                                "damurages-charged-days": {
+                                    "label": "Total de dias de estadia cobrados",
+                                    "unit": "Dias"
+                                }
+                            },
+                            "incidents": {
+                                "total-accidents": {
+                                    "label": "Acidentes em transporte",
+                                    "unit": "acidentes"
+                                },
+                                "mechanical-issues": {
+                                    "label": "Problemas mecânicos",
+                                    "unit": "incidentes"
+                                },
+                                "documentation-issues": {
+                                    "label": "Problemas de documentação",
+                                    "unit": "incidentes"
+                                },
+                                "police-issues": {
+                                    "label": "Interrupções (polícia/inspecção)",
+                                    "unit": "paragens"
+                                },
+                                "total-delays": {
+                                    "label": "Tempo total de atraso",
+                                    "unit": "dias"
+                                },
+                                "percentage-damaged-cargo": {
+                                    "label": "Viagens com carga danificada",
+                                    "unit": "%"
+                                },
+                                "percentage-complains": {
+                                    "label": "Viagens com reclamações",
+                                    "unit": "%"
+                                }
+                            },
+                            "costs": {
+                                "cost-per-km": {
+                                    "label": "Custo por km",
+                                    "unit": "km"
+                                },
+                                "cost-per-unit": {
+                                    "label": "Custo por tonelada",
+                                    "unit": "ton"
+                                },
+                                "cost-per-unit-km": {
+                                    "label": "Custo por ton-km",
+                                    "unit": "ton/km"
+                                }
+                            },
+                            "efficiency": {
+                                "backload": {
+                                    "label": "Viagens com carga de retorno",
+                                    "unit": "%"
+                                },
+                                "emissions": {
+                                    "label": "Redução de CO₂ via retorno",
+                                    "unit": "g/km"
+                                },
+                                "saved-with-backload": {
+                                    "label": "Poupança total via optimização de retorno",
+                                    "unit": {
+                                        "MZN": "MZN",
+                                        "ZAR": "ZAR",
+                                        "USD": "USD"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tendencies": {
+                    "title": "Tendências de Desempenho",
+                    "performance": {
+                        "title": "Tempos de carga e descarga",
+                        "load": "Duração da carga",
+                        "offload": "Duração da descarga",
+                        "unit": "dias"
+                    },
+                    "incidents": {
+                        "title": "Distribuição de Incidentes",
+                        "accidents": "Acidentes",
+                        "mechanical": "Mecânicos",
+                        "docummentation": "Documentação",
+                        "inspection": "Inspecção"
+                    },
+                    "emissions": {
+                        "title": "Pegada de carbono",
+                        "carbon": "Redução de CO₂ via retorno",
+                        "unit": "g/km"
+                    },
+                    "savings": {
+                        "title": "Redução de custos",
+                        "saved": "Poupado com retorno",
+                        "unit": "MZN"
+                    }
+                }
+            },
+            "private": {
+                "marketplace": {
+                    "page": {
+                        "all": {
+                            "title": "Todas as Pedidos",
+                            "description": "Ver todos os pedidos da {company}"
+                        },
+                        "drafted": {
+                            "title": "Pedidos em Rascunho",
+                            "description": "Pedidos em estado de rascunho"
+                        },
+                        "pending": {
+                            "title": "Pedidos Pendentes",
+                            "description": "Pedidos a aguardar ofertas, confirmação ou início"
+                        },
+                        "on-going": {
+                            "title": "Pedidos em Curso",
+                            "description": "Pedidos actualmente em trânsito"
+                        },
+                        "delivered": {
+                            "title": "Pedidos Entregues",
+                            "description": "Entregas concluídas e a aguardar revisão"
+                        }
+                    },
+                    "resume": {
+                        "orders": "Total de ordens",
+                        "total": "Valor total (MZN)",
+                        "average": "Valor médio (MZN)"
+                    },
+                    "actions": {
+                        "search": "Pesquisar por ID, local de carga ou descarga",
+                        "view": {
+                            "grid": "Ver em grelha",
+                            "list": "Ver em lista"
+                        },
+                        "button": "Criar nova ordem",
+                        "filters": {
+                            "title": "Filtrar por",
+                            "cargo-type": {
+                                "label": "Tipo de carga",
+                                "placeholder": "Seleccione uma opção para filtrar",
+                                "options": {
+                                    "agriculture-inputs": "Insumos Agrícolas",
+                                    "agriculture-products": "Produtos Agrícolas",
+                                    "construction": "Construção",
+                                    "machinery-equipment": "Máquinas e Equipamentos",
+                                    "fmcg": "Bens de Grande Consumo (FMCG)",
+                                    "general-cargo": "Carga Geral",
+                                    "medicine": "Medicamentos",
+                                    "mining": "Mineração",
+                                    "oil-gas": "Petróleo e Gás",
+                                    "vehicles": "Veículos",
+                                    "other": "Outros",
+                                    "none": "Limpar filtro"
+                                }
+                            },
+                            "status": {
+                                "label": "Estado"
+                            }
+                        }
+                    }
+                }
+            },
+            "order": {
+                "card": {
+                    "header": {
+                        "id": "ORD-{id}",
+                        "category": {
+                            "agriculture-inputs": "Insumos Agrícolas",
+                            "agriculture-products": "Produtos Agrícolas",
+                            "construction": "Construção",
+                            "machinery-equipment": "Máquinas e Equipamentos",
+                            "fmcg": "Bens de Grande Consumo (FMCG)",
+                            "general-cargo": "Carga Geral",
+                            "medicine": "Medicamentos",
+                            "mining": "Mineração",
+                            "oil-gas": "Petróleo e Gás",
+                            "vehicles": "Veículos",
+                            "other": "Outros"
+                        },
+                        "status": {
+                            "drafted": "Rascunho",
+                            "prospect": "Prospecção",
+                            "pending": "Pendente",
+                            "booked": "Reservado",
+                            "at-loading": "No local de carga",
+                            "loading": "A carregar",
+                            "in-transit": "Em trânsito",
+                            "at-border": "Na fronteira",
+                            "stopped": "Parado",
+                            "at-offloading": "No local de descarga",
+                            "offloading": "A descarregar",
+                            "delivered": "Entregue",
+                            "completed": "Concluído",
+                            "cancelled": "Cancelado",
+                            "waiting-documents": "A aguardar documentos"
+                        }
+                    },
+                    "content": {
+                        "weight": "Peso:",
+                        "distance": "Distância:",
+                        "loading-date": "Data de carga:",
+                        "refrigerated": "Refrigerado",
+                        "hazarduos": "Carga Perigosa",
+                        "price": "Valor:"
+                    },
+                    "footer": {}
+                }
+            }
+        }
+    },
     "Account": {
         "navbar": {
             "site-map": {
@@ -768,7 +1163,7 @@
                                 "unit": "Casos"
                             },
                             "police-issues": {
-                                "label": "Total de paragens por inspeções, multas ou ações das autoridades",
+                                "label": "Total de paragens por inspecções, multas ou ações das autoridades",
                                 "unit": "Casos"
                             },
                             "total-delays": {
@@ -943,7 +1338,9 @@
                     "cancel": "Cancelar",
                     "save": "Concluir mais tarde",
                     "quote": "Solicitar cotação",
-                    "publish": "Publicar"
+                    "publish": "Publicar",
+                    "subscribers": "Alterar para todos transportadores",
+                    "non-subscribers": "Alterar para meus transportadores"
                 },
                 "form": {
                     "loading-address": {

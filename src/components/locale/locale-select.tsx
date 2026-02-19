@@ -8,6 +8,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 import { setUserLocale } from "@/i18n/locale"
+
 import { defaultLocale, Locale } from "@/i18n/config"
 
 import { cn } from "@/lib/utils"

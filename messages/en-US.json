@@ -180,6 +180,401 @@
             "privacy": "Privacy policy"
         }
     },
+    "Shipper": {
+        "account": {
+            "header": {
+                "title": "Profile & Settings",
+                "description": "Manage your account, company, and preferences",
+                "buttons": {
+                    "back": "Back"
+                },
+                "pages": {
+                    "profile": "Your info",
+                    "company": "Company",
+                    "security-and-privacy": "Security & Privacy",
+                    "billing": "Billing"
+                }
+            }
+        },
+        "preferences": {
+            "header": {
+                "title": "Preferences",
+                "description": "Manage your account, company, and preferences",
+                "buttons": {
+                    "back": "Back"
+                }
+            }
+        },
+        "support": {
+            "header": {
+                "title": "Support",
+                "description": "Get help and support for your Appload account",
+                "buttons": {
+                    "back": "Back"
+                }
+            }
+        },
+        "main": {
+            "header": {
+                "buttons": {
+                    "user": {
+                        "profile": "Profile",
+                        "preferences": "Preferences",
+                        "support": "Support",
+                        "sign-out": "Sign Out"
+                    }
+                }
+            },
+            "sidebar": {
+                "header": {
+                    "app-name": "appload",
+                    "slogan": "Going the extra mile"
+                },
+                "content": {
+                    "dashboard": "Dashboard",
+                    "kpis": "KPIs & Insights",
+                    "marketplace": {
+                        "private": {
+                            "label": "Private Marketplace",
+                            "transporters": "My transporters",
+                            "all": "All orders",
+                            "drafted": "Drafted orders",
+                            "pending": "Pending orders",
+                            "on-going": "On going orders",
+                            "delivered": "Delivered orders"
+                        },
+                        "public": {
+                            "label": "Public Marketplace",
+                            "all": "All orders",
+                            "drafted": "Drafted orders",
+                            "pending": "Pending orders",
+                            "on-going": "On going orders",
+                            "delivered": "Delivered orders"
+                        }
+                    },
+                    "other": {
+                        "history": "History",
+                        "market-data": "Market data"
+                    }
+                }
+            },
+            "dashboard": {
+                "page": {
+                    "title": "Welcome back, {name}!",
+                    "description": "Here's what's happening with your orders today."
+                },
+                "activity": {
+                    "title": "Overview on active orders",
+                    "private": "Private Marketplace",
+                    "public": "Public Marketplace",
+                    "orders": "Published orders",
+                    "drafted": "Drafted",
+                    "prospect": "Quote requests",
+                    "pending": "Pending",
+                    "on-going": "On going",
+                    "delivered": "Delivered",
+                    "link": "View all"
+                },
+                "resume": {
+                    "tabs": {
+                        "month": "Last 30 days",
+                        "quarter": "Last 3 months",
+                        "year": "Last 12 months"
+                    },
+                    "card": {
+                        "title": "Activity overview",
+                        "trips": {
+                            "label": "Analyzed trips",
+                            "unit": "trips"
+                        },
+                        "deliveries": {
+                            "label": "Number of deliveries",
+                            "unit": "deliveries"
+                        },
+                        "total-amount": {
+                            "label": "Total amount paid",
+                            "unit": "MZN"
+                        },
+                        "average-price": {
+                            "label": "Average price per trip",
+                            "unit": "MZN"
+                        },
+                        "loaded-weight": {
+                            "label": "Total weight shipped",
+                            "unit": "ton"
+                        },
+                        "average-weight": {
+                            "label": "Average weight per trip",
+                            "unit": "ton"
+                        },
+                        "total-distance": {
+                            "label": "Total distance covered",
+                            "unit": "km"
+                        },
+                        "average-distance": {
+                            "label": "Average distance per trip",
+                            "unit": "km"
+                        }
+                    }
+                }
+            },
+            "kpis": {
+                "page": {
+                    "header": {
+                        "title": "KPIs & Insights",
+                        "description": "Performance analytics and reporting",
+                        "button": "Generate KPI Report"
+                    },
+                    "data-window": {
+                        "month": "Last month",
+                        "quarter": "Last quarter",
+                        "year": "Last year"
+                    },
+                    "data": {
+                        "triggers": {
+                            "operational": "Operational",
+                            "incidents": "Incidents",
+                            "costs": "Costs",
+                            "efficiency": "Efficiency"
+                        },
+                        "tabs": {
+                            "operational": {
+                                "on-time-loading": {
+                                    "label": "On-time arrival at loading",
+                                    "unit": "%"
+                                },
+                                "average-loading-time": {
+                                    "label": "Average loading duration",
+                                    "unit": "days/trip"
+                                },
+                                "average-travel-time": {
+                                    "label": "Average transport duration",
+                                    "unit": "Days"
+                                },
+                                "average-daily-distance": {
+                                    "label": "Average distance traveled per day",
+                                    "unit": "km"
+                                },
+                                "on-time-offloading": {
+                                    "label": "On-time arrival at offloading",
+                                    "unit": "%"
+                                },
+                                "average-offloading-time": {
+                                    "label": "Average offloading duration",
+                                    "unit": "days/trip"
+                                },
+                                "demurages-occurrences": {
+                                    "label": "Demurrage occurrences",
+                                    "unit": "%"
+                                },
+                                "damurages-charged-days": {
+                                    "label": "Total demurrage days charged",
+                                    "unit": "Days"
+                                }
+                            },
+                            "incidents": {
+                                "total-accidents": {
+                                    "label": "Accidents during transport",
+                                    "unit": "accidents"
+                                },
+                                "mechanical-issues": {
+                                    "label": "Mechanical issues",
+                                    "unit": "incidents"
+                                },
+                                "documentation-issues": {
+                                    "label": "Documentation problems",
+                                    "unit": "incidents"
+                                },
+                                "police-issues": {
+                                    "label": "Stops for inspections/fines",
+                                    "unit": "stops"
+                                },
+                                "total-delays": {
+                                    "label": "Total delay time",
+                                    "unit": "days"
+                                },
+                                "percentage-damaged-cargo": {
+                                    "label": "Trips with cargo damage",
+                                    "unit": "%"
+                                },
+                                "percentage-complains": {
+                                    "label": "Trips with complaints",
+                                    "unit": "%"
+                                }
+                            },
+                            "costs": {
+                                "cost-per-km": {
+                                    "label": "Cost per km",
+                                    "unit": "km"
+                                },
+                                "cost-per-unit": {
+                                    "label": "Cost per ton",
+                                    "unit": "ton"
+                                },
+                                "cost-per-unit-km": {
+                                    "label": "Cost per ton-km",
+                                    "unit": "ton/km"
+                                }
+                            },
+                            "efficiency": {
+                                "backload": {
+                                    "label": "Trips with backload",
+                                    "unit": "%"
+                                },
+                                "emissions": {
+                                    "label": "CO₂ reduction via backload",
+                                    "unit": "g/km"
+                                },
+                                "saved-with-backload": {
+                                    "label": "Total savings via backload optimization",
+                                    "unit": {
+                                        "MZN": "MZN",
+                                        "ZAR": "ZAR",
+                                        "USD": "USD"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tendencies": {
+                    "title": "Performance Trends",
+                    "performance": {
+                        "title": "Loading and offloading times",
+                        "load": "Loading duration",
+                        "offload": "Offloading duration",
+                        "unit": "days"
+                    },
+                    "incidents": {
+                        "title": "Incident Distribution",
+                        "accidents": "Accidents",
+                        "mechanical": "Mechanical",
+                        "docummentation": "Docummentation",
+                        "inspection": "Inspection"
+                    },
+                    "emissions": {
+                        "title": "Carbon footprint",
+                        "carbon": "CO₂ reduction via backload",
+                        "unit": "g/km"
+                    },
+                    "savings": {
+                        "title": "Cost reductions",
+                        "saved": "Saved with backload",
+                        "unit": "MZN"
+                    }
+                }
+            },
+            "private": {
+                "marketplace": {
+                    "page": {
+                        "all": {
+                            "title": "All Orders",
+                            "description": "View all orders from {company}"
+                        },
+                        "drafted": {
+                            "title": "Drafted Orders",
+                            "description": "Orders in draft status"
+                        },
+                        "pending": {
+                            "title": "Pending Orders",
+                            "description": "Orders awaiting offers, confirmation and trip starting"
+                        },
+                        "on-going": {
+                            "title": "On-going Orders",
+                            "description": "Orders currently in transit"
+                        },
+                        "delivered": {
+                            "title": "Delivered Orders",
+                            "description": "Completed deliveries and awaiting reviews"
+                        }
+                    },
+                    "resume": {
+                        "orders": "Total orders",
+                        "total": "Total value (MZN)",
+                        "average": "Avg. value (MZN)"
+                    },
+                    "actions": {
+                        "search": "Search order by id, loading or offloading location",
+                        "view": {
+                            "grid": "Switch to grid view",
+                            "list": "Switch to list view"
+                        },
+                        "button": "Create a new order",
+                        "filters": {
+                            "title": "Filter by",
+                            "cargo-type": {
+                                "label": "Cargo type",
+                                "placeholder": "Select one of the options to filter",
+                                "options": {
+                                    "agriculture-inputs": "Agriculture Inputs",
+                                    "agriculture-products": "Agriculture Products",
+                                    "construction": "Construction",
+                                    "machinery-equipment": "Machinery Equipment",
+                                    "fmcg": "FMCG",
+                                    "general-cargo": "General Cargo",
+                                    "medicine": "Medicine",
+                                    "mining": "Mining",
+                                    "oil-gas": "Oil & Gas",
+                                    "vehicles": "Vehicles",
+                                    "other": "Other",
+                                    "none": "Clear filter"
+                                }
+                            },
+                            "status": {
+                                "label": "Status"
+                            }
+                        }
+                    }
+                }
+            },
+            "order": {
+                "card": {
+                    "header": {
+                        "id": "ORD-{id}",
+                        "category": {
+                            "agriculture-inputs": "Agriculture Inputs",
+                            "agriculture-products": "Agriculture Products",
+                            "construction": "Construction",
+                            "machinery-equipment": "Machinery Equipment",
+                            "fmcg": "FMCG",
+                            "general-cargo": "General Cargo",
+                            "medicine": "Medicine",
+                            "mining": "Mining",
+                            "oil-gas": "Oil & Gas",
+                            "vehicles": "Vehicles",
+                            "other": "Other"
+                        },
+                        "status": {
+                            "drafted": "Drafted",
+                            "prospect": "Prospect",
+                            "pending": "Pending",
+                            "booked": "Booked",
+                            "at-loading": "At loading",
+                            "loading": "Loading",
+                            "in-transit": "In transit",
+                            "at-border": "At border",
+                            "stopped": "Stopped",
+                            "at-offloading": "At offloading",
+                            "offloading": "Offloading",
+                            "delivered": "Delivered",
+                            "completed": "Completed",
+                            "cancelled": "Cancelled",
+                            "waiting-documents": "Waiting documents"
+                        }
+                    },
+                    "content": {
+                        "weight": "Weight:",
+                        "distance": "Distance:",
+                        "loading-date": "Loading date:",
+                        "refrigerated": "Refrigerated",
+                        "hazarduos": "Hazardous",
+                        "price": "Amount:"
+                    },
+                    "footer": {}
+                }
+            }
+        }
+    },
     "Account": {
         "navbar": {
             "site-map": {
@@ -945,8 +1340,8 @@
                     "save": "Finish later",
                     "quote": "Request quote",
                     "publish": "Publish",
-                    "subscribers": "Send to all transporters",
-                    "non-subscribers": "Send to my transporters"
+                    "subscribers": "Switch to all transporters",
+                    "non-subscribers": "Switch to my transporters"
                 },
                 "form": {
                     "loading-address": {

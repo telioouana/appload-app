@@ -64,7 +64,7 @@ export function OrganizationMarketplace() {
             cell: ({ row }) => (
                 <div className="text-center w-16">
                     {row.original.status == "active"
-                        ? (<Badge variant="success">{t("status.active")}</Badge>)
+                        ? (<Badge variant="default">{t("status.active")}</Badge>)
                         : row.original.status == "pending"
                             ? (<Badge variant="default">{t("status.pending")}</Badge>)
                             : (<Badge variant="destructive">{t("status.closed")}</Badge>)
