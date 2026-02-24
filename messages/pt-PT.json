@@ -228,11 +228,12 @@
             "sidebar": {
                 "header": {
                     "app-name": "appload",
-                    "slogan": "Indo mais além"
+                    "slogan": "Going the extra mile"
                 },
                 "content": {
                     "dashboard": "Painel",
                     "kpis": "KPIs e Insights",
+                    "map": "Mapa",
                     "marketplace": {
                         "private": {
                             "label": "Mercado Privado",
@@ -241,7 +242,8 @@
                             "drafted": "Pedidos em rascunho",
                             "pending": "Pedidos pendentes",
                             "on-going": "Pedidos em curso",
-                            "delivered": "Pedidos entregues"
+                            "delivered": "Pedidos entregues",
+                            "terms-and-conditions": "Termos and Condições"
                         },
                         "public": {
                             "label": "Mercado Público",
@@ -491,7 +493,7 @@
                     "resume": {
                         "orders": "Total de ordens",
                         "total": "Valor total (MZN)",
-                        "average": "Valor médio (MZN)"
+                        "distance": "Distância total (km)"
                     },
                     "actions": {
                         "search": "Pesquisar por ID, local de carga ou descarga",
@@ -571,6 +573,148 @@
                         "price": "Valor:"
                     },
                     "footer": {}
+                },
+                "dialog": {
+                    "create": {
+                        "title": "Postar um novo pedido",
+                        "description": {
+                            "subscribers": "Os pedidos postados neste formulário serão enviados apenas aos transportadores registados na sua rede.",
+                            "non-subscribers": "Os pedidos postados neste formulário serão enviados a todos os transportadores registados na Appload."
+                        },
+                        "button": {
+                            "cancel": "Cancelar",
+                            "save": "Concluir mais tarde",
+                            "back": "Voltar",
+                            "preview": "Pré-visualizar",
+                            "publish": "Publicar",
+                            "subscribers": "Alterar para todos transportadores",
+                            "non-subscribers": "Alterar para meus transportadores"
+                        }
+                    },
+                    "update": {},
+                    "form": {
+                        "loading-address": {
+                            "label": "Local de carregamento",
+                            "placeholder": "Introduza o local de carregamento",
+                            "error": "O local de carregamento não foi indicado"
+                        },
+                        "expected-loading-date": {
+                            "label": "Data prevista de carregamento",
+                            "placeholder": "Selecione a data prevista de carregamento",
+                            "error": "A data prevista de carregamento não foi indicada"
+                        },
+                        "offloading-address": {
+                            "label": "Local de descarga",
+                            "placeholder": "Introduza o local de descarregamento",
+                            "error": "O local de descarregamento não foi indicado"
+                        },
+                        "expected-offloading-date": {
+                            "label": "Data prevista de descarregamento",
+                            "placeholder": "Selecione a data prevista de descarregamento",
+                            "error": "A data prevista de descarregamento não foi indicada"
+                        },
+                        "cargo": {
+                            "category": {
+                                "label": "Categoria da carga",
+                                "placeholder": "Selecione a categoria da carga",
+                                "options": {
+                                    "agriculture-inputs": "Insumos agrícolas",
+                                    "agriculture-products": "Produtos agrícolas",
+                                    "construction": "Materiais de construção",
+                                    "machinery-equipment": "Máquinas e equipamentos",
+                                    "fmcg": "Bens de consumo rápido (FMCG)",
+                                    "general-cargo": "Carga geral",
+                                    "medicine": "Medicamentos",
+                                    "mining": "Mineração",
+                                    "oil-gas": "Petróleo e gás",
+                                    "vehicles": "Veículos",
+                                    "other": "Outro"
+                                },
+                                "error": "Nenhuma categoria de carga foi selecionada"
+                            },
+                            "description": {
+                                "label": "Descrição da carga",
+                                "placeholder": "Introduza uma breve descrição da carga",
+                                "error": "A descrição da carga não foi indicada"
+                            },
+                            "quantity": {
+                                "label": "Quantidade",
+                                "placeholder": "Introduza a quantidade a carregar",
+                                "error": "A quantidade da carga não foi indicada"
+                            },
+                            "unit": {
+                                "label": "Unidade",
+                                "placeholder": "Selecione a unidade de medida",
+                                "error": "Nenhuma unidade foi selecionada"
+                            },
+                            "packing": {
+                                "label": "Tipo de embalagem",
+                                "placeholder": "Selecione o tipo de embalagem",
+                                "options": {
+                                    "bags-1kg": "Sacos de 1 kg",
+                                    "bags-2kg": "Sacos de 2 kg",
+                                    "bags-5kg": "Sacos de 5 kg",
+                                    "bags-25kg": "Sacos de 25 kg",
+                                    "bags-30kg": "Sacos de 30 kg",
+                                    "bags-50kg": "Sacos de 50 kg",
+                                    "bags-100kg": "Sacos de 100 kg",
+                                    "bags-1ton": "Sacos de 1 tonelada",
+                                    "bottle-1l": "Garrafas de 1 L",
+                                    "bottle-5l": "Garrafas de 5 L",
+                                    "bottle-10l": "Garrafas de 10 L",
+                                    "bottle-20l": "Garrafas de 20 L",
+                                    "bottle-25l": "Garrafas de 25 L",
+                                    "container-20ft": "Contentor 20 pés",
+                                    "container-40ft": "Contentor 40 pés",
+                                    "boxes": "Caixas",
+                                    "pallets": "Paletes",
+                                    "noPacking": "Sem embalagem",
+                                    "other": "Outro"
+                                },
+                                "error": "Nenhum tipo de embalagem foi selecionado"
+                            },
+                            "is-hazardous": "Carga perigosa",
+                            "hazchem-code": {
+                                "label": "Código Hazchem",
+                                "placeholder": "Introduza o código Hazchem",
+                                "error": "O código Hazchem não foi indicado"
+                            },
+                            "is-refrigerated": "Requer transporte refrigerado",
+                            "temperature": {
+                                "label": "Temperatura da carga",
+                                "message": "Temperatura selecionada",
+                                "error": "Erro na seleção da temperatura"
+                            },
+                            "temperature-instructions": {
+                                "label": "Instruções de temperatura",
+                                "placeholder": "Introduza instruções de temperatura"
+                            },
+                            "is-groupage-allowed": "Carga compatível com grupagem"
+                        },
+                        "share": {
+                            "label": "Opções de partilha",
+                            "description": "Escolha como deseja que o pedido seja partilhado na appload",
+                            "subscribers": {
+                                "label": "Mercado Privado",
+                                "description": "Os pedidos postados neste formulário serão enviados apenas aos transportadores registados na sua rede."
+                            },
+                            "non-subscribers": {
+                                "label": "Mercado Público",
+                                "description": "Os pedidos postados neste formulário serão enviados a todos os transportadores registados na Appload."
+                            }
+                        },
+                        "price": {
+                            "label": "Preço do transporte",
+                            "placeholder": "Introduza o valor a pagar por esta viagem",
+                            "error": "O preço do transporte não foi indicado"
+                        },
+                        "currency": {
+                            "label": "Moeda",
+                            "placeholder": "Selecione a moeda do valor",
+                            "error": "Nenhuma moeda foi selecionada"
+                        }
+                    },
+                    "preview": {}
                 }
             }
         }

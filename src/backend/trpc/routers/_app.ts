@@ -1,5 +1,6 @@
 import { createTRPCRouter } from "@/backend/trpc/init";
 
+import { orderRouter } from "@/modules/shipper/main/server/order-procedures";
 import { privateRouter } from "@/modules/shipper/main/private/server/procedures";
 import { kpisRouter } from "@/modules/shipper/main/public/pages/kpis/server/procedures";
 import { dashboardRouter } from "@/modules/shipper/main/public/pages/dashboard/server/procedures";
@@ -9,6 +10,7 @@ export const appRouter = createTRPCRouter({
     
     // new layout routers
     kpis: kpisRouter,
+    order: orderRouter,
     private: privateRouter,
     dashboard: dashboardRouter,
 });

@@ -1,9 +1,9 @@
 import { z } from "zod"
 import { TRPCError } from "@trpc/server"
-import { and, avg, count, desc, eq, lt, ne, or, sum } from "drizzle-orm"
+import { and, count, desc, eq, lt, ne, or, sql, sum } from "drizzle-orm"
 
 import { db } from "@/backend/db"
-import { cargo, order, trip } from "@/backend/db/schema"
+import { cargo, order, tracking, trip } from "@/backend/db/schema"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
 
 const ORDER_STATUS = ["all", "drafted", "pending", "on-going", "delivered"] as const
@@ -30,11 +30,13 @@ export const privateRouter = createTRPCRouter({
                 .select({
                     order: order,
                     cargo: cargo,
-                    trip: trip
+                    trip: trip,
+                    tracking: tracking
                 })
                 .from(order)
                 .innerJoin(cargo, eq(cargo.orderId, order.id))
                 .leftJoin(trip, eq(trip.orderId, order.id))
+                .leftJoin(tracking, eq(tracking.tripId, trip.id))
                 .where(and(
                     eq(order.shipperId, session.activeOrganizationId),
                     eq(order.share, "subscribers"),
@@ -94,7 +96,7 @@ export const privateRouter = createTRPCRouter({
                 .select({
                     orders: count(order).mapWith(Number),
                     total: sum(order.price).mapWith(Number),
-                    average: avg(order.price).mapWith(Number)
+                    distance: sql<number>`sum(${order.distance}) / 1000`.mapWith(Number)
                 })
                 .from(order)
                 .innerJoin(cargo, eq(cargo.orderId, order.id))

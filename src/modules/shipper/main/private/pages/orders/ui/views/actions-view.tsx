@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { IconLayoutGrid, IconList, IconSearch } from "@tabler/icons-react";
+import { IconLayoutGrid, IconList, IconPlus, IconSearch } from "@tabler/icons-react";
 
 import { CATEGORIES } from "@/backend/db/types";
 
@@ -15,15 +15,18 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/in
 import { Field, FieldGroup, FieldLabel, FieldSet, FieldTitle } from "@/components/ui/field";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { LAYOUT_VIEW } from "@/modules/shipper/main/types/types";
+import { LAYOUT_VIEW, ORDERS_PATH } from "@/modules/shipper/main/types/types";
+import { useCreateOrder } from "@/modules/shipper/main/hooks/use-create-order";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { CreateOrderDialog } from "@/modules/shipper/main/ui/dialog/create-order-dialog";
 
-export function ActionsView() {
+export function ActionsView({ path }: { path: ORDERS_PATH }) {
     const [cargo, setCargo] = useState<typeof CATEGORIES[number] | "none" | "">("")
     const [tab, setTab] = useState<LAYOUT_VIEW>("grid")
     const [value, setValue] = useState<string>("")
 
     const t = useTranslations(`Shipper.main.private.marketplace.actions`)
+    const { onOpenChange } = useCreateOrder()
     const router = useRouter()
 
     function search(value: string) {
@@ -97,9 +100,12 @@ export function ActionsView() {
                     </div>
 
                     <div>
+                        <CreateOrderDialog path={path} share="subscribers" />
                         <Button
                             className="h-11"
+                            onClick={onOpenChange}
                         >
+                            <IconPlus />
                             {t("button")}
                         </Button>
                     </div>

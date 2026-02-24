@@ -20,7 +20,7 @@ export const DateInput: ControlFunc = (props) => {
             {(field) => (
                 <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
-                        <InputGroup>
+                        <InputGroup className="w-full">
                             <InputGroupInput
                                 {...field}
                                 type="text"

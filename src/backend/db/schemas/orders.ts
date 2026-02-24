@@ -238,3 +238,20 @@ export const offer = pgTable(
             .notNull(),
     }
 )
+
+export const tracking = pgTable(
+    "tracking",
+    {
+        id: text("id").primaryKey().$default(() => randomUUID()),
+        tripId: text("trip_id")
+            .references(() => trip.id, { onDelete: "cascade" }),
+        truckPlate: text("truck_plate")
+            .references(() => truck.regPlate, { onDelete: "set null" }),
+        location: jsonb("loading_address").$type<Location>(),
+        createdAt: timestamp("created_at").defaultNow().notNull(),
+        updatedAt: timestamp("updated_at")
+            .defaultNow()
+            .$onUpdate(() => /* @__PURE__ */ new Date())
+            .notNull(),
+    }
+)
