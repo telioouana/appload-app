@@ -1,10 +1,10 @@
 "use client"
 
 import { Suspense } from "react"
-import { IconPackage } from "@tabler/icons-react"
 import { ErrorBoundary } from "react-error-boundary"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { useFormatter, useTranslations } from "next-intl"
+import { IconCashBanknote, IconPackage, IconRoute } from "@tabler/icons-react"
 
 import { useTRPC } from "@/backend/trpc/client"
 
@@ -21,7 +21,7 @@ export function ResumeView({ path }: { path: ORDERS_PATH }) {
         data: {
             orders,
             total,
-            average,
+            distance,
         }
     } = useSuspenseQuery(
         trpc.private.resume.queryOptions({
@@ -52,13 +52,15 @@ export function ResumeView({ path }: { path: ORDERS_PATH }) {
                         <CardContent>
                             <div className="flex gap-3 items-center">
                                 <div className="size-10 rounded-lg bg-primary/15 flex justify-center items-center">
-                                    <IconPackage className="8 text-primary" />
+                                    <IconCashBanknote className="8 text-primary" />
                                 </div>
 
                                 <div className="flex flex-col gap-0.5">
                                     <p className="text-2xl font-semibold leading-tight">
                                         {f.number(total, {
                                             currency: "MZN",
+                                            minimumFractionDigits: 0,
+                                            maximumFractionDigits: 0,
                                             currencyDisplay: "code",
                                             currencySign: "accounting",
                                             compactDisplay: "long"
@@ -74,19 +76,17 @@ export function ResumeView({ path }: { path: ORDERS_PATH }) {
                         <CardContent>
                             <div className="flex gap-3 items-center">
                                 <div className="size-10 rounded-lg bg-primary/15 flex justify-center items-center">
-                                    <IconPackage className="8 text-primary" />
+                                    <IconRoute className="8 text-primary" />
                                 </div>
 
                                 <div className="flex flex-col gap-0.5">
                                     <p className="text-2xl font-semibold leading-tight">
-                                        {f.number(average, {
-                                            currency: "MZN",
-                                            currencyDisplay: "code",
-                                            currencySign: "accounting",
-                                            compactDisplay: "long"
+                                        {f.number(distance, {
+                                            minimumFractionDigits: 0,
+                                            maximumFractionDigits: 0,
                                         })}
                                     </p>
-                                    <p className="text-muted-foreground">{t("average")}</p>
+                                    <p className="text-muted-foreground">{t("distance")}</p>
                                 </div>
                             </div>
                         </CardContent>

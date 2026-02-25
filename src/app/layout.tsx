@@ -8,7 +8,10 @@ import { Montserrat, Playfair_Display, Source_Code_Pro } from "next/font/google"
 import "./globals.css";
 
 import { Toaster } from "@/components/ui/sonner"
-import { Main } from "@/components/providers/main"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { ThemeProvider } from "@/components/providers/theme-provider"
+
+import { EdgeStoreProvider } from "@/lib/edgestore"
 
 const montserrat = Montserrat({
     variable: "--font-sans",
@@ -39,15 +42,25 @@ export default async function RootLayout({
     const messages = await getMessages()
 
     return (
-        <html lang={locale} className={montserrat.variable} suppressHydrationWarning>
-            <body className={`${sourceCodePro.variable} ${playfair.variable} antialiased h-screen w-screen overflow-clip`}>
-                <NextIntlClientProvider messages={messages}>
-                    <Main>
-                        <Analytics />
-                        <Toaster />
-                        {children}
-                    </Main>
-                </NextIntlClientProvider>
+        <html lang={locale} suppressHydrationWarning>
+            <body className={`${montserrat.variable} ${sourceCodePro.variable} ${playfair.variable} antialiased h-screen w-screen overflow-clip`}>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                    enableColorScheme
+                >
+                    <NextIntlClientProvider messages={messages}>
+                        <TooltipProvider>
+                            <EdgeStoreProvider>
+                                <Analytics />
+                                <Toaster />
+                                {children}
+                            </EdgeStoreProvider>
+                        </TooltipProvider>
+                    </NextIntlClientProvider>
+                </ThemeProvider>
             </body>
         </html>
     );

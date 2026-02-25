@@ -28,6 +28,7 @@ export function ResponsiveDialog({
     type,
     onClose,
     className,
+    
 }: Props) {
     const isMobile = useIsMobile()
 
@@ -67,11 +68,11 @@ export function ResponsiveDialog({
     if (type && type === "dialog") {
         return (
             <Dialog open={open}>
-                <DialogContent showCloseButton={false} className={cn(className)}>
-                    <DialogHeader className="px-4">
+                <DialogContent showCloseButton={false} className={cn(className, "p-0")}>
+                    <DialogHeader className="p-6 border-b bg-muted/50 rounded-t-xl">
                         <div className="flex justify-between items-start gap-4">
                             <div className="flex flex-col gap-2">
-                                <DialogTitle>{title}</DialogTitle>
+                                <DialogTitle className="font-bold text-2xl">{title}</DialogTitle>
                                 <DialogDescription>{description}</DialogDescription>
                             </div>
 
@@ -89,7 +90,7 @@ export function ResponsiveDialog({
                         )}
                     </DialogHeader>
 
-                    <div className="h-full overflow-y-scroll container-snap p-4">
+                    <div className="h-full overflow-y-scroll container-snap">
                         {children}
                     </div>
                 </DialogContent>

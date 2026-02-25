@@ -5,7 +5,7 @@ import Image from "next/image"
 import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { usePathname } from "next/navigation"
-import { IconBuildingFactory, IconChecks, IconChevronRight, IconClock, IconDashboard, IconDeviceDesktopAnalytics, IconGlobe, IconHistory, IconInvoice, IconLock, IconPackages, IconPencilMinus, IconTruck } from "@tabler/icons-react"
+import { IconBuildingFactory, IconChecks, IconChevronRight, IconClock, IconDashboard, IconDeviceDesktopAnalytics, IconGavel, IconGlobe, IconHistory, IconInvoice, IconLock, IconMap, IconPackages, IconPencilMinus, IconTruck } from "@tabler/icons-react"
 
 import { Separator } from "@/components/ui/separator"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
@@ -28,6 +28,11 @@ export function ShipperSidebar({ ...props }: React.ComponentProps<typeof Sidebar
             label: t("content.kpis"),
             url: "/s/kpis",
             Icon: IconDeviceDesktopAnalytics,
+        },
+        {
+            label: t("content.map"),
+            url: "/s/map",
+            Icon: IconMap,
         }
     ]
 
@@ -66,6 +71,11 @@ export function ShipperSidebar({ ...props }: React.ComponentProps<typeof Sidebar
                     label: t("content.marketplace.private.delivered"),
                     url: "/s/private/orders/delivered",
                     Icon: IconChecks,
+                },
+                {
+                    label: t("content.marketplace.private.terms-and-conditions"),
+                    url: "/s/private/terms-and-conditions",
+                    Icon: IconGavel,
                 }
             ]
         },

@@ -14,7 +14,7 @@ export async function autoComplete(input: string) {
             params: {
                 input,
                 key: process.env.GOOGLE_MAPS_API_KEY!,
-                language: locale
+                language: locale,
             }
         })
 
@@ -34,11 +34,26 @@ export async function distanceCalculator(origins: string, destinations: string) 
                 mode: TravelMode.driving,
                 key: process.env.GOOGLE_MAPS_API_KEY!,
                 language: locale,
-                units: UnitSystem.metric
+                units: UnitSystem.metric,
             }
         })
 
         return response.data.rows
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function getLocation(place_id: string) {
+    try {
+        const response = await client.geocode({
+            params: {
+                place_id,
+                key: process.env.GOOGLE_MAPS_API_KEY!,
+            }
+        })
+
+        return response.data.results
     } catch (error) {
         console.log(error)
     }

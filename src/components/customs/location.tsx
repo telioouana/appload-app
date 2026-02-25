@@ -28,16 +28,6 @@ export const LocationInput: ControlFunc<{
         const [places, setPlaces] = useState<PlaceAutocompleteResult[] | []>([])
         const [place, setPlace] = useState<string>("")
 
-        // useEffect(() => {
-        //     async function loadPlaces() {
-        //         const suggestions = await autoComplete(place)
-
-        //         setPlaces(suggestions ?? [])
-        //     }
-
-        //     loadPlaces()
-        // }, [place])
-
         const debounced = useDebouncedCallback(async () => {
             const suggestions = await autoComplete(place)
             setPlaces(suggestions ?? [])
