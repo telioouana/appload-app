@@ -92,6 +92,8 @@ export function OrdersView({ path }: { path: ORDERS_PATH }) {
                                 currency: order.currency
                             }
 
+                            console.log("Default Values", defaultValues)
+
                             return (
                                 <Card key={order.id} className="border border-card hover:border-primary">
                                     <OrderCard values={values} />

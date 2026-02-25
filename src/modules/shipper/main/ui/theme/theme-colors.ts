@@ -1,3 +1,5 @@
+import { ThemeColors } from "./theme-types";
+
 const themes = {
     amber: {
         light: {

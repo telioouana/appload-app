@@ -5,6 +5,7 @@ import { ThemeProviderProps } from "next-themes";
 import { createContext, useContext, useEffect, useState, } from "react";
 
 import setGlobalColorTheme from "./theme-colors";
+import { ThemeColors, ThemeColorStateParams } from "./theme-types";
 
 const ThemeContext = createContext<ThemeColorStateParams>(
     {} as ThemeColorStateParams,
@@ -18,8 +19,7 @@ export function PrivateThemeProvider({
             return (localStorage.getItem("privateThemeColor") as ThemeColors) || "gray";
         } catch (error) {
             console.log(error)
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            "gray" as ThemeColors;
+            return "gray" as ThemeColors;
         }
     };
 
@@ -58,8 +58,7 @@ export function PublicThemeProvider({
             return (localStorage.getItem("publicThemeColor") as ThemeColors) || "orange";
         } catch (error) {
             console.log(error)
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            "orange" as ThemeColors;
+            return "orange" as ThemeColors;
         }
     };
 

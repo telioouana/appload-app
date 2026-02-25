@@ -87,24 +87,30 @@ export function Map({ markers }: Props) {
                     content: pinContainer
                 });
 
-                const contentString = `
-                    <div class="font-sans flex flex-col gap-2 p-1">
-                        <h3 class="font-bold text-slate-500 uppercase text-xs tracking-wider">${t("title")}</h3>
-                        <div>
-                            <p class="font-semibold text-base text-slate-900 leading-tight">${m.location}</p>
-                            <p class="text-xs text-slate-500 italic mt-1">${m.updatedAt}</p>
-                        </div>
-                    </div>
-                `;
+                const content = document.createElement("div");
+                content.className = "font-sans flex flex-col gap-2 p-1";
 
-                marker.addListener("click", () => {
-                    infoWindow.setContent(contentString);
-                    infoWindow.open(mapRef.current, marker);
-                });
+                const title = document.createElement("h3");
+                title.className = "font-bold text-slate-500 uppercase text-xs tracking-wider";
+                title.textContent = t("title");
 
+                const body = document.createElement("div");
+                const location = document.createElement("p");
+                location.className = "font-semibold text-base text-slate-900 leading-tight";
+                location.textContent = m.location;
+
+                const updatedAt = document.createElement("p");
+                updatedAt.className = "text-xs text-slate-500 italic mt-1";
+                updatedAt.textContent = m.updatedAt;
+
+                body.appendChild(location);
+                body.appendChild(updatedAt);
+                content.appendChild(title);
+                content.appendChild(body);
+                
                 // Hover listeners
                 pinContainer.addEventListener("mouseenter", () => {
-                    infoWindow.setContent(contentString);
+                    infoWindow.setContent(content);
                     infoWindow.open(mapRef.current, marker);
                 });
 

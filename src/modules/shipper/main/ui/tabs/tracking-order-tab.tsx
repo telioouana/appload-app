@@ -1,6 +1,6 @@
 "use client"
 
-import { useFormatter, useNow,  } from "next-intl";
+import { useFormatter } from "next-intl";
 import { useState, useEffect } from "react"; // Added us☻eEffect
 
 import { Map, Marker } from "@/components/map/map";
@@ -12,12 +12,11 @@ import { Values } from "../../types/types"
 export function TrackingOrderTab({ values }: { values: Values }) {
     const [markers, setMarkers] = useState<Marker[]>([]);
     const f = useFormatter();
-    const n = useNow()
 
     const { tracking } = values;
 
     useEffect(() => {
-        // 1. Guard clause: Ensure data exists before proceeding
+        // Guard clause: Ensure data exists before proceeding
         const loc = tracking?.location?.[0];
 
         if (!loc?.placeId || !loc?.address || !tracking?.updatedAt) return;
@@ -37,7 +36,7 @@ export function TrackingOrderTab({ values }: { values: Values }) {
                         location: firstResult.address_components[0].long_name,
                         lat: firstResult.geometry.location.lat,
                         lng: firstResult.geometry.location.lng,
-                        updatedAt: f.relativeTime(updatedAt, n),
+                        updatedAt: f.relativeTime(updatedAt, new Date()),
                     }]);
                 }
             } catch (error) {
@@ -46,7 +45,7 @@ export function TrackingOrderTab({ values }: { values: Values }) {
         }
 
         truckPosition();
-    }, [tracking, f, n]); // Dependencies ensure this runs when tracking data changes
+    }, [tracking, f]); // Dependencies ensure this runs when tracking data changes
 
     return (
         <div className="w-full h-[30vh] rounded-xl">

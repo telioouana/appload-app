@@ -22,71 +22,97 @@ export const orderRouter = createTRPCRouter({
             const { session } = ctx.auth
             const { orderId, status, values } = input
 
-            const result = await distanceCalculator(values.loadingAddress[0].placeId, values.offloadingAddress[0].placeId)
+            const loadingPlace = values.loadingAddress?.[0]?.placeId
+            const offloadingPlace = values.offloadingAddress?.[0]?.placeId
 
-            const distance = result?.[0].elements[0].distance.value ?? 0
+            const result = loadingPlace && offloadingPlace
+                ? await distanceCalculator(loadingPlace, offloadingPlace)
+                : null
+
+            const distance = result?.[0]?.elements?.[0]?.distance?.value ?? 0
+
             values.price = values.price ?? 0
 
             if (orderId) {
-                await db
-                    .update(order)
-                    .set({
-                        status,
-                        distance: distance,
-                        ...values
+                await db.transaction(async (tx) => {
+                    const existing = await tx.query.order.findFirst({
+                        where: eq(order.id, orderId),
                     })
-                    .where(eq(order.id, orderId))
+                    if (!existing || existing.shipperId !== session.activeOrganizationId) {
+                        throw new TRPCError({ code: "UNAUTHORIZED" })
+                    }
+                    await tx
+                        .update(order)
+                        .set({
+                            status,
+                            distance: distance,
+                            ...values
+                        })
+                        .where(eq(order.id, orderId))
 
-                await db
-                    .update(cargo)
-                    .set({
-                        category: values.cargo.category,
-                        description: values.cargo.description,
-                        quantity: String(values.cargo.quantity),
-                        unit: values.cargo.unit,
-                        packing: values.cargo.packing,
-                        isHazardous: values.cargo.isHazardous,
-                        hazchemCode: values.cargo.hazchemCode,
-                        isRefrigerated: values.cargo.isRefrigerated,
-                        temperature: Number(values.cargo.temperature),
-                        temperatureInstructions: values.cargo.temperatureInstructions,
-                        isGroupageAllowed: values.cargo.isGroupageAllowed,
-                    })
-                    .where(eq(cargo.orderId, orderId))
+                    await tx
+                        .update(cargo)
+                        .set({
+                            category: values.cargo.category,
+                            description: values.cargo.description,
+                            quantity: String(values.cargo.quantity),
+                            unit: values.cargo.unit,
+                            packing: values.cargo.packing,
+                            isHazardous: values.cargo.isHazardous,
+                            hazchemCode: values.cargo.hazchemCode,
+                            isRefrigerated: values.cargo.isRefrigerated,
+                            temperature: Number(values.cargo.temperature),
+                            temperatureInstructions: values.cargo.temperatureInstructions,
+                            isGroupageAllowed: values.cargo.isGroupageAllowed,
+                        })
+                        .where(eq(cargo.orderId, orderId))
+                })
             } else {
-                if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
-                const shipper = await db.query.organization.findFirst({ where: eq(organization.id, session.activeOrganizationId) })
+                await db.transaction(async (tx) => {
+                    if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+                    const shipper = await db.query.organization.findFirst({ where: eq(organization.id, session.activeOrganizationId) })
 
-                const [load] = await db
-                    .insert(order)
-                    .values({
-                        status,
-                        shipperId: session.activeOrganizationId,
-                        shipperName: shipper?.name ?? "",
-                        distance: distance,
-                        route: values.loadingAddress[0].country == values.offloadingAddress[0].country ? "national" : "regional",
-                        ...values
-                    })
-                    .returning()
+                    if (!shipper) throw new TRPCError({ code: "UNAUTHORIZED" })
 
-                if (!load) throw new TRPCError({ code: "BAD_REQUEST" })
+                    const [load] =
+                        await tx
+                            .insert(order)
+                            .values({
+                                status,
+                                shipperId: session.activeOrganizationId,
+                                shipperName: shipper.name,
+                                distance: distance,
+                                route: values.loadingAddress[0].country == values.offloadingAddress[0].country ? "national" : "regional",
+                                loadingAddress: values.loadingAddress,
+                                offloadingAddress: values.offloadingAddress,
+                                expectedLoadingDate: values.expectedLoadingDate,
+                                expectedOffloadingDate: values.expectedOffloadingDate,
+                                expectedTrucks: values.expectedTrucks,
+                                share: values.share,
+                                price: values.price,
+                                currency: values.currency,
+                            })
+                            .returning()
 
-                await db
-                    .insert(cargo)
-                    .values({
-                        orderId: load.id,
-                        category: values.cargo.category,
-                        description: values.cargo.description,
-                        quantity: String(values.cargo.quantity),
-                        unit: values.cargo.unit,
-                        packing: values.cargo.packing,
-                        isHazardous: values.cargo.isHazardous,
-                        hazchemCode: values.cargo.hazchemCode,
-                        isRefrigerated: values.cargo.isRefrigerated,
-                        temperature: Number(values.cargo.temperature),
-                        temperatureInstructions: values.cargo.temperatureInstructions,
-                        isGroupageAllowed: values.cargo.isGroupageAllowed,
-                    })
+                    if (!load) throw new TRPCError({ code: "BAD_REQUEST" })
+
+                    await tx
+                        .insert(cargo)
+                        .values({
+                            orderId: load.id,
+                            category: values.cargo.category,
+                            description: values.cargo.description,
+                            quantity: String(values.cargo.quantity),
+                            unit: values.cargo.unit,
+                            packing: values.cargo.packing,
+                            isHazardous: values.cargo.isHazardous,
+                            hazchemCode: values.cargo.hazchemCode,
+                            isRefrigerated: values.cargo.isRefrigerated,
+                            temperature: Number(values.cargo.temperature),
+                            temperatureInstructions: values.cargo.temperatureInstructions,
+                            isGroupageAllowed: values.cargo.isGroupageAllowed,
+                        })
+                })
             }
         }),
 
