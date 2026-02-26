@@ -43,11 +43,6 @@ export function ShipperSidebar({ ...props }: React.ComponentProps<typeof Sidebar
             Icon: IconLock,
             items: [
                 {
-                    label: t("content.marketplace.private.transporters"),
-                    url: "/s/private/transporters",
-                    Icon: IconBuildingFactory,
-                },
-                {
                     label: t("content.marketplace.private.all"),
                     url: "/s/private/orders/all",
                     Icon: IconPackages,
@@ -71,6 +66,11 @@ export function ShipperSidebar({ ...props }: React.ComponentProps<typeof Sidebar
                     label: t("content.marketplace.private.delivered"),
                     url: "/s/private/orders/delivered",
                     Icon: IconChecks,
+                },
+                {
+                    label: t("content.marketplace.private.transporters"),
+                    url: "/s/private/transporters",
+                    Icon: IconBuildingFactory,
                 },
                 {
                     label: t("content.marketplace.private.terms-and-conditions"),

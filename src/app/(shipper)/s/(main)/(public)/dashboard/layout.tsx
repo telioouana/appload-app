@@ -8,7 +8,7 @@ export default function Layout({
     resume: React.ReactNode
 }) {
     return (
-        <div className="flex flex-col gap-6 p-2">
+        <div className="flex flex-col gap-6 px-2">
             <div>{children}</div>
             <div>{activity}</div>
             <div>{resume}</div>

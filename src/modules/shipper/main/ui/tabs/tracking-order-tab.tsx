@@ -13,39 +13,46 @@ export function TrackingOrderTab({ values }: { values: Values }) {
     const [markers, setMarkers] = useState<Marker[]>([]);
     const f = useFormatter();
 
-    const { tracking } = values;
+    const { order, trip, tracking } = values;
 
     useEffect(() => {
         // Guard clause: Ensure data exists before proceeding
-        const loc = tracking?.location?.[0];
+        if (order.status === "on-going") {
+            const loc = tracking?.location?.[0];
 
-        if (!loc?.placeId || !loc?.address || !tracking?.updatedAt) return;
+            if (!loc?.placeId || !tracking?.updatedAt || !trip?.status) return;
 
-        const { placeId } = loc
-        const { updatedAt } = tracking
+            const { status } = trip
+            const { placeId } = loc
+            const { updatedAt } = tracking
 
-        async function truckPosition() {
-            try {
-                // Call your utility function (ensure it's exported from a file)
-                const locationData = await getLocation(placeId);
+            async function truckPosition() {
+                try {
+                    // Call your utility function (ensure it's exported from a file)
+                    const locationData = await getLocation(placeId);
 
-                if (locationData && locationData[0]) {
-                    const firstResult = locationData[0];
+                    if (locationData && locationData[0]) {
+                        const firstResult = locationData[0];
 
-                    setMarkers([{
-                        location: firstResult.address_components[0].long_name,
-                        lat: firstResult.geometry.location.lat,
-                        lng: firstResult.geometry.location.lng,
-                        updatedAt: f.relativeTime(updatedAt, new Date()),
-                    }]);
+                        setMarkers(prev => [
+                            ...prev,
+                            {
+                                location: firstResult.address_components[0].long_name,
+                                lat: firstResult.geometry.location.lat,
+                                lng: firstResult.geometry.location.lng,
+                                updatedAt: f.relativeTime(updatedAt, new Date()),
+                                status: status as Marker["status"] // Type assertion to match the expected status type
+                            }
+                        ]);
+                    }
+                } catch (error) {
+                    console.error("Failed to fetch location:", error);
                 }
-            } catch (error) {
-                console.error("Failed to fetch location:", error);
             }
-        }
 
-        truckPosition();
-    }, [tracking, f]); // Dependencies ensure this runs when tracking data changes
+            truckPosition();
+        }
+    }, [tracking, f, trip, order]);
 
     return (
         <div className="w-full h-[30vh] rounded-xl">

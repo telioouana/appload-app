@@ -3,12 +3,15 @@
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { setOptions, importLibrary } from "@googlemaps/js-api-loader";
+import { PinElement } from "./pin-element";
 
+export type Status = "to-loading" | "at-loading" | "loading" | "on-route" | "at-offloading" | "offloading" | "stopped" | "waiting-documents" | "issue";
 export interface Marker {
     location: string;
     lat: number;
     lng: number;
     updatedAt: string;
+    status: Status
 }
 
 interface Props {
@@ -68,18 +71,13 @@ export function Map({ markers }: Props) {
 
             markers.forEach((m) => {
                 // IMPORTANT: Create a NEW element for every single marker
-                const pinContainer = document.createElement("div");
-                pinContainer.className = "relative bg-green-500 flex items-center justify-center rounded-full border-2 border-white size-10 isolate";
+                const color =
+                    m.status === "at-loading" || m.status === "loading" ? "bg-blue-500" :
+                        m.status === "to-loading" || m.status === "on-route" ? "bg-green-500" :
+                            m.status === "at-offloading" || m.status === "offloading" ? "bg-purple-500" :
+                                m.status === "stopped" || m.status === "waiting-documents" ? "bg-neutral-500" : "bg-red-500"
 
-                const pulse = document.createElement("div");
-                pulse.className = "absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75";
-
-                const icon = document.createElement("img");
-                icon.src = '/truck-delivery.svg';
-                icon.className = "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 size-6";
-
-                pinContainer.appendChild(pulse);
-                pinContainer.appendChild(icon);
+                const pinContainer = PinElement(m.status, color)
 
                 const marker = new AdvancedMarkerElement({
                     map: mapRef.current,
@@ -107,7 +105,7 @@ export function Map({ markers }: Props) {
                 body.appendChild(updatedAt);
                 content.appendChild(title);
                 content.appendChild(body);
-                
+
                 // Hover listeners
                 pinContainer.addEventListener("mouseenter", () => {
                     infoWindow.setContent(content);

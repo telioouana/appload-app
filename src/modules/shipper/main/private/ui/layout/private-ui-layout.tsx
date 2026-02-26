@@ -7,7 +7,7 @@ export function PrivateUILayout({ children }: PropsWithChildren) {
         <div>
             <PrivateThemeProvider>
                 <PrivateHeader />
-                <div className="w-full h-full max-w-6xl mx-auto py-6 px-1">
+                <div className="w-full h-full max-w-6xl mx-auto pt-6 pb-2 px-1">
                     {children}
                 </div>
             </PrivateThemeProvider>
