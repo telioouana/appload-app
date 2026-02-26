@@ -34,85 +34,80 @@ export const orderRouter = createTRPCRouter({
             values.price = values.price ?? 0
 
             if (orderId) {
-                await db.transaction(async (tx) => {
-                    const existing = await tx.query.order.findFirst({
-                        where: eq(order.id, orderId),
+                const existing = await db.query.order.findFirst({ where: eq(order.id, orderId) })
+
+                if (!existing || existing.shipperId !== session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+
+                await db
+                    .update(order)
+                    .set({
+                        status,
+                        distance: distance,
+                        ...values
                     })
-                    if (!existing || existing.shipperId !== session.activeOrganizationId) {
-                        throw new TRPCError({ code: "UNAUTHORIZED" })
-                    }
-                    await tx
-                        .update(order)
-                        .set({
-                            status,
-                            distance: distance,
-                            ...values
-                        })
-                        .where(eq(order.id, orderId))
+                    .where(eq(order.id, orderId))
 
-                    await tx
-                        .update(cargo)
-                        .set({
-                            category: values.cargo.category,
-                            description: values.cargo.description,
-                            quantity: String(values.cargo.quantity),
-                            unit: values.cargo.unit,
-                            packing: values.cargo.packing,
-                            isHazardous: values.cargo.isHazardous,
-                            hazchemCode: values.cargo.hazchemCode,
-                            isRefrigerated: values.cargo.isRefrigerated,
-                            temperature: Number(values.cargo.temperature),
-                            temperatureInstructions: values.cargo.temperatureInstructions,
-                            isGroupageAllowed: values.cargo.isGroupageAllowed,
-                        })
-                        .where(eq(cargo.orderId, orderId))
-                })
+                await db
+                    .update(cargo)
+                    .set({
+                        category: values.cargo.category,
+                        description: values.cargo.description,
+                        quantity: String(values.cargo.quantity),
+                        unit: values.cargo.unit,
+                        packing: values.cargo.packing,
+                        isHazardous: values.cargo.isHazardous,
+                        hazchemCode: values.cargo.hazchemCode,
+                        isRefrigerated: values.cargo.isRefrigerated,
+                        temperature: Number(values.cargo.temperature),
+                        temperatureInstructions: values.cargo.temperatureInstructions,
+                        isGroupageAllowed: values.cargo.isGroupageAllowed,
+                    })
+                    .where(eq(cargo.orderId, orderId))
             } else {
-                await db.transaction(async (tx) => {
-                    if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
-                    const shipper = await db.query.organization.findFirst({ where: eq(organization.id, session.activeOrganizationId) })
+                if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+                const shipper = await db.query.organization.findFirst({ where: eq(organization.id, session.activeOrganizationId) })
 
-                    if (!shipper) throw new TRPCError({ code: "UNAUTHORIZED" })
+                if (!shipper) throw new TRPCError({ code: "UNAUTHORIZED" })
 
-                    const [load] =
-                        await tx
-                            .insert(order)
-                            .values({
-                                status,
-                                shipperId: session.activeOrganizationId,
-                                shipperName: shipper.name,
-                                distance: distance,
-                                route: values.loadingAddress[0].country == values.offloadingAddress[0].country ? "national" : "regional",
-                                loadingAddress: values.loadingAddress,
-                                offloadingAddress: values.offloadingAddress,
-                                expectedLoadingDate: values.expectedLoadingDate,
-                                expectedOffloadingDate: values.expectedOffloadingDate,
-                                expectedTrucks: values.expectedTrucks,
-                                share: values.share,
-                                price: values.price,
-                                currency: values.currency,
-                            })
-                            .returning()
-
-                    if (!load) throw new TRPCError({ code: "BAD_REQUEST" })
-
-                    await tx
-                        .insert(cargo)
+                const [load] =
+                    await db
+                        .insert(order)
                         .values({
-                            orderId: load.id,
-                            category: values.cargo.category,
-                            description: values.cargo.description,
-                            quantity: String(values.cargo.quantity),
-                            unit: values.cargo.unit,
-                            packing: values.cargo.packing,
-                            isHazardous: values.cargo.isHazardous,
-                            hazchemCode: values.cargo.hazchemCode,
-                            isRefrigerated: values.cargo.isRefrigerated,
-                            temperature: Number(values.cargo.temperature),
-                            temperatureInstructions: values.cargo.temperatureInstructions,
-                            isGroupageAllowed: values.cargo.isGroupageAllowed,
+                            status,
+                            shipperId: session.activeOrganizationId,
+                            shipperName: shipper.name,
+                            distance: distance,
+                            route: values.loadingAddress[0].country == values.offloadingAddress[0].country ? "national" : "regional",
+                            loadingAddress: values.loadingAddress,
+                            offloadingAddress: values.offloadingAddress,
+                            expectedLoadingDate: values.expectedLoadingDate,
+                            expectedOffloadingDate: values.expectedOffloadingDate,
+                            expectedTrucks: values.expectedTrucks,
+                            share: values.share,
+                            price: values.price,
+                            currency: values.currency,
+
                         })
-                })
+                        .returning()
+
+                if (!load) throw new TRPCError({ code: "BAD_REQUEST" })
+
+                await db
+                    .insert(cargo)
+                    .values({
+                        orderId: load.id,
+                        category: values.cargo.category,
+                        description: values.cargo.description,
+                        quantity: String(values.cargo.quantity),
+                        unit: values.cargo.unit,
+                        packing: values.cargo.packing,
+                        isHazardous: values.cargo.isHazardous,
+                        hazchemCode: values.cargo.hazchemCode,
+                        isRefrigerated: values.cargo.isRefrigerated,
+                        temperature: Number(values.cargo.temperature),
+                        temperatureInstructions: values.cargo.temperatureInstructions,
+                        isGroupageAllowed: values.cargo.isGroupageAllowed,
+                    })
             }
         }),
 

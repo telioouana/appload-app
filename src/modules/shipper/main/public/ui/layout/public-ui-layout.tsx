@@ -4,10 +4,10 @@ import { PublicThemeProvider } from "../../../ui/theme/theme-provider";
 
 export function PublicUILayout({ children }: PropsWithChildren) {
     return (
-        <div>
+        <div className="w-full h-full">
             <PublicThemeProvider>
                 <PublicHeader />
-                <div className="w-full h-full">
+                <div className="w-full h-full pt-6 pb-2">
                     {children}
                 </div>
             </PublicThemeProvider>

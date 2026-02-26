@@ -91,6 +91,8 @@
     /* Info / Progress */
     --status-booked-text: oklch(0.57 0.15 259);
     --status-booked-bg: oklch(0.94 0.04 254);
+    --status-to-loading-text: oklch(0.59 0.13 224);
+    --status-to-loading-bg: oklch(0.95 0.03 219);
     --status-at-loading-text: oklch(0.65 0.13 254);
     --status-at-loading-bg: oklch(0.94 0.04 254);
     --status-loading-text: oklch(0.55 0.16 278);
@@ -99,8 +101,8 @@
     --status-at-offloading-bg: oklch(0.95 0.03 219);
     --status-offloading-text: oklch(0.70 0.11 200);
     --status-offloading-bg: oklch(0.95 0.03 195);
-    --status-in-transit-text: oklch(0.59 0.13 224);
-    --status-in-transit-bg: oklch(0.95 0.03 219);
+    --status-on-route-text: oklch(0.59 0.13 224);
+    --status-on-route-bg: oklch(0.95 0.03 219);
     --status-waiting-documents-text: oklch(0.49 0.04 257);
     --status-waiting-documents-bg: oklch(0.97 0.01 264);
     --status-at-border-text: oklch(0.66 0.02 257);
@@ -113,6 +115,8 @@
     /* Danger */
     --status-cancelled-text: oklch(0.49 0.20 28);
     --status-cancelled-bg: oklch(0.96 0.04 25);
+    --status-issue-text: oklch(0.49 0.20 28);
+    --status-issue-bg: oklch(0.96 0.04 25);
     --status-stopped-text: oklch(0.68 0.18 57);
     --status-stopped-bg: oklch(0.97 0.03 68);
 
@@ -164,6 +168,8 @@
     /* Info / Progress */
     --status-booked-text: oklch(0.78 0.12 254);
     --status-booked-bg: oklch(0.32 0.05 255);
+    --status-to-loading-text: oklch(0.89 0.07 217);
+    --status-to-loading-bg: oklch(0.32 0.07 217);
     --status-at-loading-text: oklch(0.85 0.10 255);
     --status-at-loading-bg: oklch(0.32 0.05 255);
     --status-loading-text: oklch(0.78 0.11 279);
@@ -172,8 +178,8 @@
     --status-at-offloading-bg: oklch(0.32 0.07 217);
     --status-offloading-text: oklch(0.86 0.09 196);
     --status-offloading-bg: oklch(0.32 0.06 196);
-    --status-in-transit-text: oklch(0.89 0.07 217);
-    --status-in-transit-bg: oklch(0.32 0.07 217);
+    --status-on-route-text: oklch(0.89 0.07 217);
+    --status-on-route-bg: oklch(0.32 0.07 217);
     --status-waiting-documents-text: oklch(0.83 0.02 259);
     --status-waiting-documents-bg: oklch(38.925% 0.00434 248.174);
     --status-at-border-text: oklch(0.68 0.03 258);
@@ -186,6 +192,8 @@
     /* Danger */
     --status-cancelled-text: oklch(0.82 0.13 25);
     --status-cancelled-bg: oklch(0.31 0.07 25);
+    --status-issue-text: oklch(0.82 0.13 25);
+    --status-issue-bg: oklch(0.31 0.07 25);
     --status-stopped-text: oklch(0.85 0.13 48);
     --status-stopped-bg: oklch(0.34 0.07 48);
 

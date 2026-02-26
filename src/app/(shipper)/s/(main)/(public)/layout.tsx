@@ -4,9 +4,11 @@ import { PublicUILayout } from "@/modules/shipper/main/public/ui/layout/public-u
 
 export default function PublicLayout({ children }: PropsWithChildren) {
     return (
-        <PublicUILayout>
-            {children}
-        </PublicUILayout>
+        <div className="w-full h-full">
+            <PublicUILayout>
+                {children}
+            </PublicUILayout>
+        </div>
     )
 }
 
