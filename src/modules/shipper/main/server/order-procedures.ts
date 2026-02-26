@@ -35,9 +35,8 @@ export const orderRouter = createTRPCRouter({
 
             if (orderId) {
                 const existing = await db.query.order.findFirst({ where: eq(order.id, orderId) })
-
                 if (!existing || existing.shipperId !== session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
-
+                
                 await db
                     .update(order)
                     .set({

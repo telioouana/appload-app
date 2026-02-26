@@ -72,10 +72,10 @@ export function Map({ markers }: Props) {
             markers.forEach((m) => {
                 // IMPORTANT: Create a NEW element for every single marker
                 const color =
-                    m.status === "at-loading" || m.status === "loading" ? "blue-500" :
-                        m.status === "to-loading" || m.status === "on-route" ? "green-500" :
-                            m.status === "at-offloading" || m.status === "offloading" ? "purple-500" :
-                                m.status === "stopped" || m.status === "waiting-documents" ? "neutral-500" : "red-500"
+                    m.status === "at-loading" || m.status === "loading" ? "bg-blue-500" :
+                        m.status === "to-loading" || m.status === "on-route" ? "bg-green-500" :
+                            m.status === "at-offloading" || m.status === "offloading" ? "bg-purple-500" :
+                                m.status === "stopped" || m.status === "waiting-documents" ? "bg-neutral-500" : "bg-red-500"
 
                 const pinContainer = PinElement(m.status, color)
 

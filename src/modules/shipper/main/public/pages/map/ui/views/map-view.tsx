@@ -12,6 +12,20 @@ import { Map, Marker } from "@/components/map/map"
 import { getLocation } from "@/lib/google";
 
 export default function MapView() {
+
+
+    return (
+        <ErrorBoundary fallback={<div>Failed to load map</div>}>
+            <Suspense fallback={<div>Loading map...</div>}>
+                <div className="w-full h-full max-h-[65vh]">
+                    <MapComponent />
+                </div>
+            </Suspense>
+        </ErrorBoundary>
+    )
+}
+
+function MapComponent() {
     const [markers, setMarkers] = useState<Marker[]>([])
     const f = useFormatter();
 
@@ -26,45 +40,38 @@ export default function MapView() {
         async function truckPosition() {
             try {
                 // Call your utility function (ensure it's exported from a file)
-                data.forEach(async (position) => {
-                    const { location, status, updatedAt } = position
+                const newMarkers = await Promise.all(
+                    data
+                        .filter(p => p.location?.[0]?.placeId && p.updatedAt && p.status)
+                        .map(async (position) => {
+                            const { location, status, updatedAt } = position;
 
-                    if (!location?.[0]?.placeId || !updatedAt || !status) return;
-                    const { placeId } = location[0];
+                            if (!location || location.length === 0) return null; // Skip if no location data
 
-                    const locationData = await getLocation(placeId);
+                            const { placeId } = location[0];
+                            const locationData = await getLocation(placeId);
 
-                    if (locationData && locationData[0]) {
-                        const firstResult = locationData[0];
-
-                        setMarkers(prev => [
-                            ...prev,
-                            {
-                                location: firstResult.address_components[0].long_name,
-                                lat: firstResult.geometry.location.lat,
-                                lng: firstResult.geometry.location.lng,
-                                updatedAt: f.relativeTime(updatedAt, new Date()),
-                                status: status as Marker["status"] // Type assertion to match the expected status type
+                            if (locationData?.[0]) {
+                                const firstResult = locationData[0];
+                                return {
+                                    location: firstResult.address_components[0].long_name,
+                                    lat: firstResult.geometry.location.lat,
+                                    lng: firstResult.geometry.location.lng,
+                                    updatedAt: f.relativeTime(updatedAt, new Date()),
+                                    status: status as Marker["status"]
+                                };
                             }
-                        ]);
-                    }
-                })
+                            return null;
+                        })
+                );
+                setMarkers(newMarkers.filter((m): m is Marker => m !== null));
             } catch (error) {
                 console.error("Failed to fetch location:", error);
             }
         }
 
         truckPosition();
-    }, [data, f]); // Dependencies ensure this runs when tracking data changes
+    }, [data, f]);
 
-
-    return (
-        <ErrorBoundary fallback={<div>Failed to load map</div>}>
-            <Suspense fallback={<div>Loading map...</div>}>
-                <div className="w-full h-full max-h-[65vh]">
-                    <Map markers={markers} />
-                </div>
-            </Suspense>
-        </ErrorBoundary>
-    )
+    return <Map markers={markers} />;
 }

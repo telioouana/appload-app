@@ -56,7 +56,7 @@ export function TrackingOrderTab({ values }: { values: Values }) {
 
     return (
         <div className="w-full h-[30vh] rounded-xl">
-            <Map markers={markers} />,
+            <Map markers={markers} />
         </div>
     );
 }
