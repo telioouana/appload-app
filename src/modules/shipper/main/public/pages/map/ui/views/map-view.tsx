@@ -36,6 +36,7 @@ function MapComponent() {
     )
 
     useEffect(() => {
+        let cancelled = false;
         // Guard clause: Ensure data exists before proceeding
         async function truckPosition() {
             try {
@@ -64,13 +65,16 @@ function MapComponent() {
                             return null;
                         })
                 );
+                if (cancelled) return;
                 setMarkers(newMarkers.filter((m): m is Marker => m !== null));
             } catch (error) {
+                if (cancelled) return;
                 console.error("Failed to fetch location:", error);
             }
         }
 
         truckPosition();
+        return () => { cancelled = true; };
     }, [data, f]);
 
     return <Map markers={markers} />;
