@@ -10,7 +10,7 @@ export const FISCAL_REGIME = ["normal", "simplified-5", "simplified-3"] as const
 export const INSURANCE_PAYMENT_STATUS = ["pending", "paid", "not-applicable"] as const
 export const POD_STATUS = ["pending-collection", "pending-delivery", "delivered", "verified"] as const
 export const PAYMENT_STATUS = ["pending", "partially", "completed", "cancelled", "not-applicable"] as const
-export const ORDER_STATUS = ["prospect", "drafted", "pending", "on-going", "delivered", "completed", "cancelled"] as const
+export const ORDER_STATUS = ["prospect", "drafted", "open", "booked", "on-going", "delivered", "completed", "cancelled"] as const
 export const TRIP_STATUS = ["booked", "to-loading", "at-loading", "loading", "waiting-documents", "on-route", "stopped", "issue", "at-border", "at-offloading", "offloading", "completed"] as const
 export const CATEGORIES = ["agriculture-inputs", "agriculture-products", "construction", "machinery-equipment", "fmcg", "general-cargo", "medicine", "mining", "oil-gas", "vehicles", "other"] as const
 export const PACKING = ["bags-1kg", "bags-2kg", "bags-5kg", "bags-25kg", "bags-30kg", "bags-50kg", "bags-100kg", "bags-1ton", "bottle-1l", "bottle-5l", "bottle-10l", "bottle-20l", "bottle-25l", "container-20ft", "container-40ft", "boxes", "pallets", "noPacking", "other"] as const
@@ -154,7 +154,7 @@ export const CreateOrderSchema = z.object({
 
     share: z.enum(SHARE),
     price: z.number().optional(),
-    currency: z.enum(CURRENCY).optional(),
+    currency: z.enum(CURRENCY),
 })
     .superRefine((data, ctx) => {
         // If share is "subscribers", price and currency MUST exist

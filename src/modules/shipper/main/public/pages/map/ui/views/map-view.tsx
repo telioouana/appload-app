@@ -12,8 +12,6 @@ import { Map, Marker } from "@/components/map/map"
 import { getLocation } from "@/lib/google";
 
 export default function MapView() {
-
-
     return (
         <ErrorBoundary fallback={<div>Failed to load map</div>}>
             <Suspense fallback={<div>Loading map...</div>}>
@@ -28,7 +26,6 @@ export default function MapView() {
 function MapComponent() {
     const [markers, setMarkers] = useState<Marker[]>([])
     const f = useFormatter();
-
     const trpc = useTRPC()
 
     const { data } = useSuspenseQuery(

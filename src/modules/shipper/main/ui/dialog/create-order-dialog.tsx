@@ -21,7 +21,7 @@ import { useConfirm } from "@/hooks/use-confirm"
 import { ORDERS_PATH } from "../../types/types"
 import { OrderFillForm } from "../form/order-fill-form"
 import { useCreateOrder } from "../../hooks/use-create-order"
-import { OrderPreviewForm } from "../form/order-preview-form"
+import { CreateOrderPreviewForm } from "../form/create-order-preview-form"
 
 type Props = {
     path: ORDERS_PATH
@@ -113,12 +113,13 @@ export function CreateOrderDialog({ path, share }: Props) {
     })
 
     function handleClose() {
+        setView("form")
         form.reset()
         onClose()
     }
 
     // eslint-disable-next-line react-hooks/incompatible-library
-    const [ConfirmDialog, confirm] = useConfirm(`Shipper.main.order.dialog.confirm.${form.watch().share as string}`) as [React.ComponentType, () => Promise<boolean>]
+    const [ConfirmDialog, confirm] = useConfirm(`Shipper.main.order.dialog.create.confirm.${form.watch().share as string}`) as [React.ComponentType, () => Promise<boolean>]
     async function handleNext() {
         form.clearErrors()
 
@@ -164,6 +165,7 @@ export function CreateOrderDialog({ path, share }: Props) {
                         path,
                         limit: DEFAULT_PAGE_LIMIT,
                     }))
+                    queryClient.invalidateQueries(trpc.private.resume.queryOptions({ path }))
                 }
                 onClose()
             },
@@ -174,7 +176,7 @@ export function CreateOrderDialog({ path, share }: Props) {
         }),
     )
 
-    async function handlePublish(values: CreateOrderForm, status: "drafted" | "pending") {
+    async function handlePublish(values: CreateOrderForm, status: "drafted" | "open") {
         form.clearErrors()
         await mutateAsync({
             status,
@@ -189,14 +191,14 @@ export function CreateOrderDialog({ path, share }: Props) {
         },
         {
             id: "preview",
-            render: <OrderPreviewForm key={"preview"} />
+            render: <CreateOrderPreviewForm key={"preview"} />
         }
     ]
 
     return (
         <ResponsiveDialog
             title={t(`create.title.${view}`)}
-            onClose={onClose}
+            onClose={handleClose}
             open={isOpen}
             type="dialog"
             className="md:max-w-3xl"
@@ -260,7 +262,7 @@ export function CreateOrderDialog({ path, share }: Props) {
                                     <Button
                                         type="button"
                                         disabled={isPending}
-                                        onClick={() => handlePublish(form.getValues(), "pending")}
+                                        onClick={() => handlePublish(form.getValues(), "open")}
                                     >
                                         {t("create.button.publish")}
                                         {<IconSend />}

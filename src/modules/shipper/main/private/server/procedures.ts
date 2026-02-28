@@ -6,7 +6,7 @@ import { db } from "@/backend/db"
 import { cargo, order, tracking, trip } from "@/backend/db/schema"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
 
-const ORDER_STATUS = ["all", "drafted", "pending", "on-going", "delivered"] as const
+const ORDER_STATUS = ["all", "drafted", "open", "booked", "on-going", "delivered", "history"] as const
 
 export const privateRouter = createTRPCRouter({
     orders: protectedProcedure
@@ -46,7 +46,12 @@ export const privateRouter = createTRPCRouter({
                             ne(order.status, "cancelled"),
                             ne(order.status, "prospect"),
                         )
-                        : eq(order.status, path),
+                        : path === "history"
+                            ? and(
+                                eq(order.status, "completed"),
+                                ne(order.status, "cancelled")
+                            )
+                            : eq(order.status, path),
                     cursor
                         ? or(
                             lt(order.updatedAt, cursor.updatedAt),
@@ -109,7 +114,12 @@ export const privateRouter = createTRPCRouter({
                             ne(order.status, "cancelled"),
                             ne(order.status, "prospect"),
                         )
-                        : eq(order.status, path),
+                        : path === "history"
+                            ? and(
+                                eq(order.status, "completed"),
+                                ne(order.status, "cancelled")
+                            )
+                            : eq(order.status, path),
                 ))
 
             return orders

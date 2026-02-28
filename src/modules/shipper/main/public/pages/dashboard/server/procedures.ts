@@ -19,14 +19,16 @@ export const dashboardRouter = createTRPCRouter({
                     private: {
                         orders: sql<number>`count(${order.id}) filter (where ${order.share} = 'subscribers')`.mapWith(Number),
                         drafted: sql<number>`count(${order.id}) filter (where ${order.status} = 'drafted' and ${order.share} = 'subscribers')`.mapWith(Number),
-                        pending: sql<number>`count(${order.id}) filter (where ${order.status} = 'pending' and ${order.share} = 'subscribers')`.mapWith(Number),
+                        open: sql<number>`count(${order.id}) filter (where ${order.status} = 'open' and ${order.share} = 'subscribers')`.mapWith(Number),
+                        booked: sql<number>`count(${order.id}) filter (where ${order.status} = 'booked' and ${order.share} = 'subscribers')`.mapWith(Number),
                         shipped: sql<number>`count(${order.id}) filter (where ${order.status} = 'on-going' and ${order.share} = 'subscribers')`.mapWith(Number),
                         delivered: sql<number>`count(${order.id}) filter (where ${order.status} = 'delivered' and ${order.share} = 'subscribers')`.mapWith(Number),
                     },
                     public: {
                         orders: sql<number>`count(${order.id}) filter (where ${order.share} = 'non-subscribers')`.mapWith(Number),
                         drafted: sql<number>`count(${order.id}) filter (where ${order.status} = 'drafted' and ${order.share} = 'non-subscribers')`.mapWith(Number),
-                        pending: sql<number>`count(${order.id}) filter (where ${order.status} = 'pending' and ${order.share} = 'non-subscribers')`.mapWith(Number),
+                        open: sql<number>`count(${order.id}) filter (where ${order.status} = 'open' and ${order.share} = 'non-subscribers')`.mapWith(Number),
+                        booked: sql<number>`count(${order.id}) filter (where ${order.status} = 'booked' and ${order.share} = 'non-subscribers')`.mapWith(Number),
                         shipped: sql<number>`count(${order.id}) filter (where ${order.status} = 'on-going' and ${order.share} = 'non-subscribers')`.mapWith(Number),
                         delivered: sql<number>`count(${order.id}) filter (where ${order.status} = 'delivered' and ${order.share} = 'non-subscribers')`.mapWith(Number),
                     }

@@ -8,8 +8,6 @@ export function PageView() {
                 <p className="text-muted-foreground">Veja a localização das suas cargas em andamento.</p>
             </div>
 
-            const 
-
             <Card>
                 <CardContent className="flex gap-8">
                     <CardDescription>Legend:</CardDescription>

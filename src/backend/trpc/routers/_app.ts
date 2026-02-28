@@ -5,16 +5,21 @@ import { privateRouter } from "@/modules/shipper/main/private/server/procedures"
 import { mapRouter } from "@/modules/shipper/main/public/pages/map/server/procedures";
 import { kpisRouter } from "@/modules/shipper/main/public/pages/kpis/server/procedures";
 import { dashboardRouter } from "@/modules/shipper/main/public/pages/dashboard/server/procedures";
+import { carrierOrderRouter } from "@/modules/carrier/main/pages/orders/server/procedures";
 
 export const appRouter = createTRPCRouter({
     // merge your routers here
     
     // new layout routers
+    // Shipper Routers
     map: mapRouter,
     kpis: kpisRouter,
     order: orderRouter,
     private: privateRouter,
     dashboard: dashboardRouter,
+
+    // Carrier Routers
+    carrierOrder: carrierOrderRouter,
 });
 
 // export type definition of API

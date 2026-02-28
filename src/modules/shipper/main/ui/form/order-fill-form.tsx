@@ -161,7 +161,17 @@ export function OrderFillForm({ isPending, share }: { isPending?: boolean, share
                     <FieldSet>
                         <FieldLegend variant="label">{t("share.label")}</FieldLegend>
                         <FieldDescription>{t("share.description")}</FieldDescription>
-                        <RadioGroup defaultValue={form.watch().share} className="flex gap-4" onValueChange={(value) => form.setValue("share", value as typeof SHARE[number])}>
+                        
+                        <RadioGroup
+                            defaultValue={form.watch().share}
+                            className="flex gap-4"
+                            onValueChange={(value) => {
+                                form.setValue("share", value as typeof SHARE[number])
+                                if (value === SHARE[1]) {
+                                    form.setValue("price", undefined)
+                                }
+                            }}
+                        >
                             <FieldLabel htmlFor="subscribers-r2h">
                                 <Field orientation="horizontal">
                                     <FieldContent>
@@ -171,6 +181,7 @@ export function OrderFillForm({ isPending, share }: { isPending?: boolean, share
                                     <RadioGroupItem value="subscribers" id="subscribers-r2h" />
                                 </Field>
                             </FieldLabel>
+
                             <FieldLabel htmlFor="non-subscribers-z4k">
                                 <Field orientation="horizontal">
                                     <FieldContent>

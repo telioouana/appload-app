@@ -53,9 +53,14 @@ export function ShipperSidebar({ ...props }: React.ComponentProps<typeof Sidebar
                     Icon: IconPencilMinus,
                 },
                 {
-                    label: t("content.marketplace.private.pending"),
-                    url: "/s/private/orders/pending",
+                    label: t("content.marketplace.private.open"),
+                    url: "/s/private/orders/open",
                     Icon: IconClock,
+                },
+                {
+                    label: t("content.marketplace.private.booked"),
+                    url: "/s/private/orders/booked",
+                    Icon: IconLock,
                 },
                 {
                     label: t("content.marketplace.private.on-going"),
@@ -66,6 +71,11 @@ export function ShipperSidebar({ ...props }: React.ComponentProps<typeof Sidebar
                     label: t("content.marketplace.private.delivered"),
                     url: "/s/private/orders/delivered",
                     Icon: IconChecks,
+                },
+                {
+                    label: t("content.marketplace.private.history"),
+                    url: "/s/private/orders/history",
+                    Icon: IconHistory,
                 },
                 {
                     label: t("content.marketplace.private.transporters"),

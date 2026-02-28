@@ -27,7 +27,7 @@ export function ActivityView() {
                     <div className="flex flex-col gap-4">
                         <h2 className="font-medium">{t("private")}</h2>
 
-                        <div className="grid grid-cols-1 md:grid-col-3 lg:grid-cols-5 gap-6">
+                        <div className="grid grid-cols-1 md:grid-col-3 lg:grid-cols-6 gap-6">
                             <ActivityCard
                                 Icon={IconPackages}
                                 value={data.private.orders}
@@ -46,9 +46,17 @@ export function ActivityView() {
 
                             <ActivityCard
                                 Icon={IconClock}
-                                value={data.private.pending}
-                                unit={t("pending")}
-                                href="/s/private/orders/pending"
+                                value={data.private.open}
+                                unit={t("open")}
+                                href="/s/private/orders/open"
+                                label={t("link")}
+                            />
+
+                            <ActivityCard
+                                Icon={IconClock}
+                                value={data.private.booked}
+                                unit={t("booked")}
+                                href="/s/private/orders/booked"
                                 label={t("link")}
                             />
 
@@ -73,7 +81,7 @@ export function ActivityView() {
                     <div className="flex flex-col gap-3">
                         <h2 className="font-medium">{t("public")}</h2>
 
-                        <div className="grid grid-cols-1 md:grid-col-3 lg:grid-cols-5 gap-6">
+                        <div className="grid grid-cols-1 md:grid-col-3 lg:grid-cols-6 gap-6">
                             <ActivityCard
                                 Icon={IconPackages}
                                 value={data.public.orders}
@@ -92,15 +100,23 @@ export function ActivityView() {
 
                             <ActivityCard
                                 Icon={IconClock}
-                                value={data.public.pending}
-                                unit={t("pending")}
-                                href="/s/public/orders/pending"
+                                value={data.public.open}
+                                unit={t("open")}
+                                href="/s/public/orders/open"
+                                label={t("link")}
+                            />
+
+                            <ActivityCard
+                                Icon={IconClock}
+                                value={data.public.booked}
+                                unit={t("booked")}
+                                href="/s/public/orders/booked"
                                 label={t("link")}
                             />
 
                             <ActivityCard
                                 Icon={IconTruckDelivery}
-                                value={data.private.shipped}
+                                value={data.public.shipped}
                                 unit={t("on-going")}
                                 href="/s/public/orders/shipped"
                                 label={t("link")}
@@ -108,7 +124,7 @@ export function ActivityView() {
 
                             <ActivityCard
                                 Icon={IconChecks}
-                                value={data.private.delivered}
+                                value={data.public.delivered}
                                 unit={t("delivered")}
                                 href="/s/public/orders/delivered"
                                 label={t("link")}

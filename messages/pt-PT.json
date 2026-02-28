@@ -1802,5 +1802,12 @@
         "pt-PT": "Português",
         "en-US": "English",
         "label": "Language"
+    },
+    "Miscellaneous": {
+        "infinite-scroll": {
+            "loading": "A carregar dados...",
+            "more": "Carregar mais",
+            "end": "Não há mais nada para mostrar neste momento."
+        }
     }
 }

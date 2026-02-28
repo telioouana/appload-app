@@ -5,7 +5,7 @@ import { CreateOrderForm as COF } from "@/backend/db/types";
 
 import { Separator } from "@/components/ui/separator";
 
-export function OrderPreviewForm() {
+export function CreateOrderPreviewForm() {
     const t = useTranslations("Shipper.main.order.dialog.preview")
     const f = useFormatter()
 

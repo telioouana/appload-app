@@ -24,7 +24,7 @@ export function InfiniteScroll({
         threshold: 0.5,
         rootMargin: "100px"
     })
-    const t = useTranslations("Miscellaneous.infiniteScroll")
+    const t = useTranslations("Miscellaneous.infinite-scroll")
 
     useEffect(() => {
         if (isIntersecting && hasNextPage && !isFetchingNextPage && !isManual) {
