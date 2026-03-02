@@ -16,7 +16,12 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
 
     const { user: { type } } = session
 
+    const callbarkURL = decodeURIComponent(callback)
+
     if (type === "shipper" || type === "carrier") {
+        if (callbarkURL && callbarkURL.startsWith(`/${type.charAt(0)}`)) {
+            redirect(callbarkURL)
+        }
         redirect(`/${type.charAt(0)}/${callback}`)
     }
 

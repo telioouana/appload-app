@@ -2,11 +2,17 @@ import { PropsWithChildren } from "react";
 
 import { TRPCReactProvider } from "@/backend/trpc/client";
 
+import { ShipperUILayout } from "@/modules/app/routes/shipper/ui/layout/shipper-layout";
+
 export default function ShipperLayout({ children }: PropsWithChildren) {
     return (
         <div className="h-full w-full overflow-y-auto container-snap">
             <TRPCReactProvider>
-                {children}
+                <div className="h-full w-full">
+                    <ShipperUILayout>
+                        {children}
+                    </ShipperUILayout>
+                </div>
             </TRPCReactProvider>
         </div>
     )

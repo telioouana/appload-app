@@ -3,81 +3,81 @@
         "app-name": "appload",
         "tagline": "Going the extra mile",
         "sign-in": {
-            "title": "Iniciar sessão",
-            "description": "É bom vê-lo novamente! Preencha os seus detalhes.",
+            "title": "Entrar",
+            "description": "Bem-vindo de volta! Por favor, preencha os seus dados",
             "form": {
                 "tabs": {
                     "title": "Continuar com",
                     "phone-number": {
-                        "title": "Contacto",
+                        "title": "Número de telefone",
                         "field": {
-                            "label": "Contacto",
-                            "error": "Introduza o seu número de celular"
+                            "label": "Número de telefone",
+                            "error": "O número de telefone não foi fornecido"
                         }
                     },
                     "email": {
-                        "title": "Email",
+                        "title": "E-mail",
                         "field": {
-                            "label": "Email",
-                            "placeholder": "name@company.com",
+                            "label": "E-mail",
+                            "placeholder": "nome@empresa.com",
                             "error": {
-                                "empty": "Campo de email continua vazio",
-                                "invalid": "O email introduzido não é válido"
+                                "empty": "O e-mail não foi fornecido",
+                                "invalid": "Por favor, introduza um endereço de e-mail válido"
                             }
                         }
                     }
                 },
                 "password": {
-                    "label": "Palavra passe",
+                    "label": "Senha",
                     "placeholder": "••••••••••",
-                    "error": "Introduza a sua palavra passe"
+                    "error": "A senha não foi fornecida"
                 },
-                "remember-me": "Lembrar-se de mim",
+                "remember-me": "Lembrar-me",
                 "errors": {
-                    "OTHER": "Ocorreu um erro ao iniciar sessão",
-                    "BOT_DETECTED": "Detetámos a presença de um bot neste pedido",
-                    "INVALID_EMAIL": "Por favor, utilize um endereço de email válido para realizar esta ação",
-                    "TOO_MANY_REQUESTS": "Excedeu o número de tentativas. Por favor, tente novamente mais tarde",
-                    "INVALID_CREDENTIALS": "As suas credenciais não correspondem a nenhum utilizador",
-                    "DOMAIN_EMAIL_INVALID": "Por favor, verifique o domínio do email utilizado",
-                    "INVALID_EMAIL_FORMAT": "Por favor, utilize um formato de email válido para realizar esta ação",
-                    "DISPOSABLE_EMAIL_NOT_ALLOWED": "Detetámos a utilização de endereços de email temporários",
-                    "FORBIDEN_ACCESS": ""
+                    "OTHER": "Ocorreu um erro ao entrar",
+                    "DOMAIN_EMAIL_INVALID": "Por favor, verifique o domínio do e-mail utilizado",
+                    "BOT_DETECTED": "Detectamos a presença de um bot nesta solicitação",
+                    "INVALID_EMAIL": "Por favor, use um e-mail válido para realizar esta acção",
+                    "INVALID_CREDENTIALS": "As suas credenciais não coincidem com nenhum utilizador",
+                    "DISPOSABLE_EMAIL_NOT_ALLOWED": "Detectamos o uso de e-mails descartáveis",
+                    "INVALID_EMAIL_FORMAT": "Por favor, use um formato de e-mail válido para realizar esta acção",
+                    "TOO_MANY_REQUESTS": "Excedeu o número de tentativas, por favor tente mais tarde",
+                    "FORBIDEN_ACCESS": "O acesso é proibido"
                 },
-                "button": "Iniciar sessão"
+                "button": "Entrar"
             },
             "links": {
-                "forgot": "Esqueci a minha palavra passe",
+                "forgot": "Esqueci-me da minha senha",
                 "sign-up": "Não tenho uma conta"
             }
         },
         "sign-up": {
-            "title": "Bem-vindo à Appload",
-            "description": "Criar nova conta",
+            "title": "Bem-vindo à appload",
+            "description": "Configuração da sua conta appload",
             "form": {
                 "step1": {
                     "title": "Configuração da conta",
-                    "description": "Comece por selecionar o tipo de conta que pretende criar",
+                    "description": "Começaremos por configurar o tipo de conta que deseja criar",
                     "tabs": {
-                        "title": "Selecione o tipo de conta",
+                        "title": "Seleccione o tipo de conta que deseja criar",
                         "shipper": {
                             "title": "Expedidor",
-                            "description": "Como expedidor, pode criar, acompanhar e gerir pedidos de transporte, acedendo à sua rede de transportadores ou ao marketplace."
+                            "description": "Como expedidor, pode facilmente solicitar e acompanhar os seus pedidos, enquanto acede a uma vasta gama de transportadoras, incluindo a sua própria"
                         },
                         "carrier": {
-                            "title": "Transportador",
-                            "description": "Como transportador, pode gerir viagens, frota e motoristas, bem como receber pedidos de carga de vários expedidores."
+                            "title": "Transportadora",
+                            "description": "Como transportadora, pode gerir eficientemente as suas viagens, frota e motoristas, enquanto acede a uma vasta gama de expedidores, incluindo o seu próprio"
                         }
                     },
-                    "button": "Seguinte"
+                    "button": "Próximo"
                 },
                 "step2": {
-                    "title": "Informação de contacto",
-                    "description": "Introduza os seus dados pessoais",
+                    "title": "Informação de Contacto",
+                    "description": "Introduza a sua informação pessoal",
                     "gender": {
-                        "label": "Forma de tratamento preferida *",
-                        "placeholder": "Selecione uma opção",
-                        "error": "Nenhuma forma de tratamento foi selecionada",
+                        "label": "Como prefere ser tratado? *",
+                        "placeholder": "Por favor, seleccione uma opção",
+                        "error": "Nenhum título foi seleccionado",
                         "options": {
                             "male": "Sr.",
                             "female": "Sra.",
@@ -87,67 +87,67 @@
                     "name": {
                         "label": "Nome completo *",
                         "placeholder": "João Silva",
-                        "error": "O nome não foi indicado"
+                        "error": "O nome não foi fornecido"
                     },
                     "email": {
-                        "label": "Email *",
+                        "label": "E-mail *",
                         "placeholder": "joao.silva@empresa.com",
                         "error": {
-                            "empty": "O endereço de email não foi indicado",
-                            "invalid": "Introduza um endereço de email válido"
+                            "empty": "O endereço de e-mail não foi fornecido",
+                            "invalid": "Por favor, introduza um endereço de e-mail válido"
                         }
                     },
                     "phone-number": {
                         "label": "Número de telefone *",
                         "error": {
-                            "empty": "O número de telefone não foi indicado",
-                            "invalid": "O número de telefone indicado é inválido"
+                            "empty": "O número de telefone não foi fornecido",
+                            "invalid": "Foi fornecido um número de telefone inválido"
                         }
                     },
                     "button": {
-                        "next": "Seguinte",
+                        "next": "Próximo",
                         "back": "Voltar"
                     }
                 },
                 "step3": {
-                    "title": "Definição de credenciais",
-                    "description": "Configure as credenciais de acesso à sua conta",
+                    "title": "Configuração de credenciais",
+                    "description": "Agora irá configurar as credenciais para entrar na sua conta",
                     "password": {
-                        "label": "Palavra-passe *",
+                        "label": "Senha *",
                         "placeholder": "••••••••••",
                         "error": {
-                            "empty": "Defina uma palavra-passe",
-                            "invalid": "A palavra-passe deve conter entre 8 e 32 caracteres"
+                            "empty": "Por favor, escolha uma senha para a sua conta",
+                            "invalid": "A senha deve ter entre 8 a 32 caracteres"
                         }
                     },
                     "confirm": {
-                        "label": "Confirmar palavra-passe *",
+                        "label": "Confirmar senha *",
                         "placeholder": "••••••••••",
                         "error": {
-                            "empty": "Confirme a palavra-passe",
-                            "match": "As palavras-passe não coincidem"
+                            "empty": "Reintroduza a senha",
+                            "match": "As senhas não coincidem"
                         }
                     },
                     "button": {
                         "back": "Voltar",
-                        "sign-up": "Criar conta"
+                        "sign-up": "Registar"
                     }
                 },
                 "step4": {
-                    "title": "Verificação por OTP",
-                    "description": "Introduza o código de 6 dígitos enviado para o seu número",
+                    "title": "Verificação OTP",
+                    "description": "Introduza o código de 6 dígitos que enviamos para o seu número",
                     "code": {
                         "label": "Código de verificação *",
                         "error": {
-                            "empty": "O código OTP não foi introduzido",
-                            "invalid": "O código OTP introduzido é inválido"
+                            "empty": "O código OTP não foi fornecido",
+                            "invalid": "O código OTP fornecido é inválido"
                         },
                         "SUCCESS": "Código OTP reenviado com sucesso"
                     },
                     "button": {
                         "verify": "Verificar",
                         "edit": {
-                            "text": "Não recebeu o código no número {phoneNumber}?",
+                            "text": "Não recebeu o código em {phoneNumber}?",
                             "action": "Editar"
                         },
                         "resend": "Reenviar"
@@ -155,18 +155,18 @@
                 },
                 "required": "* Campos obrigatórios",
                 "errors": {
-                    "CONFLICT_EMAIL": "O endereço de email já se encontra registado",
-                    "DOMAIN_EMAIL_INVALID": "Verifique o domínio do email utilizado",
-                    "CONFLICT_PHONE": "O número de telefone já se encontra registado",
-                    "BOT_DETECTED": "Foi detetada atividade automatizada neste pedido",
-                    "INVALID_EMAIL": "Utilize um endereço de email válido",
-                    "INVALID_CREDENTIALS": "As credenciais não correspondem a nenhum utilizador",
-                    "DISPOSABLE_EMAIL_NOT_ALLOWED": "Não são permitidos endereços de email temporários",
-                    "OTHER": "Erro no sistema. Verifique a ligação e tente novamente",
-                    "INVALID_EMAIL_FORMAT": "Formato de email inválido",
-                    "TOO_MANY_REQUESTS": "Número máximo de tentativas excedido. Tente novamente mais tarde",
-                    "MAX_REQUESTS_OTP_REACHED": "Limite máximo de pedidos de OTP atingido",
-                    "MAX_VERIFY_OTP_REACHED": "Limite máximo de tentativas de verificação OTP atingido"
+                    "CONFLICT_EMAIL": "O e-mail fornecido já está em uso",
+                    "DOMAIN_EMAIL_INVALID": "Por favor, verifique o domínio do e-mail utilizado",
+                    "CONFLICT_PHONE": "O número de telefone fornecido já está em uso",
+                    "BOT_DETECTED": "Detectamos a presença de um bot nesta solicitação",
+                    "INVALID_EMAIL": "Por favor, use um e-mail válido para realizar esta acção",
+                    "INVALID_CREDENTIALS": "As suas credenciais não coincidem com nenhum utilizador",
+                    "DISPOSABLE_EMAIL_NOT_ALLOWED": "Detectamos o uso de e-mails descartáveis",
+                    "OTHER": "Algo correu mal, por favor verifique a sua ligação e tente novamente",
+                    "INVALID_EMAIL_FORMAT": "Por favor, use um formato de e-mail válido para realizar esta acção",
+                    "TOO_MANY_REQUESTS": "Excedeu o número de tentativas, por favor tente mais tarde",
+                    "MAX_REQUESTS_OTP_REACHED": "Atingiu o limite de pedidos de OTP, tente mais tarde",
+                    "MAX_VERIFY_OTP_REACHED": "Atingiu o limite de tentativas de verificação, tente mais tarde"
                 }
             },
             "links": {
@@ -174,13 +174,1257 @@
             }
         },
         "legal": {
-            "label": "Ao continuar, está a concordar com os nossos",
-            "terms": "Termos e condições",
+            "label": "Ao continuar, aceita os nossos",
+            "terms": "Termos de serviço",
             "and": "e",
             "privacy": "Política de privacidade"
         }
     },
+    "Carrier": {
+        "sidebar": {
+            "header": {
+                "app-name": "appload",
+                "slogan": "Going the extra mile"
+            },
+            "content": {
+                "dashboard": "Dashboard",
+                "kpis": "KPIs e Análises",
+                "map": "Mapa",
+                "marketplace": {
+                    "orders": {
+                        "label": "Pedidos",
+                        "all": "Todos os pedidos",
+                        "private": "Mercado Privado",
+                        "public": "Mercado Público"
+                    },
+                    "trips": {
+                        "label": "Viagens",
+                        "all": "Todas as viagens",
+                        "booked": "Confirmadas",
+                        "on-going": "Em curso",
+                        "delivered": "Entregues"
+                    },
+                    "history": "Histórico",
+                    "clients": "Meus Clientes"
+                },
+                "company": {
+                    "label": "Motoristas e Frota",
+                    "drivers": "Motoristas",
+                    "fleet": "Frota"
+                }
+            }
+        },
+        "dashboard": {
+            "page": {
+                "title": "Bem-vindo de volta, {name}!",
+                "description": "Aqui está a sua visão geral"
+            },
+            "activity": {
+                "orders": "Pedidos Disponíveis",
+                "trips": "Pedidos Activos",
+                "fleet": "Frota Total",
+                "revenue": "Receita (MZN)"
+            },
+            "resume": {
+                "tabs": {
+                    "month": "Últimos 30 dias",
+                    "quarter": "Últimos 3 meses",
+                    "year": "Últimos 12 meses"
+                },
+                "card": {
+                    "title": "Visão geral da actividade",
+                    "trips": {
+                        "label": "Total de Viagens Concluídas",
+                        "unit": "viagens"
+                    },
+                    "deliveries": {
+                        "label": "Total de Entregas",
+                        "unit": "entregas"
+                    },
+                    "total-amount": {
+                        "label": "Receita Total",
+                        "unit": "MZN"
+                    },
+                    "average-price": {
+                        "label": "Receita Média por Viagem",
+                        "unit": "MZN"
+                    },
+                    "loaded-weight": {
+                        "label": "Peso Total Transportado",
+                        "unit": "ton"
+                    },
+                    "average-weight": {
+                        "label": "Peso Médio por Viagem",
+                        "unit": "ton"
+                    },
+                    "total-distance": {
+                        "label": "Distância Total Percorrida",
+                        "unit": "km"
+                    },
+                    "average-distance": {
+                        "label": "Distância Média por Viagem",
+                        "unit": "km"
+                    }
+                }
+            }
+        },
+        "kpis": {
+            "page": {
+                "header": {
+                    "title": "KPIs e Análises",
+                    "description": "Análise de desempenho e relatórios",
+                    "button": "Gerar Relatório de KPI"
+                },
+                "data-window": {
+                    "month": "Último mês",
+                    "quarter": "Último trimestre",
+                    "year": "Último ano"
+                },
+                "data": {
+                    "triggers": {
+                        "operational": "Operacional",
+                        "incidents": "Incidentes",
+                        "costs": "Custos",
+                        "efficiency": "Eficiência"
+                    },
+                    "tabs": {
+                        "operational": {
+                            "on-time-loading": {
+                                "label": "Chegada pontual ao carregamento",
+                                "unit": "%"
+                            },
+                            "average-loading-time": {
+                                "label": "Duração média do carregamento",
+                                "unit": "dias/viagem"
+                            },
+                            "average-travel-time": {
+                                "label": "Duração média do transporte",
+                                "unit": "dias"
+                            },
+                            "average-daily-distance": {
+                                "label": "Distância média percorrida por dia",
+                                "unit": "km"
+                            },
+                            "on-time-offloading": {
+                                "label": "Chegada pontual à descarga",
+                                "unit": "%"
+                            },
+                            "average-offloading-time": {
+                                "label": "Duração média da descarga",
+                                "unit": "dias/viagem"
+                            },
+                            "demurages-occurrences": {
+                                "label": "Ocorrências de sobrestadias",
+                                "unit": "%"
+                            },
+                            "damurages-charged-days": {
+                                "label": "Total de dias de sobrestadia cobrados",
+                                "unit": "dias"
+                            }
+                        },
+                        "incidents": {
+                            "total-accidents": {
+                                "label": "Acidentes durante o transporte",
+                                "unit": "acidentes"
+                            },
+                            "mechanical-issues": {
+                                "label": "Problemas mecânicos",
+                                "unit": "incidentes"
+                            },
+                            "documentation-issues": {
+                                "label": "Problemas de documentação",
+                                "unit": "incidentes"
+                            },
+                            "police-issues": {
+                                "label": "Paragens para inspecções/multas",
+                                "unit": "paragens"
+                            },
+                            "total-delays": {
+                                "label": "Tempo total de atraso",
+                                "unit": "dias"
+                            },
+                            "percentage-damaged-cargo": {
+                                "label": "Viagens com carga danificada",
+                                "unit": "%"
+                            },
+                            "percentage-complains": {
+                                "label": "Viagens com reclamações",
+                                "unit": "%"
+                            }
+                        },
+                        "costs": {
+                            "cost-per-km": {
+                                "label": "Custo por km",
+                                "unit": "km"
+                            },
+                            "cost-per-unit": {
+                                "label": "Custo por tonelada",
+                                "unit": "ton"
+                            },
+                            "cost-per-unit-km": {
+                                "label": "Custo por tonelada-km",
+                                "unit": "ton/km"
+                            }
+                        },
+                        "efficiency": {
+                            "backload": {
+                                "label": "Viagens com retorno (backload)",
+                                "unit": "%"
+                            },
+                            "emissions": {
+                                "label": "Redução de CO₂ via backload",
+                                "unit": "g/km"
+                            },
+                            "saved-with-backload": {
+                                "label": "Poupança total via optimização de backload",
+                                "unit": {
+                                    "MZN": "MZN",
+                                    "ZAR": "ZAR",
+                                    "USD": "USD"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "tendencies": {
+                "title": "Tendências de Desempenho",
+                "performance": {
+                    "title": "Tempos de carga e descarga",
+                    "load": "Duração do carregamento",
+                    "offload": "Duração da descarga",
+                    "unit": "dias"
+                },
+                "incidents": {
+                    "title": "Distribuição de Incidentes",
+                    "accidents": "Acidentes",
+                    "mechanical": "Mecânicos",
+                    "docummentation": "Documentação",
+                    "inspection": "Inspecção"
+                },
+                "emissions": {
+                    "title": "Pegada de carbono",
+                    "carbon": "Redução de CO₂ via backload",
+                    "unit": "g/km"
+                },
+                "savings": {
+                    "title": "Reduções de custos",
+                    "saved": "Poupado com backload",
+                    "unit": "MZN"
+                }
+            }
+        },
+        "map": {
+            "page": {
+                "title": "Mapa da Frota",
+                "description": "Acompanhe os seus camiões em viagens em curso",
+                "card": {
+                    "search": "Pesquisar camiões pela matrícula",
+                    "filters": {
+                        "label": "Filtros",
+                        "all": "Todos os camiões",
+                        "moving": "A caminho",
+                        "loading": "A carregar",
+                        "offloading": "A descarregar",
+                        "stopped": "Parado",
+                        "issue": "Problema reportado"
+                    }
+                }
+            }
+        },
+        "marketplace": {
+            "page": {
+                "orders": {
+                    "all": {
+                        "title": "Todos os Pedidos",
+                        "description": "Ver todos os pedidos disponíveis na sua rede de expedidores e no mercado público da appload"
+                    },
+                    "private": {
+                        "title": "Mercado Privado",
+                        "description": "Ver todos os pedidos disponíveis na sua rede de expedidores"
+                    },
+                    "public": {
+                        "title": "Mercado Público",
+                        "description": "Ver todos os pedidos disponíveis publicados no mercado público da appload"
+                    }
+                },
+                "trips": {
+                    "all": {
+                        "title": "Todas as viagens",
+                        "description": "Ver todas as viagens de {company}"
+                    },
+                    "open": {
+                        "title": "Viagens Abertas",
+                        "description": "Viagens a aguardar propostas e confirmação"
+                    },
+                    "booked": {
+                        "title": "Viagens Reservadas",
+                        "description": "Viagens que foram confirmadas mas ainda não iniciaram"
+                    },
+                    "on-going": {
+                        "title": "Viagens em Curso",
+                        "description": "Viagens actualmente a caminho da carga, descarga ou em trânsito"
+                    },
+                    "delivered": {
+                        "title": "Viagens Entregues",
+                        "description": "Viagens concluídas e a aguardar avaliações"
+                    }
+                },
+                "history": {
+                    "title": "Histórico",
+                    "description": "Viagens concluídas ou canceladas"
+                }
+            },
+            "orders": {
+                "resume": {
+                    "orders": "Total de pedidos",
+                    "total": "Valor total (MZN)",
+                    "distance": "Distância total (km)"
+                },
+                "actions": {
+                    "search": "Pesquisar pedido por ID, local de carga ou descarga",
+                    "view": {
+                        "grid": "Mudar para vista em grelha",
+                        "list": "Mudar para vista em lista"
+                    },
+                    "button": "Criar um novo pedido",
+                    "filters": {
+                        "title": "Filtrar por",
+                        "cargo-type": {
+                            "label": "Tipo de carga",
+                            "placeholder": "Seleccione uma das opções para filtrar",
+                            "options": {
+                                "agriculture-inputs": "Insumos Agrícolas",
+                                "agriculture-products": "Produtos Agrícolas",
+                                "construction": "Construção",
+                                "machinery-equipment": "Maquinaria e Equipamento",
+                                "fmcg": "Bens de Consumo (FMCG)",
+                                "general-cargo": "Carga Geral",
+                                "medicine": "Medicamentos",
+                                "mining": "Mineração",
+                                "oil-gas": "Óleo e Gás",
+                                "vehicles": "Veículos",
+                                "other": "Outros",
+                                "none": "Limpar filtro"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "order": {
+            "card": {
+                "header": {
+                    "id": "ORD-{id}",
+                    "category": {
+                        "agriculture-inputs": "Insumos Agrícolas",
+                        "agriculture-products": "Produtos Agrícolas",
+                        "construction": "Construção",
+                        "machinery-equipment": "Maquinaria e Equipamento",
+                        "fmcg": "Bens de Consumo (FMCG)",
+                        "general-cargo": "Carga Geral",
+                        "medicine": "Medicamentos",
+                        "mining": "Mineração",
+                        "oil-gas": "Óleo e Gás",
+                        "vehicles": "Veículos",
+                        "other": "Outros"
+                    },
+                    "status": {
+                        "drafted": "Rascunho",
+                        "prospect": "Prospecção",
+                        "open": "Aberto",
+                        "booked": "Transporte confirmado",
+                        "to-loading": "A caminho da carga",
+                        "at-loading": "No local de carga",
+                        "loading": "A carregar",
+                        "on-route": "A caminho da descarga",
+                        "at-border": "Na fronteira",
+                        "stopped": "Parado",
+                        "issue": "Problema reportado",
+                        "at-offloading": "No local de descarga",
+                        "offloading": "A descarregar",
+                        "delivered": "Entregue",
+                        "completed": "Concluído",
+                        "cancelled": "Cancelado",
+                        "waiting-documents": "A aguardar documentos"
+                    }
+                },
+                "content": {
+                    "weight": "Peso:",
+                    "distance": "Distância:",
+                    "loading-date": "Data de carga:",
+                    "refrigerated": "Refrigerado",
+                    "hazarduos": "Perigosa",
+                    "price": "Valor:"
+                },
+                "footer": {
+                    "accept": "Aceitar",
+                    "place-bid": "Fazer proposta",
+                    "manage": "Gerir",
+                    "view": "Ver",
+                    "upload-proof": "Concluir viagem"
+                }
+            },
+            "dialog": {
+                "details": {
+                    "header": {
+                        "id": "ORD-{id}",
+                        "status": {
+                            "drafted": "Rascunho",
+                            "prospect": "Prospecção",
+                            "open": "Aberto",
+                            "booked": "Transporte confirmado",
+                            "to-loading": "A caminho da carga",
+                            "at-loading": "No local de carga",
+                            "loading": "A carregar",
+                            "on-route": "A caminho da descarga",
+                            "at-border": "Na fronteira",
+                            "stopped": "Parado",
+                            "issue": "Problema reportado",
+                            "at-offloading": "No local de descarga",
+                            "offloading": "A descarregar",
+                            "delivered": "Entregue",
+                            "completed": "Concluído",
+                            "cancelled": "Cancelado",
+                            "waiting-documents": "A aguardar documentos"
+                        }
+                    },
+                    "tabs": {
+                        "triggers": {
+                            "overview": "Visão Geral",
+                            "tracking": "Rastreamento",
+                            "documents": "Documentos",
+                            "financial": "Financeiro",
+                            "timeline": "Linha do Tempo"
+                        },
+                        "content": {
+                            "overview": {
+                                "card": {
+                                    "quantity": "Quantidade",
+                                    "total-amount": "Valor total",
+                                    "delivery-date": "Data de entrega"
+                                },
+                                "info": {
+                                    "order": {
+                                        "title": "Informação do pedido",
+                                        "loading": "Data de carga",
+                                        "offloading": "Data de descarga",
+                                        "route": "Rota"
+                                    },
+                                    "cargo": {
+                                        "category": {
+                                            "label": "Categoria",
+                                            "agriculture-inputs": "Insumos Agrícolas",
+                                            "agriculture-products": "Produtos Agrícolas",
+                                            "construction": "Construção",
+                                            "machinery-equipment": "Maquinaria e Equipamento",
+                                            "fmcg": "Bens de Consumo (FMCG)",
+                                            "general-cargo": "Carga Geral",
+                                            "medicine": "Medicamentos",
+                                            "mining": "Mineração",
+                                            "oil-gas": "Óleo e Gás",
+                                            "vehicles": "Veículos",
+                                            "other": "Outros"
+                                        },
+                                        "description": "Descrição",
+                                        "refrigerated": "Refrigerado",
+                                        "hazarduos": "Perigosa"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
     "Shipper": {
+        "sidebar": {
+            "header": {
+                "app-name": "appload",
+                "slogan": "Going the extra mile"
+            },
+            "content": {
+                "dashboard": "Dashboard",
+                "kpis": "KPIs e Análises",
+                "map": "Mapa",
+                "marketplace": {
+                    "private": {
+                        "label": "Mercado Privado",
+                        "transporters": "Meus transportadores",
+                        "all": "Todos os pedidos",
+                        "drafted": "Pedidos em rascunho",
+                        "open": "Pedidos abertos",
+                        "booked": "Pedidos confirmados",
+                        "on-going": "Pedidos em curso",
+                        "delivered": "Pedidos entregues",
+                        "history": "Histórico",
+                        "terms-and-conditions": "Termos e Condições"
+                    },
+                    "public": {
+                        "label": "Mercado Público",
+                        "all": "Todos os pedidos",
+                        "drafted": "Pedidos em rascunho",
+                        "open": "Pedidos abertos",
+                        "booked": "Pedidos confirmados",
+                        "on-going": "Pedidos em curso",
+                        "delivered": "Pedidos entregues",
+                        "history": "Histórico",
+                        "terms-and-conditions": "Termos e Condições"
+                    }
+                },
+                "other": {
+                    "history": "Histórico",
+                    "market-data": "Dados de mercado"
+                }
+            }
+        },
+        "dashboard": {
+            "page": {
+                "title": "Bem-vindo de volta, {name}!",
+                "description": "Veja o que está a acontecer com os seus pedidos hoje."
+            },
+            "activity": {
+                "title": "Visão geral dos pedidos ativos",
+                "private": "Mercado Privado",
+                "public": "Mercado Público",
+                "orders": "Publicados",
+                "drafted": "Rascunhos",
+                "prospect": "Pedidos de cotação",
+                "open": "Abertos",
+                "booked": "Confirmados",
+                "on-going": "Em curso",
+                "delivered": "Entregues",
+                "link": "Ver pedidos"
+            },
+            "resume": {
+                "tabs": {
+                    "month": "Últimos 30 dias",
+                    "quarter": "Últimos 3 meses",
+                    "year": "Últimos 12 meses"
+                },
+                "card": {
+                    "title": "Resumo de atividade",
+                    "trips": {
+                        "label": "Viagens analisadas",
+                        "unit": "viagens"
+                    },
+                    "deliveries": {
+                        "label": "Número de entregas",
+                        "unit": "entregas"
+                    },
+                    "total-amount": {
+                        "label": "Valor total pago",
+                        "unit": "MZN"
+                    },
+                    "average-price": {
+                        "label": "Preço médio por viagem",
+                        "unit": "MZN"
+                    },
+                    "loaded-weight": {
+                        "label": "Peso total expedido",
+                        "unit": "ton"
+                    },
+                    "average-weight": {
+                        "label": "Peso médio por viagem",
+                        "unit": "ton"
+                    },
+                    "total-distance": {
+                        "label": "Distância total percorrida",
+                        "unit": "km"
+                    },
+                    "average-distance": {
+                        "label": "Distância média por viagem",
+                        "unit": "km"
+                    }
+                }
+            }
+        },
+        "kpis": {
+            "page": {
+                "header": {
+                    "title": "KPIs e Análises",
+                    "description": "Análise de desempenho e relatórios",
+                    "button": "Gerar Relatório de KPI"
+                },
+                "data-window": {
+                    "month": "Último mês",
+                    "quarter": "Último trimestre",
+                    "year": "Último ano"
+                },
+                "data": {
+                    "triggers": {
+                        "operational": "Operacional",
+                        "incidents": "Incidentes",
+                        "costs": "Custos",
+                        "efficiency": "Eficiência"
+                    },
+                    "tabs": {
+                        "operational": {
+                            "on-time-loading": {
+                                "label": "Chegada pontual na carga",
+                                "unit": "%"
+                            },
+                            "average-loading-time": {
+                                "label": "Duração média da carga",
+                                "unit": "dias/viagem"
+                            },
+                            "average-travel-time": {
+                                "label": "Duração média do transporte",
+                                "unit": "dias"
+                            },
+                            "average-daily-distance": {
+                                "label": "Distância média percorrida por dia",
+                                "unit": "km"
+                            },
+                            "on-time-offloading": {
+                                "label": "Chegada pontual na descarga",
+                                "unit": "%"
+                            },
+                            "average-offloading-time": {
+                                "label": "Duração média da descarga",
+                                "unit": "dias/viagem"
+                            },
+                            "demurages-occurrences": {
+                                "label": "Ocorrências de sobrestadia (demurrage)",
+                                "unit": "%"
+                            },
+                            "damurages-charged-days": {
+                                "label": "Total de dias de sobrestadia cobrados",
+                                "unit": "dias"
+                            }
+                        },
+                        "incidents": {
+                            "total-accidents": {
+                                "label": "Acidentes durante o transporte",
+                                "unit": "acidentes"
+                            },
+                            "mechanical-issues": {
+                                "label": "Problemas mecânicos",
+                                "unit": "incidentes"
+                            },
+                            "documentation-issues": {
+                                "label": "Problemas de documentação",
+                                "unit": "incidentes"
+                            },
+                            "police-issues": {
+                                "label": "Paragens para inspeções/multas",
+                                "unit": "paragens"
+                            },
+                            "total-delays": {
+                                "label": "Tempo total de atraso",
+                                "unit": "dias"
+                            },
+                            "percentage-damaged-cargo": {
+                                "label": "Viagens com danos na carga",
+                                "unit": "%"
+                            },
+                            "percentage-complains": {
+                                "label": "Viagens com reclamações",
+                                "unit": "%"
+                            }
+                        },
+                        "costs": {
+                            "cost-per-km": {
+                                "label": "Custo por km",
+                                "unit": "km"
+                            },
+                            "cost-per-unit": {
+                                "label": "Custo por tonelada",
+                                "unit": "ton"
+                            },
+                            "cost-per-unit-km": {
+                                "label": "Custo por ton-km",
+                                "unit": "ton/km"
+                            }
+                        },
+                        "efficiency": {
+                            "backload": {
+                                "label": "Viagens com retorno (backload)",
+                                "unit": "%"
+                            },
+                            "emissions": {
+                                "label": "Redução de CO₂ via retorno (backload)",
+                                "unit": "g/km"
+                            },
+                            "saved-with-backload": {
+                                "label": "Poupança total via otimização de retorno",
+                                "unit": {
+                                    "MZN": "MZN",
+                                    "ZAR": "ZAR",
+                                    "USD": "USD"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "tendencies": {
+                "title": "Tendências de Desempenho",
+                "performance": {
+                    "title": "Tempos de carga e descarga",
+                    "load": "Duração da carga",
+                    "offload": "Duração da descarga",
+                    "unit": "dias"
+                },
+                "incidents": {
+                    "title": "Distribuição de Incidentes",
+                    "accidents": "Acidentes",
+                    "mechanical": "Mecânicos",
+                    "docummentation": "Documentação",
+                    "inspection": "Inspeção"
+                },
+                "emissions": {
+                    "title": "Pegada de carbono",
+                    "carbon": "Redução de CO₂ via retorno (backload)",
+                    "unit": "g/km"
+                },
+                "savings": {
+                    "title": "Reduções de custos",
+                    "saved": "Poupado com retorno (backload)",
+                    "unit": "MZN"
+                }
+            }
+        },
+        "map": {
+            "page": {
+                "title": "Mapa de Rastreamento",
+                "description": "Mantenha-se atualizado com a posição da sua carga em curso",
+                "card": {
+                    "search": "Pesquisar camiões pela matrícula",
+                    "filters": {
+                        "label": "Filtros",
+                        "all": "Todos os camiões",
+                        "moving": "En route",
+                        "loading": "A carregar",
+                        "offloading": "A descarregar",
+                        "stopped": "Parado",
+                        "issue": "Problema reportado"
+                    }
+                }
+            }
+        },
+        "private": {
+            "marketplace": {
+                "page": {
+                    "all": {
+                        "title": "Todos os Pedidos",
+                        "description": "Visualizar todos os pedidos de {company}"
+                    },
+                    "drafted": {
+                        "title": "Rascunhos",
+                        "description": "Pedidos em estado de rascunho"
+                    },
+                    "open": {
+                        "title": "Pedidos Abertos",
+                        "description": "Pedidos a aguardar ofertas e confirmação"
+                    },
+                    "booked": {
+                        "title": "Pedidos Confirmados",
+                        "description": "Pedidos que foram confirmados mas ainda não iniciados"
+                    },
+                    "on-going": {
+                        "title": "Pedidos em Curso",
+                        "description": "Pedidos atualmente em trânsito"
+                    },
+                    "delivered": {
+                        "title": "Pedidos Entregues",
+                        "description": "Entregas concluídas e a aguardar revisão"
+                    },
+                    "history": {
+                        "title": "Histórico",
+                        "description": "Pedidos concluídos ou cancelados"
+                    }
+                },
+                "resume": {
+                    "orders": "Total de pedidos",
+                    "total": "Valor total (MZN)",
+                    "distance": "Distância total (km)"
+                },
+                "actions": {
+                    "search": "Pesquisar pedido por ID, local de carga ou descarga",
+                    "view": {
+                        "grid": "Mudar para vista de grelha",
+                        "list": "Mudar para vista de lista"
+                    },
+                    "button": "Criar novo pedido",
+                    "filters": {
+                        "title": "Filtrar por",
+                        "cargo-type": {
+                            "label": "Tipo de carga",
+                            "placeholder": "Selecione uma das opções para filtrar",
+                            "options": {
+                                "agriculture-inputs": "Insumos Agrícolas",
+                                "agriculture-products": "Produtos Agrícolas",
+                                "construction": "Construção",
+                                "machinery-equipment": "Máquinas e Equipamentos",
+                                "fmcg": "Bens de Consumo (FMCG)",
+                                "general-cargo": "Carga Geral",
+                                "medicine": "Medicamentos",
+                                "mining": "Mineração",
+                                "oil-gas": "Óleo e Gás",
+                                "vehicles": "Veículos",
+                                "other": "Outro",
+                                "none": "Limpar filtro"
+                            }
+                        },
+                        "status": {
+                            "label": "Estado"
+                        }
+                    }
+                }
+            }
+        },
+        "public": {
+            "marketplace": {
+                "page": {
+                    "all": {
+                        "title": "Todos os Pedidos",
+                        "description": "Visualize todos os seus pedidos"
+                    },
+                    "drafted": {
+                        "title": "Rascunhos",
+                        "description": "Pedidos em estado de rascunho"
+                    },
+                    "open": {
+                        "title": "Pedidos Abertos",
+                        "description": "Pedidos a aguardar ofertas e confirmação"
+                    },
+                    "booked": {
+                        "title": "Pedidos Confirmados",
+                        "description": "Pedidos que foram confirmados mas ainda não iniciados"
+                    },
+                    "on-going": {
+                        "title": "Pedidos em Curso",
+                        "description": "Pedidos atualmente em trânsito"
+                    },
+                    "delivered": {
+                        "title": "Pedidos Entregues",
+                        "description": "Entregas concluídas e a aguardar revisão"
+                    },
+                    "history": {
+                        "title": "Histórico",
+                        "description": "Pedidos concluídos ou cancelados"
+                    }
+                },
+                "resume": {
+                    "orders": "Total de pedidos",
+                    "total": "Valor total (MZN)",
+                    "distance": "Distância total (km)"
+                },
+                "actions": {
+                    "search": "Pesquisar pedido por ID, local de carga ou descarga",
+                    "view": {
+                        "grid": "Mudar para vista de grelha",
+                        "list": "Mudar para vista de lista"
+                    },
+                    "button": "Criar novo pedido",
+                    "filters": {
+                        "title": "Filtrar por",
+                        "cargo-type": {
+                            "label": "Tipo de carga",
+                            "placeholder": "Selecione uma das opções para filtrar",
+                            "options": {
+                                "agriculture-inputs": "Insumos Agrícolas",
+                                "agriculture-products": "Produtos Agrícolas",
+                                "construction": "Construção",
+                                "machinery-equipment": "Máquinas e Equipamentos",
+                                "fmcg": "Bens de Consumo (FMCG)",
+                                "general-cargo": "Carga Geral",
+                                "medicine": "Medicamentos",
+                                "mining": "Mineração",
+                                "oil-gas": "Óleo e Gás",
+                                "vehicles": "Veículos",
+                                "other": "Outro",
+                                "none": "Limpar filtro"
+                            }
+                        },
+                        "status": {
+                            "label": "Estado"
+                        }
+                    }
+                }
+            }
+        },
+        "order": {
+            "card": {
+                "header": {
+                    "id": "PED-{id}",
+                    "category": {
+                        "agriculture-inputs": "Insumos Agrícolas",
+                        "agriculture-products": "Produtos Agrícolas",
+                        "construction": "Construção",
+                        "machinery-equipment": "Máquinas e Equipamentos",
+                        "fmcg": "Bens de Consumo (FMCG)",
+                        "general-cargo": "Carga Geral",
+                        "medicine": "Medicamentos",
+                        "mining": "Mineração",
+                        "oil-gas": "Óleo e Gás",
+                        "vehicles": "Veículos",
+                        "other": "Outro"
+                    },
+                    "status": {
+                        "drafted": "Rascunho",
+                        "prospect": "Prospeção",
+                        "open": "Aberto",
+                        "booked": "Transporte confirmado",
+                        "to-loading": "A caminho da carga",
+                        "at-loading": "No local de carga",
+                        "loading": "A carregar",
+                        "on-route": "A caminho da descarga",
+                        "at-border": "Na fronteira",
+                        "stopped": "Parado",
+                        "issue": "Problema reportado",
+                        "at-offloading": "No local de descarga",
+                        "offloading": "A descarregar",
+                        "delivered": "Entregue",
+                        "completed": "Concluído",
+                        "cancelled": "Cancelado",
+                        "waiting-documents": "A aguardar documentos"
+                    }
+                },
+                "content": {
+                    "weight": "Peso:",
+                    "distance": "Distância:",
+                    "loading-date": "Data de carga:",
+                    "refrigerated": "Refrigerado",
+                    "hazarduos": "Perigoso",
+                    "price": "Valor:"
+                },
+                "footer": {
+                    "cancel": "Cancelar",
+                    "view": "Visualizar",
+                    "update": "Atualizar"
+                }
+            },
+            "dialog": {
+                "create": {
+                    "title": {
+                        "form": "Publicar um novo pedido",
+                        "preview": "Rever detalhes do pedido"
+                    },
+                    "button": {
+                        "back": "Voltar",
+                        "cancel": "Cancelar",
+                        "preview": "Seguinte",
+                        "publish": "Publicar",
+                        "save": "Terminar mais tarde"
+                    },
+                    "confirm": {
+                        "subscribers": {
+                            "title": "Confirmação importante",
+                            "description": "Tem a certeza de que deseja prosseguir com este pedido publicando apenas para os seus transportadores?",
+                            "button": {
+                                "cancel": "Cancelar",
+                                "confirm": "Tenho a certeza"
+                            }
+                        },
+                        "non-subscribers": {
+                            "title": "Confirmação importante",
+                            "description": "Tem a certeza de que deseja prosseguir com este pedido publicando para todos os transportadores registados na appload?",
+                            "button": {
+                                "cancel": "Cancelar",
+                                "confirm": "Tenho a certeza"
+                            }
+                        }
+                    }
+                },
+                "update": {
+                    "title": {
+                        "form": {
+                            "continue": "Retomar publicação do pedido",
+                            "update": "Editar detalhes do seu pedido",
+                            "duplicate": "Editar e republicar este pedido"
+                        },
+                        "preview": {
+                            "continue": "Rever detalhes do pedido",
+                            "update": "Rever alterações nos detalhes do pedido",
+                            "duplicate": "Rever detalhes do seu novo pedido"
+                        }
+                    },
+                    "button": {
+                        "back": "Voltar",
+                        "cancel": "Cancelar",
+                        "preview": "Seguinte",
+                        "publish": "Publicar",
+                        "update": "Guardar alterações"
+                    },
+                    "confirm": {
+                        "subscribers": {
+                            "title": "Confirmação importante",
+                            "description": "Tem a certeza de que deseja prosseguir com a alteração deste pedido e publicar apenas para os seus transportadores?",
+                            "button": {
+                                "cancel": "Cancelar",
+                                "confirm": "Tenho a certeza"
+                            }
+                        },
+                        "non-subscribers": {
+                            "title": "Confirmação importante",
+                            "description": "Tem a certeza de que deseja prosseguir com a alteração deste pedido e publicar para todos os transportadores registados na appload?",
+                            "button": {
+                                "cancel": "Cancelar",
+                                "confirm": "Tenho a certeza"
+                            }
+                        }
+                    }
+                },
+                "form": {
+                    "loading-address": {
+                        "label": "Endereço de carga",
+                        "placeholder": "Introduza o endereço de carga",
+                        "error": "O local do endereço de carga não foi fornecido"
+                    },
+                    "expected-loading-date": {
+                        "label": "Data de carga ideal",
+                        "placeholder": "Selecione a data de carga ideal",
+                        "error": "A data de carga ideal não foi fornecida"
+                    },
+                    "offloading-address": {
+                        "label": "Endereço de descarga",
+                        "placeholder": "Introduza o endereço de descarga",
+                        "error": "O local do endereço de descarga não foi fornecido"
+                    },
+                    "expected-offloading-date": {
+                        "label": "Data de descarga ideal",
+                        "placeholder": "Selecione a data de descarga ideal",
+                        "error": "A data de descarga ideal não foi fornecida"
+                    },
+                    "cargo": {
+                        "category": {
+                            "label": "Categoria da carga",
+                            "placeholder": "Selecione a categoria da carga",
+                            "options": {
+                                "agriculture-inputs": "Insumos Agrícolas",
+                                "agriculture-products": "Produtos Agrícolas",
+                                "construction": "Construção",
+                                "machinery-equipment": "Máquinas e Equipamentos",
+                                "fmcg": "Bens de Consumo (FMCG)",
+                                "general-cargo": "Carga Geral",
+                                "medicine": "Medicamentos",
+                                "mining": "Mineração",
+                                "oil-gas": "Óleo e Gás",
+                                "vehicles": "Veículos",
+                                "other": "Outro"
+                            },
+                            "error": "Nenhuma categoria de carga foi selecionada"
+                        },
+                        "description": {
+                            "label": "Descrição da carga",
+                            "placeholder": "Dê uma breve descrição da carga",
+                            "error": "A descrição da carga não foi fornecida"
+                        },
+                        "quantity": {
+                            "label": "Quantidade",
+                            "placeholder": "Introduza a quantidade disponível para carregar",
+                            "error": "A quantidade da carga não foi fornecida"
+                        },
+                        "unit": {
+                            "label": "Unidade",
+                            "placeholder": "Selecione a unidade da quantidade",
+                            "error": "Nenhuma unidade foi selecionada"
+                        },
+                        "packing": {
+                            "label": "Como a carga está embalada",
+                            "placeholder": "Selecione a opção de embalagem",
+                            "options": {
+                                "bags-1kg": "Sacos de 1kg",
+                                "bags-2kg": "Sacos de 2kg",
+                                "bags-5kg": "Sacos de 5kg",
+                                "bags-25kg": "Sacos de 25kg",
+                                "bags-30kg": "Sacos de 30kg",
+                                "bags-50kg": "Sacos de 50kg",
+                                "bags-100kg": "Sacos de 100kg",
+                                "bags-1ton": "Sacos de 1ton",
+                                "bottle-1l": "Garrafas de 1l",
+                                "bottle-5l": "Garrafas de 5l",
+                                "bottle-10l": "Garrafas de 10l",
+                                "bottle-20l": "Garrafas de 20l",
+                                "bottle-25l": "Garrafas de 25l",
+                                "container-20ft": "Contentor de 20 pés",
+                                "container-40ft": "Contentor de 40 pés",
+                                "boxes": "Caixas",
+                                "pallets": "Paletes",
+                                "noPacking": "Sem embalagem",
+                                "other": "Outro"
+                            },
+                            "error": "Nenhuma embalagem foi selecionada"
+                        },
+                        "is-hazardous": "É uma carga perigosa",
+                        "hazchem-code": {
+                            "label": "Código Hazchem",
+                            "placeholder": "Introduza o código hazchem",
+                            "error": "O código hazchem não foi fornecido"
+                        },
+                        "is-refrigerated": "Necessita de camião refrigerado",
+                        "temperature": {
+                            "label": "Temperatura da carga",
+                            "message": "Temperatura selecionada",
+                            "error": "Ocorreu um erro com a seleção da temperatura"
+                        },
+                        "temperature-instructions": {
+                            "label": "Instruções de temperatura",
+                            "placeholder": "Introduza as instruções de temperatura"
+                        },
+                        "is-groupage-allowed": "A carga pode ser misturada com outros tipos de carga"
+                    },
+                    "share": {
+                        "label": "Opções de partilha",
+                        "description": "Selecione como deseja que este pedido seja publicado na appload",
+                        "subscribers": {
+                            "label": "Mercado Privado",
+                            "description": "Pedidos publicados através deste formulário serão enviados apenas para os transportadores registados na sua rede"
+                        },
+                        "non-subscribers": {
+                            "label": "Mercado Público",
+                            "description": "Pedidos publicados através deste formulário serão enviados para todos os transportadores registados na appload"
+                        }
+                    },
+                    "price": {
+                        "label": "Preço de transporte",
+                        "placeholder": "Introduza o valor a ser pago por cada viagem",
+                        "error": "O preço de transporte não foi fornecido"
+                    },
+                    "currency": {
+                        "label": "Moeda",
+                        "placeholder": "Selecione a moeda da quantidade",
+                        "error": "Nenhuma moeda foi selecionada"
+                    }
+                },
+                "preview": {
+                    "route": {
+                        "from": "De",
+                        "to": "Para"
+                    },
+                    "loading-date": "Data de carga:",
+                    "offloading-date": "Data de descarga:",
+                    "cargo": {
+                        "label": "Carga",
+                        "options": {
+                            "agriculture-inputs": "Insumos Agrícolas",
+                            "agriculture-products": "Produtos Agrícolas",
+                            "construction": "Construção",
+                            "machinery-equipment": "Máquinas e Equipamentos",
+                            "fmcg": "Bens de Consumo (FMCG)",
+                            "general-cargo": "Carga Geral",
+                            "medicine": "Medicamentos",
+                            "mining": "Mineração",
+                            "oil-gas": "Óleo e Gás",
+                            "vehicles": "Veículos",
+                            "other": "Outro"
+                        }
+                    },
+                    "packing": {
+                        "label": "Embalagem",
+                        "options": {
+                            "bags-1kg": "Sacos de 1kg",
+                            "bags-2kg": "Sacos de 2kg",
+                            "bags-5kg": "Sacos de 5kg",
+                            "bags-25kg": "Sacos de 25kg",
+                            "bags-30kg": "Sacos de 30kg",
+                            "bags-50kg": "Sacos de 50kg",
+                            "bags-100kg": "Sacos de 100kg",
+                            "bags-1ton": "Sacos de 1ton",
+                            "bottle-1l": "Garrafas de 1l",
+                            "bottle-5l": "Garrafas de 5l",
+                            "bottle-10l": "Garrafas de 10l",
+                            "bottle-20l": "Garrafas de 20l",
+                            "bottle-25l": "Garrafas de 25l",
+                            "container-20ft": "Contentor de 20 pés",
+                            "container-40ft": "Contentor de 40 pés",
+                            "boxes": "Caixas",
+                            "pallets": "Paletes",
+                            "noPacking": "Sem embalagem",
+                            "other": "Outro"
+                        }
+                    },
+                    "quantity": "Quantidade",
+                    "hazarduos": "Código Hazchem",
+                    "temperature": "Temperatura",
+                    "price": "Preço"
+                },
+                "details": {
+                    "header": {
+                        "id": "PED-{id}",
+                        "status": {
+                            "drafted": "Rascunho",
+                            "prospect": "Prospeção",
+                            "open": "Aberto",
+                            "booked": "Transporte confirmado",
+                            "to-loading": "A caminho da carga",
+                            "at-loading": "No local de carga",
+                            "loading": "A carregar",
+                            "on-route": "A caminho da descarga",
+                            "at-border": "Na fronteira",
+                            "stopped": "Parado",
+                            "issue": "Problema reportado",
+                            "at-offloading": "No local de descarga",
+                            "offloading": "A descarregar",
+                            "delivered": "Entregue",
+                            "completed": "Concluído",
+                            "cancelled": "Cancelado",
+                            "waiting-documents": "A aguardar documentos"
+                        }
+                    },
+                    "tabs": {
+                        "triggers": {
+                            "overview": "Visão Geral",
+                            "tracking": "Rastreamento",
+                            "documents": "Documentos",
+                            "financial": "Financeiro",
+                            "timeline": "Cronograma"
+                        },
+                        "content": {
+                            "overview": {
+                                "card": {
+                                    "quantity": "Quantidade",
+                                    "total-amount": "Valor total",
+                                    "delivery-date": "Data de entrega"
+                                },
+                                "info": {
+                                    "order": {
+                                        "title": "Informação do pedido",
+                                        "loading": "Data de carga",
+                                        "offloading": "Data de descarga",
+                                        "route": "Rota"
+                                    },
+                                    "cargo": {
+                                        "category": {
+                                            "label": "Categoria",
+                                            "agriculture-inputs": "Insumos Agrícolas",
+                                            "agriculture-products": "Produtos Agrícolas",
+                                            "construction": "Construção",
+                                            "machinery-equipment": "Máquinas e Equipamentos",
+                                            "fmcg": "Bens de Consumo (FMCG)",
+                                            "general-cargo": "Carga Geral",
+                                            "medicine": "Medicamentos",
+                                            "mining": "Mineração",
+                                            "oil-gas": "Óleo e Gás",
+                                            "vehicles": "Veículos",
+                                            "other": "Outro"
+                                        },
+                                        "description": "Descrição",
+                                        "refrigerated": "Refrigerado",
+                                        "hazarduos": "Perigoso"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "User": {
+        "header": {
+            "buttons": {
+                "user": {
+                    "profile": "Perfil",
+                    "preferences": "Preferências",
+                    "support": "Suporte",
+                    "sign-out": "Sair"
+                }
+            }
+        },
         "account": {
             "header": {
                 "title": "Perfil e Definições",
@@ -189,10 +1433,10 @@
                     "back": "Voltar"
                 },
                 "pages": {
-                    "profile": "Os seus dados",
+                    "profile": "As suas informações",
                     "company": "Empresa",
                     "security-and-privacy": "Segurança e Privacidade",
-                    "billing": "Facturação"
+                    "billing": "Faturação"
                 }
             }
         },
@@ -213,508 +1457,25 @@
                     "back": "Voltar"
                 }
             }
-        },
-        "main": {
-            "header": {
-                "buttons": {
-                    "user": {
-                        "profile": "Perfil",
-                        "preferences": "Preferências",
-                        "support": "Suporte",
-                        "sign-out": "Sair"
-                    }
-                }
+        }
+    },
+    "States": {
+        "orders": {
+            "error": {
+                "title": "Falha ao carregar pedidos",
+                "description": "Ocorreu um erro ao tentar carregar os pedidos, por favor verifique a sua ligação e tente novamente",
+                "button": "Tentar novamente"
             },
-            "sidebar": {
-                "header": {
-                    "app-name": "appload",
-                    "slogan": "Going the extra mile"
+            "empty": {
+                "shipper": {
+                    "title": "Nenhum pedido associado a esta conta",
+                    "description": "Comece a criar novos pedidos e eles serão listados aqui",
+                    "note": "Isto pode variar com base nos filtros aplicados"
                 },
-                "content": {
-                    "dashboard": "Painel",
-                    "kpis": "KPIs e Insights",
-                    "map": "Mapa",
-                    "marketplace": {
-                        "private": {
-                            "label": "Mercado Privado",
-                            "transporters": "Meus transportadores",
-                            "all": "Todos os pedidos",
-                            "drafted": "Pedidos em rascunho",
-                            "pending": "Pedidos pendentes",
-                            "on-going": "Pedidos em curso",
-                            "delivered": "Pedidos entregues",
-                            "terms-and-conditions": "Termos and Condições"
-                        },
-                        "public": {
-                            "label": "Mercado Público",
-                            "all": "Todos os pedidos",
-                            "drafted": "Pedidos em rascunho",
-                            "pending": "Pedidos pendentes",
-                            "on-going": "Pedidos em curso",
-                            "delivered": "Pedidos entregues"
-                        }
-                    },
-                    "other": {
-                        "history": "Histórico",
-                        "market-data": "Dados de mercado"
-                    }
-                }
-            },
-            "dashboard": {
-                "page": {
-                    "title": "Bem-vindo de volta, {name}!",
-                    "description": "Veja o que está a acontecer com as seus pedidos hoje."
-                },
-                "activity": {
-                    "title": "Visão geral dos pedidos activas",
-                    "private": "Mercado Privado",
-                    "public": "Mercado Público",
-                    "orders": "Pedidos publicadas",
-                    "drafted": "Rascunhos",
-                    "prospect": "Pedidos de cotação",
-                    "pending": "Pendentes",
-                    "on-going": "Em curso",
-                    "delivered": "Entregues",
-                    "link": "Ver tudo"
-                },
-                "resume": {
-                    "tabs": {
-                        "month": "Últimos 30 dias",
-                        "quarter": "Últimos 3 meses",
-                        "year": "Últimos 12 meses"
-                    },
-                    "card": {
-                        "title": "Resumo de actividade",
-                        "trips": {
-                            "label": "Viagens analisadas",
-                            "unit": "viagens"
-                        },
-                        "deliveries": {
-                            "label": "Número de entregas",
-                            "unit": "entregas"
-                        },
-                        "total-amount": {
-                            "label": "Valor total pago",
-                            "unit": "MZN"
-                        },
-                        "average-price": {
-                            "label": "Preço médio por viagem",
-                            "unit": "MZN"
-                        },
-                        "loaded-weight": {
-                            "label": "Peso total expedido",
-                            "unit": "ton"
-                        },
-                        "average-weight": {
-                            "label": "Peso médio por viagem",
-                            "unit": "ton"
-                        },
-                        "total-distance": {
-                            "label": "Distância total percorrida",
-                            "unit": "km"
-                        },
-                        "average-distance": {
-                            "label": "Distância média por viagem",
-                            "unit": "km"
-                        }
-                    }
-                }
-            },
-            "kpis": {
-                "page": {
-                    "header": {
-                        "title": "KPIs e Insights",
-                        "description": "Análise de desempenho e relatórios",
-                        "button": "Gerar Relatório de KPI"
-                    },
-                    "data-window": {
-                        "month": "Mês passado",
-                        "quarter": "Trimestre passado",
-                        "year": "Ano passado"
-                    },
-                    "data": {
-                        "triggers": {
-                            "operational": "Operacional",
-                            "incidents": "Incidentes",
-                            "costs": "Custos",
-                            "efficiency": "Eficiência"
-                        },
-                        "tabs": {
-                            "operational": {
-                                "on-time-loading": {
-                                    "label": "Chegada pontual à carga",
-                                    "unit": "%"
-                                },
-                                "average-loading-time": {
-                                    "label": "Duração média de carga",
-                                    "unit": "dias/viagem"
-                                },
-                                "average-travel-time": {
-                                    "label": "Duração média de transporte",
-                                    "unit": "Dias"
-                                },
-                                "average-daily-distance": {
-                                    "label": "Distância média diária",
-                                    "unit": "km"
-                                },
-                                "on-time-offloading": {
-                                    "label": "Chegada pontual à descarga",
-                                    "unit": "%"
-                                },
-                                "average-offloading-time": {
-                                    "label": "Duração média de descarga",
-                                    "unit": "dias/viagem"
-                                },
-                                "demurages-occurrences": {
-                                    "label": "Ocorrências de estadia (demurrage)",
-                                    "unit": "%"
-                                },
-                                "damurages-charged-days": {
-                                    "label": "Total de dias de estadia cobrados",
-                                    "unit": "Dias"
-                                }
-                            },
-                            "incidents": {
-                                "total-accidents": {
-                                    "label": "Acidentes em transporte",
-                                    "unit": "acidentes"
-                                },
-                                "mechanical-issues": {
-                                    "label": "Problemas mecânicos",
-                                    "unit": "incidentes"
-                                },
-                                "documentation-issues": {
-                                    "label": "Problemas de documentação",
-                                    "unit": "incidentes"
-                                },
-                                "police-issues": {
-                                    "label": "Interrupções (polícia/inspecção)",
-                                    "unit": "paragens"
-                                },
-                                "total-delays": {
-                                    "label": "Tempo total de atraso",
-                                    "unit": "dias"
-                                },
-                                "percentage-damaged-cargo": {
-                                    "label": "Viagens com carga danificada",
-                                    "unit": "%"
-                                },
-                                "percentage-complains": {
-                                    "label": "Viagens com reclamações",
-                                    "unit": "%"
-                                }
-                            },
-                            "costs": {
-                                "cost-per-km": {
-                                    "label": "Custo por km",
-                                    "unit": "km"
-                                },
-                                "cost-per-unit": {
-                                    "label": "Custo por tonelada",
-                                    "unit": "ton"
-                                },
-                                "cost-per-unit-km": {
-                                    "label": "Custo por ton-km",
-                                    "unit": "ton/km"
-                                }
-                            },
-                            "efficiency": {
-                                "backload": {
-                                    "label": "Viagens com carga de retorno",
-                                    "unit": "%"
-                                },
-                                "emissions": {
-                                    "label": "Redução de CO₂ via retorno",
-                                    "unit": "g/km"
-                                },
-                                "saved-with-backload": {
-                                    "label": "Poupança total via optimização de retorno",
-                                    "unit": {
-                                        "MZN": "MZN",
-                                        "ZAR": "ZAR",
-                                        "USD": "USD"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "tendencies": {
-                    "title": "Tendências de Desempenho",
-                    "performance": {
-                        "title": "Tempos de carga e descarga",
-                        "load": "Duração da carga",
-                        "offload": "Duração da descarga",
-                        "unit": "dias"
-                    },
-                    "incidents": {
-                        "title": "Distribuição de Incidentes",
-                        "accidents": "Acidentes",
-                        "mechanical": "Mecânicos",
-                        "docummentation": "Documentação",
-                        "inspection": "Inspecção"
-                    },
-                    "emissions": {
-                        "title": "Pegada de carbono",
-                        "carbon": "Redução de CO₂ via retorno",
-                        "unit": "g/km"
-                    },
-                    "savings": {
-                        "title": "Redução de custos",
-                        "saved": "Poupado com retorno",
-                        "unit": "MZN"
-                    }
-                }
-            },
-            "private": {
-                "marketplace": {
-                    "page": {
-                        "all": {
-                            "title": "Todas as Pedidos",
-                            "description": "Ver todos os pedidos da {company}"
-                        },
-                        "drafted": {
-                            "title": "Pedidos em Rascunho",
-                            "description": "Pedidos em estado de rascunho"
-                        },
-                        "pending": {
-                            "title": "Pedidos Pendentes",
-                            "description": "Pedidos a aguardar ofertas, confirmação ou início"
-                        },
-                        "on-going": {
-                            "title": "Pedidos em Curso",
-                            "description": "Pedidos actualmente em trânsito"
-                        },
-                        "delivered": {
-                            "title": "Pedidos Entregues",
-                            "description": "Entregas concluídas e a aguardar revisão"
-                        }
-                    },
-                    "resume": {
-                        "orders": "Total de ordens",
-                        "total": "Valor total (MZN)",
-                        "distance": "Distância total (km)"
-                    },
-                    "actions": {
-                        "search": "Pesquisar por ID, local de carga ou descarga",
-                        "view": {
-                            "grid": "Ver em grelha",
-                            "list": "Ver em lista"
-                        },
-                        "button": "Criar nova ordem",
-                        "filters": {
-                            "title": "Filtrar por",
-                            "cargo-type": {
-                                "label": "Tipo de carga",
-                                "placeholder": "Seleccione uma opção para filtrar",
-                                "options": {
-                                    "agriculture-inputs": "Insumos Agrícolas",
-                                    "agriculture-products": "Produtos Agrícolas",
-                                    "construction": "Construção",
-                                    "machinery-equipment": "Máquinas e Equipamentos",
-                                    "fmcg": "Bens de Grande Consumo (FMCG)",
-                                    "general-cargo": "Carga Geral",
-                                    "medicine": "Medicamentos",
-                                    "mining": "Mineração",
-                                    "oil-gas": "Petróleo e Gás",
-                                    "vehicles": "Veículos",
-                                    "other": "Outros",
-                                    "none": "Limpar filtro"
-                                }
-                            },
-                            "status": {
-                                "label": "Estado"
-                            }
-                        }
-                    }
-                }
-            },
-            "order": {
-                "card": {
-                    "header": {
-                        "id": "ORD-{id}",
-                        "category": {
-                            "agriculture-inputs": "Insumos Agrícolas",
-                            "agriculture-products": "Produtos Agrícolas",
-                            "construction": "Construção",
-                            "machinery-equipment": "Máquinas e Equipamentos",
-                            "fmcg": "Bens de Grande Consumo (FMCG)",
-                            "general-cargo": "Carga Geral",
-                            "medicine": "Medicamentos",
-                            "mining": "Mineração",
-                            "oil-gas": "Petróleo e Gás",
-                            "vehicles": "Veículos",
-                            "other": "Outros"
-                        },
-                        "status": {
-                            "drafted": "Rascunho",
-                            "prospect": "Prospecção",
-                            "pending": "Pendente",
-                            "booked": "Reservado",
-                            "at-loading": "No local de carga",
-                            "loading": "A carregar",
-                            "in-transit": "Em trânsito",
-                            "at-border": "Na fronteira",
-                            "stopped": "Parado",
-                            "at-offloading": "No local de descarga",
-                            "offloading": "A descarregar",
-                            "delivered": "Entregue",
-                            "completed": "Concluído",
-                            "cancelled": "Cancelado",
-                            "waiting-documents": "A aguardar documentos"
-                        }
-                    },
-                    "content": {
-                        "weight": "Peso:",
-                        "distance": "Distância:",
-                        "loading-date": "Data de carga:",
-                        "refrigerated": "Refrigerado",
-                        "hazarduos": "Carga Perigosa",
-                        "price": "Valor:"
-                    },
-                    "footer": {}
-                },
-                "dialog": {
-                    "create": {
-                        "title": "Postar um novo pedido",
-                        "description": {
-                            "subscribers": "Os pedidos postados neste formulário serão enviados apenas aos transportadores registados na sua rede.",
-                            "non-subscribers": "Os pedidos postados neste formulário serão enviados a todos os transportadores registados na Appload."
-                        },
-                        "button": {
-                            "cancel": "Cancelar",
-                            "save": "Concluir mais tarde",
-                            "back": "Voltar",
-                            "preview": "Pré-visualizar",
-                            "publish": "Publicar",
-                            "subscribers": "Alterar para todos transportadores",
-                            "non-subscribers": "Alterar para meus transportadores"
-                        }
-                    },
-                    "update": {},
-                    "form": {
-                        "loading-address": {
-                            "label": "Local de carregamento",
-                            "placeholder": "Introduza o local de carregamento",
-                            "error": "O local de carregamento não foi indicado"
-                        },
-                        "expected-loading-date": {
-                            "label": "Data prevista de carregamento",
-                            "placeholder": "Selecione a data prevista de carregamento",
-                            "error": "A data prevista de carregamento não foi indicada"
-                        },
-                        "offloading-address": {
-                            "label": "Local de descarga",
-                            "placeholder": "Introduza o local de descarregamento",
-                            "error": "O local de descarregamento não foi indicado"
-                        },
-                        "expected-offloading-date": {
-                            "label": "Data prevista de descarregamento",
-                            "placeholder": "Selecione a data prevista de descarregamento",
-                            "error": "A data prevista de descarregamento não foi indicada"
-                        },
-                        "cargo": {
-                            "category": {
-                                "label": "Categoria da carga",
-                                "placeholder": "Selecione a categoria da carga",
-                                "options": {
-                                    "agriculture-inputs": "Insumos agrícolas",
-                                    "agriculture-products": "Produtos agrícolas",
-                                    "construction": "Materiais de construção",
-                                    "machinery-equipment": "Máquinas e equipamentos",
-                                    "fmcg": "Bens de consumo rápido (FMCG)",
-                                    "general-cargo": "Carga geral",
-                                    "medicine": "Medicamentos",
-                                    "mining": "Mineração",
-                                    "oil-gas": "Petróleo e gás",
-                                    "vehicles": "Veículos",
-                                    "other": "Outro"
-                                },
-                                "error": "Nenhuma categoria de carga foi selecionada"
-                            },
-                            "description": {
-                                "label": "Descrição da carga",
-                                "placeholder": "Introduza uma breve descrição da carga",
-                                "error": "A descrição da carga não foi indicada"
-                            },
-                            "quantity": {
-                                "label": "Quantidade",
-                                "placeholder": "Introduza a quantidade a carregar",
-                                "error": "A quantidade da carga não foi indicada"
-                            },
-                            "unit": {
-                                "label": "Unidade",
-                                "placeholder": "Selecione a unidade de medida",
-                                "error": "Nenhuma unidade foi selecionada"
-                            },
-                            "packing": {
-                                "label": "Tipo de embalagem",
-                                "placeholder": "Selecione o tipo de embalagem",
-                                "options": {
-                                    "bags-1kg": "Sacos de 1 kg",
-                                    "bags-2kg": "Sacos de 2 kg",
-                                    "bags-5kg": "Sacos de 5 kg",
-                                    "bags-25kg": "Sacos de 25 kg",
-                                    "bags-30kg": "Sacos de 30 kg",
-                                    "bags-50kg": "Sacos de 50 kg",
-                                    "bags-100kg": "Sacos de 100 kg",
-                                    "bags-1ton": "Sacos de 1 tonelada",
-                                    "bottle-1l": "Garrafas de 1 L",
-                                    "bottle-5l": "Garrafas de 5 L",
-                                    "bottle-10l": "Garrafas de 10 L",
-                                    "bottle-20l": "Garrafas de 20 L",
-                                    "bottle-25l": "Garrafas de 25 L",
-                                    "container-20ft": "Contentor 20 pés",
-                                    "container-40ft": "Contentor 40 pés",
-                                    "boxes": "Caixas",
-                                    "pallets": "Paletes",
-                                    "noPacking": "Sem embalagem",
-                                    "other": "Outro"
-                                },
-                                "error": "Nenhum tipo de embalagem foi selecionado"
-                            },
-                            "is-hazardous": "Carga perigosa",
-                            "hazchem-code": {
-                                "label": "Código Hazchem",
-                                "placeholder": "Introduza o código Hazchem",
-                                "error": "O código Hazchem não foi indicado"
-                            },
-                            "is-refrigerated": "Requer transporte refrigerado",
-                            "temperature": {
-                                "label": "Temperatura da carga",
-                                "message": "Temperatura selecionada",
-                                "error": "Erro na seleção da temperatura"
-                            },
-                            "temperature-instructions": {
-                                "label": "Instruções de temperatura",
-                                "placeholder": "Introduza instruções de temperatura"
-                            },
-                            "is-groupage-allowed": "Carga compatível com grupagem"
-                        },
-                        "share": {
-                            "label": "Opções de partilha",
-                            "description": "Escolha como deseja que o pedido seja partilhado na appload",
-                            "subscribers": {
-                                "label": "Mercado Privado",
-                                "description": "Os pedidos postados neste formulário serão enviados apenas aos transportadores registados na sua rede."
-                            },
-                            "non-subscribers": {
-                                "label": "Mercado Público",
-                                "description": "Os pedidos postados neste formulário serão enviados a todos os transportadores registados na Appload."
-                            }
-                        },
-                        "price": {
-                            "label": "Preço do transporte",
-                            "placeholder": "Introduza o valor a pagar por esta viagem",
-                            "error": "O preço do transporte não foi indicado"
-                        },
-                        "currency": {
-                            "label": "Moeda",
-                            "placeholder": "Selecione a moeda do valor",
-                            "error": "Nenhuma moeda foi selecionada"
-                        }
-                    },
-                    "preview": {}
+                "carrier": {
+                    "title": "Não há novos pedidos disponíveis na appload",
+                    "description": "Todos os pedidos publicados no mercado foram aceites ou cancelados. Por favor, volte a verificar mais tarde para novos pedidos",
+                    "note": "Isto pode variar com base nos filtros aplicados"
                 }
             }
         }
@@ -1802,5 +2563,12 @@
         "pt-PT": "Português",
         "en-US": "English",
         "label": "Language"
+    },
+    "Miscellaneous": {
+        "infinite-scroll": {
+            "loading": "A carregar dados...",
+            "more": "Carregar mais",
+            "end": "Não há mais nada para mostrar neste momento."
+        }
     }
 }

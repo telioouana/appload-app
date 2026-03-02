@@ -1,20 +1,30 @@
 import { createTRPCRouter } from "@/backend/trpc/init";
 
-import { orderRouter } from "@/modules/shipper/main/server/order-procedures";
-import { privateRouter } from "@/modules/shipper/main/private/server/procedures";
-import { mapRouter } from "@/modules/shipper/main/public/pages/map/server/procedures";
-import { kpisRouter } from "@/modules/shipper/main/public/pages/kpis/server/procedures";
-import { dashboardRouter } from "@/modules/shipper/main/public/pages/dashboard/server/procedures";
+import { publicRouter } from "@/modules/app/routes/shipper/server/public-procedures";
+import { shipperMapRouter } from "@/modules/app/routes/shipper/server/map-procedures";
+import { privateRouter } from "@/modules/app/routes/shipper/server/private-procedures";
+import { shipperKpisRouter } from "@/modules/app/routes/shipper/server/kpis-procedures";
+import { shipperOrderRouter } from "@/modules/app/routes/shipper/server/order-procedures";
+import { shipperDashboardRouter } from "@/modules/app/routes/shipper/server/dashboard-procedures";
+
+import { ordersRouter } from "@/modules/app/routes/carrier/server/orders-procedures";
+import { carrierMapRouter } from "@/modules/app/routes/carrier/server/map-procedures";
+import { carrierDashboardRouter } from "@/modules/app/routes/carrier/server/dashboard-procedures";
 
 export const appRouter = createTRPCRouter({
     // merge your routers here
-    
-    // new layout routers
-    map: mapRouter,
-    kpis: kpisRouter,
-    order: orderRouter,
+    // Shipper Routers
+    public: publicRouter,
     private: privateRouter,
-    dashboard: dashboardRouter,
+    shipperMap: shipperMapRouter,
+    shipperKpis: shipperKpisRouter,
+    shipperOrder: shipperOrderRouter,
+    shipperDashboard: shipperDashboardRouter,
+
+    // Carrier Routers
+    orders: ordersRouter,
+    carrierMap: carrierMapRouter,
+    carrierDashboard: carrierDashboardRouter,
 });
 
 // export type definition of API
