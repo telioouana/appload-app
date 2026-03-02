@@ -88,11 +88,11 @@ export function OverviewOrderTab({ values }: { values: Values }) {
                     <div className="flex flex-col gap-1 w-full">
                         <span className="text-xs text-muted-foreground">{t("info.order.route")}</span>
                         <div className="flex gap-2 items-center">
-                            <span className="font-medium">{order.loadingAddress?.[0].state}</span>
+                            <span className="font-medium">{order.loadingAddress?.[0]?.state}</span>
 
                             <IconArrowRight className="w-7 h-3" />
 
-                            <span className="font-medium">{order.offloadingAddress?.[0].state}</span>
+                            <span className="font-medium">{order.offloadingAddress?.[0]?.state}</span>
                         </div>
                     </div>
                 </div>

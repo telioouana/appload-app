@@ -56,7 +56,13 @@ export const ordersRouter = createTRPCRouter({
                         )
                         : path === "public"
                             ? eq(order.share, "non-subscribers")
-                            : undefined,
+                            : or(
+                                eq(order.share, "non-subscribers"),
+                                and(
+                                    eq(order.share, "subscribers"),
+                                    eq(network.carrierId, session.activeOrganizationId)
+                                )
+                            ),
                     cursor
                         ? or(
                             lt(order.updatedAt, cursor.updatedAt),

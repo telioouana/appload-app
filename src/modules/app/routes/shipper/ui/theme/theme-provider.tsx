@@ -32,17 +32,18 @@ export function PrivateThemeProvider({
         getSavedThemeColor() as ThemeColors,
     );
     const [isMounted, setIsMounted] = useState(false);
-    const { theme } = useTheme();
+    const { resolvedTheme } = useTheme();
 
     useEffect(() => {
+        if (resolvedTheme !== "light" && resolvedTheme !== "dark") return;
         localStorage.setItem("privateThemeColor", themeColor);
-        setGlobalColorTheme(theme as "light" | "dark" , themeColor);
+        setGlobalColorTheme(resolvedTheme, themeColor);
 
         if (!isMounted) {
             setIsMounted(true);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [themeColor, theme]);
+    }, [themeColor, resolvedTheme]);
 
     if (!isMounted) {
         return null;
@@ -76,17 +77,18 @@ export function PublicThemeProvider({
         getSavedThemeColor() as ThemeColors,
     );
     const [isMounted, setIsMounted] = useState(false);
-    const { theme } = useTheme();
+    const { resolvedTheme } = useTheme();
 
     useEffect(() => {
+        if (resolvedTheme !== "light" && resolvedTheme !== "dark") return;
         localStorage.setItem("publicThemeColor", themeColor);
-        setGlobalColorTheme(theme as "light" | "dark", themeColor);
+        setGlobalColorTheme(resolvedTheme, themeColor);
 
         if (!isMounted) {
             setIsMounted(true);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [themeColor, theme]);
+    }, [themeColor, resolvedTheme]);
 
     if (!isMounted) {
         return null;

@@ -25,7 +25,7 @@ export function OrderCard({ values }: Props) {
     const status = trip ? trip.status : order.status
 
     return (
-        <Card className={cn("border border-card hover:border-primary", order.share === "subscribers" && "bg-secondary/50")}>
+        <Card className={cn("border border-card hover:border-primary", order.share === "subscribers" && "bg-orange-100 dark:bg-orange-100/20")}>
             <CardHeader className="gap-2.5">
                 <div className="flex justify-between items-start gap-4">
                     <div className="flex flex-col gap-0.5">
