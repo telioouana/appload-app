@@ -14,23 +14,15 @@ const ThemeContext = createContext<ThemeColorStateParams>(
 export function PrivateThemeProvider({
     children,
 }: ThemeProviderProps) {
-    const getSavedThemeColor = () => {
-        // Check if we are running in a browser environment
-        if (typeof window === "undefined") {
-            return "gray" as ThemeColors;
-        }
+    const [themeColor, setThemeColor] = useState<ThemeColors>("gray");
 
-        try {
-            return (localStorage.getItem("privateThemeColor") as ThemeColors) || "gray" as ThemeColors;
-        } catch (error) {
-            console.log(error);
-            return "gray" as ThemeColors;
+    useEffect(() => {
+        const savedColor = localStorage.getItem("privateThemeColor") as ThemeColors;
+        if (savedColor) {
+            setThemeColor(savedColor);
         }
-    };
+    }, []);
 
-    const [themeColor, setThemeColor] = useState<ThemeColors>(
-        getSavedThemeColor() as ThemeColors,
-    );
     const [isMounted, setIsMounted] = useState(false);
     const { resolvedTheme } = useTheme();
 
@@ -59,23 +51,15 @@ export function PrivateThemeProvider({
 export function PublicThemeProvider({
     children,
 }: ThemeProviderProps) {
-    const getSavedThemeColor = () => {
-        // Check if we are running in a browser environment
-        if (typeof window === "undefined") {
-            return "orange" as ThemeColors;
-        }
+    const [themeColor, setThemeColor] = useState<ThemeColors>("orange");
 
-        try {
-            return (localStorage.getItem("publicThemeColor") as ThemeColors) || "orange" as ThemeColors;
-        } catch (error) {
-            console.log(error);
-            return "orange" as ThemeColors;
+    useEffect(() => {
+        const savedColor = localStorage.getItem("publicThemeColor") as ThemeColors;
+        if (savedColor) {
+            setThemeColor(savedColor);
         }
-    };
+    }, []);
 
-    const [themeColor, setThemeColor] = useState<ThemeColors>(
-        getSavedThemeColor() as ThemeColors,
-    );
     const [isMounted, setIsMounted] = useState(false);
     const { resolvedTheme } = useTheme();
 
