@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
-import { DEFAULT_LOGIN_REDIRECT, apiAuthPrefix, authRoutes, publicRoutes } from "@/routes"
+import { apiAuthPrefix, authRoutes, publicRoutes } from "@/routes"
 
 // This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {
@@ -36,7 +36,16 @@ export async function proxy(request: NextRequest) {
     }
 
     if (isAuthRoute && sessionCookie) {
-        return NextResponse.redirect(new URL("/u/redirect", nextUrl))
+        const redirectUrl = new URL("/u/redirect", nextUrl);
+        const callback =
+            nextUrl.searchParams.get("callback") ??
+            nextUrl.searchParams.get("callbackUrl");
+
+        if (callback) {
+            redirectUrl.searchParams.set("callback", callback);
+        }
+
+        return NextResponse.redirect(redirectUrl);
     }
 
     return NextResponse.next()
