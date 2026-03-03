@@ -3,6 +3,8 @@ import { redirect } from "next/navigation"
 
 import { auth } from "@/backend/auth"
 
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
+
 export default async function Page({ searchParams }: { searchParams: Promise<{ callback: string }> }) {
     const { callback } = await searchParams
 
@@ -22,7 +24,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
         if (callbarkURL && callbarkURL.startsWith(`/${type.charAt(0)}`)) {
             redirect(callbarkURL)
         }
-        redirect(`/${type.charAt(0)}/${callback}`)
+        redirect(`/${type.charAt(0)}${DEFAULT_LOGIN_REDIRECT}`)
     }
 
     redirect("/unauthorized")

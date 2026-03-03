@@ -25,7 +25,7 @@ export function OrderCard({ values }: Props) {
     const status = trip ? trip.status : order.status
 
     return (
-        <Card className={cn("border border-card hover:border-primary", order.share === "subscribers" && "bg-orange-100 dark:bg-orange-100/20")}>
+        <Card className={cn("border border-card hover:border-primary", order.share === "subscribers" && "bg-orange-50 dark:bg-orange-50/20")}>
             <CardHeader className="gap-2.5">
                 <div className="flex justify-between items-start gap-4">
                     <div className="flex flex-col gap-0.5">
@@ -51,7 +51,7 @@ export function OrderCard({ values }: Props) {
                 </div>
             </CardHeader>
             <CardContent className="flex flex-col gap-1.5 h-full">
-                <Separator />
+                <Separator className={cn(order.share === "subscribers" && "bg-orange-300")} />
 
                 <div className="flex flex-col gap-1.5 h-full">
                     <div className="flex justify-between items-center gap-2">
@@ -97,26 +97,27 @@ export function OrderCard({ values }: Props) {
                     </div>
                 </div>
 
-                <Separator />
+                {!!order.price && (
+                    <>
+                        <Separator className={cn(order.share === "subscribers" && "bg-orange-300")} />
 
-                <div className="flex justify-between items-center gap-2 py-2">
-                    <div className="text-muted-foreground">{t("content.price")}</div>
-                    <div className="font-medium text-xl text-primary space-x-1">
-                        <span>
-                            {order.price == null
-                                ? "0"
-                                : f.number(order.price, {
-                                    currency: order.currency ?? "MZN",
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                })
-                            }
-                        </span>
-                        <span>{order.currency ?? "MZN"}</span>
-                    </div>
-                </div>
+                        <div className="flex justify-between items-center gap-2 py-2">
+                            <div className="text-muted-foreground">{t("content.price")}</div>
+                            <div className="font-medium text-xl text-primary space-x-1">
+                                <span>
+                                    {f.number(order.price, {
+                                        currency: order.currency ?? "MZN",
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    })}
+                                </span>
+                                <span>{order.currency ?? "MZN"}</span>
+                            </div>
+                        </div>
+                    </>
+                )}
 
-                <Separator />
+                <Separator className={cn(order.share === "subscribers" && "bg-orange-300")} />
             </CardContent>
             <CardFooter className="flex justify-between gap-2 items-center">
                 <div className="w-full">
