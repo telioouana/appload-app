@@ -14,30 +14,28 @@ const ThemeContext = createContext<ThemeColorStateParams>(
 export function PrivateThemeProvider({
     children,
 }: ThemeProviderProps) {
-    const getSavedThemeColor = () => {
-        try {
-            return (localStorage.getItem("privateThemeColor") as ThemeColors) || "gray";
-        } catch (error) {
-            console.log(error)
-            return "gray" as ThemeColors;
-        }
-    };
-
-    const [themeColor, setThemeColor] = useState<ThemeColors>(
-        getSavedThemeColor() as ThemeColors,
-    );
-    const [isMounted, setIsMounted] = useState(false);
-    const { theme } = useTheme();
+    const [themeColor, setThemeColor] = useState<ThemeColors>("gray");
 
     useEffect(() => {
+        const savedColor = localStorage.getItem("privateThemeColor") as ThemeColors;
+        if (savedColor) {
+            setThemeColor(savedColor);
+        }
+    }, []);
+
+    const [isMounted, setIsMounted] = useState(false);
+    const { resolvedTheme } = useTheme();
+
+    useEffect(() => {
+        if (resolvedTheme !== "light" && resolvedTheme !== "dark") return;
         localStorage.setItem("privateThemeColor", themeColor);
-        setGlobalColorTheme(theme as "light" | "dark", themeColor);
+        setGlobalColorTheme(resolvedTheme, themeColor);
 
         if (!isMounted) {
             setIsMounted(true);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [themeColor, theme]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [themeColor, resolvedTheme]);
 
     if (!isMounted) {
         return null;
@@ -53,30 +51,29 @@ export function PrivateThemeProvider({
 export function PublicThemeProvider({
     children,
 }: ThemeProviderProps) {
-    const getSavedThemeColor = () => {
-        try {
-            return (localStorage.getItem("publicThemeColor") as ThemeColors) || "orange";
-        } catch (error) {
-            console.log(error)
-            return "orange" as ThemeColors;
-        }
-    };
-
-    const [themeColor, setThemeColor] = useState<ThemeColors>(
-        getSavedThemeColor() as ThemeColors,
-    );
-    const [isMounted, setIsMounted] = useState(false);
-    const { theme } = useTheme();
+    const [themeColor, setThemeColor] = useState<ThemeColors>("gray");
 
     useEffect(() => {
+        const savedColor = localStorage.getItem("publicThemeColor") as ThemeColors;
+        if (savedColor) {
+            setThemeColor(savedColor);
+        }
+    }, []);
+
+    const [isMounted, setIsMounted] = useState(false);
+    const { resolvedTheme } = useTheme();
+
+    
+    useEffect(() => {
+        if (resolvedTheme !== "light" && resolvedTheme !== "dark") return;
         localStorage.setItem("publicThemeColor", themeColor);
-        setGlobalColorTheme(theme as "light" | "dark", themeColor);
+        setGlobalColorTheme(resolvedTheme, themeColor);
 
         if (!isMounted) {
             setIsMounted(true);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [themeColor, theme]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [themeColor, resolvedTheme]);
 
     if (!isMounted) {
         return null;

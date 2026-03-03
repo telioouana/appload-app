@@ -36,7 +36,7 @@ export async function proxy(request: NextRequest) {
     }
 
     if (isAuthRoute && sessionCookie) {
-        return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
+        return NextResponse.redirect(new URL("/u/redirect", nextUrl))
     }
 
     return NextResponse.next()

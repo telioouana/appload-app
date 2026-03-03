@@ -46,7 +46,7 @@ export default async function RootLayout({
             <body className={`${montserrat.variable} ${sourceCodePro.variable} ${playfair.variable} antialiased h-screen w-screen overflow-clip`}>
                 <ThemeProvider
                     attribute="class"
-                    defaultTheme="light"
+                    defaultTheme="dark"
                     disableTransitionOnChange
                     enableColorScheme
                 >
