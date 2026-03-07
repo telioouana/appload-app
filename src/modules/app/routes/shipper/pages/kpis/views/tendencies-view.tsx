@@ -6,16 +6,16 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { useTRPC } from "@/backend/trpc/client";
 
-import { TendenciesSavingsCard } from "../components/cards/tendencies-savings-card";
+import { TendenciesOnTimeCard } from "../components/cards/tendencies-on-time-card";
+import { TendenciesLoadingCard } from "../components/cards/tendencies-loading-card";
 import { TendenciesIncidentsCard } from "../components/cards/tendencies-incidents-card";
-import { TendenciesEmissionsCard } from "../components/cards/tendencies-emissions-card";
-import { TendenciesPerformanceCard } from "../components/cards/tendencies-performance-card";
+import { TendenciesOffloadingCard } from "../components/cards/tendencies-offloading-card";
 
 export function TendenciesView({ endDate, startDate }: { endDate: Date, startDate: Date }) {
     const trpc = useTRPC()
 
-    const { data: performance } = useSuspenseQuery(
-        trpc.shipperKpis.performance.queryOptions({
+    const { data: onTime } = useSuspenseQuery(
+        trpc.shipperKpis.onTime.queryOptions({
             endDate,
             startDate,
             currency: "MZN",
@@ -30,16 +30,16 @@ export function TendenciesView({ endDate, startDate }: { endDate: Date, startDat
         })
     )
 
-    const { data: emissions } = useSuspenseQuery(
-        trpc.shipperKpis.emissions.queryOptions({
+    const { data: loading } = useSuspenseQuery(
+        trpc.shipperKpis.loading.queryOptions({
             endDate,
             startDate,
             currency: "MZN",
         })
     )
 
-    const { data: savings } = useSuspenseQuery(
-        trpc.shipperKpis.savings.queryOptions({
+    const { data: offloading } = useSuspenseQuery(
+        trpc.shipperKpis.offloading.queryOptions({
             endDate,
             startDate,
             currency: "MZN",
@@ -54,12 +54,11 @@ export function TendenciesView({ endDate, startDate }: { endDate: Date, startDat
                         <h2 className="text-xl font-bold">Performance Trends</h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <TendenciesPerformanceCard data={performance} />
+                            <TendenciesOnTimeCard data={onTime} />
                             <TendenciesIncidentsCard data={incidents} />
-                            <TendenciesEmissionsCard data={emissions} />
-                            <TendenciesSavingsCard data={savings} />
+                            <TendenciesLoadingCard data={loading} />
+                            <TendenciesOffloadingCard data={offloading} />
                         </div>
-
                     </div>
                 </ErrorBoundary>
             </Suspense>

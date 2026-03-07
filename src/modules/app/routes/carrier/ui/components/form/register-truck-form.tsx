@@ -166,9 +166,9 @@ export function RegisterTruckForm({ setHasTrailer }: Props) {
                 </RadioGroup>
             </FieldSet>
 
-            {/* {watch().truck.type === TRUCK_TYPE[1] && (
-            )} */}
+            {watch().truck.type === TRUCK_TYPE[1] && (
             <LoadingBayForm name="truck" />
+            )}
 
             <Separator />
 

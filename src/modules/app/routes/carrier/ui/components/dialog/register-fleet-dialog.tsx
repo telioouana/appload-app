@@ -5,8 +5,8 @@ import { useTranslations } from "next-intl"
 import { useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { FormProvider, useForm, DefaultValues, FieldPath } from "react-hook-form"
 import { IconArrowRight, IconPlus, IconTruck, IconX } from "@tabler/icons-react"
+import { FormProvider, useForm, DefaultValues, FieldPath } from "react-hook-form"
 
 import { LOADING_BAY, TRUCK_TYPE } from "@/backend/db/types"
 
@@ -111,9 +111,9 @@ export function RegisterFleetDialog() {
         resolver: zodResolver(registerFleetSchema) as import("react-hook-form").Resolver<FullFleetForm>,
         defaultValues: {
             truck: { license: [{ url: "" }], booklet: [{ url: "" }] },
-            ...(hasTrailer ? { trailer: { license: [{ url: "" }], booklet: [{ url: "" }] } } : undefined),
-            ...(hasTrailer && hasLink ? { link: { license: [{ url: "" }], booklet: [{ url: "" }] } } : undefined)
-        }
+            trailer: { license: [{ url: "" }], booklet: [{ url: "" }] },
+            link: { license: [{ url: "" }], booklet: [{ url: "" }] }
+        } as DefaultValues<FullFleetForm>
     });
 
     async function handleNext() {
@@ -145,11 +145,7 @@ export function RegisterFleetDialog() {
 
     async function addLink() {
         const isValid = await handleNext()
-
-        if (isValid) {
-            setHasLink(true);
-            setStep(2); // Move to Link section
-        }
+        setHasLink(isValid);
     };
 
     function handleClose() {

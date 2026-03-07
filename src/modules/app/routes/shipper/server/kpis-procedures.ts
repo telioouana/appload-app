@@ -81,40 +81,6 @@ export const shipperKpisRouter = createTRPCRouter({
             return kpis
         }),
 
-    performance: protectedProcedure
-        .input(
-            z.object({
-                endDate: z.date(),
-                startDate: z.date(),
-                currency: z.enum(CURRENCY),
-            })
-        )
-        .query(async ({ ctx, input }) => {
-            const { session } = ctx.auth
-            const { currency, endDate, startDate } = input
-
-            if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
-
-            const kpis = await db
-                .select({
-                    load: trip.daysSpendLoading,
-                    offload: trip.daysSpendOffloading,
-                    date: trip.createdAt
-                })
-                .from(order)
-                .innerJoin(trip, eq(trip.orderId, order.id))
-                .where(and(
-                    eq(order.status, "completed"),
-                    eq(trip.status, "completed"),
-                    eq(order.currency, currency),
-                    between(trip.createdAt, startDate, endDate),
-                    eq(order.shipperId, session.activeOrganizationId)
-                ))
-
-
-            return kpis
-        }),
-
     onTime: protectedProcedure
         .input(
             z.object({
@@ -184,7 +150,7 @@ export const shipperKpisRouter = createTRPCRouter({
             return kpis
         }),
 
-    emissions: protectedProcedure
+    loading: protectedProcedure
         .input(
             z.object({
                 endDate: z.date(),
@@ -200,24 +166,25 @@ export const shipperKpisRouter = createTRPCRouter({
 
             const kpis = await db
                 .select({
-                    carbon: sql<number>`${trip.defaultCoefficient} * ${trip.loadFactor} * ${trip.ageFactor} * (${order.distance} / 1000) * ${trip.loadedWeight}`,
-                    date: trip.createdAt
+                    load: avg(trip.daysSpendLoading).mapWith(Number),
+                    date: trip.arrivalAtLoading
                 })
                 .from(order)
                 .innerJoin(trip, eq(trip.orderId, order.id))
                 .where(and(
                     eq(order.status, "completed"),
                     eq(trip.status, "completed"),
-                    eq(trip.tripType, "backload"),
                     eq(order.currency, currency),
                     between(trip.createdAt, startDate, endDate),
                     eq(order.shipperId, session.activeOrganizationId)
                 ))
+                .groupBy(trip.arrivalAtLoading)
+
 
             return kpis
         }),
 
-    savings: protectedProcedure
+    offloading: protectedProcedure
         .input(
             z.object({
                 endDate: z.date(),
@@ -233,19 +200,21 @@ export const shipperKpisRouter = createTRPCRouter({
 
             const kpis = await db
                 .select({
-                    saved: sql<number>`${trip.shipperTotal} - ${trip.shipperTotal} * 0.7`,
-                    date: trip.createdAt
+                    offload: avg(trip.daysSpendLoading).mapWith(Number),
+                    date: trip.arrivalAtLoading
                 })
                 .from(order)
                 .innerJoin(trip, eq(trip.orderId, order.id))
                 .where(and(
                     eq(order.status, "completed"),
                     eq(trip.status, "completed"),
-                    eq(trip.tripType, "backload"),
                     eq(order.currency, currency),
                     between(trip.createdAt, startDate, endDate),
                     eq(order.shipperId, session.activeOrganizationId)
                 ))
+                .groupBy(trip.arrivalAtLoading)
+
+
             return kpis
         })
 })
