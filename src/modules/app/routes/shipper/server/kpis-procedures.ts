@@ -111,6 +111,42 @@ export const shipperKpisRouter = createTRPCRouter({
                     eq(order.shipperId, session.activeOrganizationId)
                 ))
 
+
+            return kpis
+        }),
+
+    onTime: protectedProcedure
+        .input(
+            z.object({
+                endDate: z.date(),
+                startDate: z.date(),
+                currency: z.enum(CURRENCY),
+            })
+        )
+        .query(async ({ ctx, input }) => {
+            const { session } = ctx.auth
+            const { currency, endDate, startDate } = input
+
+            if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+
+            const kpis = await db
+                .select({
+                    totalOnTime: sql<number>`sum(case when ${trip.arrivalOnTimeLoading} then 1 else 0 end)`,
+                    total: count(trip).mapWith(Number),
+                    date: trip.arrivalAtLoading
+                })
+                .from(order)
+                .innerJoin(trip, eq(trip.orderId, order.id))
+                .where(and(
+                    eq(order.status, "completed"),
+                    eq(trip.status, "completed"),
+                    eq(order.currency, currency),
+                    between(trip.createdAt, startDate, endDate),
+                    eq(order.shipperId, session.activeOrganizationId)
+                ))
+                .groupBy(trip.arrivalAtLoading)
+
+
             return kpis
         }),
 
@@ -210,7 +246,6 @@ export const shipperKpisRouter = createTRPCRouter({
                     between(trip.createdAt, startDate, endDate),
                     eq(order.shipperId, session.activeOrganizationId)
                 ))
-
             return kpis
         })
 })

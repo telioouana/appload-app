@@ -14,6 +14,7 @@ export const TextAreaInput: ControlFunc = (props) => {
                     <InputGroupTextarea
                         {...field}
                         rows={2}
+                        className="w-full"
                         autoComplete="off"
                         value={field.value ?? ""}
                         onChange={field.onChange}

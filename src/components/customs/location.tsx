@@ -63,6 +63,7 @@ export const LocationInput: ControlFunc<{
                                 <InputGroupInput
                                     {...field}
                                     type="text"
+                                    className="w-full"
                                     autoComplete="off"
                                     value={field.value ?? ""}
                                     disabled={props.isPending}

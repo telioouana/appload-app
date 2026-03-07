@@ -60,8 +60,10 @@ export function Base<
                                     <FieldContent>
                                         {text}
                                     </FieldContent>
-                                    {control}
-                                    {error}
+                                    <div className="flex flex-col gap-2 items-start h-full w-full">
+                                        <div className="w-full">{control}</div>
+                                        <div className="w-full">{error}</div>
+                                    </div>
                                 </>
                             )}
 

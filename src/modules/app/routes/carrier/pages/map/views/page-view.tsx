@@ -1,20 +1,21 @@
 "use client"
 
-import { Separator } from "@/components/ui/separator";
-
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { IconSearch } from "@tabler/icons-react";
 
+import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 
+import { MAP_FILTER } from "../../../types/types";
+
 export function PageView() {
     const [value, setValue] = useState<string>("")
+    const [tab, setTab] = useState<MAP_FILTER>("all")
 
     const t = useTranslations(`Carrier.map.page`)
     const router = useRouter()
@@ -31,6 +32,20 @@ export function PageView() {
 
         router.replace(url.href)
     }
+
+    function filter(value: MAP_FILTER) {
+        setTab(value)
+
+        const url = new URL(window.location.href)
+        if (value !== "all") {
+            url.searchParams.set("filterBy", value)
+        } else {
+            url.searchParams.delete("filterBy")
+        }
+
+        router.replace(url.href)
+    }
+
     return (
         <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
@@ -59,7 +74,7 @@ export function PageView() {
                     <FieldGroup className="w-full">
                         <Field className="gap-2">
                             <FieldLabel className="text-muted-foreground font-normal text-xs">{t("card.filters.label")}</FieldLabel>
-                            <Tabs>
+                            <Tabs value={tab} onValueChange={(value) => filter(value as MAP_FILTER)}>
                                 <TabsList className="bg-transparent -mx-2">
                                     <TabsTrigger value="all">{t("card.filters.all")}</TabsTrigger>
 

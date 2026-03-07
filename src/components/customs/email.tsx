@@ -15,6 +15,7 @@ export const EmailInput: ControlFunc = (props) => {
                         {...field}
                         type="email"
                         autoComplete="off"
+                        className="w-full"
                         value={field.value ?? ""}
                         onChange={field.onChange}
                         disabled={props.isPending}

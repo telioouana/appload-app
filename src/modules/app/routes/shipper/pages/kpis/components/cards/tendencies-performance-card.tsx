@@ -1,7 +1,7 @@
 "use client"
 
 import { useLocale, useTranslations } from "next-intl"
-import { Area, AreaChart, CartesianGrid, XAxis, } from "recharts"
+import { Line, LineChart, CartesianGrid, XAxis, } from "recharts"
 
 import { Card, CardContent, CardHeader, CardTitle, } from "@/components/ui/card"
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig, } from "@/components/ui/chart"
@@ -19,7 +19,6 @@ export function TendenciesPerformanceCard({ data }: Props) {
     const locale = useLocale()
 
     const chartConfig = {
-
         load: {
             label: t("load"),
             color: "var(--chart-3)",
@@ -37,11 +36,54 @@ export function TendenciesPerformanceCard({ data }: Props) {
             </CardHeader>
 
             <CardContent>
-                <ChartContainer
+                <ChartContainer config={chartConfig}>
+                    <LineChart
+                        accessibilityLayer
+                        data={data}
+                        margin={{
+                            left: 4,
+                            right: 4,
+                            top: 4,
+                        }}
+                    >
+                        <CartesianGrid vertical={false} />
+                        <XAxis
+                            dataKey="date"
+                            tickLine={false}
+                            axisLine={false}
+                            tickMargin={8}
+                            tickFormatter={(value) => {
+                                const date = new Date(value)
+                                return date.toLocaleDateString(locale, {
+                                    month: "short",
+                                    day: "numeric",
+                                })
+                            }}
+                        />
+                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                        <Line
+                            dataKey="load"
+                            type="monotone"
+                            stroke="var(--color-load)"
+                            strokeWidth={2}
+                            dot={true}
+                        />
+                        <Line
+                            dataKey="offload"
+                            type="monotone"
+                            stroke="var(--color-offload)"
+                            strokeWidth={2}
+                            dot={true}
+                        />
+                        <ChartLegend content={<ChartLegendContent className="text-xs font-normal" />} />
+                    </LineChart>
+                </ChartContainer>
+
+                {/* <ChartContainer
                     config={chartConfig}
                     className="aspect-auto h-48 w-full"
                 >
-                    <AreaChart
+                    <BarChart
                         accessibilityLayer
                         data={data}
                     >
@@ -90,19 +132,17 @@ export function TendenciesPerformanceCard({ data }: Props) {
                             }}
                         />
 
-                        <Area
+                        <Bar
                             dataKey="load"
                             type="natural"
-                            fill="url(#fillLoad)"
-                            stroke="var(--color-load)"
+                            fill="var(--color-load)"
                             stackId="a"
                         />
 
-                        <Area
+                        <Bar
                             dataKey="offload"
                             type="natural"
-                            fill="url(#fillOffload)"
-                            stroke="var(--color-offload)"
+                            fill="var(--color-offload)"
                             stackId="a"
                         />
 
@@ -135,8 +175,8 @@ export function TendenciesPerformanceCard({ data }: Props) {
                             }
                         />
                         <ChartLegend content={<ChartLegendContent className="text-xs font-normal" />} />
-                    </AreaChart>
-                </ChartContainer>
+                    </BarChart>
+                </ChartContainer> */}
             </CardContent>
         </Card>
     )

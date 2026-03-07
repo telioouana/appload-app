@@ -5,9 +5,9 @@ import { IconPackage, IconX } from "@tabler/icons-react"
 import { useFormatter, useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
-import { DrawerDescription, DrawerTitle } from "@/components/ui/drawer"
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader } from "@/components/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 import { OverviewOrderTab } from "../tabs/overview-order-tab"
 import { TrackingOrderTab } from "../tabs/tracking-order-tab"
@@ -36,14 +36,14 @@ export function OrderDetailsDialog() {
                             <IconPackage className="size-8 text-primary-foreground" stroke={1.2} />
                         </div>
                         <div className="flex flex-col gap-0.5">
-                            <DrawerTitle className="text-2xl font-semibold text-primary-foreground leading-tight">{t("header.id", { id: order.legacyId.toString().padStart(4, '0') })}</DrawerTitle>
-                            <DrawerDescription className="text-primary-foreground/60">
+                            <DialogTitle className="text-2xl font-semibold text-primary-foreground leading-tight">{t("header.id", { id: order.legacyId.toString().padStart(4, '0') })}</DialogTitle>
+                            <DialogDescription className="text-primary-foreground/60">
                                 {f.dateTime(order.createdAt, {
                                     day: "numeric",
                                     month: "short",
                                     year: "numeric"
                                 })}
-                            </DrawerDescription>
+                            </DialogDescription>
                         </div>
                     </div>
 

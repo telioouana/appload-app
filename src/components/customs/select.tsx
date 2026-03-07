@@ -21,6 +21,7 @@ export const SelectInput: ControlFunc<PropsWithChildren> = ({
                     <SelectTrigger
                         id={field.id}
                         onBlur={onBlur}
+                        className="w-full"
                         disabled={props.isPending}
                         aria-invalid={field["aria-invalid"]}
                     >
@@ -29,7 +30,7 @@ export const SelectInput: ControlFunc<PropsWithChildren> = ({
                             <SelectValue placeholder={props.placeholder} />
                         </div>
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="w-full">
                         {children}
                     </SelectContent>
                 </Select>

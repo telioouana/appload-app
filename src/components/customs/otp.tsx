@@ -9,7 +9,13 @@ export const OTPInput: ControlFunc = props => {
     const REGEX_OTP_NUMBERS_VALIDATION: any = /^[0-9]+$/
 
     return <Base {...props}>{(field) => (
-        <InputOTP {...field} maxLength={6} pattern={REGEX_OTP_NUMBERS_VALIDATION} disabled={props.isPending} >
+        <InputOTP
+            {...field}
+            maxLength={6}
+            className="w-full"
+            disabled={props.isPending}
+            pattern={REGEX_OTP_NUMBERS_VALIDATION}
+        >
             <InputOTPGroup><InputOTPSlot index={0} /></InputOTPGroup>
             <InputOTPGroup><InputOTPSlot index={1} /></InputOTPGroup>
             <InputOTPGroup><InputOTPSlot index={2} /></InputOTPGroup>

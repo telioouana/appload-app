@@ -1,5 +1,5 @@
+import { HeaderView } from "@/modules/app/routes/carrier/pages/drivers/views/header-view";
+
 export default function Page() {
-    return (
-        <div>Drivers</div>
-    )
+    return <HeaderView />
 }

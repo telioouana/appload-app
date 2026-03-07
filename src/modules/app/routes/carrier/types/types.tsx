@@ -2,8 +2,10 @@ import type { cargo, order, tracking, trip } from "@/backend/db/schema"
 
 export type LAYOUT_VIEW = "list" | "grid"
 export type PERIOD = "month" | "quarter" | "year"
-export type ORDERS_PATH = "all" | "private" | "public" 
-export type TRIP_PATH = "all"| "booked" | "on-going" | "delivered"
+export type ORDERS_PATH = "all" | "private" | "public"
+export type STATUS_FILTER = "all" | "active" | "idle" | "free"
+export type TRIP_PATH = "all" | "booked" | "on-going" | "delivered"
+export type MAP_FILTER = "all" | "loading" | "moving" | "stopped" | "issue" | "offloading"
 
 export type Values = {
     order: typeof order.$inferSelect,

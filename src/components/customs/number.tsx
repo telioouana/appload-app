@@ -14,6 +14,7 @@ export const NumberInput: ControlFunc = (props) => {
                     <InputGroupInput
                         {...field}
                         type="number"
+                        className="w-full"
                         autoComplete="off"
                         value={field.value ?? ""}
                         onChange={(e) => {

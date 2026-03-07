@@ -207,6 +207,7 @@ export const offer = pgTable(
     "offer",
     {
         id: text("id").primaryKey().$default(() => randomUUID()),
+        legacyId: serial("legacy_id").unique().notNull(),
         orderId: text("order_id")
             .notNull()
             .references(() => order.id, { onDelete: "cascade" }),
@@ -248,6 +249,23 @@ export const tracking = pgTable(
         truckPlate: text("truck_plate")
             .references(() => truck.regPlate, { onDelete: "set null" }),
         location: jsonb("loading_address").$type<Location>(),
+        createdAt: timestamp("created_at").defaultNow().notNull(),
+        updatedAt: timestamp("updated_at")
+            .defaultNow()
+            .$onUpdate(() => /* @__PURE__ */ new Date())
+            .notNull(),
+    }
+)
+
+export const timeline = pgTable(
+    "timeline",
+    {
+        id: text("id").primaryKey().$default(() => randomUUID()),
+        legacyId: serial("legacy_id").unique().notNull(),
+        tripId: text("trip_id")
+            .notNull()
+            .references(() => trip.id, { onDelete: "cascade" }),
+        status: tripStatusEnum("status").default("booked"),
         createdAt: timestamp("created_at").defaultNow().notNull(),
         updatedAt: timestamp("updated_at")
             .defaultNow()

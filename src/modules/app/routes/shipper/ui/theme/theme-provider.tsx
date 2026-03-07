@@ -51,7 +51,7 @@ export function PrivateThemeProvider({
 export function PublicThemeProvider({
     children,
 }: ThemeProviderProps) {
-    const [themeColor, setThemeColor] = useState<ThemeColors>("gray");
+    const [themeColor, setThemeColor] = useState<ThemeColors>("orange");
 
     useEffect(() => {
         const savedColor = localStorage.getItem("publicThemeColor") as ThemeColors;

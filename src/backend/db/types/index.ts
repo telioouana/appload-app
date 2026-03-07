@@ -5,19 +5,21 @@ export const TRIP_TYPE = ["backload", "normal"] as const
 export const TRUCK_AGE = ["recent", "not-recent"] as const
 export const WEIGHT_UNIT = ["ton", "kg", "liter"] as const
 export const ROUTE_TYPE = ["national", "regional"] as const
+export const FLEET_STATUS = ["active", "idle", "free"] as const
 export const SHARE = ["subscribers", "non-subscribers"] as const
+export const TRUCK_TYPE = ["articulated", "non-articulated"] as const
 export const FISCAL_REGIME = ["normal", "simplified-5", "simplified-3"] as const
 export const INSURANCE_PAYMENT_STATUS = ["pending", "paid", "not-applicable"] as const
 export const POD_STATUS = ["pending-collection", "pending-delivery", "delivered", "verified"] as const
 export const PAYMENT_STATUS = ["pending", "partially", "completed", "cancelled", "not-applicable"] as const
 export const ORDER_STATUS = ["prospect", "drafted", "open", "booked", "on-going", "delivered", "completed", "cancelled"] as const
+export const LOADING_BAY = ["flatbed", "dropsides", "tautliner", "rigid-body", "refrigerated", "tipper", "side-tipper", "tanker", "lowbed"] as const
 export const CATEGORIES = ["agriculture-inputs", "agriculture-products", "construction", "machinery-equipment", "fmcg", "general-cargo", "medicine", "mining", "oil-gas", "vehicles", "other"] as const
 export const TRIP_STATUS = ["booked", "to-loading", "at-loading", "loading", "waiting-documents", "on-route", "stopped", "issue", "at-border", "at-offloading", "offloading", "completed", "cancelled"] as const
 export const PACKING = ["bags-1kg", "bags-2kg", "bags-5kg", "bags-25kg", "bags-30kg", "bags-50kg", "bags-100kg", "bags-1ton", "bottle-1l", "bottle-5l", "bottle-10l", "bottle-20l", "bottle-25l", "container-20ft", "container-40ft", "boxes", "pallets", "noPacking", "other"] as const
+export const YEARS = ["1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"] as const
 
-export const urlSchema = z.array(z.object({
-    url: z.url()
-}))
+export const urlSchema = z.array(z.object({ url: z.url() }))
 
 export const statusSchema = z.array(
     z.object({
@@ -25,6 +27,15 @@ export const statusSchema = z.array(
         date: z.date()
     })
 )
+
+export const loadingBaySchema = z.object({
+    width: z.number().positive(),
+    length: z.number().positive(),
+    height: z.number().positive(),
+    volume: z.number().positive(),
+    capacity: z.number().positive(),
+    type: z.enum(LOADING_BAY)
+})
 
 export const LocationSchema = z.array(z.object({
     address: z.string(),
@@ -189,7 +200,56 @@ export const TripsTableSchema = z.object({
     trip: TripSchema
 })
 
+export const RegisterDriverSchema = z.object({
+    name: z.string(),
+    email: z.email(),
+    country: z.string().nonempty(),
+    phoneNumber: z.string().min(9).max(15),
+    driverLicense: urlSchema.min(1).max(2),
+    passportCard: urlSchema.length(1).optional(),
+})
+
+export const RegisterTruckSchema = z.object({
+    internalId: z.string(),
+    driver: z.string().optional(),
+    regPlate: z.string(),
+    brand: z.string(),
+    model: z.string(),
+    year: z.number(),
+    type: z.enum(TRUCK_TYPE),
+    loadingBay: loadingBaySchema.optional(),
+    vin: z.string(),
+    booklet: urlSchema,
+    license: urlSchema,
+})
+
+export const RegisterTrailerSchema = z.object({
+    internalId: z.string(),
+    regPlate: z.string(),
+    brand: z.string(),
+    model: z.string(),
+    year: z.number(),
+    loadingBay: loadingBaySchema,
+    vin: z.string(),
+    booklet: urlSchema,
+    license: urlSchema,
+})
+
+export const RegisterLinkSchema = z.object({
+    internalId: z.string(),
+    regPlate: z.string(),
+    brand: z.string(),
+    model: z.string(),
+    year: z.number(),
+    loadingBay: loadingBaySchema,
+    vin: z.string(),
+    booklet: urlSchema,
+    license: urlSchema,
+})
+
 export type Urls = z.infer<typeof urlSchema>;
 export type Location = z.infer<typeof LocationSchema>
 export type StatusSchema = z.infer<typeof statusSchema>
+export type LoadingBay = z.infer<typeof loadingBaySchema>
 export type CreateOrderForm = z.infer<typeof CreateOrderSchema>
+export type RegisterDriverForm = z.infer<typeof RegisterDriverSchema>

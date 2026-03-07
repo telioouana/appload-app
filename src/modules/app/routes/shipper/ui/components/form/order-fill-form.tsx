@@ -23,7 +23,7 @@ export function OrderFillForm({ isPending, share }: { isPending?: boolean, share
 
     return (
         <FieldGroup className="max-h-100 overflow-y-scroll container-snap px-8">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <LocationInput
                     control={form.control}
                     name={`loadingAddress.${0}.address`}
@@ -47,7 +47,7 @@ export function OrderFillForm({ isPending, share }: { isPending?: boolean, share
                 />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <DateInput
                     control={form.control}
                     name="expectedLoadingDate"
@@ -65,7 +65,7 @@ export function OrderFillForm({ isPending, share }: { isPending?: boolean, share
                 />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <SelectInput
                     control={form.control}
                     name="cargo.category"
@@ -85,7 +85,7 @@ export function OrderFillForm({ isPending, share }: { isPending?: boolean, share
                 />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <SelectInput
                     control={form.control}
                     name="cargo.packing"
