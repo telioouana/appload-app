@@ -10,9 +10,13 @@
     - state field contains a district name (Maputo districts like KaMavota, KaMaxakeni, etc.).
 */
 
-import { db } from '..';
-import { order } from '../schema';
-import { randomUUID } from 'crypto';
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
+import * as schema from '../schema';
+import { order } from '../schemas/orders';
+
+const client = neon(process.env.DATABASE_URL!);
+const db = drizzle({ client, schema });
 
 const ORG_ID = 'uS9XJgdh9CFxAZcSUuMu9zoHWTe7y7Xr';
 
@@ -21,7 +25,6 @@ const days = (n: number) => new Date(now.getTime() + n * 24 * 60 * 60 * 1000);
 
 const ORDERS = [
 	{
-		id: randomUUID().toString(),
 		shipperId: ORG_ID,
 		shipperName: 'Seed Shipper A',
 		loadingAddress: [
@@ -51,7 +54,6 @@ const ORDERS = [
 		currency: 'MZN',
 	},
 	{
-		id: randomUUID().toString(),
 		shipperId: ORG_ID,
 		shipperName: 'Seed Shipper B',
 		loadingAddress: [
@@ -81,7 +83,6 @@ const ORDERS = [
 		currency: 'MZN',
 	},
 	{
-		id: randomUUID().toString(),
 		shipperId: ORG_ID,
 		shipperName: 'Seed Shipper C',
 		loadingAddress: [
@@ -111,7 +112,6 @@ const ORDERS = [
 		currency: 'MZN',
 	},
 	{
-		id: randomUUID().toString(),
 		shipperId: ORG_ID,
 		shipperName: 'Seed Shipper D',
 		loadingAddress: [
@@ -141,7 +141,6 @@ const ORDERS = [
 		currency: 'MZN',
 	},
 	{
-		id: randomUUID().toString(),
 		shipperId: ORG_ID,
 		shipperName: 'Seed Shipper E',
 		loadingAddress: [
