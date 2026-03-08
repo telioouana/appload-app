@@ -13,6 +13,7 @@
 import { db } from '..';
 import { order } from '../schema';
 import { randomUUID } from 'crypto';
+import { ORDER_STATUS, SHARE, CURRENCY, ROUTE_TYPE } from '../types';
 
 const ORG_ID = 'uS9XJgdh9CFxAZcSUuMu9zoHWTe7y7Xr';
 
@@ -44,11 +45,11 @@ const ORDERS = [
 		expectedOffloadingDate: days(3),
 		distance: 120,
 		expectedTrucks: 1,
-		route: 'national',
-		share: 'subscribers',
-		status: 'open',
+		route: 'national' as typeof ROUTE_TYPE[number],
+		share: 'subscribers' as typeof SHARE[number],
+		status: 'open' as typeof ORDER_STATUS[number],
 		price: 120000,
-		currency: 'MZN',
+		currency: 'MZN' as typeof CURRENCY[number],
 	},
 	{
 		id: randomUUID().toString(),
@@ -74,11 +75,11 @@ const ORDERS = [
 		expectedOffloadingDate: days(4),
 		distance: 300,
 		expectedTrucks: 1,
-		route: 'national',
-		share: 'non-subscribers',
-		status: 'open',
+		route: 'national' as typeof ROUTE_TYPE[number],
+		share: 'non-subscribers' as typeof SHARE[number],
+		status: 'open' as typeof ORDER_STATUS[number],
 		price: 300000,
-		currency: 'MZN',
+		currency: 'MZN' as typeof CURRENCY[number],
 	},
 	{
 		id: randomUUID().toString(),
@@ -104,11 +105,11 @@ const ORDERS = [
 		expectedOffloadingDate: days(6),
 		distance: 540,
 		expectedTrucks: 1,
-		route: 'national',
-		share: 'subscribers',
-		status: 'open',
+		route: 'national' as typeof ROUTE_TYPE[number],
+		share: 'subscribers' as typeof SHARE[number],
+		status: 'open' as typeof ORDER_STATUS[number],
 		price: 540000,
-		currency: 'MZN',
+		currency: 'MZN' as typeof CURRENCY[number],
 	},
 	{
 		id: randomUUID().toString(),
@@ -134,11 +135,11 @@ const ORDERS = [
 		expectedOffloadingDate: days(7),
 		distance: 220,
 		expectedTrucks: 1,
-		route: 'national',
-		share: 'non-subscribers',
-		status: 'open',
+		route: 'national' as typeof ROUTE_TYPE[number],
+		share: 'non-subscribers' as typeof SHARE[number],
+		status: 'open' as typeof ORDER_STATUS[number],
 		price: 220000,
-		currency: 'MZN',
+		currency: 'MZN' as typeof CURRENCY[number],
 	},
 	{
 		id: randomUUID().toString(),
@@ -164,11 +165,11 @@ const ORDERS = [
 		expectedOffloadingDate: days(9),
 		distance: 410,
 		expectedTrucks: 1,
-		route: 'national',
-		share: 'non-subscribers',
-		status: 'open',
+		route: 'national' as typeof ROUTE_TYPE[number],
+		share: 'non-subscribers' as typeof SHARE[number],
+		status: 'open' as typeof ORDER_STATUS[number],
 		price: 410000,
-		currency: 'MZN',
+		currency: 'MZN' as typeof CURRENCY[number],
 	},
 ];
 
