@@ -23,11 +23,7 @@ const SvgIcon = ({
 	<svg
 		xmlns='http://www.w3.org/2000/svg'
 		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth={2}
-		strokeLinecap='round'
-		strokeLinejoin='round'
+		fill='currentColor'
 		aria-hidden='true'
 		{...props}>
 		{title ? <title>{title}</title> : null}
@@ -38,13 +34,11 @@ const SvgIcon = ({
 export const Building2 = (props: IconProps) => (
 	<SvgIcon {...props}>
 		<rect x='5' y='6' width='14' height='12' rx='1' />
-		<path d='M9 18v-3h6v3' />
 	</SvgIcon>
 );
 export const MapPin = (props: IconProps) => (
 	<SvgIcon {...props}>
-		<path d='M12 22s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12z' />
-		<circle cx='12' cy='10' r='2.5' />
+		<path d='M12 2c-3.3 0-6 2.7-6 6 0 4.5 6 11 6 11s6-6.5 6-11c0-3.3-2.7-6-6-6z' />
 	</SvgIcon>
 );
 export const Search = (props: IconProps) => (
@@ -62,11 +56,7 @@ export const Search = (props: IconProps) => (
 );
 export const Star = (props: IconProps) => (
 	<SvgIcon {...props}>
-		<path
-			d='M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'
-			fill='currentColor'
-			stroke='none'
-		/>
+		<path d='M12 17.3 7.24 20l1.1-5.63L4.5 11.36l5.76-.84L12 5l1.74 5.52 5.76.84-3.84 3.01L16.76 20z' />
 	</SvgIcon>
 );
 export const LayoutGrid = (props: IconProps) => (
@@ -85,58 +75,17 @@ export const List = (props: IconProps) => (
 	</SvgIcon>
 );
 
-// Local fallbacks for header and contexts to keep this page self-contained.
-// When ready, replace these with the real implementations from your project.
+// TODO: temporarily disabled CarrierPrivateHeader while testing layout
+// import { CarrierPrivateHeader } from './CarrierPrivateHeader';
+// TODO: temporarily disabled context hooks while testing layout
+// import { useCompany } from '../../contexts/CompanyContext';
+// import { Notification } from '../../contexts/NotificationContext';
+// import { useLanguage } from '../../contexts/LanguageContext';
 
-interface CarrierPrivateHeaderProps {
-	title: string;
-	onNavigate?: (page: 'preferences' | 'profile' | 'support') => void;
-	onLogout?: () => void;
-	onNotificationNavigate?: (notification: Notification) => void;
-	onMenuClick?: () => void;
-}
-
-const CarrierPrivateHeader = ({
-	title,
-	onNavigate,
-	onLogout,
-	onNotificationNavigate,
-	onMenuClick,
-}: CarrierPrivateHeaderProps) => {
-	return (
-		<header className='mb-4 flex items-center justify-between'>
-			<div className='flex items-center gap-4'>
-				<h2 className='text-lg font-semibold'>{title}</h2>
-			</div>
-			<div className='flex items-center gap-2'>
-				<button
-					type='button'
-					onClick={() => onNavigate?.('profile')}
-					className='text-sm'>
-					Profile
-				</button>
-				<button type='button' onClick={onLogout} className='text-sm'>
-					Logout
-				</button>
-				<button
-					type='button'
-					onClick={() => onNotificationNavigate?.({} as Notification)}
-					className='text-sm'>
-					Notifications
-				</button>
-				<button type='button' onClick={onMenuClick} className='text-sm'>
-					Menu
-				</button>
-			</div>
-		</header>
-	);
-};
-
-// Minimal context fallbacks used only on this page to avoid missing-module errors.
-const useCompany = () => ({
-	selectedCompany: undefined as { accentColor?: string } | undefined,
-});
-const useLanguage = () => ({ language: 'en' as const });
+// Fallbacks to keep page compiling while contexts are commented out
+// const selectedCompany = undefined as any;
+// const language = 'en' as const;
+type Notification = any;
 
 interface Client {
 	id: string;
@@ -278,20 +227,6 @@ export default function Page({
 	// Use company accent color if available, fallback to orange
 	const accentColor = selectedCompany?.accentColor || '#ff5722';
 
-	// Safari can be picky about 8-digit hex (#RRGGBBAA). Use rgba(...) for translucent fills.
-	const hexToRgba = (hex: string, alpha: number) => {
-		const h = hex.replace('#', '');
-		const full =
-			h.length === 3
-				? h
-						.split('')
-						.map((c) => c + c)
-						.join('')
-				: h;
-		const n = parseInt(full, 16);
-		return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
-	};
-
 	const content = {
 		en: {
 			title: 'My Clients',
@@ -385,7 +320,7 @@ export default function Page({
 	});
 
 	return (
-		<div className='flex-1 min-h-0 flex flex-col overflow-hidden relative isolate'>
+		<div className='flex-1 flex flex-col overflow-hidden'>
 			{/* TODO: temporarily disabled CarrierPrivateHeader while testing layout
 			<CarrierPrivateHeader
 				title={t.title}
@@ -394,15 +329,7 @@ export default function Page({
 				onMenuClick={onMenuClick}
 			/> */}
 
-			<CarrierPrivateHeader
-				title={t.title}
-				onNavigate={onNavigate}
-				onLogout={onLogout}
-				onNotificationNavigate={onNotificationNavigate}
-				onMenuClick={onMenuClick}
-			/>
-
-			<div className='flex-1 min-h-0 bg-gray-50 dark:bg-gray-900 overflow-y-auto relative z-0'>
+			<div className='flex-1 bg-gray-50 dark:bg-gray-900 overflow-y-auto'>
 				<div className='px-4 md:px-6 lg:px-8 py-6 space-y-6 max-w-7xl mx-auto'>
 					{/* Page Header */}
 					<div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
@@ -423,12 +350,12 @@ export default function Page({
 							return (
 								<div
 									key={index}
-									className=' dark:bg-gray-800 rounded-xl border-2 p-4'
+									className='bg-white dark:bg-gray-800 rounded-xl border-2 p-4'
 									style={
 										isAccent
 											? {
 													borderColor: accentColor,
-													backgroundColor: hexToRgba(accentColor, 0.06),
+													backgroundColor: `${accentColor}10`,
 											  }
 											: undefined
 									}>
@@ -446,7 +373,7 @@ export default function Page({
 					</div>
 
 					{/* Search and Filters */}
-					<div className=' dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4'>
+					<div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4'>
 						<div className='flex flex-col md:flex-row gap-4'>
 							{/* Search */}
 							<div className='flex-1 relative'>
@@ -506,7 +433,7 @@ export default function Page({
 							{filteredClients.map((client) => (
 								<div
 									key={client.id}
-									className='dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:shadow-lg transition-all cursor-pointer group'
+									className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:shadow-lg transition-all cursor-pointer group'
 									onMouseEnter={() => setHoveredId(client.id)}
 									onMouseLeave={() => setHoveredId(null)}
 									style={hoverStyle(client.id)}>
@@ -515,7 +442,7 @@ export default function Page({
 										<div
 											className='w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0'
 											style={{
-												backgroundColor: hexToRgba(accentColor, 0.08),
+												backgroundColor: `${accentColor}15`,
 												color: accentColor,
 											}}>
 											<Building2 className='w-6 h-6' />
@@ -622,7 +549,7 @@ export default function Page({
 							{filteredClients.map((client) => (
 								<div
 									key={client.id}
-									className=' dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-all cursor-pointer'
+									className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-all cursor-pointer'
 									onMouseEnter={() => setHoveredId(client.id)}
 									onMouseLeave={() => setHoveredId(null)}
 									style={hoverStyle(client.id)}>
@@ -632,7 +559,7 @@ export default function Page({
 											<div
 												className='w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0'
 												style={{
-													backgroundColor: hexToRgba(accentColor, 0.08),
+													backgroundColor: `${accentColor}15`,
 													color: accentColor,
 												}}>
 												<Building2 className='w-6 h-6' />

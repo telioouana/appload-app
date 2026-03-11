@@ -104,27 +104,24 @@ const CarrierPrivateHeader = ({
 	onMenuClick,
 }: CarrierPrivateHeaderProps) => {
 	return (
-		<header className='mb-4 flex items-center justify-between'>
-			<div className='flex items-center gap-4'>
-				<h2 className='text-lg font-semibold'>{title}</h2>
+		<header className="mb-4 flex items-center justify-between">
+			<div className="flex items-center gap-4">
+				<h2 className="text-lg font-semibold">{title}</h2>
 			</div>
-			<div className='flex items-center gap-2'>
-				<button
-					type='button'
-					onClick={() => onNavigate?.('profile')}
-					className='text-sm'>
+			<div className="flex items-center gap-2">
+				<button type="button" onClick={() => onNavigate?.('profile')} className="text-sm">
 					Profile
 				</button>
-				<button type='button' onClick={onLogout} className='text-sm'>
+				<button type="button" onClick={onLogout} className="text-sm">
 					Logout
 				</button>
 				<button
-					type='button'
+					type="button"
 					onClick={() => onNotificationNavigate?.({} as Notification)}
-					className='text-sm'>
+					className="text-sm">
 					Notifications
 				</button>
-				<button type='button' onClick={onMenuClick} className='text-sm'>
+				<button type="button" onClick={onMenuClick} className="text-sm">
 					Menu
 				</button>
 			</div>
@@ -133,10 +130,9 @@ const CarrierPrivateHeader = ({
 };
 
 // Minimal context fallbacks used only on this page to avoid missing-module errors.
-const useCompany = () => ({
-	selectedCompany: undefined as { accentColor?: string } | undefined,
-});
+const useCompany = () => ({ selectedCompany: undefined as { accentColor?: string } | undefined });
 const useLanguage = () => ({ language: 'en' as const });
+
 
 interface Client {
 	id: string;
@@ -281,13 +277,7 @@ export default function Page({
 	// Safari can be picky about 8-digit hex (#RRGGBBAA). Use rgba(...) for translucent fills.
 	const hexToRgba = (hex: string, alpha: number) => {
 		const h = hex.replace('#', '');
-		const full =
-			h.length === 3
-				? h
-						.split('')
-						.map((c) => c + c)
-						.join('')
-				: h;
+		const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
 		const n = parseInt(full, 16);
 		return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
 	};
@@ -446,7 +436,7 @@ export default function Page({
 					</div>
 
 					{/* Search and Filters */}
-					<div className=' dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4'>
+					<div className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4'>
 						<div className='flex flex-col md:flex-row gap-4'>
 							{/* Search */}
 							<div className='flex-1 relative'>
@@ -506,7 +496,7 @@ export default function Page({
 							{filteredClients.map((client) => (
 								<div
 									key={client.id}
-									className='dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:shadow-lg transition-all cursor-pointer group'
+									className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:shadow-lg transition-all cursor-pointer group'
 									onMouseEnter={() => setHoveredId(client.id)}
 									onMouseLeave={() => setHoveredId(null)}
 									style={hoverStyle(client.id)}>
@@ -622,7 +612,7 @@ export default function Page({
 							{filteredClients.map((client) => (
 								<div
 									key={client.id}
-									className=' dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-all cursor-pointer'
+									className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-all cursor-pointer'
 									onMouseEnter={() => setHoveredId(client.id)}
 									onMouseLeave={() => setHoveredId(null)}
 									style={hoverStyle(client.id)}>

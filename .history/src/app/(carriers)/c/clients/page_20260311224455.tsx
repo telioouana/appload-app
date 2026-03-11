@@ -622,7 +622,7 @@ export default function Page({
 							{filteredClients.map((client) => (
 								<div
 									key={client.id}
-									className=' dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-all cursor-pointer'
+									className='bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-all cursor-pointer'
 									onMouseEnter={() => setHoveredId(client.id)}
 									onMouseLeave={() => setHoveredId(null)}
 									style={hoverStyle(client.id)}>
