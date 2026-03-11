@@ -28,7 +28,7 @@ export function FleetView({ status, view }: Props) {
         isFetchingNextPage,
         fetchNextPage,
     } = useSuspenseInfiniteQuery(
-        trpc.driver.drivers.infiniteQueryOptions({
+        trpc.fleet.fleet.infiniteQueryOptions({
             limit: DEFAULT_PAGE_LIMIT,
             status,
         }, {

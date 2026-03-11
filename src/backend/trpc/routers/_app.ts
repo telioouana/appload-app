@@ -7,6 +7,7 @@ import { shipperKpisRouter } from "@/modules/app/routes/shipper/server/kpis-proc
 import { shipperOrderRouter } from "@/modules/app/routes/shipper/server/order-procedures";
 import { shipperDashboardRouter } from "@/modules/app/routes/shipper/server/dashboard-procedures";
 
+import { fleetRouter } from "@/modules/app/routes/carrier/server/fleet-procedures";
 import { driverRouter } from "@/modules/app/routes/carrier/server/driver-procedures";
 import { ordersRouter } from "@/modules/app/routes/carrier/server/orders-procedures";
 import { carrierMapRouter } from "@/modules/app/routes/carrier/server/map-procedures";
@@ -23,6 +24,7 @@ export const appRouter = createTRPCRouter({
     shipperDashboard: shipperDashboardRouter,
 
     // Carrier Routers
+    fleet: fleetRouter,
     driver: driverRouter,
     orders: ordersRouter,
     carrierMap: carrierMapRouter,

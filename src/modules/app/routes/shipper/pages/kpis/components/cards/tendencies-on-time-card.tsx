@@ -51,11 +51,11 @@ export function TendenciesOnTimeCard({ data }: Props) {
                     >
                         <CartesianGrid vertical={false} />
                         <YAxis
-                            dataKey="date"
                             tickLine={false}
                             axisLine={false}
                             tickMargin={8}
                         />
+                        
                         <XAxis
                             dataKey="date"
                             tickLine={false}

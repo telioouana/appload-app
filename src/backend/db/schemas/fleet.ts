@@ -41,11 +41,8 @@ export const truck = pgTable(
             .references(() => organization.id, { onDelete: "cascade" }),
         regPlate: text("reg_plate").unique().notNull(),
 
-        driver: text("driver_id")
+        driverId: text("driver_id")
             .references(() => driver.id, { onDelete: "set null" }),
-        trailer: text("driver_id")
-            .references(() => trailer.regPlate, { onDelete: "set null" }),
-        driverName: text("driver_name"),
 
         brand: text("brand").notNull(),
         model: text("model").notNull(),
@@ -77,8 +74,8 @@ export const trailer = pgTable(
         carrierId: text("carrier_id")
             .notNull()
             .references(() => organization.id, { onDelete: "cascade" }),
-        link: text("driver_id")
-            .references(() => link.regPlate, { onDelete: "set null" }),
+        truckId: text("truck_id")
+            .references(() => truck.id, { onDelete: "set null" }),
 
         regPlate: text("reg_plate").unique().notNull(),
         brand: text("brand").notNull(),
@@ -110,6 +107,9 @@ export const link = pgTable(
         carrierId: text("carrier_id")
             .notNull()
             .references(() => organization.id, { onDelete: "cascade" }),
+        trailerId: text("trailer_id")
+            .references(() => trailer.id, { onDelete: "set null" }),
+
         regPlate: text("reg_plate").unique().notNull(),
         brand: text("brand").notNull(),
         model: text("model").notNull(),

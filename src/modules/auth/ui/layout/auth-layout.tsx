@@ -1,4 +1,5 @@
 import { AuthView } from "@/modules/auth/ui/views/auth-view"
+import { PublicThemeProvider } from "@/theme/theme-provider"
 
 interface Props {
     children: React.ReactNode
@@ -6,8 +7,10 @@ interface Props {
 
 export function AuthLayout({ children }: Props) {
     return (
-        <AuthView>
-            {children}
-        </AuthView>
+        <PublicThemeProvider>
+            <AuthView>
+                {children}
+            </AuthView>
+        </PublicThemeProvider>
     )
 }

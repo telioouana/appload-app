@@ -11,18 +11,20 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 
 import { Values } from "../../../types/types";
+import { useAcceptOrder } from "../../../hooks/use-accept-order";
+import { useCreateOffer } from "../../../hooks/use-create-offer";
 import { StatusBadge, StatusKey } from "@/modules/app/ui/components/badge/status-badge";
 
 type Props = {
     values: Values
 }
 export function OrderCard({ values }: Props) {
+    const { onOpenChange: acceptOrder } = useAcceptOrder()
+    const { onOpenChange: makeOffer} = useCreateOffer()
     const t = useTranslations("Carrier.order.card")
     const f = useFormatter()
 
-    const { order, cargo, trip } = values
-
-    const status = trip ? trip.status : order.status
+    const { order, cargo } = values
 
     return (
         <Card className={cn("border border-card hover:border-primary", order.share === "subscribers" && "bg-orange-50 dark:bg-orange-50/20")}>
@@ -34,7 +36,7 @@ export function OrderCard({ values }: Props) {
                     </div>
 
                     <div className="flex flex-col gap-0.5 justify-end items-end">
-                        <StatusBadge label={t(`header.status.${status}`)} status={status as StatusKey} />
+                        <StatusBadge label={t(`header.status.${order.status}`)} status={status as StatusKey} />
                         {order.share === "subscribers" && (
                             <div className="flex items-center gap-2">
                                 <Badge variant="ghost" className="font-medium text-primary">
@@ -137,7 +139,7 @@ export function OrderCard({ values }: Props) {
                                 <Button
                                     variant="success"
                                     className="w-full cursor-pointer font-normal"
-                                    onClick={() => { }}
+                                    onClick={() => acceptOrder(values)}
                                 >
                                     <IconContract />
                                     {t("footer.accept")}
@@ -146,7 +148,7 @@ export function OrderCard({ values }: Props) {
                                 <Button
                                     variant="default"
                                     className="w-full cursor-pointer font-normal"
-                                    onClick={() => { }}
+                                    onClick={() => makeOffer()}
                                 >
                                     <IconInvoice />
                                     {t("footer.place-bid")}

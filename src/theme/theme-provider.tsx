@@ -14,7 +14,7 @@ const ThemeContext = createContext<ThemeColorStateParams>(
 export function PrivateThemeProvider({
     children,
 }: ThemeProviderProps) {
-    const [themeColor, setThemeColor] = useState<ThemeColors>("gray");
+    const [themeColor, setThemeColor] = useState<ThemeColors>("amber");
 
     useEffect(() => {
         const savedColor = localStorage.getItem("privateThemeColor") as ThemeColors;

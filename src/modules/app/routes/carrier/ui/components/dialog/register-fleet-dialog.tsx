@@ -90,7 +90,7 @@ export function DynamicFleetSchema(hasTrailer: boolean, hasLink: boolean, t: (ke
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const BaseSchema = DynamicFleetSchema(true, true, (k: string) => k);
+export const BaseSchema = DynamicFleetSchema(true, true, (k: string) => k);
 export type FullFleetForm = z.infer<typeof BaseSchema>
 
 export function RegisterFleetDialog() {

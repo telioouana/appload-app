@@ -1,7 +1,7 @@
 "use client"
 
 import { useLocale, useTranslations } from "next-intl"
-import { Bar, BarChart, CartesianGrid, XAxis, } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, } from "recharts"
 
 import { Card, CardContent, CardHeader, CardTitle, } from "@/components/ui/card"
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig, } from "@/components/ui/chart"
@@ -45,6 +45,12 @@ export function TendenciesOffloadingCard({ data }: Props) {
                         }}
                     >
                         <CartesianGrid vertical={false} />
+                        <YAxis
+                            tickLine={false}
+                            axisLine={false}
+                            tickMargin={8}
+                        />
+
                         <XAxis
                             dataKey="date"
                             tickLine={false}

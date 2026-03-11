@@ -167,10 +167,19 @@ export function RegisterTruckForm({ setHasTrailer }: Props) {
             </FieldSet>
 
             {watch().truck.type === TRUCK_TYPE[1] && (
-            <LoadingBayForm name="truck" />
+                <LoadingBayForm name="truck" />
             )}
 
             <Separator />
+
+            <FieldSet>
+                <FieldLegend className="mb-0 flex flex-col gap-1" variant="label">
+                    <FieldLabel>{t("driver.label")}</FieldLabel>
+                    <FieldDescription className="text-xs">{t("driver.description")}</FieldDescription>
+                </FieldLegend>
+
+                
+            </FieldSet>
 
             <FieldSet className="flex flex-col gap-1">
                 <div className="flex items-center justify-between gap-4 mb-1">
@@ -247,6 +256,8 @@ export function RegisterTruckForm({ setHasTrailer }: Props) {
                     />
                 ))}
             </FieldSet>
+
+
         </FieldGroup>
     )
 }

@@ -25,7 +25,7 @@ export const TextInput: ControlFunc<{
                                     {...field}
                                     type="text"
                                     ref={withMask(inputMask, {
-                                        placeholder: '-',
+                                        placeholder: '_',
                                         showMaskOnHover: false
                                     })}
                                     className="w-full"

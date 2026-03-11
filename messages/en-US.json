@@ -634,6 +634,26 @@
                             }
                         }
                     }
+                },
+                "accept": {
+                    "header": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "footer": {
+                        "close": "Close",
+                        "accept": "Accept order"
+                    }
+                },
+                "offer": {
+                    "header": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "footer": {
+                        "close": "Close",
+                        "send": "Send offer"
+                    }
                 }
             }
         },

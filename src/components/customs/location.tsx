@@ -31,7 +31,7 @@ export const LocationInput: ControlFunc<{
         const debounced = useDebouncedCallback(async () => {
             const suggestions = await autoComplete(place)
             setPlaces(suggestions ?? [])
-        }, { wait: 1500 })
+        }, { wait: 500 })
 
         const ref = useOnclickOutside(() => {
             setPlaces([]);

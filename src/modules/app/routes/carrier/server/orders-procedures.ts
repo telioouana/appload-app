@@ -30,7 +30,6 @@ export const ordersRouter = createTRPCRouter({
                 .select({
                     order: order,
                     cargo: cargo,
-                    trip: trip,
                     organizationId: organization.id,
                     organizationName: organization.name,
                     fiscalRegime: kyc.fiscalRegime,
@@ -42,10 +41,6 @@ export const ordersRouter = createTRPCRouter({
                 .leftJoin(network, and(
                     eq(network.shipperId, order.shipperId),
                     eq(network.carrierId, session.activeOrganizationId)
-                ))
-                .leftJoin(trip, and(
-                    eq(trip.orderId, order.id),
-                    eq(trip.carrierId, session.activeOrganizationId)
                 ))
                 .where(and(
                     eq(order.status, "open"),
