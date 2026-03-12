@@ -87,6 +87,7 @@ export const trip = pgTable(
         legacyId: serial("legacy_id").unique().notNull(),
         orderId: text("order_id")
             .notNull()
+            .unique()
             .references(() => order.id, { onDelete: "cascade" }),
         carrierId: text("carrier_id")
             .notNull()

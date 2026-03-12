@@ -8,6 +8,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { IconArrowRight, IconPlus, IconTruck, IconX } from "@tabler/icons-react"
 import { FormProvider, useForm, DefaultValues, FieldPath } from "react-hook-form"
 
+import { useTRPC } from "@/backend/trpc/client"
 import { LOADING_BAY, TRUCK_TYPE } from "@/backend/db/types"
 
 import { Button } from "@/components/ui/button"
@@ -16,9 +17,10 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { RegisterTruckForm } from "../form/register-truck-form"
 import { useRegisterFleet } from "../../../hooks/use-register-fleet"
 import { RegisterTrailerForm } from "../form/register-trailer-form"
+import { DEFAULT_PAGE_LIMIT } from "@/constants"
 
-export function DynamicFleetSchema(hasTrailer: boolean, hasLink: boolean, t: (key: string) => string) {
-    const LoadingBaySchema = z.object({
+function LoadingBay(t: (key: string) => string) {
+    const schema = z.object({
         width: z.number({ error: t("form.loading-bay.width.error") }).positive({ error: t("form.loading-bay.width.error") }),
         length: z.number({ error: t("form.loading-bay.length.error") }).positive({ error: t("form.loading-bay.length.error") }),
         height: z.number({ error: t("form.loading-bay.height.error") }).positive({ error: t("form.loading-bay.height.error") }),
@@ -27,25 +29,30 @@ export function DynamicFleetSchema(hasTrailer: boolean, hasLink: boolean, t: (ke
         type: z.enum(LOADING_BAY, { error: t("form.loading-bay.type.error") })
     })
 
-    const TruckFields = z.object({
+    return schema
+}
+
+export function TruckSchema(t: (key: string) => string) {
+    const fields = z.object({
         internalId: z.string().optional(),
-        driver: z.string().optional(),
         regPlate: z.string({ error: t("form.truck.plate-number.error") }).nonempty({ error: t("form.truck.plate-number.error") }),
         brand: z.string({ error: t("form.truck.brand.error") }).nonempty({ error: t("form.truck.brand.error") }),
         model: z.string({ error: t("form.truck.model.error") }).nonempty({ error: t("form.truck.model.error") }),
-        year: z.string({ error: t("form.truck.year.error") }).nonempty({ error: t("form.truck.year.error") }),
-        type: z.enum(TRUCK_TYPE),
+        year: z.coerce.number({ error: t("form.truck.year.error") }),
         vin: z.string({ error: t("form.truck.vin.error.empty") }).nonempty({ error: t("form.truck.vin.error.empty") }).length(17, { error: t("form.truck.vin.error.invalid") }),
+        type: z.enum(TRUCK_TYPE),
         booklet: z.array(z.object({ url: z.url({ error: t("form.truck.license.error.empty") }) })).min(1, { error: t("form.truck.license.error.invalid") }),
         license: z.array(z.object({ url: z.url({ error: t("form.truck.booklet.error.empty") }) })).min(1, { error: t("form.truck.booklet.error.invalid") }),
     })
 
-    const TruckSchema = z.discriminatedUnion("type", [
-        TruckFields.extend({
+    const loadingBay = LoadingBay(t)
+
+    const schema = z.discriminatedUnion("type", [
+        fields.extend({
             type: z.literal("non-articulated"),
-            loadingBay: LoadingBaySchema, // REQUIRED
+            loadingBay: loadingBay, // REQUIRED
         }),
-        TruckFields.extend({
+        fields.extend({
             type: z.literal("articulated"),
             loadingBay: z.object({
                 width: z.number().positive().optional(),
@@ -58,38 +65,64 @@ export function DynamicFleetSchema(hasTrailer: boolean, hasLink: boolean, t: (ke
         }),
     ]);
 
-    const TrailerSchema = z.object({
+    return schema
+}
+
+export function TrailerSchema(t: (key: string) => string) {
+    const loadingBay = LoadingBay(t)
+
+    const schema = z.object({
         internalId: z.string().optional(),
         regPlate: z.string({ error: t("form.trailer.plate-number.error") }).nonempty({ error: t("form.trailer.plate-number.error") }),
         brand: z.string({ error: t("form.trailer.brand.error") }).nonempty({ error: t("form.trailer.brand.error") }),
         model: z.string({ error: t("form.trailer.model.error") }).nonempty({ error: t("form.trailer.model.error") }),
-        year: z.string({ error: t("form.trailer.year.error") }).nonempty({ error: t("form.trailer.year.error") }),
-        loadingBay: LoadingBaySchema,
+        year: z.coerce.number({ error: t("form.trailer.year.error") }),
+        loadingBay: loadingBay,
         vin: z.string({ error: t("form.trailer.vin.error.empty") }).nonempty({ error: t("form.trailer.vin.error.empty") }).length(17, { error: t("form.trailer.vin.error.invalid") }),
         booklet: z.array(z.object({ url: z.url({ error: t("form.trailer.license.error.empty") }) })).min(1, { error: t("form.trailer.license.error.invalid") }),
         license: z.array(z.object({ url: z.url({ error: t("form.trailer.booklet.error.empty") }) })).min(1, { error: t("form.trailer.booklet.error.invalid") }),
     })
 
-    let fleetSchema = z.object({
-        truck: TruckSchema
-    });
-
-    if (hasTrailer) {
-        fleetSchema = fleetSchema.extend({
-            trailer: TrailerSchema
-        });
-
-        if (hasLink) {
-            fleetSchema = fleetSchema.extend({
-                link: TrailerSchema // Reusing TrailerSchema since the fields are identical
-            });
-        }
-    }
-
-    return fleetSchema;
+    return schema
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function DynamicFleetSchema(hasTrailer: boolean, hasLink: boolean, t: (key: string) => string) {
+    const truckSchema = TruckSchema(t);
+    const trailerSchema = TrailerSchema(t);
+
+    // 1. Extract the variants from your existing TruckSchema discriminated union
+    // options[0] is 'non-articulated', options[1] is 'articulated'
+    const [NonArticulatedTruck, ArticulatedTruck] = truckSchema.options;
+
+    // 2. Define the variant where trailer/link SHOULD NOT exist
+    const NonArticulatedVariant = z.object({
+        truck: NonArticulatedTruck,
+        // We define these as optional never so the keys exist in the type 
+        // but can only be undefined
+        trailer: z.undefined().optional(),
+        link: z.undefined().optional(),
+    });
+
+    // 3. Define the variant where trailer IS mandatory
+    const ArticulatedVariant = z.object({
+        truck: ArticulatedTruck,
+        trailer: trailerSchema, // Mandatory
+        link: hasLink ? trailerSchema : z.undefined().optional(),
+    });
+
+    /**
+     * If the UI configuration doesn't support trailers at all, 
+     * return only the non-articulated schema.
+     */
+    if (!hasTrailer) {
+        return NonArticulatedVariant;
+    }
+
+    // 4. Return the Union
+    // Now the inferred type will be: { truck, trailer?, link? }
+    return z.union([NonArticulatedVariant, ArticulatedVariant]);
+}
+
 export const BaseSchema = DynamicFleetSchema(true, true, (k: string) => k);
 export type FullFleetForm = z.infer<typeof BaseSchema>
 
@@ -100,6 +133,23 @@ export function RegisterFleetDialog() {
 
     const t = useTranslations("Carrier.company.fleet.dialog")
     const { isOpen, onClose } = useRegisterFleet()
+    const queryClient = useQueryClient()
+    const trpc = useTRPC()
+
+    const save = useMutation(
+        trpc.fleet.add.mutationOptions({
+            onSuccess: () => {
+                queryClient.invalidateQueries(trpc.fleet.fleet.infiniteQueryOptions({
+                    limit: DEFAULT_PAGE_LIMIT
+                }))
+                handleClose()
+            },
+            onError: (error) => {
+                // TODO: Display proper message with internationalization
+                console.log(error)
+            }
+        })
+    )
 
     // Memorizing the schema to keep it in sync with state
     const registerFleetSchema = useMemo(
@@ -126,8 +176,8 @@ export function RegisterFleetDialog() {
             `${currentPath}.brand`,
             `${currentPath}.model`,
             `${currentPath}.year`,
-            `${currentPath}.type`,
             `${currentPath}.vin`,
+            `truck.type`,
             `${currentPath}.loadingBay.width`,
             `${currentPath}.loadingBay.length`,
             `${currentPath}.loadingBay.height`,
@@ -153,9 +203,9 @@ export function RegisterFleetDialog() {
         onClose()
     }
 
-    function handleSubmit(values: FullFleetForm) {
+    async function handleSubmit(values: FullFleetForm) {
         form.clearErrors()
-        window.alert(values)
+        await save.mutateAsync({ values })
     }
 
     function removeTrailer() {

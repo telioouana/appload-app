@@ -42,8 +42,6 @@ export function CredentialsSetup({ changeStep }: Props) {
             type: values.step1.type,
             phoneNumber: phoneNumber,
             gender: values.step2.gender,
-        }, {
-            
         })
 
         if (result.error) {

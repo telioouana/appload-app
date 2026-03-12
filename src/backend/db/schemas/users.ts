@@ -23,7 +23,7 @@ export const user = pgTable(
         banned: boolean("banned").default(false),
         banReason: text("ban_reason"),
         banExpires: timestamp("ban_expires"),
-        type: text("type", { enum: ["appload", "shipper", "carrier"] }).notNull(),
+        type: text("type", { enum: ["appload", "shipper", "carrier", "driver"] }).notNull(),
         gender: text("gender", { enum: ["male", "female", "other"] }),
         status: text("status", { enum: ["active", "closed"] })
             .default("active")

@@ -59,6 +59,7 @@ export function HeaderView() {
                                         <TooltipContent>{t("buttons.grid")}</TooltipContent>
                                     </Tooltip>
                                 </TabsTrigger>
+                                
                                 <TabsTrigger value="list" className="rounded-md">
                                     <Tooltip>
                                         <TooltipTrigger><IconList /></TooltipTrigger>

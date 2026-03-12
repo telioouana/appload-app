@@ -200,7 +200,7 @@ export const shipperKpisRouter = createTRPCRouter({
 
             const kpis = await db
                 .select({
-                    offload: avg(trip.daysSpendLoading).mapWith(Number),
+                    offload: avg(trip.daysSpendOffloading).mapWith(Number),
                     date: trip.arrivalAtLoading
                 })
                 .from(order)

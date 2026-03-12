@@ -36,7 +36,7 @@ export function OrderCard({ values }: Props) {
                     </div>
 
                     <div className="flex flex-col gap-0.5 justify-end items-end">
-                        <StatusBadge label={t(`header.status.${order.status}`)} status={status as StatusKey} />
+                        <StatusBadge label={t(`header.status.${order.status}`)} status={order.status as StatusKey} />
                         {order.share === "subscribers" && (
                             <div className="flex items-center gap-2">
                                 <Badge variant="ghost" className="font-medium text-primary">

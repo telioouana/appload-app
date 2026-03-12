@@ -3,9 +3,10 @@ import { TRPCError } from "@trpc/server"
 import { and, count, desc, eq, lt, or, sql } from "drizzle-orm"
 
 import { db } from "@/backend/db"
-import { driver, link, truck, trailer, user, tracking, trip } from "@/backend/db/schema"
+import { FLEET_STATUS, LOADING_BAY } from "@/backend/db/types"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
-import { FLEET_STATUS } from "@/backend/db/types"
+import { driver, link, truck, trailer, user, tracking, trip } from "@/backend/db/schema"
+
 import { BaseSchema } from "../ui/components/dialog/register-fleet-dialog"
 
 export const fleetRouter = createTRPCRouter({
@@ -36,16 +37,11 @@ export const fleetRouter = createTRPCRouter({
 
             const fleet = await db
                 .select({
-                    driver: {
-                        name: user.name,
-                        email: user.email,
-                        phone: user.phoneNumber,
-                        status: driver.status
-                    },
                     truck: {
                         code: truck.internalId,
                         plate: truck.regPlate,
                         status: truck.status,
+                        age: truck.year,
                         type: truck.type,
                         loading: truck.loadingBay
                     },
@@ -63,8 +59,6 @@ export const fleetRouter = createTRPCRouter({
                     }
                 })
                 .from(truck)
-                .innerJoin(driver, and(eq(driver.id, truck.driverId), eq(driver.carrierId, session.activeOrganizationId)))
-                .innerJoin(user, eq(user.id, driver.userId))
                 .leftJoin(trailer, and(eq(trailer.truckId, truck.id), eq(trailer.carrierId, session.activeOrganizationId)))
                 .leftJoin(link, and(eq(link.trailerId, trailer.id), eq(link.carrierId, session.activeOrganizationId)))
                 .where(eq(truck.carrierId, session.activeOrganizationId))
@@ -92,8 +86,8 @@ export const fleetRouter = createTRPCRouter({
             const fleet = await db
                 .select()
                 .from(truck)
-                .innerJoin(driver, and(eq(driver.id, truck.driverId), eq(driver.carrierId, session.activeOrganizationId)))
-                .innerJoin(user, eq(user.id, driver.userId))
+                .innerJoin(driver, and(eq(driver.truckId, truck.id), eq(driver.carrierId, session.activeOrganizationId)))
+                .innerJoin(user, and(eq(user.id, driver.userId), eq(user.type, "driver")))
                 .leftJoin(trailer, and(eq(trailer.truckId, truck.id), eq(trailer.carrierId, session.activeOrganizationId)))
                 .leftJoin(link, and(eq(link.trailerId, trailer.id), eq(link.carrierId, session.activeOrganizationId)))
                 .leftJoin(trip, eq(trip.truckPlate, truck.regPlate))
@@ -148,6 +142,83 @@ export const fleetRouter = createTRPCRouter({
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
+            const { truck: vehicle } = values
+
+            const loadingBay = vehicle.type === "articulated"
+                ? {
+                    width: vehicle.loadingBay?.width ?? 0,
+                    length: vehicle.loadingBay?.length ?? 0,
+                    height: vehicle.loadingBay?.height ?? 0,
+                    volume: vehicle.loadingBay?.volume ?? 0,
+                    capacity: vehicle.loadingBay?.capacity ?? 0,
+                    type: vehicle.loadingBay?.type as typeof LOADING_BAY[number]
+                }
+                : null
+
+            const [insertTruck] = await db
+                .insert(truck)
+                .values({
+                    carrierId: session.activeOrganizationId,
+                    status: FLEET_STATUS[2],
+
+                    internalId: vehicle.internalId,
+                    regPlate: vehicle.regPlate,
+                    brand: vehicle.brand,
+                    model: vehicle.model,
+                    year: vehicle.year,
+                    vin: vehicle.vin,
+                    type: vehicle.type,
+                    loadingBay: loadingBay,
+                    booklet: vehicle.booklet,
+                    license: vehicle.license,
+                })
+                .returning()
+
+            if (!insertTruck) throw new TRPCError({ code: "BAD_REQUEST" })
+
+            if (vehicle.type === "articulated" && values.trailer) {
+                const [insertTrailer] = await db
+                    .insert(trailer)
+                    .values({
+                        truckId: insertTruck.id,
+                        carrierId: session.activeOrganizationId,
+                        status: FLEET_STATUS[2],
+
+                        internalId: values.trailer.internalId,
+                        regPlate: values.trailer.regPlate,
+                        brand: values.trailer.brand,
+                        model: values.trailer.model,
+                        year: values.trailer.year,
+                        vin: values.trailer.vin,
+                        loadingBay: values.trailer.loadingBay,
+                        booklet: values.trailer.booklet,
+                        license: values.trailer.license,
+                    })
+                    .returning()
+
+                if (!insertTrailer) throw new TRPCError({ code: "BAD_REQUEST" })
+                
+                if(values.link){
+                    await db
+                    .insert(link)
+                    .values({
+                        trailerId: insertTrailer.id,
+                        carrierId: session.activeOrganizationId,
+                        status: FLEET_STATUS[2],
+
+                        internalId: values.link.internalId,
+                        regPlate: values.link.regPlate,
+                        brand: values.link.brand,
+                        model: values.link.model,
+                        year: values.link.year,
+                        vin: values.link.vin,
+                        loadingBay: values.link.loadingBay,
+                        booklet: values.link.booklet,
+                        license: values.link.license,
+                    })
+                    .returning()
+                }
+            }
 
         })
 })

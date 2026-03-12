@@ -1,18 +1,18 @@
 import { create } from "zustand"
-import { Drivers } from "../types/types"
+import { Driver } from "../types/types"
 
 interface Props {
     isOpen: boolean
-    drivers: Drivers | []
+    drivers: Driver[] | []
     onClose: () => void
-    onOpenChange: (drivers: Drivers) => void
+    onOpenChange: (drivers: Driver[]) => void
 }
 
 export const useRegisterFleet = create<Props>(( set) => ({
     isOpen: false,
     drivers: [],
     onClose: () => set({ isOpen: false }),
-    onOpenChange: (drivers: Drivers) => set({ 
+    onOpenChange: (drivers: Driver[]) => set({ 
         isOpen: true,
         drivers: drivers
     }),

@@ -21,7 +21,7 @@ export function ResumeView() {
             free
         }
     } = useSuspenseQuery(
-        trpc.driver.resume.queryOptions()
+        trpc.fleet.resume.queryOptions()
     )
 
     return (

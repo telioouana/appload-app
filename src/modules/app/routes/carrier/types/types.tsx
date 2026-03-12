@@ -8,23 +8,18 @@ export type STATUS_FILTER = "all" | "active" | "idle" | "free"
 export type TRIP_PATH = "all" | "booked" | "on-going" | "delivered"
 export type MAP_FILTER = "all" | "loading" | "moving" | "stopped" | "issue" | "offloading"
 
-export type Drivers = {
+export type Driver = {
     id: string;
     name: string;
-    email: string;
     phone: string | null;
-}[]
+    passport: string | null;
+}
 
 export type Fleet = {
-    driver: {
-        name: string;
-        email: string;
-        phone: string | null;
-        status: typeof FLEET_STATUS[number] | null;
-    }
     truck: {
         code: string | null;
         plate: string;
+        age: number;
         status: typeof FLEET_STATUS[number] | null;
         type: typeof TRUCK_TYPE[number];
         loading: {
@@ -71,4 +66,5 @@ export type Values = {
     organizationName: string,
     fiscalRegime: typeof FISCAL_REGIME[number],
     fleet: Fleet[]
+    drivers: Driver[]
 }

@@ -1,11 +1,11 @@
 import { z } from "zod"
 import { TRPCError } from "@trpc/server";
-import { and, count, desc, eq, lt, ne, or, sql } from "drizzle-orm";
+import { and, count, desc, eq, lt, or, sql } from "drizzle-orm";
 
 import { db } from "@/backend/db";
+import { FLEET_STATUS, urlSchema } from "@/backend/db/types";
 import { driver, tracking, trip, truck, user } from "@/backend/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init";
-import { FLEET_STATUS } from "@/backend/db/types";
 
 export const driverRouter = createTRPCRouter({
     resume: protectedProcedure
@@ -30,22 +30,21 @@ export const driverRouter = createTRPCRouter({
     offer: protectedProcedure
         .query(async ({ ctx }) => {
             const { session } = ctx.auth
-            
+
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
             const drivers = await db
                 .select({
                     id: driver.id,
                     name: user.name,
-                    email: user.email,
                     phone: user.phoneNumber,
+                    passport: driver.passport,
                 })
                 .from(driver)
-                .innerJoin(user, eq(user.id, driver.userId))
-                .leftJoin(truck, eq(truck.driverId, driver.id))
+                .innerJoin(user, and(eq(user.id, driver.userId), eq(user.type, "driver")))
+                .leftJoin(truck, eq(truck.id, driver.truckId))
                 .where(and(
                     eq(driver.carrierId, session.activeOrganizationId),
-                    ne(driver.id, truck.driverId)
                 ))
 
             return drivers
@@ -71,13 +70,13 @@ export const driverRouter = createTRPCRouter({
             const drivers = await db
                 .select()
                 .from(driver)
-                .innerJoin(user, eq(user.id, driver.userId))
-                .leftJoin(truck, eq(truck.driverId, driver.id))
+                .innerJoin(user, and(eq(user.id, driver.userId), eq(user.type, "driver")))
+                .leftJoin(truck, eq(truck.id, driver.truckId))
                 .leftJoin(trip, eq(trip.driverId, driver.id))
                 .leftJoin(tracking, eq(tracking.truckPlate, truck.regPlate))
                 .where(and(
                     eq(driver.carrierId, session.activeOrganizationId),
-                    status 
+                    status
                         ? eq(driver.status, status)
                         : undefined,
                     cursor
@@ -111,5 +110,30 @@ export const driverRouter = createTRPCRouter({
                 items,
                 nextCursor
             }
+        }),
+
+    register: protectedProcedure
+        .input(
+            z.object({
+                userId: z.string(),
+                driverLicense: urlSchema.min(1).max(2),
+                passportCard: urlSchema.length(1).optional(),
+            })
+        )
+        .mutation(async ({ ctx, input }) => {
+            const { session } = ctx.auth
+            const { userId, driverLicense, passportCard, } = input
+
+            if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+            const carrierId = session.activeOrganizationId
+            await db
+                .insert(driver)
+                .values({
+                    userId,
+                    carrierId,
+                    driverLicense,
+                    passportCard,
+                    status: "idle"
+                })
         })
 })

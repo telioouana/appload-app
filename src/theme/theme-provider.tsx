@@ -18,7 +18,7 @@ export function PrivateThemeProvider({
 
     useEffect(() => {
         const savedColor = localStorage.getItem("privateThemeColor") as ThemeColors;
-        if (savedColor) {
+        if (savedColor && savedColor !== "gray") {
             setThemeColor(savedColor);
         }
     }, []);

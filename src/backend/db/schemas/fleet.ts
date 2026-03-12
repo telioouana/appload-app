@@ -19,6 +19,10 @@ export const driver = pgTable(
         carrierId: text("carrier_id")
             .notNull()
             .references(() => organization.id, { onDelete: "cascade" }),
+        truckId: text("truck_id")
+            .references(() => truck.id, { onDelete: "set null" }),
+            
+        passport: text("passport"),
         driverLicense: jsonb("driver_card").$type<Urls>(),
         passportCard: jsonb("passport_card").$type<Urls>(),
         status: fleetEnum("status").default("idle"),
@@ -40,9 +44,6 @@ export const truck = pgTable(
             .notNull()
             .references(() => organization.id, { onDelete: "cascade" }),
         regPlate: text("reg_plate").unique().notNull(),
-
-        driverId: text("driver_id")
-            .references(() => driver.id, { onDelete: "set null" }),
 
         brand: text("brand").notNull(),
         model: text("model").notNull(),

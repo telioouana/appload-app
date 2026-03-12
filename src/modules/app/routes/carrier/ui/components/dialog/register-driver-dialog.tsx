@@ -1,32 +1,46 @@
 "use client"
 
 import { z } from "zod"
+import { useMemo } from "react"
 import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormProvider, useForm } from "react-hook-form"
 import { IconTruck, IconUser, IconX } from "@tabler/icons-react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
+import { useTRPC } from "@/backend/trpc/client"
+import { authClient } from "@/backend/auth/auth-client"
+
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
-import { useRegisterDriver } from "../../../hooks/use-register-driver"
 import { RegisterDriverForm } from "../form/register-driver-form"
+import { useRegisterDriver } from "../../../hooks/use-register-driver"
+
+import { countryCodes } from "@/lib/country-codes"
+import { DEFAULT_PAGE_LIMIT } from "@/constants"
+
+function DriverSchema(t: (key: string) => string) {
+    const schema = z.object({
+        name: z.string({ error: t("") }).nonempty({ error: t("") }),
+        email: z.email({ error: t("") }),
+        country: z.string(),
+        phoneNumber: z.string({ error: t("") }).min(9, { error: t("") }).max(15, { error: t("") }),
+        driverLicense: z.array(z.object({ url: z.url({ error: t("") }) })).min(1, { error: t("") }).max(2, { error: t("") }),
+        passportCard: z.array(z.object({ url: z.url({ error: t("") }) })).length(1).optional(),
+    })
+
+    return schema
+}
+
+export const RegisterDriverSchema = DriverSchema((k: string) => k)
+export type RegisterDriverForm = z.infer<typeof RegisterDriverSchema>
 
 export function RegisterDriverDialog() {
     const t = useTranslations("Carrier.company.drivers.dialog.register")
     const { isOpen, onClose } = useRegisterDriver()
 
-    const RegisterDriverSchema = z.object({
-        name: z.string(),
-        email: z.email(),
-        country: z.string().nonempty(),
-        phoneNumber: z.string().min(9).max(15),
-        driverLicense: z.array(z.object({ url: z.url() })).min(1).max(2),
-        passportCard: z.array(z.object({ url: z.url() })).length(1).optional(),
-    })
-
-    type RegisterDriverForm = z.infer<typeof RegisterDriverSchema>
+    const RegisterDriverSchema = useMemo(() => DriverSchema(t), [t])
 
     const form = useForm<RegisterDriverForm>({
         resolver: zodResolver(RegisterDriverSchema),
@@ -37,14 +51,53 @@ export function RegisterDriverDialog() {
         }
     })
 
+    const queryClient = useQueryClient()
+    const trpc = useTRPC()
+
+    const register = useMutation(
+        trpc.driver.register.mutationOptions({
+            onSuccess: () => {
+                queryClient.invalidateQueries(trpc.driver.drivers.infiniteQueryOptions({
+                    limit: DEFAULT_PAGE_LIMIT
+                }))
+                handleClose()
+            },
+            onError: (error) => {
+                // TODO: Display proper message with internationalization
+                console.log(error)
+            }
+        })
+    )
+
     function handleClose() {
         form.reset()
         onClose()
     }
 
-    function handleSubmit(values: RegisterDriverForm) {
+    async function handleSubmit(values: RegisterDriverForm) {
         form.clearErrors()
-        window.alert(values)
+        const phoneNumber = `${countryCodes.find(({ country }) => country === values.country)?.code ?? ""}${values.phoneNumber}`
+        const result = await authClient.signUp.email({
+            email: values.email,
+            password: `@Driver_${values.phoneNumber}`,
+            name: values.name,
+            type: "driver",
+            phoneNumber: phoneNumber,
+        })
+
+        if (!result.data) {
+            // TODO: Display proper message with internationalization
+            console.log(result.error)
+            return
+        }
+
+        const { data: user } = result
+
+        await register.mutateAsync({
+            userId: user.user.id,
+            driverLicense: values.driverLicense,
+            passportCard: values.passportCard
+        })
     }
 
     return (

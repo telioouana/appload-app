@@ -43,6 +43,12 @@ export function OrdersView({ path }: { path: ORDERS_PATH }) {
         trpc.fleet.offer.queryOptions()
     )
 
+    const {
+        data: drivers
+    } = useSuspenseQuery(
+        trpc.driver.offer.queryOptions()
+    )
+
     if (orders.pages[0].items.length === 0) return <EmptyOrders />
 
     return (
@@ -59,6 +65,7 @@ export function OrdersView({ path }: { path: ORDERS_PATH }) {
                                     fleet,
                                     order,
                                     cargo,
+                                    drivers,
                                     organizationId,
                                     organizationName,
                                     fiscalRegime: fiscalRegime as typeof FISCAL_REGIME[number]
