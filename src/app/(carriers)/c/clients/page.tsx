@@ -385,7 +385,7 @@ export default function Page({
 	});
 
 	return (
-		<div className='flex-1 min-h-0 flex flex-col overflow-hidden relative isolate'>
+		<div className='flex-1 flex flex-col overflow-hidden'>
 			{/* TODO: temporarily disabled CarrierPrivateHeader while testing layout
 			<CarrierPrivateHeader
 				title={t.title}
@@ -402,7 +402,7 @@ export default function Page({
 				onMenuClick={onMenuClick}
 			/>
 
-			<div className='flex-1 min-h-0 bg-gray-50 dark:bg-gray-900 overflow-y-auto relative z-0'>
+			<div className='flex-1 bg-gray-50 dark:bg-gray-900 overflow-y-auto'>
 				<div className='px-4 md:px-6 lg:px-8 py-6 space-y-6 max-w-7xl mx-auto'>
 					{/* Page Header */}
 					<div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
@@ -428,7 +428,7 @@ export default function Page({
 										isAccent
 											? {
 													borderColor: accentColor,
-													backgroundColor: hexToRgba(accentColor, 0.06),
+													backgroundColor: `${accentColor}10`,
 											  }
 											: undefined
 									}>
@@ -450,9 +450,11 @@ export default function Page({
 						<div className='flex flex-col md:flex-row gap-4'>
 							{/* Search */}
 							<div className='flex-1 relative'>
-								<Search className='absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none' />
+								<Search className='absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10' />
 								<input
-									type='search'
+									type='text'
+									inputMode='search'
+									autoComplete='off'
 									aria-label={t.search}
 									placeholder={t.search}
 									value={searchQuery}
@@ -460,6 +462,7 @@ export default function Page({
 									className='w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:border-transparent'
 									style={
 										{
+											paddingLeft: '2.5rem',
 											['--tw-ring-color' as any]: accentColor,
 										} as React.CSSProperties
 									}
@@ -513,7 +516,7 @@ export default function Page({
 									{/* Header */}
 									<div className='flex items-start gap-3 mb-4'>
 										<div
-											className='w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0'
+											className='w-12 h-12 rounded-lg flex items-center justify-center shrink-0'
 											style={{
 												backgroundColor: hexToRgba(accentColor, 0.08),
 												color: accentColor,
