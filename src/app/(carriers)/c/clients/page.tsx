@@ -394,14 +394,6 @@ export default function Page({
 				onMenuClick={onMenuClick}
 			/> */}
 
-			<CarrierPrivateHeader
-				title={t.title}
-				onNavigate={onNavigate}
-				onLogout={onLogout}
-				onNotificationNavigate={onNotificationNavigate}
-				onMenuClick={onMenuClick}
-			/>
-
 			<div className='flex-1 bg-gray-50 dark:bg-gray-900 overflow-y-auto'>
 				<div className='px-4 md:px-6 lg:px-8 py-6 space-y-6 max-w-7xl mx-auto'>
 					{/* Page Header */}
@@ -463,6 +455,7 @@ export default function Page({
 									style={
 										{
 											paddingLeft: '2.5rem',
+
 											['--tw-ring-color' as any]: accentColor,
 										} as React.CSSProperties
 									}
@@ -631,9 +624,9 @@ export default function Page({
 									style={hoverStyle(client.id)}>
 									<div className='flex flex-col lg:flex-row lg:items-center gap-4'>
 										{/* Logo & Name */}
-										<div className='flex items-center gap-3 lg:w-64 flex-shrink-0'>
+										<div className='flex items-center gap-3 lg:w-64 shrink-0'>
 											<div
-												className='w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0'
+												className='w-12 h-12 rounded-lg flex items-center justify-center shrink-0'
 												style={{
 													backgroundColor: hexToRgba(accentColor, 0.08),
 													color: accentColor,
@@ -692,7 +685,7 @@ export default function Page({
 										</div>
 
 										{/* Status & Rating */}
-										<div className='flex items-center gap-3 lg:flex-shrink-0'>
+										<div className='flex items-center gap-3 lg:shrink-0'>
 											<span
 												className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
 													client.status === 'active'
