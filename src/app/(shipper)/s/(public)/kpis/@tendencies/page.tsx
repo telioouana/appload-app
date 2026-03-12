@@ -28,7 +28,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
     const client = getQueryClient()
 
     await client.prefetchQuery(
-        trpc.shipperKpis.performance.queryOptions({
+        trpc.shipperKpis.onTime.queryOptions({
             endDate,
             startDate,
             currency: "MZN",
@@ -44,7 +44,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
     )
 
     await client.prefetchQuery(
-        trpc.shipperKpis.savings.queryOptions({
+        trpc.shipperKpis.loading.queryOptions({
             endDate,
             startDate,
             currency: "MZN",
@@ -52,7 +52,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
     )
 
     await client.prefetchQuery(
-        trpc.shipperKpis.emissions.queryOptions({
+        trpc.shipperKpis.offloading.queryOptions({
             endDate,
             startDate,
             currency: "MZN",

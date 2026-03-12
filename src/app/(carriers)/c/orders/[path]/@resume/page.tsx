@@ -1,7 +1,7 @@
 import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server"
-import { ResumeView } from "@/modules/app/routes/carrier/pages/orders/views/resume-view"
 
 import { ORDERS_PATH } from "@/modules/app/routes/carrier/types/types"
+import { ResumeView } from "@/modules/app/routes/carrier/pages/orders/views/resume-view"
 
 export default async function Page({ params }: { params: Promise<{ path: ORDERS_PATH }> }) {
     const { path } = await params

@@ -2,7 +2,6 @@ import { toast } from "sonner";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useEdgeStore } from "@/lib/edgestore";
 import { FieldPath, useFieldArray, useFormContext } from "react-hook-form"
 import { IconCheck, IconChevronLeft, IconCirclePlus } from "@tabler/icons-react";
 
@@ -16,7 +15,9 @@ import { FileInput } from "@/components/customs/file";
 import { SelectInput } from "@/components/customs/select";
 import { FieldContent, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldLegend, FieldSet, FieldTitle } from "@/components/ui/field";
 
+import { useEdgeStore } from "@/lib/edgestore";
 import { countryCodes } from "@/lib/country-codes";
+
 import { inferKYC } from "@/modules/account/pages/create-organization/server/procedures";
 import { CreateOrganizationForm, View } from "@/modules/account/pages/create-organization/ui/schema/validation";
 
@@ -29,9 +30,9 @@ export function KYCInfo({ changeView }: Props) {
 
     const t = useTranslations("Account.organization.create.form.kyc")
     const router = useRouter()
-    const { edgestore } = useEdgeStore()
 
     const { clearErrors, control, formState: { errors }, getValues, trigger, watch } = useFormContext<CreateOrganizationForm>()
+    const { edgestore } = useEdgeStore()
 
     const idRef = [
         useRef<HTMLInputElement | null>(null),
@@ -138,7 +139,7 @@ export function KYCInfo({ changeView }: Props) {
                                 path === "commercialCertificate" ? addCommercialCertificate({ url: "" }) :
                                     null
 
-    const removeField = (path: string, index: number) =>
+    const removeField = (index: number, path?: string) =>
         path === "id" ? removeId(index) :
             path === "nuit" ? removeNuit(index) :
                 path === "alvara" ? removeAlvara(index) :

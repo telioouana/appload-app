@@ -67,6 +67,7 @@ export const PhoneInput: ControlFunc<{
                 <InputGroupInput
                     {...field}
                     type="tel"
+                    className="w-full"
                     autoComplete="off"
                     value={field.value ?? ""}
                     onChange={field.onChange}

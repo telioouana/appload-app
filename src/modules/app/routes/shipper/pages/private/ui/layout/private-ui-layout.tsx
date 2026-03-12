@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 
 import { PrivateHeader } from "../components/navigation/header";
-import { PrivateThemeProvider } from "../../../../ui/theme/theme-provider";
+import { PrivateThemeProvider } from "../../../../../../../../theme/theme-provider";
 
 export function PrivateUILayout({ children }: PropsWithChildren) {
     return (

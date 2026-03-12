@@ -6,6 +6,9 @@ import { db } from "@/backend/db"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
 import { cargo, kyc, network, order, organization, trip } from "@/backend/db/schema"
 
+import { TripSchema } from "../ui/components/dialog/accept-order-dialog"
+import { FISCAL_REGIME, TRUCK_AGE, WEIGHT_UNIT } from "@/backend/db/types"
+
 const PATHS = ["all", "private", "public"] as const
 
 export const ordersRouter = createTRPCRouter({
@@ -30,7 +33,6 @@ export const ordersRouter = createTRPCRouter({
                 .select({
                     order: order,
                     cargo: cargo,
-                    trip: trip,
                     organizationId: organization.id,
                     organizationName: organization.name,
                     fiscalRegime: kyc.fiscalRegime,
@@ -42,10 +44,6 @@ export const ordersRouter = createTRPCRouter({
                 .leftJoin(network, and(
                     eq(network.shipperId, order.shipperId),
                     eq(network.carrierId, session.activeOrganizationId)
-                ))
-                .leftJoin(trip, and(
-                    eq(trip.orderId, order.id),
-                    eq(trip.carrierId, session.activeOrganizationId)
                 ))
                 .where(and(
                     eq(order.status, "open"),
@@ -136,5 +134,63 @@ export const ordersRouter = createTRPCRouter({
                 ))
 
             return orders
+        }),
+
+    accept: protectedProcedure
+        .input(
+            z.object({
+                values: TripSchema
+            })
+        )
+        .mutation(async ({ ctx, input }) => {
+            const { values } = input
+            const { session } = ctx.auth
+
+            if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+
+            const [data] = await db
+                .insert(trip)
+                .values({
+                    orderId: values.orderId,
+                    carrierId: values.carrierId,
+                    carrierName: values.carrierName,
+
+                    driverId: values.driverId,
+                    driverName: values.driverName,
+                    driverPhoneNumber: values.driverPhoneNumber,
+                    driverPassport: values.driverPassport,
+                    truckPlate: values.truckPlate,
+                    truckAge: values.truckAge as typeof TRUCK_AGE[number],
+                    trailerPlate: values.trailerPlate,
+                    linkPlate: values.linkPlate,
+
+                    proposedLoadingDate: values.proposedLoadingDate, arrivalAtLoading: null,
+                    proposedOffloadingDate: values.proposedOffloadingDate,
+
+                    weightUnit: values.weightUnit as typeof WEIGHT_UNIT[number],
+
+                    status: "booked",
+
+                    fiscalRegime: values.fiscalRegime as typeof FISCAL_REGIME[number],
+                    carrierSubtotal: String(values.carrierSubtotal),
+                    carrierVAT: String(values.carrierVAT),
+                    carrierTotal: String(values.carrierTotal),
+                    carrierCurrency: values.carrierCurrency,
+
+                    shipperSubtotal: String(values.shipperSubtotal),
+                    shipperVAT: String(values.shipperVAT),
+                    shipperTotal: String(values.shipperTotal),
+                    shipperCurrency: values.shipperCurrency,
+                })
+                .returning()
+
+            if (!data) throw new TRPCError({ code: "BAD_REQUEST" })
+
+            await db
+                .update(order)
+                .set({
+                    status: "booked"
+                })
+                .where(eq(order.id, values.orderId))
         })
 })

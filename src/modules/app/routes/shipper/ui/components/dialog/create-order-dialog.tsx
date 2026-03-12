@@ -167,7 +167,7 @@ export function CreateOrderDialog({ path, share }: Props) {
                     }))
                     queryClient.invalidateQueries(trpc.private.resume.queryOptions({ path }))
                 }
-                onClose()
+                handleClose()
             },
             onError: (error) => {
                 // TODO: Show error feedback to user

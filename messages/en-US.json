@@ -634,6 +634,430 @@
                             }
                         }
                     }
+                },
+                "accept": {
+                    "header": {
+                        "title": "Order acceptance",
+                        "description": "Fill the form to accept this order"
+                    },
+                    "form": {
+                        "order": {
+                            "title": "Summary of the order",
+                            "fields": {
+                                "info": {
+                                    "order": {
+                                        "route": "Route"
+                                    },
+                                    "cargo": {
+                                        "category": {
+                                            "label": "Category",
+                                            "agriculture-inputs": "Agriculture Inputs",
+                                            "agriculture-products": "Agriculture Products",
+                                            "construction": "Construction",
+                                            "machinery-equipment": "Machinery Equipment",
+                                            "fmcg": "FMCG",
+                                            "general-cargo": "General Cargo",
+                                            "medicine": "Medicine",
+                                            "mining": "Mining",
+                                            "oil-gas": "Oil & Gas",
+                                            "vehicles": "Vehicles",
+                                            "other": "Other"
+                                        },
+                                        "refrigerated": "Refrigerated",
+                                        "hazarduos": "Hazardous"
+                                    }
+                                },
+                                "dates": {
+                                    "label": "Dates",
+                                    "description": "If you are available with client's dates please leave as it is",
+                                    "proposed-loading-date": {
+                                        "label": "Loading",
+                                        "placeholder": "Select a date"
+                                    },
+                                    "proposed-offloading-date": {
+                                        "label": "Offloading",
+                                        "placeholder": "Select a date"
+                                    }
+                                }
+                            }
+                        },
+                        "fleet": {
+                            "title": "Driver & Fleet details",
+                            "search": {
+                                "label": "Search",
+                                "description": "Use the fields below to search for your drivers or fleet.",
+                                "driver": {
+                                    "label": "Search driver",
+                                    "placeholder": "Enter driver's name"
+                                },
+                                "truck": {
+                                    "label": "Search truck",
+                                    "placeholder": "Type truck's plate number"
+                                }
+                            }
+                        },
+                        "fields": {
+                            "name": {
+                                "label": "Driver name *",
+                                "placeholder": "Select a driver from the search",
+                                "error": "Driver's name was not provided"
+                            },
+                            "phone-number": {
+                                "label": "Phone number *",
+                                "placeholder": "Select a driver from the search",
+                                "error": {
+                                    "empty": "Driver's phone number was not provided",
+                                    "invalid": "The number provided is invalid"
+                                }
+                            },
+                            "passport": {
+                                "label": "Passport",
+                                "placeholder": "Select a driver from the search"
+                            },
+                            "truck-plate": {
+                                "label": "Truck plate number *",
+                                "placeholder": "Select a truck from the search",
+                                "error": "Truck's plate number was not provided"
+                            },
+                            "truck-age": {
+                                "label": "Truck classification",
+                                "placeholder": "Select a truck from the search",
+                                "value": {
+                                    "recent": "Recent",
+                                    "non-recent": "Non recent"
+                                },
+                                "error": "Truck's age was not provided"
+                            },
+                            "trailer-plate": {
+                                "label": "Trailer plate number",
+                                "placeholder": "Select a truck from the search"
+                            },
+                            "link-plate": {
+                                "label": "Link plate number",
+                                "placeholder": "Select a truck from the search"
+                            }
+                        }
+                    },
+                    "footer": {
+                        "close": "Close",
+                        "accept": "Accept order"
+                    }
+                },
+                "offer": {
+                    "header": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "footer": {
+                        "close": "Close",
+                        "send": "Send offer"
+                    }
+                }
+            }
+        },
+        "company": {
+            "drivers": {
+                "page": {
+                    "title": "Drivers",
+                    "description": "Manage your driver roster",
+                    "buttons": {
+                        "list": "Switch to list view",
+                        "grid": "Switch to grid view",
+                        "add": "Add new driver"
+                    }
+                },
+                "resume": {
+                    "total": "Total drivers",
+                    "active": "In movement",
+                    "idle": "Off duty",
+                    "free": "On break"
+                },
+                "actions": {
+                    "search": "Search by driver name",
+                    "tabs": {
+                        "all": "All",
+                        "active": "In movement",
+                        "idle": "Off duty",
+                        "free": "On break"
+                    }
+                },
+                "drivers": {},
+                "dialog": {
+                    "register": {
+                        "header": {
+                            "title": "Add new driver",
+                            "description": "Enter driver details to add to your team"
+                        },
+                        "footer": {
+                            "cancel": "Cancel",
+                            "register": "Register"
+                        }
+                    },
+                    "form": {
+                        "name": {
+                            "label": "Full name *",
+                            "placeholder": "John Doe",
+                            "error": "No name was provided"
+                        },
+                        "email": {
+                            "label": "Email *",
+                            "placeholder": "john.doe@company.com",
+                            "error": {
+                                "empty": "No email address was provided",
+                                "invalid": "Please enter a valid email address"
+                            }
+                        },
+                        "phone-number": {
+                            "label": "Phone number *",
+                            "error": "No phone number was provided"
+                        },
+                        "driver-license": {
+                            "label": "Driving License *",
+                            "description": "Only PDF Files with 2MB size each and max of 2 files",
+                            "placeholder": {
+                                "front": "Upload the driver driving license",
+                                "back": "Upload the other page of the driving license"
+                            },
+                            "add-page": "Add Page",
+                            "error": "The driving license was not provided"
+                        },
+                        "passport-card": {
+                            "label": "Passport",
+                            "description": "Only PDF Files with 2MB size only one file allowed",
+                            "placeholder": "Upload the driver passport"
+                        }
+                    }
+                }
+            },
+            "fleet": {
+                "page": {
+                    "title": "Fleet",
+                    "description": "Manage your fleet",
+                    "buttons": {
+                        "list": "Switch to list view",
+                        "grid": "Switch to grid view",
+                        "add": "Add new fleet"
+                    }
+                },
+                "resume": {
+                    "total": "Fleet size",
+                    "active": "In movement",
+                    "idle": "Off duty",
+                    "free": "Maintanace"
+                },
+                "actions": {
+                    "search": "Search by plate number",
+                    "tabs": {
+                        "all": "All",
+                        "active": "In movement",
+                        "idle": "Off duty",
+                        "free": "Maintanace"
+                    }
+                },
+                "fleet": {},
+                "dialog": {
+                    "register": {
+                        "header": {
+                            "title": "Add new fleet",
+                            "description": "Enter fleet details to add to your roster"
+                        },
+                        "footer": {
+                            "cancel": "Cancel",
+                            "back": "Back",
+                            "next": "Next",
+                            "register": "Register"
+                        }
+                    },
+                    "form": {
+                        "truck": {
+                            "label": "Truk information",
+                            "plate-number": {
+                                "label": "Plate Number *",
+                                "placeholder": "e.g., AAA 001 MC",
+                                "error": "Plate number was not provided"
+                            },
+                            "internal-id": {
+                                "label": "Internal Truck code",
+                                "placeholder": "Enter the company truck code"
+                            },
+                            "brand": {
+                                "label": "Manufacturer *",
+                                "placeholder": "e.g., Mercedes-Benz",
+                                "error": "Manufacturer was not provided"
+                            },
+                            "model": {
+                                "label": "Model *",
+                                "placeholder": "e.g., Actros 2551",
+                                "error": "Model was not provided"
+                            },
+                            "year": {
+                                "label": "Year *",
+                                "placeholder": "e.g., 2020",
+                                "error": "Model year was not provided"
+                            },
+                            "vin": {
+                                "label": "VIN (Vehicle Identification Number) *",
+                                "placeholder": "17-character VIN",
+                                "error": {
+                                    "empty": "VIN was not provided",
+                                    "invalid": "VIN must contain 17 characters"
+                                }
+                            },
+                            "type": {
+                                "label": "Truck Type *",
+                                "description": "Select truck type",
+                                "articulated": {
+                                    "label": "Articulated",
+                                    "description": "This truck has two separate parts—a front \"cab\" that pulls a back \"trailer.\" Because it can bend in the middle, it is used for carrying huge loads over long distances on the main highways."
+                                },
+                                "non-articulated": {
+                                    "label": "Non Articulated",
+                                    "description": "This is one single, solid piece from front to back. Since it doesn't bend, it is much easier to drive through narrow city streets and is perfect for making local deliveries."
+                                }
+                            },
+                            "license": {
+                                "label": "Transport license *",
+                                "description": "Only PDF Files with 2MB size each and max of 2 files",
+                                "placeholder": {
+                                    "front": "Upload the truck license",
+                                    "back": "Upload the other page of the license"
+                                },
+                                "error": {
+                                    "invalid": "Must uppload at least one file",
+                                    "empty": "License was not provided"
+                                },
+                                "add-page": "Add Page"
+                            },
+                            "booklet": {
+                                "label": "Booklet *",
+                                "description": "Only PDF Files with 2MB size each and max of 2 files",
+                                "placeholder": {
+                                    "front": "Upload the truck booklet",
+                                    "back": "Upload the other page of the truck booklet"
+                                },
+                                "error": {
+                                    "invalid": "Must uppload at least one file",
+                                    "empty": "Booklet was not provided"
+                                },
+                                "add-page": "Add Page"
+                            }
+                        },
+                        "trailer": {
+                            "label": {
+                                "trailer": "Traler information",
+                                "link": "Link information"
+                            },
+                            "buttons": {
+                                "add": "Add link",
+                                "remove": {
+                                    "trailer": "Remover trailer",
+                                    "link": "Remove link"
+                                }
+                            },
+                            "plate-number": {
+                                "label": "Plate Number *",
+                                "placeholder": "e.g., AA 001 MC",
+                                "error": "Plate number was not provided"
+                            },
+                            "internal-id": {
+                                "label": "Internal Trailer code",
+                                "placeholder": "Enter the company trailer code"
+                            },
+                            "brand": {
+                                "label": "Manufacturer *",
+                                "placeholder": "e.g., Henred Fruehauf",
+                                "error": "Manufacturer was not provided"
+                            },
+                            "model": {
+                                "label": "Model *",
+                                "placeholder": "e.g., Plataforms",
+                                "error": "Model was not provided"
+                            },
+                            "year": {
+                                "label": "Year *",
+                                "placeholder": "e.g., 2020",
+                                "error": "Model year was not provided"
+                            },
+                            "vin": {
+                                "label": "VIN (Vehicle Identification Number) *",
+                                "placeholder": "17-character VIN",
+                                "error": {
+                                    "empty": "VIN was not provided",
+                                    "invalid": "VIN must contain 17 characters"
+                                }
+                            },
+                            "license": {
+                                "label": "Transport license *",
+                                "description": "Only PDF Files with 2MB size each and max of 2 files",
+                                "placeholder": {
+                                    "front": "Upload the trailer license",
+                                    "back": "Upload the other page of the license"
+                                },
+                                "error": {
+                                    "invalid": "Must uppload at least one file",
+                                    "empty": "License was not provided"
+                                },
+                                "add-page": "Add Page"
+                            },
+                            "booklet": {
+                                "label": "Booklet *",
+                                "description": "Only PDF Files with 2MB size each and max of 2 files",
+                                "placeholder": {
+                                    "front": "Upload the trailer booklet",
+                                    "back": "Upload the other page of the trailer booklet"
+                                },
+                                "error": {
+                                    "invalid": "Must uppload at least one file",
+                                    "empty": "Booklet was not provided"
+                                },
+                                "add-page": "Add Page"
+                            }
+                        },
+                        "loading-bay": {
+                            "label": "Loading area",
+                            "width": {
+                                "label": "Width (m)",
+                                "placeholder": "Enter the width of the cargo bay",
+                                "error": "Width was not provided"
+                            },
+                            "length": {
+                                "label": "Length (m)",
+                                "placeholder": "Enter the width of the cargo bay",
+                                "error": "Length was not provided"
+                            },
+                            "height": {
+                                "label": "Height (m)",
+                                "placeholder": "Enter the width of the cargo bay",
+                                "error": "Height was not provided"
+                            },
+                            "volume": {
+                                "label": "Volume (m³)",
+                                "placeholder": "Calculate the volume (H x L x W)",
+                                "error": "Volume was not provided"
+                            },
+                            "capacity": {
+                                "label": "Loading capacity (tons)",
+                                "placeholder": "e.g., 24",
+                                "error": "Loading capacity was not provided"
+                            },
+                            "type": {
+                                "label": "Type",
+                                "placeholder": "Select type of cargo bay",
+                                "options": {
+                                    "flatbed": "Flatbed",
+                                    "dropsides": "Dropsides",
+                                    "tautliner": "Tautliner",
+                                    "rigid-body": "Container",
+                                    "refrigerated": "Refrigerated",
+                                    "tipper": "Tipper",
+                                    "side-tipper": "Side Tipper",
+                                    "tanker": "Tanker",
+                                    "lowbed": "Lowbed"
+                                },
+                                "error": "Cargo bay type was not provided"
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -973,6 +1397,34 @@
                         }
                     }
                 }
+            },
+            "transporters": {
+                "page": {
+                    "title": "My Transporters",
+                    "description": "Network of my trusted transporters"
+                },
+                "resume": {
+                    "added": "Total Transporters",
+                    "active": "Active Transporters",
+                    "trips": "Combined trips completed",
+                    "rating": "Avg Rating"
+                },
+                "actions": {
+                    "search": "Search transporter by name or location",
+                    "view": {
+                        "list": "Switch to list view",
+                        "grid": "Switch to grid view"
+                    },
+                    "tabs": {
+                        "all": "All",
+                        "active": "Active",
+                        "pending": "Pending"
+                    },
+                    "buttons": {
+                        "add": "Add new trsndp"
+                    }
+                },
+                "card": {}
             }
         },
         "public": {

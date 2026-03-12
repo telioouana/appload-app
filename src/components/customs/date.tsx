@@ -25,6 +25,7 @@ export const DateInput: ControlFunc = (props) => {
                                 {...field}
                                 type="text"
                                 autoComplete="off"
+                                className="w-full"
                                 value={field.value ? f.dateTime(field.value, {
                                     day: "2-digit",
                                     month: "short",
@@ -48,6 +49,7 @@ export const DateInput: ControlFunc = (props) => {
                     <PopoverContent className="w-full overflow-hidden p-0" align="start">
                         <Calendar
                             mode="single"
+                            className="w-full"
                             selected={field.value}
                             captionLayout="dropdown"
                             onSelect={(date) => {

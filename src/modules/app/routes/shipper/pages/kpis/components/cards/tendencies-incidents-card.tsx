@@ -49,12 +49,18 @@ export function TendenciesIncidentsCard({ data: { accidents, mechanical, documme
                 <CardTitle className="font-bold">{t("title")}</CardTitle>
             </CardHeader>
 
-            <CardContent>
+            <CardContent className="">
                 <ChartContainer
                     config={chartConfig}
-                    className="[&_.recharts-pie-label-text]:fill-foreground font-medium mx-auto text-base aspect-square h-48 w-full"
+                    className="flex justify-center items-center [&_.recharts-pie-label-text]:fill-foreground font-medium mx-auto text-base aspect-square max-h-48 w-full"
                 >
-                    <PieChart>
+                    <PieChart
+                        margin={{
+                            left: 4,
+                            right: 4,
+                            top: 4,
+                        }}
+                    >
                         <ChartTooltip
                             cursor={false}
                             content={

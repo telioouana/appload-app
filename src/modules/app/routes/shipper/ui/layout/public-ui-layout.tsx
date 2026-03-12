@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 
 import { PublicHeader } from "../components/navigation/header";
-import { PublicThemeProvider } from "../theme/theme-provider";
+import { PublicThemeProvider } from "../../../../../../theme/theme-provider";
 
 export function PublicUILayout({ children }: PropsWithChildren) {
     return (

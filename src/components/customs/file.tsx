@@ -19,7 +19,7 @@ export const FileInput: ControlFunc<{
     owner: string
     index: number
     length: number
-    remove: (path: string, index: number) => void
+    remove?: (index: number, path?: string, ) => void
 }> = ({
     inputRef,
     path,
@@ -133,6 +133,7 @@ export const FileInput: ControlFunc<{
                                 {...field}
                                 readOnly
                                 type="text"
+                                className="w-full"
                                 value={field.value ?? ""}
                                 disabled={props.isPending}
                                 placeholder={props.placeholder}
@@ -147,7 +148,7 @@ export const FileInput: ControlFunc<{
                                                 variant="destructive"
                                                 disabled={isDisabled}
                                                 onClick={async () => {
-                                                    remove?.(path, index)
+                                                    remove?.(index, path)
                                                 }}
                                             >
                                                 Remove <IconCircleX />

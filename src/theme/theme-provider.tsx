@@ -14,11 +14,11 @@ const ThemeContext = createContext<ThemeColorStateParams>(
 export function PrivateThemeProvider({
     children,
 }: ThemeProviderProps) {
-    const [themeColor, setThemeColor] = useState<ThemeColors>("gray");
+    const [themeColor, setThemeColor] = useState<ThemeColors>("amber");
 
     useEffect(() => {
         const savedColor = localStorage.getItem("privateThemeColor") as ThemeColors;
-        if (savedColor) {
+        if (savedColor && savedColor !== "gray") {
             setThemeColor(savedColor);
         }
     }, []);
@@ -51,7 +51,7 @@ export function PrivateThemeProvider({
 export function PublicThemeProvider({
     children,
 }: ThemeProviderProps) {
-    const [themeColor, setThemeColor] = useState<ThemeColors>("gray");
+    const [themeColor, setThemeColor] = useState<ThemeColors>("orange");
 
     useEffect(() => {
         const savedColor = localStorage.getItem("publicThemeColor") as ThemeColors;

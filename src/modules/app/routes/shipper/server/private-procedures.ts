@@ -3,8 +3,8 @@ import { TRPCError } from "@trpc/server"
 import { and, count, desc, eq, lt, ne, or, sql, sum } from "drizzle-orm"
 
 import { db } from "@/backend/db"
-import { cargo, order, tracking, trip } from "@/backend/db/schema"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
+import { cargo, order, timeline, tracking, trip } from "@/backend/db/schema"
 
 const ORDER_STATUS = ["all", "drafted", "open", "booked", "on-going", "delivered", "history"] as const
 
@@ -26,17 +26,21 @@ export const privateRouter = createTRPCRouter({
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
+            const status = db.select().from(timeline).where(eq(timeline.tripId, trip.id)).orderBy(desc(timeline.legacyId)).as("timeline")
+
             const orders = await db
                 .select({
                     order: order,
                     cargo: cargo,
                     trip: trip,
-                    tracking: tracking
+                    tracking: tracking,
+                    status: timeline
                 })
                 .from(order)
                 .innerJoin(cargo, eq(cargo.orderId, order.id))
                 .leftJoin(trip, eq(trip.orderId, order.id))
                 .leftJoin(tracking, eq(tracking.tripId, trip.id))
+                .leftJoinLateral(status, sql`true`)
                 .where(and(
                     eq(order.shipperId, session.activeOrganizationId),
                     eq(order.share, "subscribers"),
