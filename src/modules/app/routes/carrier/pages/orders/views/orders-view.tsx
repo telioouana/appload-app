@@ -54,7 +54,7 @@ export function OrdersView({ path }: { path: ORDERS_PATH }) {
     return (
         <Suspense fallback={<OrdersLoadingFallback />} >
             <ErrorBoundary fallback={<OrdersErrorFallback />} >
-                <AcceptOrderDialog />
+                <AcceptOrderDialog path={path} />
                 <CreateOfferDialog />
 
                 <div className="flex flex-col">
