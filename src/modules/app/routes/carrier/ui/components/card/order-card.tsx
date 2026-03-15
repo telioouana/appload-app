@@ -10,17 +10,17 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 
 import { cn } from "@/lib/utils"
 
-import { Values } from "../../../types/types";
+import { OrderValues } from "../../../types/types";
 import { useAcceptOrder } from "../../../hooks/use-accept-order";
 import { useCreateOffer } from "../../../hooks/use-create-offer";
 import { StatusBadge, StatusKey } from "@/modules/app/ui/components/badge/status-badge";
 
 type Props = {
-    values: Values
+    values: OrderValues
 }
 export function OrderCard({ values }: Props) {
     const { onOpenChange: acceptOrder } = useAcceptOrder()
-    const { onOpenChange: makeOffer} = useCreateOffer()
+    const { onOpenChange: makeOffer } = useCreateOffer()
     const t = useTranslations("Carrier.order.card")
     const f = useFormatter()
 
@@ -99,7 +99,7 @@ export function OrderCard({ values }: Props) {
                     </div>
                 </div>
 
-                {!!order.price && (
+                {(order.share === "subscribers" || order.status !== "open") && (
                     <>
                         <Separator className={cn(order.share === "subscribers" && "bg-orange-300")} />
 
@@ -107,7 +107,7 @@ export function OrderCard({ values }: Props) {
                             <div className="text-muted-foreground">{t("content.price")}</div>
                             <div className="font-medium text-xl text-primary space-x-1">
                                 <span>
-                                    {f.number(order.price, {
+                                    {f.number(order.price ?? 0, {
                                         currency: order.currency ?? "MZN",
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2,

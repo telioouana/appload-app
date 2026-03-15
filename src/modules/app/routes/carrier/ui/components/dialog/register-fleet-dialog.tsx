@@ -2,14 +2,13 @@
 
 import { z } from "zod"
 import { useTranslations } from "next-intl"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { IconArrowRight, IconPlus, IconTruck, IconX } from "@tabler/icons-react"
 import { FormProvider, useForm, DefaultValues, FieldPath } from "react-hook-form"
 
 import { useTRPC } from "@/backend/trpc/client"
-import { LOADING_BAY, TRUCK_TYPE } from "@/backend/db/types"
 
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
@@ -18,110 +17,7 @@ import { RegisterTruckForm } from "../form/register-truck-form"
 import { useRegisterFleet } from "../../../hooks/use-register-fleet"
 import { RegisterTrailerForm } from "../form/register-trailer-form"
 import { DEFAULT_PAGE_LIMIT } from "@/constants"
-
-function LoadingBay(t: (key: string) => string) {
-    const schema = z.object({
-        width: z.number({ error: t("form.loading-bay.width.error") }).positive({ error: t("form.loading-bay.width.error") }),
-        length: z.number({ error: t("form.loading-bay.length.error") }).positive({ error: t("form.loading-bay.length.error") }),
-        height: z.number({ error: t("form.loading-bay.height.error") }).positive({ error: t("form.loading-bay.height.error") }),
-        volume: z.number({ error: t("form.loading-bay.volume.error") }).positive({ error: t("form.loading-bay.volume.error") }),
-        capacity: z.number({ error: t("form.loading-bay.capacity.error") }).positive({ error: t("form.loading-bay.capacity.error") }),
-        type: z.enum(LOADING_BAY, { error: t("form.loading-bay.type.error") })
-    })
-
-    return schema
-}
-
-export function TruckSchema(t: (key: string) => string) {
-    const fields = z.object({
-        internalId: z.string().optional(),
-        regPlate: z.string({ error: t("form.truck.plate-number.error") }).nonempty({ error: t("form.truck.plate-number.error") }),
-        brand: z.string({ error: t("form.truck.brand.error") }).nonempty({ error: t("form.truck.brand.error") }),
-        model: z.string({ error: t("form.truck.model.error") }).nonempty({ error: t("form.truck.model.error") }),
-        year: z.coerce.number({ error: t("form.truck.year.error") }),
-        vin: z.string({ error: t("form.truck.vin.error.empty") }).nonempty({ error: t("form.truck.vin.error.empty") }).length(17, { error: t("form.truck.vin.error.invalid") }),
-        type: z.enum(TRUCK_TYPE),
-        booklet: z.array(z.object({ url: z.url({ error: t("form.truck.license.error.empty") }) })).min(1, { error: t("form.truck.license.error.invalid") }),
-        license: z.array(z.object({ url: z.url({ error: t("form.truck.booklet.error.empty") }) })).min(1, { error: t("form.truck.booklet.error.invalid") }),
-    })
-
-    const loadingBay = LoadingBay(t)
-
-    const schema = z.discriminatedUnion("type", [
-        fields.extend({
-            type: z.literal("non-articulated"),
-            loadingBay: loadingBay, // REQUIRED
-        }),
-        fields.extend({
-            type: z.literal("articulated"),
-            loadingBay: z.object({
-                width: z.number().positive().optional(),
-                length: z.number().positive().optional(),
-                height: z.number().positive().optional(),
-                volume: z.number().positive().optional(),
-                capacity: z.number().positive().optional(),
-                type: z.enum(LOADING_BAY).optional()
-            }),
-        }),
-    ]);
-
-    return schema
-}
-
-export function TrailerSchema(t: (key: string) => string) {
-    const loadingBay = LoadingBay(t)
-
-    const schema = z.object({
-        internalId: z.string().optional(),
-        regPlate: z.string({ error: t("form.trailer.plate-number.error") }).nonempty({ error: t("form.trailer.plate-number.error") }),
-        brand: z.string({ error: t("form.trailer.brand.error") }).nonempty({ error: t("form.trailer.brand.error") }),
-        model: z.string({ error: t("form.trailer.model.error") }).nonempty({ error: t("form.trailer.model.error") }),
-        year: z.coerce.number({ error: t("form.trailer.year.error") }),
-        loadingBay: loadingBay,
-        vin: z.string({ error: t("form.trailer.vin.error.empty") }).nonempty({ error: t("form.trailer.vin.error.empty") }).length(17, { error: t("form.trailer.vin.error.invalid") }),
-        booklet: z.array(z.object({ url: z.url({ error: t("form.trailer.license.error.empty") }) })).min(1, { error: t("form.trailer.license.error.invalid") }),
-        license: z.array(z.object({ url: z.url({ error: t("form.trailer.booklet.error.empty") }) })).min(1, { error: t("form.trailer.booklet.error.invalid") }),
-    })
-
-    return schema
-}
-
-export function DynamicFleetSchema(hasTrailer: boolean, hasLink: boolean, t: (key: string) => string) {
-    const truckSchema = TruckSchema(t);
-    const trailerSchema = TrailerSchema(t);
-
-    // 1. Extract the variants from your existing TruckSchema discriminated union
-    // options[0] is 'non-articulated', options[1] is 'articulated'
-    const [NonArticulatedTruck, ArticulatedTruck] = truckSchema.options;
-
-    // 2. Define the variant where trailer/link SHOULD NOT exist
-    const NonArticulatedVariant = z.object({
-        truck: NonArticulatedTruck,
-        // We define these as optional never so the keys exist in the type 
-        // but can only be undefined
-        trailer: z.undefined().optional(),
-        link: z.undefined().optional(),
-    });
-
-    // 3. Define the variant where trailer IS mandatory
-    const ArticulatedVariant = z.object({
-        truck: ArticulatedTruck,
-        trailer: trailerSchema, // Mandatory
-        link: hasLink ? trailerSchema : z.undefined().optional(),
-    });
-
-    /**
-     * If the UI configuration doesn't support trailers at all, 
-     * return only the non-articulated schema.
-     */
-    if (!hasTrailer) {
-        return NonArticulatedVariant;
-    }
-
-    // 4. Return the Union
-    // Now the inferred type will be: { truck, trailer?, link? }
-    return z.union([NonArticulatedVariant, ArticulatedVariant]);
-}
+import { DynamicFleetSchema } from "../../../schemas/fleet"
 
 export const BaseSchema = DynamicFleetSchema(true, true, (k: string) => k);
 export type FullFleetForm = z.infer<typeof BaseSchema>
@@ -139,9 +35,14 @@ export function RegisterFleetDialog() {
     const save = useMutation(
         trpc.fleet.add.mutationOptions({
             onSuccess: () => {
-                queryClient.invalidateQueries(trpc.fleet.fleet.infiniteQueryOptions({
-                    limit: DEFAULT_PAGE_LIMIT
-                }))
+                queryClient.invalidateQueries(
+                    trpc.fleet.fleet.infiniteQueryOptions({
+                        limit: DEFAULT_PAGE_LIMIT
+                    })
+                )
+                queryClient.invalidateQueries(
+                    trpc.fleet.resume.queryOptions()
+                )
                 handleClose()
             },
             onError: (error) => {
@@ -161,10 +62,24 @@ export function RegisterFleetDialog() {
         resolver: zodResolver(registerFleetSchema) as import("react-hook-form").Resolver<FullFleetForm>,
         defaultValues: {
             truck: { license: [{ url: "" }], booklet: [{ url: "" }] },
-            trailer: { license: [{ url: "" }], booklet: [{ url: "" }] },
-            link: { license: [{ url: "" }], booklet: [{ url: "" }] }
+            ...(hasTrailer && { trailer: { license: [{ url: "" }], booklet: [{ url: "" }] } }),
+            ...(hasTrailer && hasLink && { link: { license: [{ url: "" }], booklet: [{ url: "" }] } }),
         } as DefaultValues<FullFleetForm>
     });
+
+    useEffect(() => {
+        // Initialize trailer if we just entered step 1 and it's not already set
+        if (step === 1 && hasTrailer && !form.getValues("trailer")) {
+            form.setValue("trailer.license", [{ url: "" }]);
+            form.setValue("trailer.booklet", [{ url: "" }]);
+        }
+
+        // Initialize link if we just entered step 2 and it's not already set
+        if (step === 2 && hasLink && !form.getValues("link")) {
+            form.setValue("link.license", [{ url: "" }]);
+            form.setValue("link.booklet", [{ url: "" }]);
+        }
+    }, [step, hasTrailer, hasLink, form]);
 
     async function handleNext() {
         form.clearErrors()
@@ -177,20 +92,39 @@ export function RegisterFleetDialog() {
             `${currentPath}.model`,
             `${currentPath}.year`,
             `${currentPath}.vin`,
-            `truck.type`,
-            `${currentPath}.loadingBay.width`,
-            `${currentPath}.loadingBay.length`,
-            `${currentPath}.loadingBay.height`,
-            `${currentPath}.loadingBay.volume`,
-            `${currentPath}.loadingBay.capacity`,
-            `${currentPath}.loadingBay.type`,
             `${currentPath}.booklet`,
             `${currentPath}.license`,
         ]
 
+        if (step !== 0) {
+            fields.push(
+                `${currentPath}.loadingBay.width`,
+                `${currentPath}.loadingBay.length`,
+                `${currentPath}.loadingBay.height`,
+                `${currentPath}.loadingBay.volume`,
+                `${currentPath}.loadingBay.capacity`,
+                `${currentPath}.loadingBay.type`,
+            )
+        }
+
+        console.log(form.getValues())
         const isValid = await form.trigger(fields, { shouldFocus: true });
-        if (isValid) setStep((s) => s + 1);
-        return isValid
+        if (isValid) {
+            // 2. Initialize the NEXT step data before moving there
+            const nextStep = step + 1;
+            if (nextStep === 1 && hasTrailer && !form.getValues("trailer")) {
+                form.setValue("trailer.license", [{ url: "" }]);
+                form.setValue("trailer.booklet", [{ url: "" }]);
+            }
+            if (nextStep === 2 && hasLink && !form.getValues("link")) {
+                form.setValue("link.license", [{ url: "" }]);
+                form.setValue("link.booklet", [{ url: "" }]);
+            }
+
+            // 3. Move
+            setStep(nextStep);
+        }
+        return isValid;
     };
 
     async function addLink() {
@@ -205,7 +139,68 @@ export function RegisterFleetDialog() {
 
     async function handleSubmit(values: FullFleetForm) {
         form.clearErrors()
-        await save.mutateAsync({ values })
+        const fields: FieldPath<FullFleetForm>[] = [
+            "truck.regPlate",
+            "truck.brand",
+            "truck.model",
+            "truck.year",
+            "truck.vin",
+            "truck.booklet",
+            "truck.license",
+        ]
+
+        if (values.truck.type === "articulated") {
+            fields.push(
+                "trailer.regPlate",
+                "trailer.brand",
+                "trailer.model",
+                "trailer.year",
+                "trailer.vin",
+                "trailer.booklet",
+                "trailer.license",
+                "trailer.loadingBay.width",
+                "trailer.loadingBay.length",
+                "trailer.loadingBay.height",
+                "trailer.loadingBay.volume",
+                "trailer.loadingBay.capacity",
+                "trailer.loadingBay.type",
+            )
+
+            if (hasLink) {
+                fields.push(
+                    "link.regPlate",
+                    "link.brand",
+                    "link.model",
+                    "link.year",
+                    "link.vin",
+                    "link.booklet",
+                    "link.license",
+                    "link.loadingBay.width",
+                    "link.loadingBay.length",
+                    "link.loadingBay.height",
+                    "link.loadingBay.volume",
+                    "link.loadingBay.capacity",
+                    "link.loadingBay.type",
+                )
+            }
+        } else {
+            fields.push(
+                "truck.loadingBay.width",
+                "truck.loadingBay.length",
+                "truck.loadingBay.height",
+                "truck.loadingBay.volume",
+                "truck.loadingBay.capacity",
+                "truck.loadingBay.type",
+            )
+        }
+
+        console.log(values)
+        const isValid = await form.trigger(fields, { shouldFocus: true });
+        if (isValid) await save.mutateAsync({
+            truck: values.truck,
+            trailer: values.trailer,
+            link: values.link
+        })
     }
 
     function removeTrailer() {
@@ -257,7 +252,7 @@ export function RegisterFleetDialog() {
                 </DialogHeader>
 
                 <FormProvider {...form}>
-                    <form onSubmit={form.handleSubmit(handleSubmit)}>
+                    <form>
                         <div className="max-h-[50vh] overflow-y-auto p-6 container-snap">
                             {/* Step-based Rendering */}
                             {step === 0 && <RegisterTruckForm setHasTrailer={setHasTrailer} />}
@@ -294,7 +289,8 @@ export function RegisterFleetDialog() {
                                     </Button>
                                 ) : (
                                     <Button
-                                        type="submit"
+                                        type="button"
+                                        onClick={() => handleSubmit(form.getValues())}
                                         disabled={step === 0 && form.watch("truck.type") === undefined}
                                     >
                                         {t("register.footer.register")}

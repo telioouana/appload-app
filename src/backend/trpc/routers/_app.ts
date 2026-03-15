@@ -12,6 +12,7 @@ import { driverRouter } from "@/modules/app/routes/carrier/server/driver-procedu
 import { ordersRouter } from "@/modules/app/routes/carrier/server/orders-procedures";
 import { carrierMapRouter } from "@/modules/app/routes/carrier/server/map-procedures";
 import { carrierDashboardRouter } from "@/modules/app/routes/carrier/server/dashboard-procedures";
+import { tripsRouter } from "@/modules/app/routes/carrier/server/trips-procedures";
 
 export const appRouter = createTRPCRouter({
     // merge your routers here
@@ -24,6 +25,7 @@ export const appRouter = createTRPCRouter({
     shipperDashboard: shipperDashboardRouter,
 
     // Carrier Routers
+    trips: tripsRouter,
     fleet: fleetRouter,
     driver: driverRouter,
     orders: ordersRouter,

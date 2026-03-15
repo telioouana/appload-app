@@ -1,18 +1,18 @@
 import { create } from "zustand"
-import { Values } from "../types/types"
+import { OrderValues } from "../types/types"
 
 interface Props {
     isOpen: boolean
-    values: Values | undefined
+    values: OrderValues | undefined
 
     onClose: () => void
-    onOpenChange: (values: Values) => void
+    onOpenChange: (values: OrderValues) => void
 }
 
 export const useAcceptOrder = create<Props>((set) => ({
     isOpen: false,
     values: undefined,
-    onOpenChange: (values: Values) => set({
+    onOpenChange: (values: OrderValues) => set({
         isOpen: true,
         values: values
     }),

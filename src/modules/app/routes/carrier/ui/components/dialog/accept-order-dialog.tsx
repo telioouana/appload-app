@@ -14,47 +14,14 @@ import { CURRENCY, FISCAL_REGIME, WEIGHT_UNIT } from "@/backend/db/types"
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
-import { ORDERS_PATH, Values } from "../../../types/types"
+import { createTripSchema } from "../../../schemas/trip"
+import { ORDERS_PATH, OrderValues } from "../../../types/types"
 import { AcceptOrderForm } from "../form/accept-order-form"
 import { useAcceptOrder } from "../../../hooks/use-accept-order"
+
 import { DEFAULT_PAGE_LIMIT } from "@/constants"
 
-export function Schema(t: (key: string) => string) {
-    const TripSchema = z.object({
-        orderId: z.string().nonempty(),
-        carrierId: z.string().nonempty(),
-        carrierName: z.string().nonempty(),
-
-        driverId: z.string().nonempty(),
-        driverName: z.string({ error: t("form.fields.name.error") }).nonempty({ error: t("form.fields.name.error") }),
-        driverPhoneNumber: z.string({ error: t("form.fields.phone-number.error.empty") }).min(9, { error: t("form.fields.phone-number.error.invalid") }).max(15, { error: t("form.fields.phone-number.error.invalid") }),
-        driverPassport: z.string().optional(),
-        truckPlate: z.string({ error: t("form.fields.truck-plate.error") }).nonempty({ error: t("form.fields.truck-plate.error") }),
-        truckAge: z.string({ error: t("form.fields.truck-age.error") }).nonempty({ error: t("form.fields.truck-age.error") }),
-        trailerPlate: z.string().optional(),
-        linkPlate: z.string().optional(),
-
-        proposedLoadingDate: z.date(),
-        proposedOffloadingDate: z.date(),
-
-        weightUnit: z.enum(WEIGHT_UNIT),
-
-        fiscalRegime: z.enum(FISCAL_REGIME),
-        carrierSubtotal: z.number().nonnegative(),
-        carrierVAT: z.number().nonnegative(),
-        carrierTotal: z.number().nonnegative(),
-        carrierCurrency: z.enum(CURRENCY),
-
-        shipperSubtotal: z.number().nonnegative(),
-        shipperVAT: z.number().nonnegative(),
-        shipperTotal: z.number().nonnegative(),
-        shipperCurrency: z.enum(CURRENCY),
-    })
-
-    return TripSchema
-}
-
-export const TripSchema = Schema((k: string) => k)
+export const TripSchema = createTripSchema((k: string) => k)
 export type TripSchemaForm = z.infer<typeof TripSchema>
 
 export function AcceptOrderDialog({ path }: { path: ORDERS_PATH }) {
@@ -72,10 +39,10 @@ export function AcceptOrderDialog({ path }: { path: ORDERS_PATH }) {
     )
 }
 
-function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: () => void, path: ORDERS_PATH, values: Values }) {
+function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: () => void, path: ORDERS_PATH, values: OrderValues }) {
     const t = useTranslations("Carrier.order.dialog.accept")
 
-    const TripSchema = useMemo(() => Schema(t), [t])
+    const TripSchema = useMemo(() => createTripSchema(t), [t])
     type TripSchemaForm = z.infer<typeof TripSchema>
 
     const form = useForm<TripSchemaForm>({
@@ -113,6 +80,8 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
                     limit: DEFAULT_PAGE_LIMIT,
                     path,
                 }))
+                queryClient.invalidateQueries(trpc.orders.resume.queryOptions({ path }))
+                handleClose()
             }
         })
     )

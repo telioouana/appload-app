@@ -15,6 +15,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Field, FieldContent, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet, FieldTitle, } from "@/components/ui/field";
 
 import { LoadingBayForm } from "./loading-bay-form";
+import { FullFleetForm } from "../dialog/register-fleet-dialog";
 
 interface Props {
     setHasTrailer: (hasTrailer: boolean) => void
@@ -23,7 +24,7 @@ interface Props {
 export function RegisterTruckForm({ setHasTrailer }: Props) {
     const t = useTranslations("Carrier.company.fleet.dialog.form.truck")
 
-    const { control, setValue, watch, formState: { isSubmitting } } = useFormContext()
+    const { control, setValue, watch, formState: { isSubmitting } } = useFormContext<FullFleetForm>()
 
     const licenseRef = [
         useRef<HTMLInputElement | null>(null),
@@ -135,14 +136,16 @@ export function RegisterTruckForm({ setHasTrailer }: Props) {
                 <FieldDescription>{t("type.description")}</FieldDescription>
 
                 <RadioGroup
-                    defaultValue={watch("truck.type")}
                     className="flex gap-4"
-                    onValueChange={(value: typeof TRUCK_TYPE[number]) => {
-                        setValue("truck.type", value)
-                        if (value === TRUCK_TYPE[0]) setHasTrailer(true)
-                        else setHasTrailer(false)
+                    onValueChange={(value) => {
+                        setValue("truck.type", value as typeof TRUCK_TYPE[number])
+                        if (value === "articulated") 
+                            setHasTrailer(true)
+                        else 
+                            setHasTrailer(false)
 
                     }}
+                    value={watch("truck.type")}
                 >
                     <FieldLabel htmlFor="articulated-r2h">
                         <Field orientation="horizontal">
@@ -150,7 +153,7 @@ export function RegisterTruckForm({ setHasTrailer }: Props) {
                                 <FieldTitle>{t("type.articulated.label")}</FieldTitle>
                                 <FieldDescription>{t("type.articulated.description")}</FieldDescription>
                             </FieldContent>
-                            <RadioGroupItem value={TRUCK_TYPE[0]} id="articulated-r2h" />
+                            <RadioGroupItem value="articulated" id="articulated-r2h" />
                         </Field>
                     </FieldLabel>
 
@@ -160,13 +163,13 @@ export function RegisterTruckForm({ setHasTrailer }: Props) {
                                 <FieldTitle>{t("type.non-articulated.label")}</FieldTitle>
                                 <FieldDescription>{t("type.non-articulated.description")}</FieldDescription>
                             </FieldContent>
-                            <RadioGroupItem value={TRUCK_TYPE[1]} id="non-articulated-z4k" />
+                            <RadioGroupItem value="non-articulated" id="non-articulated-z4k" />
                         </Field>
                     </FieldLabel>
                 </RadioGroup>
             </FieldSet>
 
-            {watch().truck.type === TRUCK_TYPE[1] && (
+            {watch("truck.type") === TRUCK_TYPE[1] && (
                 <LoadingBayForm name="truck" />
             )}
 

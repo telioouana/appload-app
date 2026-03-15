@@ -201,8 +201,7 @@
                         "label": "Trips",
                         "all": "All trips",
                         "booked": "Confirmed",
-                        "on-going": "On going",
-                        "delivered": "Delivered "
+                        "on-going": "On going"
                     },
                     "history": "History",
                     "clients": "My Clients"
@@ -555,7 +554,7 @@
                     "loading-date": "Loading date:",
                     "refrigerated": "Refrigerated",
                     "hazarduos": "Hazardous",
-                    "price": "Revenue:"
+                    "price": "Transport price:"
                 },
                 "footer": {
                     "accept": "Accept",
@@ -751,6 +750,45 @@
                     "footer": {
                         "close": "Close",
                         "send": "Send offer"
+                    }
+                }
+            }
+        },
+        "trip": {
+            "card": {
+                "header": {
+                    "id": "TRP-{id}",
+                    "category": {
+                        "agriculture-inputs": "Insumos Agrícolas",
+                        "agriculture-products": "Produtos Agrícolas",
+                        "construction": "Construção",
+                        "machinery-equipment": "Maquinaria e Equipamento",
+                        "fmcg": "Bens de Consumo (FMCG)",
+                        "general-cargo": "Carga Geral",
+                        "medicine": "Medicamentos",
+                        "mining": "Mineração",
+                        "oil-gas": "Óleo e Gás",
+                        "vehicles": "Veículos",
+                        "other": "Outros"
+                    },
+                    "status": {
+                        "drafted": "Rascunho",
+                        "prospect": "Prospecção",
+                        "open": "Aberto",
+                        "booked": "Transporte confirmado",
+                        "to-loading": "A caminho da carga",
+                        "at-loading": "No local de carga",
+                        "loading": "A carregar",
+                        "on-route": "A caminho da descarga",
+                        "at-border": "Na fronteira",
+                        "stopped": "Parado",
+                        "issue": "Problema reportado",
+                        "at-offloading": "No local de descarga",
+                        "offloading": "A descarregar",
+                        "delivered": "Entregue",
+                        "completed": "Concluído",
+                        "cancelled": "Cancelado",
+                        "waiting-documents": "A aguardar documentos"
                     }
                 }
             }
@@ -1172,9 +1210,10 @@
                     "button": "Generate KPI Report"
                 },
                 "data-window": {
-                    "month": "Last month",
-                    "quarter": "Last quarter",
-                    "year": "Last year"
+                    "week": "Last 7 days",
+                    "month": "Last 30 days",
+                    "quarter": "Last 3 months",
+                    "year": "Last 12 months"
                 },
                 "data": {
                     "triggers": {
@@ -1285,11 +1324,11 @@
             },
             "tendencies": {
                 "title": "Performance Trends",
-                "performance": {
-                    "title": "Loading and offloading times",
-                    "load": "Loading duration",
-                    "offload": "Offloading duration",
-                    "unit": "days"
+                "on-time": {
+                    "title": "On time Arrival",
+                    "total-on-time": "Arrived on time",
+                    "total": "Total of orders",
+                    "unit": "orders"
                 },
                 "incidents": {
                     "title": "Incident Distribution",
@@ -1298,15 +1337,15 @@
                     "docummentation": "Docummentation",
                     "inspection": "Inspection"
                 },
-                "emissions": {
-                    "title": "Carbon footprint",
-                    "carbon": "CO₂ reduction via backload",
-                    "unit": "g/km"
+                "loading": {
+                    "title": "Average time spend loading",
+                    "load": "Loading duration",
+                    "unit": "days"
                 },
-                "savings": {
-                    "title": "Cost reductions",
-                    "saved": "Saved with backload",
-                    "unit": "MZN"
+                "offloading": {
+                    "title": "Average time spend offloading",
+                    "offload": "Offloading duration",
+                    "unit": "days"
                 }
             }
         },
