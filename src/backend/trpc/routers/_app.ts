@@ -13,6 +13,7 @@ import { ordersRouter } from "@/modules/app/routes/carrier/server/orders-procedu
 import { carrierMapRouter } from "@/modules/app/routes/carrier/server/map-procedures";
 import { carrierDashboardRouter } from "@/modules/app/routes/carrier/server/dashboard-procedures";
 import { tripsRouter } from "@/modules/app/routes/carrier/server/trips-procedures";
+import { carrierKpisRouter } from "@/modules/app/routes/carrier/server/kpis-procedures";
 
 export const appRouter = createTRPCRouter({
     // merge your routers here
@@ -31,6 +32,7 @@ export const appRouter = createTRPCRouter({
     orders: ordersRouter,
     carrierMap: carrierMapRouter,
     carrierDashboard: carrierDashboardRouter,
+    carrierKpis: carrierKpisRouter,
 });
 
 // export type definition of API
