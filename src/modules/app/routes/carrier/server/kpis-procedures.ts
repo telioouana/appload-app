@@ -60,7 +60,7 @@ export const carrierKpisRouter = createTRPCRouter({
                                     trips: count().mapWith(Number),
                                     backload: sql<number>`count(${trip.id}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
                                     emissions: sql<number>`sum(${trip.defaultCoefficient} * ${trip.loadFactor} * ${trip.ageFactor} * (${order.distance} / 1000) * ${trip.loadedWeight}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
-                                    total: sql<number>`sum(((${trip.carrierTotal} - ${trip.totalFuelCost}) / ${trip.totalFuelCost}) * 100) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
+                                    total: sql<number>`sum(((${trip.carrierTotal} - ${trip.totalFuelCost}) / nullif(${trip.totalFuelCost}, 0)) * 100) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
                                 }
                 )
                 .from(trip)
