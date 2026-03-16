@@ -40,7 +40,7 @@ export function AcceptOrderForm({ values }: Props) {
     const debouncedDriver = useDebouncedCallback(() => {
         const data = driversList.filter((value) => value.name.toLowerCase().includes(driver.toLowerCase()))
         setDrivers(data ?? [])
-    }, { wait: 500 })
+    }, { wait: 0 })
 
     const normalizePlate = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "")
     const debouncedFleet = useDebouncedCallback((query: string) => {
@@ -49,7 +49,7 @@ export function AcceptOrderForm({ values }: Props) {
             normalizePlate(value.truck.regPlate).includes(normalizedQuery)
         )
         setFleet(data ?? [])
-    }, { wait: 500 })
+    }, { wait: 0 })
 
     const refDriver = useOnclickOutside(() => {
         setDriver("")
