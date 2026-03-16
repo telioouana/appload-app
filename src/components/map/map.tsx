@@ -64,7 +64,7 @@ export function Map({ markers }: Props) {
                 minWidth: 200,
                 maxWidth: 200,
                 headerDisabled: true,
-                disableAutoPan: true
+                disableAutoPan: false
             });
 
             const bounds = new LatLngBounds();

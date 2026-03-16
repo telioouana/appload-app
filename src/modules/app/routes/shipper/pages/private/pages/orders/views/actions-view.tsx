@@ -81,7 +81,7 @@ export function ActionsView({ path }: { path: ORDERS_PATH }) {
                             />
                         </InputGroup>
 
-                        <Tabs value={tab} onValueChange={(value) => view(value as LAYOUT_VIEW)}>
+                        <Tabs className="hidden" value={tab} onValueChange={(value) => view(value as LAYOUT_VIEW)}>
                             <TabsList className="rounded-md">
                                 <TabsTrigger value="grid" className="rounded-md">
                                     <Tooltip>

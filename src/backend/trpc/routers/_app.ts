@@ -13,6 +13,7 @@ import { driverRouter } from "@/modules/app/routes/carrier/server/driver-procedu
 import { ordersRouter } from "@/modules/app/routes/carrier/server/orders-procedures";
 import { carrierMapRouter } from "@/modules/app/routes/carrier/server/map-procedures";
 import { historyRouter } from "@/modules/app/routes/carrier/server/history-procedures";
+import { carrierKpisRouter } from "@/modules/app/routes/carrier/server/kpis-procedures";
 import { carrierDashboardRouter } from "@/modules/app/routes/carrier/server/dashboard-procedures";
 
 export const appRouter = createTRPCRouter({
@@ -32,6 +33,7 @@ export const appRouter = createTRPCRouter({
     orders: ordersRouter,
     history: historyRouter,
     carrierMap: carrierMapRouter,
+    carrierKpis: carrierKpisRouter,
     carrierDashboard: carrierDashboardRouter,
 });
 

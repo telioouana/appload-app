@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image";
 import { IconLineDashed } from "@tabler/icons-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -32,7 +33,16 @@ export function ListCard({ values }: Props) {
             <CardContent className="p-4">
                 <div className="grid grid-cols-4 items-start gap-4">
                     <div className="flex items-center gap-3">
-                        {/* {avatar("size-12")} */}
+                        <div className="w-30 h-10 shrink-0">
+                            <Image
+                                src="/trucks/truck-icon.svg"
+                                alt="truck icon"
+                                width={1}
+                                height={1}
+                                priority
+                                className="w-full h-full"
+                            />
+                        </div>
                         <div className="flex flex-col gap-1">
                             <p className="text-sm font-medium truncate">{values.truck.internalId ?? values.truck.regPlate}</p>
                             <p className="text-sm font-medium truncate">{values.truck.type}</p>
@@ -84,7 +94,7 @@ export function ListCard({ values }: Props) {
                                         <span>{values.trailer?.loadingBay.type}</span>
                                     </div>
                                 </div>
-                                
+
                                 {values.link && (
                                     <div className="flex flex-col gap-1 truncate">
                                         <span className="text-muted-foreground text-xs">
