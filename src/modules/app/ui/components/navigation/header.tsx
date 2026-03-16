@@ -87,9 +87,10 @@ export function Header() {
                 }))}
             />
 
-            <Button
-                variant="outline"
+            <Button 
                 size="icon"
+                variant="outline"
+                className="hidden"
             >
                 <IconBell />
             </Button>

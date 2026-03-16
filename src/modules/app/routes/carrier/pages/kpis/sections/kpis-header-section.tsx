@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 
 export function KPIsHeaderSection() {
-    const t = useTranslations("Shipper.kpis.page.header")
+    const t = useTranslations("Carrier.kpis.page.header")
     return (
         <div className="flex justify-between items-center gap-4">
             <div className="flex flex-col gap-1">

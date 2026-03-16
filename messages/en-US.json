@@ -275,9 +275,10 @@
                     "button": "Generate KPI Report"
                 },
                 "data-window": {
-                    "month": "Last month",
-                    "quarter": "Last quarter",
-                    "year": "Last year"
+                    "week": "Last 7 days",
+                    "month": "Last 30 days",
+                    "quarter": "Last 3 months",
+                    "year": "Last 12 months"
                 },
                 "data": {
                     "triggers": {
@@ -374,13 +375,9 @@
                                 "label": "CO₂ reduction via backload",
                                 "unit": "g/km"
                             },
-                            "saved-with-backload": {
-                                "label": "Total savings via backload optimization",
-                                "unit": {
-                                    "MZN": "MZN",
-                                    "ZAR": "ZAR",
-                                    "USD": "USD"
-                                }
+                            "margin-over-fuel": {
+                                "label": "Margin over fuel cost on backload trips",
+                                "unit": "%"
                             }
                         }
                     }
@@ -388,11 +385,11 @@
             },
             "tendencies": {
                 "title": "Performance Trends",
-                "performance": {
-                    "title": "Loading and offloading times",
-                    "load": "Loading duration",
-                    "offload": "Offloading duration",
-                    "unit": "days"
+                "on-time": {
+                    "title": "On time Arrival",
+                    "total-on-time": "Arrived on time",
+                    "total": "Total of orders",
+                    "unit": "orders"
                 },
                 "incidents": {
                     "title": "Incident Distribution",
@@ -401,15 +398,15 @@
                     "docummentation": "Docummentation",
                     "inspection": "Inspection"
                 },
-                "emissions": {
-                    "title": "Carbon footprint",
-                    "carbon": "CO₂ reduction via backload",
-                    "unit": "g/km"
+                "loading": {
+                    "title": "Average time spend loading",
+                    "load": "Loading duration",
+                    "unit": "days"
                 },
-                "savings": {
-                    "title": "Cost reductions",
-                    "saved": "Saved with backload",
-                    "unit": "MZN"
+                "offloading": {
+                    "title": "Average time spend offloading",
+                    "offload": "Offloading duration",
+                    "unit": "days"
                 }
             }
         },

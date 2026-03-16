@@ -9,7 +9,7 @@ import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init";
 
 const SECTION = ["operational", "incidents", "costs", "efficiency"] as const
 
-export const shipperKpisRouter = createTRPCRouter({
+export const carrierKpisRouter = createTRPCRouter({
     report: protectedProcedure
         .input(
             z.object({
@@ -54,23 +54,23 @@ export const shipperKpisRouter = createTRPCRouter({
                                     trips: count().mapWith(Number),
                                     distance: sql<number>`sum(distinct ${order.distance})`.mapWith(Number),
                                     weight: sum(trip.loadedWeight).mapWith(Number),
-                                    total: sum(trip.shipperTotal).mapWith(Number),
+                                    total: sum(trip.carrierTotal).mapWith(Number),
                                 }
                                 : {
                                     trips: count().mapWith(Number),
                                     backload: sql<number>`count(${trip.id}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
                                     emissions: sql<number>`sum(${trip.defaultCoefficient} * ${trip.loadFactor} * ${trip.ageFactor} * (${order.distance} / 1000) * ${trip.loadedWeight}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
-                                    total: sql<number>`sum(${trip.shipperTotal} / 0.7 - ${trip.shipperTotal}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
+                                    total: sql<number>`sum(((${trip.carrierTotal} - ${trip.totalFuelCost}) / ${trip.totalFuelCost}) * 100) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
                                 }
                 )
-                .from(order)
-                .innerJoin(trip, eq(trip.orderId, order.id))
+                .from(trip)
+                .innerJoin(order, eq(trip.orderId, order.id))
                 .where(and(
                     eq(order.status, "completed"),
                     eq(trip.status, "completed"),
                     eq(order.currency, currency),
                     between(trip.createdAt, startDate, endDate),
-                    eq(order.shipperId, session.activeOrganizationId)
+                    eq(trip.carrierId, session.activeOrganizationId)
                 ))
 
             return kpis
@@ -96,14 +96,14 @@ export const shipperKpisRouter = createTRPCRouter({
                     total: count(trip).mapWith(Number),
                     date: trip.arrivalAtLoading
                 })
-                .from(order)
-                .innerJoin(trip, eq(trip.orderId, order.id))
+                .from(trip)
+                .innerJoin(order, eq(trip.orderId, order.id))
                 .where(and(
                     eq(order.status, "completed"),
                     eq(trip.status, "completed"),
                     eq(order.currency, currency),
                     between(trip.createdAt, startDate, endDate),
-                    eq(order.shipperId, session.activeOrganizationId)
+                    eq(trip.carrierId, session.activeOrganizationId)
                 ))
                 .groupBy(trip.arrivalAtLoading)
 
@@ -132,14 +132,14 @@ export const shipperKpisRouter = createTRPCRouter({
                     docummentation: sum(trip.numberOfDocumentationIssuesStops).mapWith(Number),
                     inspection: sum(trip.numberOfPoliceStops).mapWith(Number),
                 })
-                .from(order)
-                .innerJoin(trip, eq(trip.orderId, order.id))
+                .from(trip)
+                .innerJoin(order, eq(trip.orderId, order.id))
                 .where(and(
                     eq(order.status, "completed"),
                     eq(trip.status, "completed"),
                     eq(order.currency, currency),
                     between(trip.createdAt, startDate, endDate),
-                    eq(order.shipperId, session.activeOrganizationId)
+                    eq(trip.carrierId, session.activeOrganizationId)
                 ))
 
             return kpis
@@ -164,14 +164,14 @@ export const shipperKpisRouter = createTRPCRouter({
                     load: avg(trip.daysSpendLoading).mapWith(Number),
                     date: trip.arrivalAtLoading
                 })
-                .from(order)
-                .innerJoin(trip, eq(trip.orderId, order.id))
+                .from(trip)
+                .innerJoin(order, eq(trip.orderId, order.id))
                 .where(and(
                     eq(order.status, "completed"),
                     eq(trip.status, "completed"),
                     eq(order.currency, currency),
                     between(trip.createdAt, startDate, endDate),
-                    eq(order.shipperId, session.activeOrganizationId)
+                    eq(trip.carrierId, session.activeOrganizationId)
                 ))
                 .groupBy(trip.arrivalAtLoading)
 
@@ -198,14 +198,14 @@ export const shipperKpisRouter = createTRPCRouter({
                     offload: avg(trip.daysSpendOffloading).mapWith(Number),
                     date: trip.arrivalAtLoading
                 })
-                .from(order)
-                .innerJoin(trip, eq(trip.orderId, order.id))
+                .from(trip)
+                .innerJoin(order, eq(trip.orderId, order.id))
                 .where(and(
                     eq(order.status, "completed"),
                     eq(trip.status, "completed"),
                     eq(order.currency, currency),
                     between(trip.createdAt, startDate, endDate),
-                    eq(order.shipperId, session.activeOrganizationId)
+                    eq(trip.carrierId, session.activeOrganizationId)
                 ))
                 .groupBy(trip.arrivalAtLoading)
 

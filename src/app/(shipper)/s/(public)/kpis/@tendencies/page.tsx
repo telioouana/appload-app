@@ -17,6 +17,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
             startDate = new Date(now.setDate(now.getDate() - 7));
             endDate = new Date();
             break;
+        case undefined:
         case "month":
             startDate = new Date(now.setDate(now.getDate() - 30));
             endDate = new Date();

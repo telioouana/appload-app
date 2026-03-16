@@ -1,11 +1,12 @@
-import type { cargo, driver, link, order, tracking, trailer, trip, truck, user } from "@/backend/db/schema"
 import { FISCAL_REGIME } from "@/backend/db/types"
+import type { cargo, driver, link, order, tracking, trailer, trip, truck, user } from "@/backend/db/schema"
 
 export type LAYOUT_VIEW = "list" | "grid"
-export type PERIOD = "month" | "quarter" | "year"
 export type ORDERS_PATH = "all" | "private" | "public"
-export type STATUS_FILTER = "all" | "active" | "idle" | "free"
 export type TRIPS_PATH = "all" | "booked" | "on-going"
+export type PERIOD = "week" | "month" | "quarter" | "year"
+export type STATUS_FILTER = "all" | "active" | "idle" | "free"
+export type KPIs_TABS = "operational" | "incidents" | "costs" | "efficiency"
 export type MAP_FILTER = "all" | "loading" | "moving" | "stopped" | "issue" | "offloading"
 
 export type Driver = {

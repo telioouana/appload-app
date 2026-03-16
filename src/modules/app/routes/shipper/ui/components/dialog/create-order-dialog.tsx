@@ -119,7 +119,7 @@ export function CreateOrderDialog({ path, share }: Props) {
     }
 
     // eslint-disable-next-line react-hooks/incompatible-library
-    const [ConfirmDialog, confirm] = useConfirm(`Shipper.main.order.dialog.create.confirm.${form.watch().share as string}`) as [React.ComponentType, () => Promise<boolean>]
+    const [ConfirmDialog, confirm] = useConfirm(`Shipper.order.dialog.create.confirm.${form.watch().share as string}`) as [React.ComponentType, () => Promise<boolean>]
     async function handleNext() {
         form.clearErrors()
 
