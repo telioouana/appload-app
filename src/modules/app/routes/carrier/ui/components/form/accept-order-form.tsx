@@ -7,19 +7,19 @@ import { withMask } from "use-mask-input"
 import { useTranslations } from "next-intl"
 import { useFormContext } from "react-hook-form"
 import { useDebouncedCallback } from "@tanstack/react-pacer"
+import { IconArrowRight, IconBiohazard, IconMapPin, IconPackage, IconSnowflake, IconTruck } from "@tabler/icons-react"
 
+import { SelectItem } from "@/components/ui/select"
+import { TextInput } from "@/components/customs/text"
+import { DateInput } from "@/components/customs/date"
 import { Separator } from "@/components/ui/separator"
+import { SelectInput } from "@/components/customs/select"
 import { Command, CommandItem, CommandList } from "@/components/ui/command"
 import { FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from "@/components/ui/field"
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group"
 
-import { Driver, Fleet, OrderValues } from "../../../types/types"
 import { TripSchemaForm } from "../dialog/accept-order-dialog"
-import { IconArrowRight, IconBiohazard, IconMapPin, IconPackage, IconSnowflake, IconTruck } from "@tabler/icons-react"
-import { TextInput } from "@/components/customs/text"
-import { SelectInput } from "@/components/customs/select"
-import { SelectItem } from "@/components/ui/select"
-import { DateInput } from "@/components/customs/date"
+import { Driver, Fleet, OrderValues } from "../../../types/types"
 
 interface Props {
     values: OrderValues
@@ -317,7 +317,7 @@ export function AcceptOrderForm({ values }: Props) {
                             isPending
                         >
                             <SelectItem value="recent">{t("fields.truck-age.value.recent")}</SelectItem>
-                            <SelectItem value="not-recent">{t("fields.truck-age.value.non-recent")}</SelectItem>
+                            <SelectItem value="not-recent">{t("fields.truck-age.value.not-recent")}</SelectItem>
                         </SelectInput>
 
                         <TextInput

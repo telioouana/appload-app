@@ -723,7 +723,7 @@
                                 "placeholder": "Select a truck from the search",
                                 "value": {
                                     "recent": "Recent",
-                                    "non-recent": "Non recent"
+                                    "not-recent": "Not recent"
                                 },
                                 "error": "Truck's age was not provided"
                             },

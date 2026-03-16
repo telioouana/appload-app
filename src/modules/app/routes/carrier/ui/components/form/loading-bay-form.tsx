@@ -9,10 +9,12 @@ import { SelectInput } from "@/components/customs/select";
 import { NumberInput } from "@/components/customs/number";
 import { FieldLabel, FieldLegend, FieldSet } from "@/components/ui/field";
 
+import { FullFleetForm } from "../dialog/register-fleet-dialog";
+
 export function LoadingBayForm({ name }: { name: "truck" | "trailer" | "link" }) {
     const t = useTranslations("Carrier.company.fleet.dialog.form.loading-bay")
 
-    const { control, formState: { isSubmitting } } = useFormContext()
+    const { control, formState: { isSubmitting } } = useFormContext<FullFleetForm>()
 
     return (
         <FieldSet className="flex flex-col">
