@@ -79,7 +79,6 @@ export function AcceptOrderForm({ values }: Props) {
 
     function handleSelectFleet(value: Fleet) {
         setValue("truckPlate", value.truck.regPlate)
-        console.log(value.truck.year)
         const age = value.truck.year >= 2015 ? "recent" : "not-recent"
         setValue("truckAge", age)
         setValue("trailerPlate", value.trailer?.regPlate)
