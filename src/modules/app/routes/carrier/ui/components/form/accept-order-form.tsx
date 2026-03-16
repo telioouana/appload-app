@@ -42,8 +42,12 @@ export function AcceptOrderForm({ values }: Props) {
         setDrivers(data ?? [])
     }, { wait: 500 })
 
-    const debouncedFleet = useDebouncedCallback(() => {
-        const data = fleetList.filter((value) => value.truck.regPlate.toLowerCase().includes(plate.toLowerCase()))
+    const normalizePlate = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "")
+    const debouncedFleet = useDebouncedCallback((query: string) => {
+        const normalizedQuery = normalizePlate(query)
+        const data = fleetList.filter((value) =>
+            normalizePlate(value.truck.regPlate).includes(normalizedQuery)
+        )
         setFleet(data ?? [])
     }, { wait: 500 })
 
@@ -64,7 +68,7 @@ export function AcceptOrderForm({ values }: Props) {
 
     function handleChangeFleet(input: string) {
         setPlate(input)
-        debouncedFleet()
+        debouncedFleet(input)
     }
 
     function handleSelectDriver(value: Driver) {
