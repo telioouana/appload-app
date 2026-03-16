@@ -46,16 +46,32 @@ export function FleetView({ status, view }: Props) {
                         ? (
                             <div className="grid grid-rows-1 w-full gap-4">
                                 {data.pages.flatMap((page) =>
-                                    page.items.map(({ driver, user, truck, trip, tracking }) => {
-                                        return <ListCard key={driver.id} />
+                                    page.items.map(({ driver, user, truck, tracking, trailer, link }) => {
+                                        const values = {
+                                            truck,
+                                            trailer,
+                                            link,
+                                            driver,
+                                            user,
+                                            tracking
+                                        }
+                                        return <ListCard key={truck.id} values={values} />
                                     })
                                 )}
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {data.pages.flatMap((page) =>
-                                    page.items.map(({ driver, user, truck, trip, tracking }) => {
-                                        return <GridCard key={driver.id} />
+                                    page.items.map(({ driver, user, truck, tracking, trailer, link }) => {
+                                        const values = {
+                                            truck,
+                                            trailer,
+                                            link,
+                                            driver,
+                                            user,
+                                            tracking
+                                        }
+                                        return <GridCard key={truck.id} values={values} />
                                     })
                                 )}
                             </div>

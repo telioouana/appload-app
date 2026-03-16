@@ -1,4 +1,4 @@
-import type { cargo, link, order, trailer, trip, truck } from "@/backend/db/schema"
+import type { cargo, driver, link, order, tracking, trailer, trip, truck, user } from "@/backend/db/schema"
 import { FISCAL_REGIME } from "@/backend/db/types"
 
 export type LAYOUT_VIEW = "list" | "grid"
@@ -13,6 +13,22 @@ export type Driver = {
     name: string;
     phone: string | null;
     passport: string | null;
+}
+
+export type DriverValues = {
+    driver: typeof driver.$inferSelect
+    user: typeof user.$inferSelect
+    truck: typeof truck.$inferSelect | null
+    tracking: typeof tracking.$inferSelect | null
+}
+
+export type FleetValues = {
+    truck: typeof truck.$inferSelect
+    trailer: typeof trailer.$inferSelect | null
+    link: typeof link.$inferSelect | null
+    driver: typeof driver.$inferSelect | null
+    user: typeof user.$inferSelect | null
+    tracking: typeof tracking.$inferSelect | null
 }
 
 export type Fleet = {
@@ -35,4 +51,5 @@ export type TripValues = {
     order: typeof order.$inferSelect,
     cargo: typeof cargo.$inferSelect,
     trip: typeof trip.$inferSelect,
+    tracking: typeof tracking.$inferSelect | null
 }

@@ -38,7 +38,7 @@ export function HeaderView() {
 
             <div className="flex gap-2">
                 <RegisterDriverDialog />
-                <Tabs value={tab} onValueChange={(value) => view(value as LAYOUT_VIEW)}>
+                <Tabs className="hidden" value={tab} onValueChange={(value) => view(value as LAYOUT_VIEW)}>
                     <TabsList className="rounded-md">
                         <TabsTrigger value="grid" className="rounded-md">
                             <Tooltip>

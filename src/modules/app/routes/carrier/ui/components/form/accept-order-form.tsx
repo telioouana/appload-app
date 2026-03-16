@@ -44,7 +44,6 @@ export function AcceptOrderForm({ values }: Props) {
 
     const debouncedFleet = useDebouncedCallback(() => {
         const data = fleetList.filter((value) => value.truck.regPlate.toLowerCase().includes(plate.toLowerCase()))
-        console.log(data)
         setFleet(data ?? [])
     }, { wait: 500 })
 
@@ -66,8 +65,6 @@ export function AcceptOrderForm({ values }: Props) {
     function handleChangeFleet(input: string) {
         setPlate(input)
         debouncedFleet()
-        console.log(input)
-        console.log(plate)
     }
 
     function handleSelectDriver(value: Driver) {
@@ -82,12 +79,11 @@ export function AcceptOrderForm({ values }: Props) {
 
     function handleSelectFleet(value: Fleet) {
         setValue("truckPlate", value.truck.regPlate)
-        const age = value.truck.year >= 2015 ? "recent" : "non-recent"
+        console.log(value.truck.year)
+        const age = value.truck.year >= 2015 ? "recent" : "not-recent"
         setValue("truckAge", age)
-        if (value.truck.type === "articulated") {
-            setValue("trailerPlate", value.trailer?.regPlate)
-            setValue("linkPlate", value.link?.regPlate)
-        }
+        setValue("trailerPlate", value.trailer?.regPlate)
+        setValue("linkPlate", value.link?.regPlate)
 
         setPlate("")
         setFleet([])
@@ -321,7 +317,7 @@ export function AcceptOrderForm({ values }: Props) {
                             isPending
                         >
                             <SelectItem value="recent">{t("fields.truck-age.value.recent")}</SelectItem>
-                            <SelectItem value="non-recent">{t("fields.truck-age.value.non-recent")}</SelectItem>
+                            <SelectItem value="not-recent">{t("fields.truck-age.value.non-recent")}</SelectItem>
                         </SelectInput>
 
                         <TextInput

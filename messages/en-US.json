@@ -790,6 +790,13 @@
                         "cancelled": "Cancelado",
                         "waiting-documents": "A aguardar documentos"
                     }
+                },
+                "content": {
+                    "route":"Route",
+                    "distance": "Distance",
+                    "driver": "Driver",
+                    "truck": "Truck",
+                    "location": "Position"
                 }
             }
         },

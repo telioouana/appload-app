@@ -10,38 +10,36 @@ import { useTRPC } from "@/backend/trpc/client"
 
 import { InfiniteScroll } from "@/components/customs/scroll"
 
-import { TRIPS_PATH } from "../../../types/types"
 import { TripCard } from "../../../ui/components/card/trip-card"
 import { EmptyOrders } from "@/modules/app/ui/components/states/empty-orders"
 import { OrdersErrorFallback } from "@/modules/app/ui/components/states/orders-error-fallback"
 import { OrdersLoadingFallback } from "@/modules/app/ui/components/states/orders-loading-fallback"
 
 
-export function TripsView({ path }: { path: TRIPS_PATH }) {
+export function HistoryView() {
     const trpc = useTRPC()
 
     const {
-        data: trips,
+        data: history,
         hasNextPage,
         isFetchingNextPage,
         fetchNextPage,
     } = useSuspenseInfiniteQuery(
-        trpc.trips.all.infiniteQueryOptions({
-            path,
+        trpc.history.all.infiniteQueryOptions({
             limit: DEFAULT_PAGE_LIMIT,
         }, {
             getNextPageParam: (lastPage) => lastPage.nextCursor,
         })
     )
 
-    if (trips.pages[0].items.length === 0) return <EmptyOrders />
+    if (history.pages[0].items.length === 0) return <EmptyOrders />
 
     return (
         <Suspense fallback={<OrdersLoadingFallback />} >
             <ErrorBoundary fallback={<OrdersErrorFallback />} >
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 gap-6 h-full w-full">
-                        {trips.pages.flatMap((page) =>
+                        {history.pages.flatMap((page) =>
                             page.items.map(({ order, cargo, trip, location }) => {
                                 const values = {
                                     trip,

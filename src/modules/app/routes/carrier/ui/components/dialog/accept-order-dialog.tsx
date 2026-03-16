@@ -94,6 +94,7 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
     async function handleSubmit(values: TripSchemaForm) {
         form.clearErrors()
 
+        console.log(values)
         accept.mutateAsync({
             values
         })

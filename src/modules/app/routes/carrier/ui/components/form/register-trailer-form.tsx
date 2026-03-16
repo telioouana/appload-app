@@ -138,10 +138,15 @@ export function RegisterTrailerForm({ name, hasLink, addLink, remove }: Props) {
 
                     <TextInput
                         control={control}
-                        name={`${name}.vin`}
-                        label={t("vin.label")}
+                        name="truck.vin"
                         isPending={isSubmitting}
+                        label={t("vin.label")}
                         placeholder={t("vin.placeholder")}
+                        hasPattern
+                        // Alphanumeric, exactly 17, excludes I, O, Q
+                        pattern="^[A-HJ-NPR-Z0-9]{17}$" 
+                        regex={/[^a-zA-Z0-9]/g}
+                        length={17}
                     />
                 </div>
             </FieldSet>

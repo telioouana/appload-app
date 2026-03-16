@@ -4,7 +4,7 @@ import { and, count, desc, eq, lt, or, sql } from "drizzle-orm";
 
 import { db } from "@/backend/db";
 import { FLEET_STATUS, urlSchema } from "@/backend/db/types";
-import { driver, tracking, trip, truck, user } from "@/backend/db/schema";
+import { driver, tracking, truck, user } from "@/backend/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init";
 
 export const driverRouter = createTRPCRouter({
@@ -66,14 +66,15 @@ export const driverRouter = createTRPCRouter({
             const { cursor, limit, status } = input
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+            
+            const location = db.select().from(tracking).where(eq(tracking.truckPlate, truck.regPlate)).orderBy(desc(tracking.createdAt)).limit(1).as("tracking")
 
             const drivers = await db
                 .select()
                 .from(driver)
                 .innerJoin(user, and(eq(user.id, driver.userId), eq(user.type, "driver")))
                 .leftJoin(truck, eq(truck.id, driver.truckId))
-                .leftJoin(trip, eq(trip.driverId, driver.id))
-                .leftJoin(tracking, eq(tracking.truckPlate, truck.regPlate))
+                .leftJoinLateral(location, sql`true`)
                 .where(and(
                     eq(driver.carrierId, session.activeOrganizationId),
                     status

@@ -1,5 +1,11 @@
-export function GridCard() {
+import { FleetValues } from "../../../../types/types"
+
+interface Props {
+    values: FleetValues
+}
+
+export function GridCard({ values }: Props) {
     return (
-        <div>grid-card</div>
+        <div>{JSON.stringify(values)}</div>
     )
 }

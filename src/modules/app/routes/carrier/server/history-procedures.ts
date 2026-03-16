@@ -1,19 +1,16 @@
 import { z } from "zod"
 import { TRPCError } from "@trpc/server"
-import { and, count, desc, eq, lt, ne, or, sql, sum } from "drizzle-orm"
+import { and, count, desc, eq, lt, or, sql, sum } from "drizzle-orm"
 
 import { db } from "@/backend/db"
 import { cargo, order, tracking, trip } from "@/backend/db/schema"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
 
-const PATHS = ["all", "booked", "on-going"] as const
-
-export const tripsRouter = createTRPCRouter({
+export const historyRouter = createTRPCRouter({
     all: protectedProcedure
         .input(
             z.object({
                 limit: z.number().min(1).max(8),
-                path: z.enum(PATHS),
                 cursor: z.object({
                     id: z.number(),
                     updatedAt: z.date(),
@@ -22,7 +19,7 @@ export const tripsRouter = createTRPCRouter({
         )
         .query(async ({ ctx, input }) => {
             const { session } = ctx.auth
-            const { cursor, path, limit } = input
+            const { cursor, limit } = input
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
@@ -35,25 +32,11 @@ export const tripsRouter = createTRPCRouter({
                 .innerJoin(cargo, eq(cargo.orderId, order.id))
                 .leftJoinLateral(location, sql`true`)
                 .where(and(
-                    ne(trip.status, "cancelled"),
-                    ne(trip.status, "completed"),
                     eq(trip.carrierId, session.activeOrganizationId),
-                    path === "on-going"
-                        ? or(
-                            eq(trip.status, "to-loading"),
-                            eq(trip.status, "at-loading"),
-                            eq(trip.status, "loading"),
-                            eq(trip.status, "waiting-documents"),
-                            eq(trip.status, "on-route"),
-                            eq(trip.status, "stopped"),
-                            eq(trip.status, "issue"),
-                            eq(trip.status, "at-border"),
-                            eq(trip.status, "at-offloading"),
-                            eq(trip.status, "offloading"),
-                        )
-                        : path === "booked"
-                            ? eq(trip.status, path)
-                            : undefined,
+                    or(
+                        eq(trip.status, "completed"),
+                        eq(trip.status, "cancelled"),
+                    ),
                     cursor
                         ? or(
                             lt(trip.updatedAt, cursor.updatedAt),
@@ -88,13 +71,7 @@ export const tripsRouter = createTRPCRouter({
         }),
 
     resume: protectedProcedure
-        .input(
-            z.object({
-                path: z.enum(PATHS),
-            })
-        )
-        .query(async ({ ctx, input }) => {
-            const { path } = input
+        .query(async ({ ctx }) => {
             const { session } = ctx.auth
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
@@ -109,25 +86,11 @@ export const tripsRouter = createTRPCRouter({
                 .innerJoin(order, eq(trip.orderId, order.id))
                 .innerJoin(cargo, eq(cargo.orderId, order.id))
                 .where(and(
-                    ne(trip.status, "cancelled"),
-                    ne(trip.status, "completed"),
                     eq(trip.carrierId, session.activeOrganizationId),
-                    path === "on-going"
-                        ? and(
-                            eq(trip.status, "to-loading"),
-                            eq(trip.status, "at-loading"),
-                            eq(trip.status, "loading"),
-                            eq(trip.status, "waiting-documents"),
-                            eq(trip.status, "on-route"),
-                            eq(trip.status, "stopped"),
-                            eq(trip.status, "issue"),
-                            eq(trip.status, "at-border"),
-                            eq(trip.status, "at-offloading"),
-                            eq(trip.status, "offloading"),
-                        )
-                        : path === "booked"
-                            ? eq(trip.status, path)
-                            : undefined,
+                    or(
+                        eq(trip.status, "completed"),
+                        eq(trip.status, "cancelled"),
+                    )
                 ))
 
             return trips

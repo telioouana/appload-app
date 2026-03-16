@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { CURRENCY, FISCAL_REGIME, WEIGHT_UNIT } from "@/backend/db/types";
+import { CURRENCY, FISCAL_REGIME, TRUCK_AGE, WEIGHT_UNIT } from "@/backend/db/types";
 
 export function createTripSchema(t: (key: string) => string) {
     const schema = z.object({
@@ -13,7 +13,7 @@ export function createTripSchema(t: (key: string) => string) {
         driverPhoneNumber: z.string({ error: t("form.fields.phone-number.error.empty") }).min(9, { error: t("form.fields.phone-number.error.invalid") }).max(15, { error: t("form.fields.phone-number.error.invalid") }),
         driverPassport: z.string().optional(),
         truckPlate: z.string({ error: t("form.fields.truck-plate.error") }).nonempty({ error: t("form.fields.truck-plate.error") }),
-        truckAge: z.string({ error: t("form.fields.truck-age.error") }).nonempty({ error: t("form.fields.truck-age.error") }),
+        truckAge: z.enum(TRUCK_AGE, { error: t("form.fields.truck-age.error") }),
         trailerPlate: z.string().optional(),
         linkPlate: z.string().optional(),
 
