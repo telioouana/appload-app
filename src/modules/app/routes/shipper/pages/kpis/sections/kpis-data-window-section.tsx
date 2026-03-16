@@ -16,28 +16,28 @@ export function KPIsDataWindowSection({ setDates }: { setDates: ({start, end}: {
 
     function periodChange(newPeriod: PERIOD) {
         const now = new Date();
-        const year = now.getFullYear();
-        const month = now.getMonth();
+        // const year = now.getFullYear();
+        // const month = now.getMonth();
 
         let start: Date;
         let end: Date;
 
         switch (newPeriod) {
+            case "week":
+                start = new Date(now.setDate(now.getDate() - 7));
+                end = new Date();
+                break;
             case "month":
-                // First and last day of previous month
-                start = new Date(year, month - 1, 1);
-                end = new Date(year, month, 0);
+                start = new Date(now.setDate(now.getDate() - 30));
+                end = new Date();
                 break;
             case "quarter":
-                // First and last day of previous quarter
-                const currentQuarterStartMonth = Math.floor(month / 3) * 3;
-                start = new Date(year, currentQuarterStartMonth - 3, 1);
-                end = new Date(year, currentQuarterStartMonth, 0);
+                start = new Date(now.setDate(now.getDate() - 90));
+                end = new Date();
                 break;
             case "year":
-                // First and last day of previous year
-                start = new Date(year - 1, 0, 1);
-                end = new Date(year - 1, 11, 31);
+                start = new Date(now.setDate(now.getDate() - 365));
+                end = new Date();
                 break;
             default:
                 return;
@@ -56,6 +56,7 @@ export function KPIsDataWindowSection({ setDates }: { setDates: ({start, end}: {
         <div className="flex w-full justify-center items-center">
             <Tabs value={period} onValueChange={(value) => periodChange(value as PERIOD)}>
                 <TabsList>
+                    <TabsTrigger value="week">{t("week")}</TabsTrigger>
                     <TabsTrigger value="month">{t("month")}</TabsTrigger>
                     <TabsTrigger value="quarter">{t("quarter")}</TabsTrigger>
                     <TabsTrigger value="year">{t("year")}</TabsTrigger>

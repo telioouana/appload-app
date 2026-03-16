@@ -1,11 +1,11 @@
-import { FISCAL_REGIME, FLEET_STATUS, LOADING_BAY, TRUCK_TYPE } from "@/backend/db/types"
-import type { cargo, order } from "@/backend/db/schema"
+import type { cargo, driver, link, order, tracking, trailer, trip, truck, user } from "@/backend/db/schema"
+import { FISCAL_REGIME } from "@/backend/db/types"
 
 export type LAYOUT_VIEW = "list" | "grid"
 export type PERIOD = "month" | "quarter" | "year"
 export type ORDERS_PATH = "all" | "private" | "public"
 export type STATUS_FILTER = "all" | "active" | "idle" | "free"
-export type TRIP_PATH = "all" | "booked" | "on-going" | "delivered"
+export type TRIPS_PATH = "all" | "booked" | "on-going"
 export type MAP_FILTER = "all" | "loading" | "moving" | "stopped" | "issue" | "offloading"
 
 export type Driver = {
@@ -15,51 +15,29 @@ export type Driver = {
     passport: string | null;
 }
 
-export type Fleet = {
-    truck: {
-        code: string | null;
-        plate: string;
-        age: number;
-        status: typeof FLEET_STATUS[number] | null;
-        type: typeof TRUCK_TYPE[number];
-        loading: {
-            width: number;
-            length: number;
-            height: number;
-            volume: number;
-            capacity: number;
-            type: typeof LOADING_BAY[number];
-        } | null;
-    }
-    trailer: {
-        code: string | null;
-        plate: string;
-        status: typeof FLEET_STATUS[number] | null;
-        loading: {
-            width: number;
-            length: number;
-            height: number;
-            volume: number;
-            capacity: number;
-            type: typeof LOADING_BAY[number];
-        }
-    } | null
-    link: {
-        code: string | null;
-        plate: string;
-        status: typeof FLEET_STATUS[number] | null;
-        loading: {
-            width: number;
-            length: number;
-            height: number;
-            volume: number;
-            capacity: number;
-            type: typeof LOADING_BAY[number];
-        }
-    } | null
+export type DriverValues = {
+    driver: typeof driver.$inferSelect
+    user: typeof user.$inferSelect
+    truck: typeof truck.$inferSelect | null
+    tracking: typeof tracking.$inferSelect | null
 }
 
-export type Values = {
+export type FleetValues = {
+    truck: typeof truck.$inferSelect
+    trailer: typeof trailer.$inferSelect | null
+    link: typeof link.$inferSelect | null
+    driver: typeof driver.$inferSelect | null
+    user: typeof user.$inferSelect | null
+    tracking: typeof tracking.$inferSelect | null
+}
+
+export type Fleet = {
+    truck: typeof truck.$inferSelect
+    trailer: typeof trailer.$inferSelect | null
+    link: typeof link.$inferSelect | null
+}
+
+export type OrderValues = {
     order: typeof order.$inferSelect,
     cargo: typeof cargo.$inferSelect,
     organizationId: string,
@@ -67,4 +45,11 @@ export type Values = {
     fiscalRegime: typeof FISCAL_REGIME[number],
     fleet: Fleet[]
     drivers: Driver[]
+}
+
+export type TripValues = {
+    order: typeof order.$inferSelect,
+    cargo: typeof cargo.$inferSelect,
+    trip: typeof trip.$inferSelect,
+    tracking: typeof tracking.$inferSelect | null
 }

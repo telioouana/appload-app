@@ -7,22 +7,22 @@ import { withMask } from "use-mask-input"
 import { useTranslations } from "next-intl"
 import { useFormContext } from "react-hook-form"
 import { useDebouncedCallback } from "@tanstack/react-pacer"
+import { IconArrowRight, IconBiohazard, IconMapPin, IconPackage, IconSnowflake, IconTruck } from "@tabler/icons-react"
 
+import { SelectItem } from "@/components/ui/select"
+import { TextInput } from "@/components/customs/text"
+import { DateInput } from "@/components/customs/date"
 import { Separator } from "@/components/ui/separator"
+import { SelectInput } from "@/components/customs/select"
 import { Command, CommandItem, CommandList } from "@/components/ui/command"
 import { FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from "@/components/ui/field"
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group"
 
-import { Driver, Fleet, Values } from "../../../types/types"
 import { TripSchemaForm } from "../dialog/accept-order-dialog"
-import { IconArrowRight, IconBiohazard, IconMapPin, IconPackage, IconSnowflake, IconTruck } from "@tabler/icons-react"
-import { TextInput } from "@/components/customs/text"
-import { SelectInput } from "@/components/customs/select"
-import { SelectItem } from "@/components/ui/select"
-import { DateInput } from "@/components/customs/date"
+import { Driver, Fleet, OrderValues } from "../../../types/types"
 
 interface Props {
-    values: Values
+    values: OrderValues
 }
 
 export function AcceptOrderForm({ values }: Props) {
@@ -38,14 +38,18 @@ export function AcceptOrderForm({ values }: Props) {
     const { cargo, drivers: driversList, fleet: fleetList, order } = values
 
     const debouncedDriver = useDebouncedCallback(() => {
-        const data = driversList.filter((value) => value.name.toLocaleLowerCase().includes(driver.toLocaleLowerCase()))
+        const data = driversList.filter((value) => value.name.toLowerCase().includes(driver.toLowerCase()))
         setDrivers(data ?? [])
-    }, { wait: 500 })
+    }, { wait: 0 })
 
-    const debouncedFleet = useDebouncedCallback(() => {
-        const data = fleetList.filter((value) => value.truck.plate.includes(plate))
+    const normalizePlate = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "")
+    const debouncedFleet = useDebouncedCallback((query: string) => {
+        const normalizedQuery = normalizePlate(query)
+        const data = fleetList.filter((value) =>
+            normalizePlate(value.truck.regPlate).includes(normalizedQuery)
+        )
         setFleet(data ?? [])
-    }, { wait: 500 })
+    }, { wait: 0 })
 
     const refDriver = useOnclickOutside(() => {
         setDriver("")
@@ -58,13 +62,13 @@ export function AcceptOrderForm({ values }: Props) {
     })
 
     function handleChangeDriver(input: string) {
-        debouncedDriver()
         setDriver(input)
+        debouncedDriver()
     }
 
     function handleChangeFleet(input: string) {
-        debouncedFleet()
         setPlate(input)
+        debouncedFleet(input)
     }
 
     function handleSelectDriver(value: Driver) {
@@ -78,13 +82,11 @@ export function AcceptOrderForm({ values }: Props) {
     }
 
     function handleSelectFleet(value: Fleet) {
-        setValue("truckPlate", value.truck.plate)
-        const age = value.truck.age >= 2015 ? "recent" : "non-recent"
-        if (value.truck.type === "articulated") {
-            setValue("trailerPlate", value.trailer?.plate)
-            setValue("truckAge", age)
-            setValue("linkPlate", value.link?.plate)
-        }
+        setValue("truckPlate", value.truck.regPlate)
+        const age = value.truck.year >= 2015 ? "recent" : "not-recent"
+        setValue("truckAge", age)
+        setValue("trailerPlate", value.trailer?.regPlate)
+        setValue("linkPlate", value.link?.regPlate)
 
         setPlate("")
         setFleet([])
@@ -244,7 +246,8 @@ export function AcceptOrderForm({ values }: Props) {
 
                                     ref={withMask('AAA 999 AA', {
                                         placeholder: '_',
-                                        showMaskOnHover: false
+                                        showMaskOnHover: false,
+                                        autoUnmask: true
                                     })}
                                 />
 
@@ -260,9 +263,9 @@ export function AcceptOrderForm({ values }: Props) {
                                             <CommandItem
                                                 key={index}
                                                 className=""
-                                                value={suggestion.truck.plate}
+                                                value={suggestion.truck.regPlate}
                                                 onSelect={() => handleSelectFleet(suggestion)}
-                                            >{suggestion.truck.plate}</CommandItem>
+                                            >{suggestion.truck.regPlate}</CommandItem>
                                         ))}
                                     </CommandList>
                                 </Command>
@@ -317,7 +320,7 @@ export function AcceptOrderForm({ values }: Props) {
                             isPending
                         >
                             <SelectItem value="recent">{t("fields.truck-age.value.recent")}</SelectItem>
-                            <SelectItem value="non-recent">{t("fields.truck-age.value.non-recent")}</SelectItem>
+                            <SelectItem value="not-recent">{t("fields.truck-age.value.not-recent")}</SelectItem>
                         </SelectInput>
 
                         <TextInput

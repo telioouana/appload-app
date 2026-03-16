@@ -4,10 +4,10 @@ import { and, count, desc, eq, lt, or, sql, sum } from "drizzle-orm"
 
 import { db } from "@/backend/db"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
+import { FISCAL_REGIME, TRUCK_AGE, WEIGHT_UNIT } from "@/backend/db/types"
 import { cargo, kyc, network, order, organization, trip } from "@/backend/db/schema"
 
-import { TripSchema } from "../ui/components/dialog/accept-order-dialog"
-import { FISCAL_REGIME, TRUCK_AGE, WEIGHT_UNIT } from "@/backend/db/types"
+import { TripSchema } from "../schemas/trip"
 
 const PATHS = ["all", "private", "public"] as const
 

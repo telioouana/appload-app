@@ -1,9 +1,9 @@
-import { TRIP_PATH } from "@/modules/app/routes/carrier/types/types";
+import { TRIPS_PATH } from "@/modules/app/routes/carrier/types/types"
 
-export default async function Page({ params }: { params: Promise<{ path: TRIP_PATH }> }) {
+import { PageView } from "@/modules/app/routes/carrier/pages/trips/views/page-view"
+
+export default async function Page({ params }: { params: Promise<{ path: TRIPS_PATH }> }) {
     const { path } = await params
-    
-    return (
-        <div>{path}</div>
-    )
+
+    return <PageView path={path} />
 }

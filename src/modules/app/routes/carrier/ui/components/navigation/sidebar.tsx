@@ -5,7 +5,7 @@ import Image from "next/image"
 import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { usePathname } from "next/navigation"
-import { IconBuildingFactory, IconChecks, IconChevronRight, IconDashboard, IconDeviceDesktopAnalytics, IconGlobe, IconHistory, IconLock, IconMap, IconPackage, IconPackages, IconRoute, IconTruck, IconTruckDelivery, IconTruckLoading, IconUsers } from "@tabler/icons-react"
+import { IconBuildingFactory, IconChevronRight, IconDashboard, IconDeviceDesktopAnalytics, IconGlobe, IconHistory, IconLock, IconMap, IconPackage, IconPackages, IconRoute, IconTruck, IconTruckDelivery, IconTruckLoading, IconUsers } from "@tabler/icons-react"
 
 import { Separator } from "@/components/ui/separator"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
@@ -78,11 +78,6 @@ export function CarrierSidebar({ ...props }: React.ComponentProps<typeof Sidebar
                     label: t("content.marketplace.trips.on-going"),
                     url: "/c/trips/on-going",
                     Icon: IconTruckDelivery,
-                },
-                {
-                    label: t("content.marketplace.trips.delivered"),
-                    url: "/c/trips/delivered",
-                    Icon: IconChecks,
                 }
             ]
         },

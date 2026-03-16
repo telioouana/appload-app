@@ -23,6 +23,10 @@ export default async function Page({ params }: { params: Promise<{ path: ORDERS_
         trpc.fleet.offer.queryOptions()
     )
 
+    await client.prefetchQuery(
+        trpc.driver.offer.queryOptions()
+    )
+
     return (
         <HydrateClient>
             <OrdersView path={path} />

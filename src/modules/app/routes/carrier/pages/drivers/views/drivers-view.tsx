@@ -9,8 +9,9 @@ import { DEFAULT_PAGE_LIMIT } from "@/constants"
 import { useTRPC } from "@/backend/trpc/client"
 import { FLEET_STATUS } from "@/backend/db/types"
 
-import { LAYOUT_VIEW } from "../../../types/types"
 import { InfiniteScroll } from "@/components/customs/scroll"
+
+import { LAYOUT_VIEW } from "../../../types/types"
 import { ListCard } from "../components/card/list-card"
 import { GridCard } from "../components/card/grid-card"
 
@@ -23,7 +24,7 @@ export function DriversView({ status, view }: Props) {
     const trpc = useTRPC()
 
     const {
-        data,
+        data: drivers,
         hasNextPage,
         isFetchingNextPage,
         fetchNextPage,
@@ -36,7 +37,7 @@ export function DriversView({ status, view }: Props) {
         })
     )
 
-    if (data.pages[0].items.length === 0) return <div />
+    if (drivers.pages[0].items.length === 0) return <div />
 
     return (
         <Suspense fallback={"Loading..."}>
@@ -45,17 +46,29 @@ export function DriversView({ status, view }: Props) {
                     {(!view || view === "list")
                         ? (
                             <div className="grid grid-rows-1 w-full gap-4">
-                                {data.pages.flatMap((page) =>
-                                    page.items.map(({ driver, user, truck, trip, tracking }) => {
-                                        return <ListCard key={driver.id} />
+                                {drivers.pages.flatMap((page) =>
+                                    page.items.map(({ driver, user, truck, tracking }) => {
+                                        const values = {
+                                            driver,
+                                            user,
+                                            truck,
+                                            tracking
+                                        }
+                                        return <ListCard key={driver.id} values={values} />
                                     })
                                 )}
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {data.pages.flatMap((page) =>
-                                    page.items.map(({ driver, user, truck, trip, tracking }) => {
-                                        return <GridCard key={driver.id} />
+                                {drivers.pages.flatMap((page) =>
+                                    page.items.map(({ driver, user, truck, tracking }) => {
+                                        const values = {
+                                            driver,
+                                            user,
+                                            truck,
+                                            tracking
+                                        }
+                                        return <GridCard key={driver.id} values={values} />
                                     })
                                 )}
                             </div>

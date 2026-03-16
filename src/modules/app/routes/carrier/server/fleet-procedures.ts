@@ -5,9 +5,9 @@ import { and, count, desc, eq, lt, or, sql } from "drizzle-orm"
 import { db } from "@/backend/db"
 import { FLEET_STATUS, LOADING_BAY } from "@/backend/db/types"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
-import { driver, link, truck, trailer, user, tracking, trip } from "@/backend/db/schema"
+import { driver, link, truck, trailer, user, tracking } from "@/backend/db/schema"
 
-import { BaseSchema } from "../ui/components/dialog/register-fleet-dialog"
+import { TrailerSchema, TruckSchema } from "../schemas/fleet"
 
 export const fleetRouter = createTRPCRouter({
     resume: protectedProcedure
@@ -36,33 +36,13 @@ export const fleetRouter = createTRPCRouter({
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
             const fleet = await db
-                .select({
-                    truck: {
-                        code: truck.internalId,
-                        plate: truck.regPlate,
-                        status: truck.status,
-                        age: truck.year,
-                        type: truck.type,
-                        loading: truck.loadingBay
-                    },
-                    trailer: {
-                        code: trailer.internalId,
-                        plate: trailer.regPlate,
-                        status: trailer.status,
-                        loading: trailer.loadingBay
-                    },
-                    link: {
-                        code: link.internalId,
-                        plate: link.regPlate,
-                        status: link.status,
-                        loading: link.loadingBay
-                    }
-                })
+                .select()
                 .from(truck)
-                .leftJoin(trailer, and(eq(trailer.truckId, truck.id), eq(trailer.carrierId, session.activeOrganizationId)))
-                .leftJoin(link, and(eq(link.trailerId, trailer.id), eq(link.carrierId, session.activeOrganizationId)))
+                .leftJoin(trailer, eq(trailer.truckId, truck.id))
+                .leftJoin(link, eq(link.trailerId, trailer.id))
                 .where(eq(truck.carrierId, session.activeOrganizationId))
 
+            console.log()
             return fleet
         }),
 
@@ -86,11 +66,10 @@ export const fleetRouter = createTRPCRouter({
             const fleet = await db
                 .select()
                 .from(truck)
-                .innerJoin(driver, and(eq(driver.truckId, truck.id), eq(driver.carrierId, session.activeOrganizationId)))
-                .innerJoin(user, and(eq(user.id, driver.userId), eq(user.type, "driver")))
+                .leftJoin(driver, and(eq(driver.truckId, truck.id), eq(driver.carrierId, session.activeOrganizationId)))
+                .leftJoin(user, and(eq(user.id, driver.userId), eq(user.type, "driver")))
                 .leftJoin(trailer, and(eq(trailer.truckId, truck.id), eq(trailer.carrierId, session.activeOrganizationId)))
                 .leftJoin(link, and(eq(link.trailerId, trailer.id), eq(link.carrierId, session.activeOrganizationId)))
-                .leftJoin(trip, eq(trip.truckPlate, truck.regPlate))
                 .leftJoin(tracking, eq(tracking.truckPlate, truck.regPlate))
                 .where(and(
                     eq(truck.carrierId, session.activeOrganizationId),
@@ -133,18 +112,18 @@ export const fleetRouter = createTRPCRouter({
     add: protectedProcedure
         .input(
             z.object({
-                values: BaseSchema
+                truck: TruckSchema,
+                trailer: TrailerSchema.partial().optional(),
+                link: TrailerSchema.partial().optional(),
             })
         )
         .mutation(async ({ ctx, input }) => {
-            const { values } = input
+            const { truck: vehicle, trailer: atrelado, link: connection } = input
             const { session } = ctx.auth
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
-            const { truck: vehicle } = values
-
-            const loadingBay = vehicle.type === "articulated"
+            const loadingBay = vehicle.type === "non-articulated"
                 ? {
                     width: vehicle.loadingBay?.width ?? 0,
                     length: vehicle.loadingBay?.length ?? 0,
@@ -155,11 +134,20 @@ export const fleetRouter = createTRPCRouter({
                 }
                 : null
 
+            const emptyLoadingBay = {
+                width: 0,
+                length: 0,
+                height: 0,
+                volume: 0,
+                capacity: 0,
+                type: "flatbed" as const // Use any valid enum value as default
+            };
+
             const [insertTruck] = await db
                 .insert(truck)
                 .values({
                     carrierId: session.activeOrganizationId,
-                    status: FLEET_STATUS[2],
+                    status: FLEET_STATUS[1],
 
                     internalId: vehicle.internalId,
                     regPlate: vehicle.regPlate,
@@ -176,47 +164,47 @@ export const fleetRouter = createTRPCRouter({
 
             if (!insertTruck) throw new TRPCError({ code: "BAD_REQUEST" })
 
-            if (vehicle.type === "articulated" && values.trailer) {
+            if (vehicle.type === "articulated" && atrelado) {
                 const [insertTrailer] = await db
                     .insert(trailer)
                     .values({
                         truckId: insertTruck.id,
                         carrierId: session.activeOrganizationId,
-                        status: FLEET_STATUS[2],
+                        status: FLEET_STATUS[1],
 
-                        internalId: values.trailer.internalId,
-                        regPlate: values.trailer.regPlate,
-                        brand: values.trailer.brand,
-                        model: values.trailer.model,
-                        year: values.trailer.year,
-                        vin: values.trailer.vin,
-                        loadingBay: values.trailer.loadingBay,
-                        booklet: values.trailer.booklet,
-                        license: values.trailer.license,
+                        internalId: atrelado.internalId ?? null,
+                        regPlate: atrelado.regPlate ?? "",
+                        brand: atrelado.brand ?? "",
+                        model: atrelado.model ?? "",
+                        year: atrelado.year ?? new Date().getFullYear(),
+                        vin: atrelado.vin ?? "",
+                        loadingBay: atrelado.loadingBay ?? emptyLoadingBay,
+                        booklet: atrelado.booklet ?? null,
+                        license: atrelado.license ?? null,
                     })
-                    .returning()
+                    .returning();
 
                 if (!insertTrailer) throw new TRPCError({ code: "BAD_REQUEST" })
-                
-                if(values.link){
-                    await db
-                    .insert(link)
-                    .values({
-                        trailerId: insertTrailer.id,
-                        carrierId: session.activeOrganizationId,
-                        status: FLEET_STATUS[2],
 
-                        internalId: values.link.internalId,
-                        regPlate: values.link.regPlate,
-                        brand: values.link.brand,
-                        model: values.link.model,
-                        year: values.link.year,
-                        vin: values.link.vin,
-                        loadingBay: values.link.loadingBay,
-                        booklet: values.link.booklet,
-                        license: values.link.license,
-                    })
-                    .returning()
+                if (connection) {
+                    await db
+                        .insert(link)
+                        .values({
+                            trailerId: insertTrailer.id,
+                            carrierId: session.activeOrganizationId,
+                            status: FLEET_STATUS[1],
+
+                            internalId: connection.internalId,
+                            regPlate: connection.regPlate ?? "",
+                            brand: connection.brand ?? "",
+                            model: connection.model ?? "",
+                            year: connection.year ?? new Date().getFullYear(),
+                            vin: connection.vin ?? "",
+                            loadingBay: connection.loadingBay ?? emptyLoadingBay,
+                            booklet: connection.booklet ?? null,
+                            license: connection.license ?? null,
+                        })
+                        .returning()
                 }
             }
 

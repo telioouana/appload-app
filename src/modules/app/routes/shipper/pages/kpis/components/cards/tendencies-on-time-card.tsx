@@ -54,6 +54,7 @@ export function TendenciesOnTimeCard({ data }: Props) {
                             tickLine={false}
                             axisLine={false}
                             tickMargin={8}
+                            allowDecimals={false}
                         />
                         
                         <XAxis
@@ -69,7 +70,34 @@ export function TendenciesOnTimeCard({ data }: Props) {
                                 })
                             }}
                         />
-                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                        <ChartTooltip
+                            cursor={false}
+                            content={
+                                <ChartTooltipContent
+                                    hideLabel
+                                    formatter={(value, name) => (
+                                        <>
+                                            <div
+                                                className="size-2.5 shrink-0 rounded bg-(--color-bg)"
+                                                style={
+                                                    {
+                                                        "--color-bg": `var(--color-${name})`,
+                                                    } as React.CSSProperties
+                                                }
+                                            />
+                                            {chartConfig[name as keyof typeof chartConfig]?.label || name}
+
+                                            <div className="text-foreground ml-auto flex items-baseline gap-1.5 font-mono font-medium tabular-nums">
+                                                {value}
+                                                <span className="text-muted-foreground font-normal">
+                                                    {t("unit")}
+                                                </span>
+                                            </div>
+                                        </>
+                                    )}
+                                />
+                            }
+                        />
                         <Line
                             dataKey="totalOnTime"
                             type="monotone"

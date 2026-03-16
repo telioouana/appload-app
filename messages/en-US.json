@@ -201,8 +201,7 @@
                         "label": "Trips",
                         "all": "All trips",
                         "booked": "Confirmed",
-                        "on-going": "On going",
-                        "delivered": "Delivered "
+                        "on-going": "On going"
                     },
                     "history": "History",
                     "clients": "My Clients"
@@ -555,7 +554,7 @@
                     "loading-date": "Loading date:",
                     "refrigerated": "Refrigerated",
                     "hazarduos": "Hazardous",
-                    "price": "Revenue:"
+                    "price": "Transport price:"
                 },
                 "footer": {
                     "accept": "Accept",
@@ -724,7 +723,7 @@
                                 "placeholder": "Select a truck from the search",
                                 "value": {
                                     "recent": "Recent",
-                                    "non-recent": "Non recent"
+                                    "not-recent": "Not recent"
                                 },
                                 "error": "Truck's age was not provided"
                             },
@@ -752,6 +751,52 @@
                         "close": "Close",
                         "send": "Send offer"
                     }
+                }
+            }
+        },
+        "trip": {
+            "card": {
+                "header": {
+                    "id": "TRP-{id}",
+                    "category": {
+                        "agriculture-inputs": "Agriculture Inputs",
+                        "agriculture-products": "Agriculture Products",
+                        "construction": "Construction",
+                        "machinery-equipment": "Machinery Equipment",
+                        "fmcg": "FMCG",
+                        "general-cargo": "General Cargo",
+                        "medicine": "Medicine",
+                        "mining": "Mining",
+                        "oil-gas": "Oil & Gas",
+                        "vehicles": "Vehicles",
+                        "other": "Other"
+                    },
+                    "status": {
+                        "drafted": "Drafted",
+                        "prospect": "Prospect",
+                        "open": "Open",
+                        "booked": "Transport confirmed",
+                        "to-loading": "On route to loading",
+                        "at-loading": "At loading",
+                        "loading": "Loading",
+                        "on-route": "On route to offloading",
+                        "at-border": "At border",
+                        "stopped": "Stopped",
+                        "issue": "Issue reported",
+                        "at-offloading": "At offloading",
+                        "offloading": "Offloading",
+                        "delivered": "Delivered",
+                        "completed": "Completed",
+                        "cancelled": "Cancelled",
+                        "waiting-documents": "Waiting documents"
+                    }
+                },
+                "content": {
+                    "route":"Route",
+                    "distance": "Distance",
+                    "driver": "Driver",
+                    "truck": "Truck",
+                    "location": "Position"
                 }
             }
         },
@@ -1172,9 +1217,10 @@
                     "button": "Generate KPI Report"
                 },
                 "data-window": {
-                    "month": "Last month",
-                    "quarter": "Last quarter",
-                    "year": "Last year"
+                    "week": "Last 7 days",
+                    "month": "Last 30 days",
+                    "quarter": "Last 3 months",
+                    "year": "Last 12 months"
                 },
                 "data": {
                     "triggers": {
@@ -1285,11 +1331,11 @@
             },
             "tendencies": {
                 "title": "Performance Trends",
-                "performance": {
-                    "title": "Loading and offloading times",
-                    "load": "Loading duration",
-                    "offload": "Offloading duration",
-                    "unit": "days"
+                "on-time": {
+                    "title": "On time Arrival",
+                    "total-on-time": "Arrived on time",
+                    "total": "Total of orders",
+                    "unit": "orders"
                 },
                 "incidents": {
                     "title": "Incident Distribution",
@@ -1298,15 +1344,15 @@
                     "docummentation": "Docummentation",
                     "inspection": "Inspection"
                 },
-                "emissions": {
-                    "title": "Carbon footprint",
-                    "carbon": "CO₂ reduction via backload",
-                    "unit": "g/km"
+                "loading": {
+                    "title": "Average time spend loading",
+                    "load": "Loading duration",
+                    "unit": "days"
                 },
-                "savings": {
-                    "title": "Cost reductions",
-                    "saved": "Saved with backload",
-                    "unit": "MZN"
+                "offloading": {
+                    "title": "Average time spend offloading",
+                    "offload": "Offloading duration",
+                    "unit": "days"
                 }
             }
         },

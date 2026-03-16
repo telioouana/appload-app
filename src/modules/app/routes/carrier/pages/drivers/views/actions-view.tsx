@@ -59,7 +59,7 @@ export function ActionsView() {
                     />
                 </InputGroup>
 
-                <Tabs value={tab} onValueChange={(value) => status(value as STATUS_FILTER)}>
+                <Tabs className="hidden" value={tab} onValueChange={(value) => status(value as STATUS_FILTER)}>
                     <TabsList>
                         <TabsTrigger value="all">{t("tabs.all")}</TabsTrigger>
                         <TabsTrigger value="active">{t("tabs.active")}</TabsTrigger>

@@ -4,12 +4,12 @@ import { KPIsView } from "@/modules/app/routes/shipper/pages/kpis/views/kpis-vie
 
 export default async function Page() {
     const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
+    // const year = now.getFullYear();
+    // const month = now.getMonth();
 
-    // Logic for default "Last Month"
-    const startDate = new Date(year, month - 1, 1);
-    const endDate = new Date(year, month, 0);
+    // Logic for default "Last 30 days"
+    const startDate = new Date(now.setDate(now.getDate() - 30));
+    const endDate = new Date();
 
     const client = getQueryClient()
 

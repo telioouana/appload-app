@@ -10,9 +10,17 @@ import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/
 export const TextInput: ControlFunc<{
     hasInputMask?: boolean,
     inputMask?: string
+    hasPattern?: boolean,
+    pattern?: string,
+    regex?: RegExp,
+    length?: number,
 }> = ({
     hasInputMask,
     inputMask,
+    hasPattern,
+    pattern,
+    regex,
+    length,
     ...props
 }) => {
         return (
@@ -20,7 +28,7 @@ export const TextInput: ControlFunc<{
                 {(field) => (
                     <InputGroup>
                         {(hasInputMask && inputMask)
-                            ? (
+                            && (
                                 <InputGroupInput
                                     {...field}
                                     type="text"
@@ -35,7 +43,38 @@ export const TextInput: ControlFunc<{
                                     disabled={props.isPending}
                                     placeholder={props.placeholder}
                                 />
-                            ) : (
+                            )
+                        }
+
+                        {(hasPattern && pattern && regex)
+                            && (
+                                <InputGroupInput
+                                    {...field}
+                                    type="text"
+                                    pattern={pattern}
+                                    className="w-full not-placeholder-shown:Uppercase"
+                                    autoComplete="off"
+                                    value={field.value ?? ""}
+                                    onChange={(e) => {
+                                        // 2. Real-time Sanitization:
+                                        // This regex removes anything that ISN'T a letter or number
+                                        const sanitized = e.target.value.replace(regex, "");
+
+                                        // Force uppercase for VINs (optional but standard)
+                                        e.target.value = sanitized.toUpperCase();
+
+                                        // 3. Pass the clean value back to React Hook Form
+                                        field.onChange(e);
+                                    }}
+                                    disabled={props.isPending}
+                                    placeholder={props.placeholder}
+                                    maxLength={length}
+                                />
+                            )
+                        }
+
+                        {((!hasInputMask && !hasPattern) || (!inputMask && !pattern))
+                            && (
                                 <InputGroupInput
                                     {...field}
                                     type="text"
