@@ -31,35 +31,18 @@ export function ClientsView({ search }: { search?: string }) {
 
     const items = data.pages.flatMap((page) => page.items)
 
+    // Compute filteredItems with a hook unconditionally so hooks order is stable
+    const filteredItems = useMemo(() => {
+        if (raw === "") return items
+        const q = raw.toLowerCase()
+        return items.filter((values) => {
+            const candidates: Array<string | undefined> = [values.name, values.address]
+            return candidates.some((c) => c && c.toLowerCase().includes(q))
+        })
+    }, [items, search])
+
+    // If there are no items at all, render a small placeholder (do not change hook ordering)
     if (items.length === 0) return <div />
-
-    if (raw === "") {
-        return (
-            <Suspense fallback={"Loading..."} >
-                <ErrorBoundary fallback={"Error loading"} >
-                    <div className="flex flex-col">
-                        <div className="grid grid-cols-1 gap-6 h-full w-full">
-                            {items.map((values) => {
-                                return <ClientCard key={values.id} values={values} />
-                            })}
-                        </div>
-
-                        <InfiniteScroll
-                            hasNextPage={hasNextPage}
-                            isFetchingNextPage={isFetchingNextPage}
-                            fetchNextPage={fetchNextPage}
-                        />
-                    </div>
-                </ErrorBoundary>
-            </Suspense>
-        )
-    }
-
-    const q = raw.toLowerCase()
-    const filteredItems = useMemo(() => items.filter((values) => {
-        const candidates: Array<string | undefined> = [values.name, values.address]
-        return candidates.some((c) => c && c.toLowerCase().includes(q))
-    }), [items, search])
 
     return (
         <Suspense fallback={"Loading..."} >

@@ -7,10 +7,10 @@ import { TripsView } from "@/modules/app/routes/carrier/pages/trips/views/trips-
 
 export default async function Page({ params, searchParams }: {
     params: Promise<{ path: TRIPS_PATH }>
-    searchParams: Promise<{ search?: string }>
+    searchParams: Promise<{ search?: string, "cargo-type"?: string }>
 }) {
     const { path } = await params
-    const { search } = await searchParams
+    const { search, "cargo-type": cargoType } = await searchParams
 
     const client = getQueryClient()
 
@@ -25,7 +25,7 @@ export default async function Page({ params, searchParams }: {
 
     return (
         <HydrateClient>
-            <TripsView path={path} search={search} />
+            <TripsView path={path} search={search} cargoType={cargoType} />
         </HydrateClient>
     )
 }

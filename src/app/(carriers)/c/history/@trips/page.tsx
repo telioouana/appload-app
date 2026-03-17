@@ -7,9 +7,9 @@ import { HistoryView } from "@/modules/app/routes/carrier/pages/history/views/hi
 export default async function Page({
     searchParams,
 }: {
-    searchParams: Promise<{ search?: string }>
+    searchParams: Promise<{ search?: string, "cargo-type"?: string }>
 }) {
-    const { search } = await searchParams
+    const { search, "cargo-type": cargoType } = await searchParams
 
     const client = getQueryClient()
 
@@ -23,7 +23,7 @@ export default async function Page({
 
     return (
         <HydrateClient>
-            <HistoryView search={search} />
+            <HistoryView search={search} cargoType={cargoType} />
         </HydrateClient>
     )
 }

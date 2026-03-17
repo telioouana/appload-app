@@ -17,7 +17,7 @@ import { OrdersErrorFallback } from "@/modules/app/ui/components/states/orders-e
 import { OrdersLoadingFallback } from "@/modules/app/ui/components/states/orders-loading-fallback"
 
 
-export function TripsView({ path, search }: { path: TRIPS_PATH, search?: string }) {
+export function TripsView({ path, search, cargoType }: { path: TRIPS_PATH, search?: string, cargoType?: string }) {
     const trpc = useTRPC()
 
     const {
@@ -34,16 +34,26 @@ export function TripsView({ path, search }: { path: TRIPS_PATH, search?: string 
         })
     )
 
-    if (trips.pages[0].items.length === 0) return <EmptyOrders />
-
     const filteredTrips = useMemo(() => {
+        const cargoRaw = (cargoType ?? "").trim()
+        const cargoFilter = cargoRaw === "" ? null : cargoRaw.toLowerCase()
         const items = trips.pages.flatMap((page) => page.items)
         const raw = (search ?? "").trim()
-        if (raw === "") return items
+        if (raw === "" && cargoFilter == null) return items
+        // keep items that matched cargo filter when search is empty
+        if (raw === "") return items.filter((it) => {
+            if (cargoFilter == null) return true
+            const cat = (it.cargo?.category ?? "").toLowerCase()
+            return cat === cargoFilter
+        })
 
         const q = raw.toLowerCase()
 
-        return items.filter(({ order, trip }) => {
+        return items.filter(({ order, trip, cargo }) => {
+            if (cargoFilter != null) {
+                const cat = (cargo?.category ?? "").toLowerCase()
+                if (cat !== cargoFilter) return false
+            }
             const loadingState = order.loadingAddress?.[0]?.state?.toLowerCase()
             const offloadingState = order.offloadingAddress?.[0]?.state?.toLowerCase()
 
@@ -62,30 +72,38 @@ export function TripsView({ path, search }: { path: TRIPS_PATH, search?: string 
                 legacyIdPadded === raw
             )
         })
-    }, [trips.pages, search])
+    }, [trips.pages, search, cargoType])
 
     return (
         <Suspense fallback={<OrdersLoadingFallback />} >
             <ErrorBoundary fallback={<OrdersErrorFallback />} >
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 gap-6 h-full w-full">
-                        {filteredTrips.map(({ order, cargo, trip, location }) => {
-                            const values = {
-                                trip,
-                                order,
-                                cargo,
-                                tracking: location,
-                            }
+                        {filteredTrips.length === 0 ? (
+                            <div className="col-span-full">
+                                <EmptyOrders />
+                            </div>
+                        ) : (
+                            filteredTrips.map(({ order, cargo, trip, location }) => {
+                                const values = {
+                                    trip,
+                                    order,
+                                    cargo,
+                                    tracking: location,
+                                }
 
-                            return <TripCard key={trip.id} values={values}/>
-                        })}
+                                return <TripCard key={trip.id} values={values}/>
+                            })
+                        )}
                     </div>
 
-                    <InfiniteScroll
-                        hasNextPage={hasNextPage}
-                        isFetchingNextPage={isFetchingNextPage}
-                        fetchNextPage={fetchNextPage}
-                    />
+                    {filteredTrips.length > 0 && (
+                        <InfiniteScroll
+                            hasNextPage={hasNextPage}
+                            isFetchingNextPage={isFetchingNextPage}
+                            fetchNextPage={fetchNextPage}
+                        />
+                    )}
                 </div>
 
             </ErrorBoundary>
