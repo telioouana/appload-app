@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
 
@@ -56,10 +56,10 @@ export function ClientsView({ search }: { search?: string }) {
     }
 
     const q = raw.toLowerCase()
-    const filteredItems = items.filter((values) => {
+    const filteredItems = useMemo(() => items.filter((values) => {
         const candidates: Array<string | undefined> = [values.name, values.address]
         return candidates.some((c) => c && c.toLowerCase().includes(q))
-    })
+    }), [items, search])
 
     return (
         <Suspense fallback={"Loading..."} >

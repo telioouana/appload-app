@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
 
@@ -45,10 +45,11 @@ export function DriversView({ status, view, search }: Props) {
 
     const items = drivers.pages.flatMap((page) => page.items)
 
-    const filtered = (raw === "") ? items : items.filter(({ user }) => {
+    const filteredItems = useMemo(() => {
+        if (raw === "") return items
         const q = raw.toLowerCase()
-        return !!user?.name && user.name.toLowerCase().includes(q)
-    })
+        return items.filter(({ user }) => !!user?.name && user.name.toLowerCase().includes(q))
+    }, [drivers.pages, search])
 
     return (
         <Suspense fallback={"Loading..."}>
@@ -57,7 +58,7 @@ export function DriversView({ status, view, search }: Props) {
                     {(!view || view === "list")
                         ? (
                             <div className="grid grid-rows-1 w-full gap-4">
-                                {filtered.map(({ driver, user, truck, tracking }) => {
+                                {filteredItems.map(({ driver, user, truck, tracking }) => {
                                     const values = {
                                         driver,
                                         user,
@@ -69,7 +70,7 @@ export function DriversView({ status, view, search }: Props) {
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {filtered.map(({ driver, user, truck, tracking }) => {
+                                {filteredItems.map(({ driver, user, truck, tracking }) => {
                                     const values = {
                                         driver,
                                         user,

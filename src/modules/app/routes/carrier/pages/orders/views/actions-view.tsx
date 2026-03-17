@@ -17,10 +17,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 import { LAYOUT_VIEW } from "../../../types/types";
 
-export function ActionsView() {
+export function ActionsView({ initialSearch }: { initialSearch?: string }) {
     const [cargo, setCargo] = useState<typeof CATEGORIES[number] | "none" | "">("")
     const [tab, setTab] = useState<LAYOUT_VIEW>("grid")
-    const [value, setValue] = useState<string>("")
+    const [value, setValue] = useState<string>(initialSearch ?? "")
 
     const t = useTranslations(`Carrier.marketplace.orders.actions`)
     const router = useRouter()

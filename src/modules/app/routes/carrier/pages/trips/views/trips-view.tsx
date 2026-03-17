@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
 
@@ -36,7 +36,7 @@ export function TripsView({ path, search }: { path: TRIPS_PATH, search?: string 
 
     if (trips.pages[0].items.length === 0) return <EmptyOrders />
 
-    const filteredTrips = (() => {
+    const filteredTrips = useMemo(() => {
         const items = trips.pages.flatMap((page) => page.items)
         const raw = (search ?? "").trim()
         if (raw === "") return items
@@ -62,7 +62,7 @@ export function TripsView({ path, search }: { path: TRIPS_PATH, search?: string 
                 legacyIdPadded === raw
             )
         })
-    })()
+    }, [trips.pages, search])
 
     return (
         <Suspense fallback={<OrdersLoadingFallback />} >

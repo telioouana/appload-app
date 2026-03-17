@@ -49,7 +49,7 @@ export function OrdersView({ path, search }: { path: ORDERS_PATH, search?: strin
         trpc.driver.offer.queryOptions()
     )
 
-    const filteredOrders = useMemo(() => {
+    const filteredItems = useMemo(() => {
         const raw = (search ?? "").trim()
         const items = orders.pages.flatMap((page) => page.items)
 
@@ -84,7 +84,7 @@ export function OrdersView({ path, search }: { path: ORDERS_PATH, search?: strin
 
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full w-full">
-                        {filteredOrders.map(({ order, cargo, organizationId, organizationName, fiscalRegime }) => {
+                        {filteredItems.map(({ order, cargo, organizationId, organizationName, fiscalRegime }) => {
                             const values = {
                                 fleet,
                                 order,
