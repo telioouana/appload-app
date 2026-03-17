@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
 
@@ -16,7 +16,7 @@ import { OrdersErrorFallback } from "@/modules/app/ui/components/states/orders-e
 import { OrdersLoadingFallback } from "@/modules/app/ui/components/states/orders-loading-fallback"
 
 
-export function HistoryView() {
+export function HistoryView({ search }: { search?: string }) {
     const trpc = useTRPC()
 
     const {
@@ -32,15 +32,40 @@ export function HistoryView() {
         })
     )
 
-    if (history.pages[0].items.length === 0) return <EmptyOrders />
+    const filteredHistory = useMemo(() => {
+        const raw = (search ?? "").trim()
+        const items = history.pages.flatMap((page) => page.items)
+        if (raw === "") return items
+
+        const q = raw.toLowerCase()
+
+        return items.filter(({ order, trip }) => {
+            const loadingState = order.loadingAddress?.[0]?.state?.toLowerCase()
+            const offloadingState = order.offloadingAddress?.[0]?.state?.toLowerCase()
+            const driverName = trip.driverName?.toLowerCase()
+            const truckPlate = trip.truckPlate?.toLowerCase()
+
+            const legacyId = trip.legacyId?.toString()
+
+            return (
+                loadingState?.includes(q) ||
+                offloadingState?.includes(q) ||
+                driverName?.includes(q) ||
+                truckPlate?.includes(q) ||
+                legacyId === raw ||
+                legacyId?.padStart(4, "0") === raw
+            )
+        })
+    }, [history.pages, search])
+
+    if (filteredHistory.length === 0) return <EmptyOrders />
 
     return (
         <Suspense fallback={<OrdersLoadingFallback />} >
             <ErrorBoundary fallback={<OrdersErrorFallback />} >
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 gap-6 h-full w-full">
-                        {history.pages.flatMap((page) =>
-                            page.items.map(({ order, cargo, trip, location }) => {
+                        {filteredHistory.map(({ order, cargo, trip, location }) => {
                                 const values = {
                                     trip,
                                     order,
@@ -49,8 +74,7 @@ export function HistoryView() {
                                 }
 
                                 return <TripCard key={trip.id} values={values}/>
-                            })
-                        )}
+                        })}
                     </div>
 
                     <InfiniteScroll
