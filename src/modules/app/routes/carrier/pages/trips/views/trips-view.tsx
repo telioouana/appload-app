@@ -17,7 +17,7 @@ import { OrdersErrorFallback } from "@/modules/app/ui/components/states/orders-e
 import { OrdersLoadingFallback } from "@/modules/app/ui/components/states/orders-loading-fallback"
 
 
-export function TripsView({ path }: { path: TRIPS_PATH }) {
+export function TripsView({ path, search }: { path: TRIPS_PATH, search?: string }) {
     const trpc = useTRPC()
 
     const {
@@ -36,23 +36,49 @@ export function TripsView({ path }: { path: TRIPS_PATH }) {
 
     if (trips.pages[0].items.length === 0) return <EmptyOrders />
 
+    const filteredTrips = (() => {
+        const items = trips.pages.flatMap((page) => page.items)
+        const raw = (search ?? "").trim()
+        if (raw === "") return items
+
+        const q = raw.toLowerCase()
+
+        return items.filter(({ order, trip }) => {
+            const loadingState = order.loadingAddress?.[0]?.state?.toLowerCase()
+            const offloadingState = order.offloadingAddress?.[0]?.state?.toLowerCase()
+
+            const driverName = trip.driverName?.toLowerCase()
+            const truckPlate = trip.truckPlate?.toLowerCase()
+
+            const legacyId = trip.legacyId?.toString()
+            const legacyIdPadded = legacyId?.padStart(4, "0")
+
+            return (
+                (loadingState?.includes(q) ?? false) ||
+                (offloadingState?.includes(q) ?? false) ||
+                (driverName?.includes(q) ?? false) ||
+                (truckPlate?.includes(q) ?? false) ||
+                legacyId === raw ||
+                legacyIdPadded === raw
+            )
+        })
+    })()
+
     return (
         <Suspense fallback={<OrdersLoadingFallback />} >
             <ErrorBoundary fallback={<OrdersErrorFallback />} >
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 gap-6 h-full w-full">
-                        {trips.pages.flatMap((page) =>
-                            page.items.map(({ order, cargo, trip, location }) => {
-                                const values = {
-                                    trip,
-                                    order,
-                                    cargo,
-                                    tracking: location,
-                                }
+                        {filteredTrips.map(({ order, cargo, trip, location }) => {
+                            const values = {
+                                trip,
+                                order,
+                                cargo,
+                                tracking: location,
+                            }
 
-                                return <TripCard key={trip.id} values={values}/>
-                            })
-                        )}
+                            return <TripCard key={trip.id} values={values}/>
+                        })}
                     </div>
 
                     <InfiniteScroll

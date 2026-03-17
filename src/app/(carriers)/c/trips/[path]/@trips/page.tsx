@@ -5,8 +5,12 @@ import { DEFAULT_PAGE_LIMIT } from "@/constants"
 import { TRIPS_PATH } from "@/modules/app/routes/carrier/types/types"
 import { TripsView } from "@/modules/app/routes/carrier/pages/trips/views/trips-view"
 
-export default async function Page({ params }: { params: Promise<{ path: TRIPS_PATH }> }) {
+export default async function Page({ params, searchParams }: {
+    params: Promise<{ path: TRIPS_PATH }>
+    searchParams: Promise<{ search?: string }>
+}) {
     const { path } = await params
+    const { search } = await searchParams
 
     const client = getQueryClient()
 
@@ -21,7 +25,7 @@ export default async function Page({ params }: { params: Promise<{ path: TRIPS_P
 
     return (
         <HydrateClient>
-            <TripsView path={path} />
+            <TripsView path={path} search={search} />
         </HydrateClient>
     )
 }
