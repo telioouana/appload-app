@@ -49,7 +49,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
 
     return (
         <HydrateClient>
-            <KPIsView endDate={endDate} startDate={startDate} />
+            <KPIsView endDate={endDate} startDate={startDate} time={period}/>
         </HydrateClient>
     )
 }

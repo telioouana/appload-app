@@ -7,12 +7,12 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { CURRENCY } from "@/backend/db/types";
 import { useTRPC } from "@/backend/trpc/client";
 
-import { KPIs_TABS } from "../../../types/types";
+import { KPIs_TABS, PERIOD } from "../../../types/types";
 import { KPIsDataSection } from "../sections/kpis-data-section";
 import { KPIsHeaderSection } from "../sections/kpis-header-section";
 import { KPIsDataWindowSection } from "../sections/kpis-data-window-section";
 
-export function KPIsView({ endDate: initialEndDate, startDate: initialStartDate }: { endDate: Date, startDate: Date }) {
+export function KPIsView({ endDate: initialEndDate, startDate: initialStartDate, time }: { endDate: Date, startDate: Date, time?: PERIOD }) {
     // Manage date state locally so the UI and Queries update on period change
     const [dates, setDates] = useState({ start: initialStartDate, end: initialEndDate });
     const [currency, setCurrency] = useState<typeof CURRENCY[number]>("MZN")
@@ -32,7 +32,7 @@ export function KPIsView({ endDate: initialEndDate, startDate: initialStartDate 
     return (
         <div className="flex flex-col gap-6">
             <KPIsHeaderSection />
-            <KPIsDataWindowSection setDates={setDates} />
+            <KPIsDataWindowSection setDates={setDates} time={time} />
             <Suspense fallback={<div>Loading activity...</div>}>
                 <ErrorBoundary fallback={<div>Error loading activity.</div>}>
                     <KPIsDataSection

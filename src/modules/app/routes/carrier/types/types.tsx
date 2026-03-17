@@ -54,3 +54,13 @@ export type TripValues = {
     trip: typeof trip.$inferSelect,
     tracking: typeof tracking.$inferSelect | null
 }
+
+export type ClientValues = {
+    id: string;
+    name: string;
+    logo: string | null;
+    address: string;
+    trips: number;
+    revenue: number;
+    createdAt: Date;
+}

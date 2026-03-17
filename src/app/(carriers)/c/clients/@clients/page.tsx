@@ -1,6 +1,6 @@
 import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server";
 
-import { TransportersView } from "@/modules/app/routes/shipper/pages/private/pages/transporters/views/transporters-view";
+import { ClientsView } from "@/modules/app/routes/carrier/pages/clients/views/clients-view";
 
 import { DEFAULT_PAGE_LIMIT } from "@/constants";
 
@@ -8,14 +8,14 @@ export default async function Page() {
     const client = getQueryClient()
 
     await client.prefetchInfiniteQuery(
-        trpc.transporters.transporters.infiniteQueryOptions({
+        trpc.clients.clients.infiniteQueryOptions({
             limit: DEFAULT_PAGE_LIMIT
         })
     )
 
     return (
         <HydrateClient>
-            <TransportersView />
+            <ClientsView />
         </HydrateClient>
     )
 }

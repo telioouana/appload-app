@@ -86,8 +86,8 @@ export const fleetRouter = createTRPCRouter({
                         )
                         : undefined,
                 ))
-                .orderBy(desc(truck.legacyId), desc(driver.updatedAt))
-                // Checking if there are more orders from the current user
+                .orderBy(desc(truck.legacyId), desc(truck.updatedAt))
+                // Checking if there are more fleet from the current user
                 .limit(limit + 1)
 
             const hasMore = fleet.length > limit

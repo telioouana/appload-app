@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { TRIPS_PATH } from "../../../types/types"
 
 export function PageView({ path }: { path: TRIPS_PATH }) {
-    const t = useTranslations(`Carrier.marketplace.page.orders.${path}`)
+    const t = useTranslations(`Carrier.marketplace.page.trips.${path}`)
     const { data, isPending } = authClient.useActiveOrganization()
 
     if (isPending || !data) {

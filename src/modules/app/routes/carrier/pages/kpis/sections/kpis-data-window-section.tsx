@@ -8,8 +8,13 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { PERIOD } from "../../../types/types";
 
-export function KPIsDataWindowSection({ setDates }: { setDates: ({start, end}: {start: Date, end: Date}) => void }) {
-    const [period, setPeriod] = useState<PERIOD>("month")
+interface Props {
+    setDates: ({start, end}: {start: Date, end: Date}) => void
+    time?: PERIOD
+}
+
+export function KPIsDataWindowSection({ setDates, time }: Props) {
+    const [period, setPeriod] = useState<PERIOD>(time ?? "month")
 
     const t = useTranslations("Carrier.kpis.page.data-window")
     const router = useRouter()
