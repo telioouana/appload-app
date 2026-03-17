@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { useSuspenseInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query"
 
@@ -20,7 +20,7 @@ import { OrdersLoadingFallback } from "@/modules/app/ui/components/states/orders
 import { CreateOfferDialog } from "../../../ui/components/dialog/create-offer-dialog"
 
 
-export function OrdersView({ path }: { path: ORDERS_PATH }) {
+export function OrdersView({ path, search }: { path: ORDERS_PATH, search?: string }) {
     const trpc = useTRPC()
 
     const {
@@ -49,6 +49,11 @@ export function OrdersView({ path }: { path: ORDERS_PATH }) {
         trpc.driver.offer.queryOptions()
     )
 
+    const filteredOrders = useMemo(() => {
+        const data = orders.pages.flatMap((page) => page.items.filter((values) => values.order.loadingAddress?.[0]?.state.toLowerCase().includes(search?.toLowerCase() ?? "")))
+        return data
+    }, [orders.pages, search])
+
     if (orders.pages[0].items.length === 0) return <EmptyOrders />
 
     return (
@@ -59,21 +64,19 @@ export function OrdersView({ path }: { path: ORDERS_PATH }) {
 
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full w-full">
-                        {orders.pages.flatMap((page) =>
-                            page.items.map(({ order, cargo, organizationId, organizationName, fiscalRegime }) => {
-                                const values = {
-                                    fleet,
-                                    order,
-                                    cargo,
-                                    drivers,
-                                    organizationId,
-                                    organizationName,
-                                    fiscalRegime: fiscalRegime as typeof FISCAL_REGIME[number]
-                                }
+                        {filteredOrders.map(({ order, cargo, organizationId, organizationName, fiscalRegime }) => {
+                            const values = {
+                                fleet,
+                                order,
+                                cargo,
+                                drivers,
+                                organizationId,
+                                organizationName,
+                                fiscalRegime: fiscalRegime as typeof FISCAL_REGIME[number]
+                            }
 
-                                return <OrderCard key={order.id} values={values} />
-                            })
-                        )}
+                            return <OrderCard key={order.id} values={values} />
+                        })}
                     </div>
 
                     <InfiniteScroll

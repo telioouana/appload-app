@@ -1841,7 +1841,7 @@
                         }
                     },
                     "price": {
-                        "label": "Shipping price",
+                        "label": "Shipping price (MZN)",
                         "placeholder": "Enter the amount to be paid for each this trip",
                         "error": "Shipping price was not provided"
                     },
