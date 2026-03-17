@@ -66,7 +66,7 @@ export const transportersRouter = createTRPCRouter({
                     carriers.name,
                     carriers.billingAddress,
                     carriers.createdAt
-                ).orderBy(desc(carriers.id), desc(carriers.createdAt))
+                ).orderBy(desc(carriers.createdAt), desc(carriers.id))
                 // Checking if there are more transporters from the current user
                 .limit(limit + 1)
 

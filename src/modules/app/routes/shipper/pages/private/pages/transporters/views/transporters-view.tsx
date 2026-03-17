@@ -35,8 +35,8 @@ export function TransportersView() {
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 gap-6 h-full w-full">
                         {data.pages.flatMap((page) =>
-                            page.items.map((values, i) => {
-                                return <TransportersCard key={i} values={values} />
+                            page.items.map((values) => {
+                                return <TransportersCard key={values.id} values={values} />
                             })
                         )}
                     </div>

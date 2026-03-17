@@ -833,7 +833,8 @@
                     "phone": "Contact:",
                     "truck": "Assigned truck:",
                     "none": "None",
-                    "rate": "Rate:"
+                    "rate": "Rate:",
+                    "trip": "Trips:"
                 },
                 "dialog": {
                     "register": {
@@ -899,7 +900,7 @@
                     "total": "Fleet size",
                     "active": "In movement",
                     "idle": "Off duty",
-                    "free": "Maintanace"
+                    "free": "Maintenance"
                 },
                 "actions": {
                     "search": "Search by plate number",
@@ -907,7 +908,7 @@
                         "all": "All",
                         "active": "In movement",
                         "idle": "Off duty",
-                        "free": "Maintanace"
+                        "free": "Maintenance"
                     }
                 },
                 "card": {
@@ -918,7 +919,7 @@
                     "status": {
                         "active": "In movement",
                         "idle": "Off duty",
-                        "free": "Maintanace"
+                        "free": "Maintenance"
                     },
                     "loading-bay": {
                         "label": "Truck type:",

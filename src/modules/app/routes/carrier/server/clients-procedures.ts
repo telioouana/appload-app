@@ -66,7 +66,7 @@ export const clientsRouter = createTRPCRouter({
                     shippers.name,
                     shippers.billingAddress,
                     shippers.createdAt
-                ).orderBy(desc(shippers.id), desc(shippers.createdAt))
+                ).orderBy(desc(shippers.createdAt), desc(shippers.id))
                 // Checking if there are more clients from the current user
                 .limit(limit + 1)
 
