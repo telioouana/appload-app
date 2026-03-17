@@ -64,6 +64,7 @@ export const transportersRouter = createTRPCRouter({
                 .groupBy(
                     carriers.id,
                     carriers.name,
+                    carriers.logo,
                     carriers.billingAddress,
                     carriers.createdAt
                 ).orderBy(desc(carriers.createdAt), desc(carriers.id))
