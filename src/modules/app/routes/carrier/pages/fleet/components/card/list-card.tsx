@@ -1,6 +1,8 @@
 "use client"
 
 import Image from "next/image";
+
+import { useTranslations } from "next-intl"
 import { IconLineDashed } from "@tabler/icons-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -15,6 +17,8 @@ interface Props {
 }
 
 export function ListCard({ values }: Props) {
+    const t = useTranslations(`Carrier.company.fleet.card`)
+
     const getStatusColor = (status: string) => {
         switch (status) {
             case "active":
@@ -45,7 +49,7 @@ export function ListCard({ values }: Props) {
                         </div>
                         <div className="flex flex-col gap-1">
                             <p className="text-sm font-medium truncate">{values.truck.internalId ?? values.truck.regPlate}</p>
-                            <p className="text-sm font-medium truncate">{values.truck.type}</p>
+                            <p className="text-sm font-medium truncate">{t(`type.${values.truck.type}`)}</p>
                             <Badge
                                 variant="ghost"
                                 className={cn(
@@ -53,7 +57,7 @@ export function ListCard({ values }: Props) {
                                     getStatusColor(values.truck.status)
                                 )}
                             >
-                                {values.truck.status}
+                                {t(`status.${values.truck.status}`)}
                             </Badge>
                         </div>
                     </div>
@@ -63,16 +67,16 @@ export function ListCard({ values }: Props) {
                             <>
                                 <div className="flex flex-col gap-1 truncate">
                                     <span className="text-muted-foreground text-xs">
-                                        Truck type:
+                                        {t("loading-bay.label")}
                                     </span>
                                     <span className="font-medium">
-                                        {values.truck.loadingBay?.type}
+                                        {t(`loading-bay.${values.truck.loadingBay?.type}`)}
                                     </span>
                                 </div>
 
                                 <div className="flex flex-col gap-1 truncate">
                                     <span className="text-muted-foreground text-xs">
-                                        Capacity:
+                                        {t("capacity")}
                                     </span>
                                     <span className="font-medium">
                                         {values.truck.loadingBay?.capacity} ton
@@ -83,7 +87,7 @@ export function ListCard({ values }: Props) {
                             <div className="col-span-2">
                                 <div className="flex flex-col gap-1 truncate">
                                     <span className="text-muted-foreground text-xs">
-                                        Trailer:
+                                        {t("trailer")}
                                     </span>
                                     <span className="font-medium">
                                         {values.trailer?.internalId ?? values.trailer?.regPlate}
@@ -91,22 +95,22 @@ export function ListCard({ values }: Props) {
                                     <div className="font-medium flex gap-2 items-center">
                                         <span>{values.trailer?.loadingBay.capacity} ton</span>
                                         <IconLineDashed className="size-4 text-muted-foreground" stroke={1.5} />
-                                        <span>{values.trailer?.loadingBay.type}</span>
+                                        <span>{t(`loading-bay.${values.trailer?.loadingBay.type}`)}</span>
                                     </div>
                                 </div>
 
                                 {values.link && (
                                     <div className="flex flex-col gap-1 truncate">
                                         <span className="text-muted-foreground text-xs">
-                                            Link:
+                                            {t("link")}
                                         </span>
                                         <span className="font-medium">
-                                            {values.link?.internalId ?? values.link?.regPlate ?? "none"}
+                                            {values.link.internalId ?? values.link?.regPlate}
                                         </span>
                                         <div className="font-medium flex gap-2">
-                                            <span>{values.trailer?.loadingBay.capacity} ton</span>
+                                            <span>{values.link.loadingBay.capacity} ton</span>
                                             <IconLineDashed />
-                                            <span>{values.trailer?.loadingBay.type}</span>
+                                            <span>{t(`loading-bay.${values.link.loadingBay.type}`)}</span>
                                         </div>
                                     </div>
                                 )}
@@ -116,10 +120,10 @@ export function ListCard({ values }: Props) {
 
                     <div className="flex flex-col gap-1 truncate">
                         <span className="text-muted-foreground text-xs">
-                            Assigned driver:
+                            {t("driver")}
                         </span>
                         <span className="font-medium">
-                            {values.user?.name ?? "none"}
+                            {values.user?.name ?? t("none")}
                         </span>
                     </div>
                 </div>

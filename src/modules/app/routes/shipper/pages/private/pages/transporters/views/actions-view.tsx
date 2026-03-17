@@ -5,24 +5,18 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { IconLayoutGrid, IconList, IconSearch } from "@tabler/icons-react";
 
-import { CATEGORIES } from "@/backend/db/types";
-
-import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
-import { Field, FieldGroup, FieldLabel, FieldSet, FieldTitle } from "@/components/ui/field";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { LAYOUT_VIEW } from "../../../types/types";
+import { LAYOUT_VIEW } from "@/modules/app/routes/shipper/types/types";
 
-export function ActionsView() {
-    const [cargo, setCargo] = useState<typeof CATEGORIES[number] | "none" | "">("")
+export function TransportersActionsView() {
     const [tab, setTab] = useState<LAYOUT_VIEW>("grid")
     const [value, setValue] = useState<string>("")
 
-    const t = useTranslations(`Carrier.marketplace.orders.actions`)
+    const t = useTranslations("Shipper.private.transporters.actions")
     const router = useRouter()
 
     function search(value: string) {
@@ -43,19 +37,6 @@ export function ActionsView() {
 
         const url = new URL(window.location.href)
         url.searchParams.set("view", value)
-
-        router.replace(url.href)
-    }
-
-    function filterCargo(value: typeof CATEGORIES[number] | "none") {
-        setCargo(value === "none" ? "" : value)
-
-        const url = new URL(window.location.href)
-        if (value !== "none") {
-            url.searchParams.set("cargo-type", value)
-        } else {
-            url.searchParams.delete("cargo-type")
-        }
 
         router.replace(url.href)
     }
@@ -93,29 +74,6 @@ export function ActionsView() {
                         </TabsList>
                     </Tabs>
                 </div>
-
-                <Separator />
-
-                <FieldGroup className="w-full">
-                    <FieldSet className="gap-3">
-                        <FieldTitle>{t("filters.title")}</FieldTitle>
-                        <Field className="gap-2">
-                            <FieldLabel className="text-muted-foreground font-normal text-xs">{t("filters.cargo-type.label")}</FieldLabel>
-                            <Select
-                                value={cargo}
-                                onValueChange={(value) => filterCargo(value as typeof CATEGORIES[number] | "none")}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue placeholder={t("filters.cargo-type.placeholder")} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {CATEGORIES.map((item) => <SelectItem key={item} value={item}>{t(`filters.cargo-type.options.${item}`)}</SelectItem>)}
-                                    <SelectItem value="none">{t("filters.cargo-type.options.none")}</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </Field>
-                    </FieldSet>
-                </FieldGroup>
             </CardContent>
         </Card>
     )

@@ -1,12 +1,14 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+import { IconStarFilled } from "@tabler/icons-react";
+
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { AvatarGenerator } from "@/components/customs/avatar";
 
 import { DriverValues } from "../../../../types/types";
-import { IconStarFilled } from "@tabler/icons-react";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -14,6 +16,8 @@ interface Props {
 }
 
 export function ListCard({ values }: Props) {
+    const t = useTranslations(`Carrier.company.drivers.card`)
+
     const { name, image, email, phoneNumber } = values.user
 
     function avatar(className?: string) {
@@ -55,14 +59,14 @@ export function ListCard({ values }: Props) {
                                     getStatusColor(values.driver.status)
                                 )}
                             >
-                                {values.driver.status}
+                                {t(`status.${values.driver.status}`)}
                             </Badge>
                         </div>
                     </div>
 
                     <div className="flex flex-col gap-1 truncate">
                         <span className="text-muted-foreground text-xs">
-                            Email:
+                            {t("email")}
                         </span>
                         <span className="font-medium">
                             {email}
@@ -71,7 +75,7 @@ export function ListCard({ values }: Props) {
 
                     <div className="flex flex-col gap-1 truncate">
                         <span className="text-muted-foreground text-xs">
-                            Contact:
+                            {t("phone")}
                         </span>
                         <span className="font-medium">
                             {phoneNumber}
@@ -80,10 +84,10 @@ export function ListCard({ values }: Props) {
 
                     <div className="flex flex-col gap-1 truncate">
                         <span className="text-muted-foreground text-xs">
-                            Assigned truck:
+                            {t("truck")}
                         </span>
                         <span className="font-medium">
-                            {values.truck?.internalId ?? values.truck?.regPlate ?? "none"}
+                            {values.truck?.internalId ?? values.truck?.regPlate ?? t("none")}
                         </span>
                     </div>
                 </div>
@@ -91,7 +95,7 @@ export function ListCard({ values }: Props) {
                 <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1 truncate">
                         <span className="text-muted-foreground text-xs">
-                            Rate:
+                            {t("rate")}
                         </span>
                         <div className="flex items-center gap-1 text-center">
                             <IconStarFilled className="w-3 h-3 text-yellow-500 fill-yellow-500" />
@@ -103,7 +107,7 @@ export function ListCard({ values }: Props) {
 
                     <div className="flex flex-col gap-1 truncate">
                         <span className="text-muted-foreground text-xs">
-                            Trips:
+                            {t("trips")}
                         </span>
                         <span className="font-medium text-center">
                             {0}

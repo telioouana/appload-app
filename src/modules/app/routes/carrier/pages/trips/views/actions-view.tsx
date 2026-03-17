@@ -61,8 +61,8 @@ export function ActionsView() {
     }
 
     return (
-        <Card>
-            <CardContent className="flex flex-col gap-3">
+        <Card className="p-0">
+            <CardContent className="flex flex-col gap-3 p-4">
                 <div className="flex justify-between gap-4 items-center">
                     <InputGroup className="h-11">
                         <InputGroupAddon>

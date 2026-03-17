@@ -3,11 +3,11 @@ import { PropsWithChildren } from "react";
 export default function Layout({
     children,
     actions,
-    transporters,
+    clients,
     resume
 }: PropsWithChildren<{
     actions: React.ReactNode
-    transporters: React.ReactNode
+    clients: React.ReactNode
     resume: React.ReactNode
 }>) {
   return (
@@ -15,7 +15,7 @@ export default function Layout({
             {children}
             {resume}
             {actions}
-            {transporters}
+            {clients}
         </div>
   )
 }

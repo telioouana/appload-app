@@ -789,7 +789,7 @@
                     }
                 },
                 "content": {
-                    "route":"Route",
+                    "route": "Route",
                     "distance": "Distance",
                     "driver": "Driver",
                     "truck": "Truck",
@@ -823,7 +823,19 @@
                         "free": "On break"
                     }
                 },
-                "drivers": {},
+                "card": {
+                    "status": {
+                        "active": "In movement",
+                        "idle": "Off duty",
+                        "free": "On break"
+                    },
+                    "email": "Email:",
+                    "phone": "Contact:",
+                    "truck": "Assigned truck:",
+                    "none": "None",
+                    "rate": "Rate:",
+                    "trip": "Trips:"
+                },
                 "dialog": {
                     "register": {
                         "header": {
@@ -851,7 +863,10 @@
                         },
                         "phone-number": {
                             "label": "Phone number *",
-                            "error": "No phone number was provided"
+                            "error": {
+                                "empty": "No phone number was provided",
+                                "invalid": "Invalid phone number was provided"
+                            }
                         },
                         "driver-license": {
                             "label": "Driving License *",
@@ -885,7 +900,7 @@
                     "total": "Fleet size",
                     "active": "In movement",
                     "idle": "Off duty",
-                    "free": "Maintanace"
+                    "free": "Maintenance"
                 },
                 "actions": {
                     "search": "Search by plate number",
@@ -893,10 +908,37 @@
                         "all": "All",
                         "active": "In movement",
                         "idle": "Off duty",
-                        "free": "Maintanace"
+                        "free": "Maintenance"
                     }
                 },
-                "fleet": {},
+                "card": {
+                    "type": {
+                        "articulated": "Articulated",
+                        "non-articulated": "Non articulated"
+                    },
+                    "status": {
+                        "active": "In movement",
+                        "idle": "Off duty",
+                        "free": "Maintenance"
+                    },
+                    "loading-bay": {
+                        "label": "Truck type:",
+                        "flatbed": "Flatbed",
+                        "dropsides": "Dropsides",
+                        "tautliner": "Tautliner",
+                        "rigid-body": "Container",
+                        "refrigerated": "Refrigerated",
+                        "tipper": "Tipper",
+                        "side-tipper": "Side Tipper",
+                        "tanker": "Tanker",
+                        "lowbed": "Lowbed"
+                    },
+                    "capacity": "Capacity:",
+                    "trailer": "Trailer:",
+                    "link": "Link:",
+                    "driver": "Assigned driver:",
+                    "none": "None"
+                },
                 "dialog": {
                     "register": {
                         "header": {
@@ -1101,6 +1143,28 @@
                         }
                     }
                 }
+            }
+        },
+        "clients": {
+            "page": {
+                "title": "My Clients",
+                "description": "Clients who have added you to their network"
+            },
+            "resume": {
+                "clients": "Clients",
+                "trips": "Completed trips",
+                "revenue": "Revenue (MZN)"
+            },
+            "actions": {
+                "search": "Search client by name",
+                "view": {
+                    "list": "Switch to list view",
+                    "grid": "Switch to grid view"
+                }
+            },
+            "card": {
+                "trips": "Completed trips:",
+                "revenue": "Revenue (MZN):"
             }
         }
     },
@@ -1447,10 +1511,9 @@
                     "description": "Network of my trusted transporters"
                 },
                 "resume": {
-                    "added": "Total Transporters",
-                    "active": "Active Transporters",
-                    "trips": "Combined trips completed",
-                    "rating": "Avg Rating"
+                    "transporters": "Transporters",
+                    "trips": "Completed trips",
+                    "paid": "Paid (MZN)"
                 },
                 "actions": {
                     "search": "Search transporter by name or location",
@@ -1464,10 +1527,13 @@
                         "pending": "Pending"
                     },
                     "buttons": {
-                        "add": "Add new trsndp"
+                        "add": "Add new transporter"
                     }
                 },
-                "card": {}
+                "card": {
+                    "trips": "Completed trips:",
+                    "paid": "Paid (MZN):"
+                }
             }
         },
         "public": {
