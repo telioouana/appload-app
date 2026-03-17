@@ -11,7 +11,7 @@ import { useTRPC } from "@/backend/trpc/client"
 import { InfiniteScroll } from "@/components/customs/scroll"
 import { ClientCard } from "../components/card/client-card"
 
-export function ClientsView() {
+export function ClientsView({ search }: { search?: string }) {
     const trpc = useTRPC()
 
     const {
@@ -27,18 +27,48 @@ export function ClientsView() {
         })
     )
 
-    if (data.pages[0].items.length === 0) return <div />
-    
+    const raw = (search ?? "").trim()
+
+    const items = data.pages.flatMap((page) => page.items)
+
+    if (items.length === 0) return <div />
+
+    if (raw === "") {
+        return (
+            <Suspense fallback={"Loading..."} >
+                <ErrorBoundary fallback={"Error loading"} >
+                    <div className="flex flex-col">
+                        <div className="grid grid-cols-1 gap-6 h-full w-full">
+                            {items.map((values) => {
+                                return <ClientCard key={values.id} values={values} />
+                            })}
+                        </div>
+
+                        <InfiniteScroll
+                            hasNextPage={hasNextPage}
+                            isFetchingNextPage={isFetchingNextPage}
+                            fetchNextPage={fetchNextPage}
+                        />
+                    </div>
+                </ErrorBoundary>
+            </Suspense>
+        )
+    }
+
+    const q = raw.toLowerCase()
+    const filteredItems = items.filter((values) => {
+        const candidates: Array<string | undefined> = [values.name, values.address]
+        return candidates.some((c) => c && c.toLowerCase().includes(q))
+    })
+
     return (
         <Suspense fallback={"Loading..."} >
             <ErrorBoundary fallback={"Error loading"} >
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 gap-6 h-full w-full">
-                        {data.pages.flatMap((page) =>
-                            page.items.map((values) => {
-                                return <ClientCard key={values.id} values={values} />
-                            })
-                        )}
+                        {filteredItems.map((values) => {
+                            return <ClientCard key={values.id} values={values} />
+                        })}
                     </div>
 
                     <InfiniteScroll
