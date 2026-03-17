@@ -50,8 +50,28 @@ export function OrdersView({ path, search }: { path: ORDERS_PATH, search?: strin
     )
 
     const filteredOrders = useMemo(() => {
-        const data = orders.pages.flatMap((page) => page.items.filter((values) => values.order.loadingAddress?.[0]?.state.toLowerCase().includes(search?.toLowerCase() ?? "")))
-        return data
+        const raw = (search ?? "").trim()
+        const items = orders.pages.flatMap((page) => page.items)
+
+        if (raw === "") return items
+
+        const q = raw.toLowerCase()
+
+        return items.filter((values) => {
+            const loadingState = values.order.loadingAddress?.[0]?.state?.toLowerCase()
+            const offloadingState = values.order.offloadingAddress?.[0]?.state?.toLowerCase()
+
+            const matchesLocation =
+                loadingState?.includes(q) ||
+                offloadingState?.includes(q)
+
+            const legacyId = values.order.legacyId
+            const matchesLegacyId =
+                legacyId != null &&
+                (legacyId.toString() === raw || legacyId.toString().padStart(4, "0") === raw)
+
+            return matchesLocation || matchesLegacyId
+        })
     }, [orders.pages, search])
 
     if (orders.pages[0].items.length === 0) return <EmptyOrders />
