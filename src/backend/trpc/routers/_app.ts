@@ -1,5 +1,6 @@
 import { createTRPCRouter } from "@/backend/trpc/init";
 
+import { marketRouter } from "@/modules/app/routes/shipper/server/market-procedures";
 import { publicRouter } from "@/modules/app/routes/shipper/server/public-procedures";
 import { shipperMapRouter } from "@/modules/app/routes/shipper/server/map-procedures";
 import { privateRouter } from "@/modules/app/routes/shipper/server/private-procedures";
@@ -21,6 +22,7 @@ import { carrierDashboardRouter } from "@/modules/app/routes/carrier/server/dash
 export const appRouter = createTRPCRouter({
     // merge your routers here
     // Shipper Routers
+    market: marketRouter,
     public: publicRouter,
     private: privateRouter,
     shipperMap: shipperMapRouter,
