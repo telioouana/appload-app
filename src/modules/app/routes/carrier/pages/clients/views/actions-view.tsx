@@ -12,9 +12,9 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/in
 
 import { LAYOUT_VIEW } from "../../../types/types";
 
-export function ClientsActionsView() {
+export function ClientsActionsView({ initialSearch }: { initialSearch?: string }) {
     const [tab, setTab] = useState<LAYOUT_VIEW>("grid")
-    const [value, setValue] = useState<string>("")
+    const [value, setValue] = useState<string>(initialSearch ?? "")
 
     const t = useTranslations("Carrier.clients.actions")
     const router = useRouter()

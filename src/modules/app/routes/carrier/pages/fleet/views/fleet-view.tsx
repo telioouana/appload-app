@@ -17,9 +17,10 @@ import { GridCard } from "../components/card/grid-card"
 interface Props {
     status: typeof FLEET_STATUS[number] | undefined
     view: LAYOUT_VIEW | undefined
+    search?: string
 }
 
-export function FleetView({ status, view }: Props) {
+export function FleetView({ status, view, search }: Props) {
     const trpc = useTRPC()
 
     const {
@@ -36,7 +37,27 @@ export function FleetView({ status, view }: Props) {
         })
     )
 
-    if (data.pages[0].items.length === 0) return <div />
+    // Flatten all pages into a single items array for filtering
+    const items = data.pages.flatMap((page) => page.items)
+
+    if (items.length === 0) return <div />
+
+    // Normalize search and compute filtered list
+    const raw = (search ?? "").trim()
+    const filteredItems = raw === "" ? items : (() => {
+        const q = raw.toLowerCase()
+        return items.filter(({ user, truck, trailer, link }) => {
+            // candidate fields: user.name, truck internalId/regPlate, trailer internalId/regPlate, link internalId/regPlate
+            const candidates: Array<string | undefined> = [
+                user?.name,
+                truck?.internalId ?? truck?.regPlate,
+                trailer?.internalId ?? trailer?.regPlate,
+                link?.internalId ?? link?.regPlate,
+            ]
+
+            return candidates.some((v) => v && v.toLowerCase().includes(q))
+        })
+    })()
 
     return (
         <Suspense fallback={"Loading..."}>
@@ -45,35 +66,31 @@ export function FleetView({ status, view }: Props) {
                     {(!view || view === "list")
                         ? (
                             <div className="grid grid-rows-1 w-full gap-4">
-                                {data.pages.flatMap((page) =>
-                                    page.items.map(({ driver, user, truck, tracking, trailer, link }) => {
-                                        const values = {
-                                            truck,
-                                            trailer,
-                                            link,
-                                            driver,
-                                            user,
-                                            tracking
-                                        }
-                                        return <ListCard key={truck.id} values={values} />
-                                    })
-                                )}
+                                {filteredItems.map(({ driver, user, truck, tracking, trailer, link }) => {
+                                    const values = {
+                                        truck,
+                                        trailer,
+                                        link,
+                                        driver,
+                                        user,
+                                        tracking
+                                    }
+                                    return <ListCard key={truck.id} values={values} />
+                                })}
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {data.pages.flatMap((page) =>
-                                    page.items.map(({ driver, user, truck, tracking, trailer, link }) => {
-                                        const values = {
-                                            truck,
-                                            trailer,
-                                            link,
-                                            driver,
-                                            user,
-                                            tracking
-                                        }
-                                        return <GridCard key={truck.id} values={values} />
-                                    })
-                                )}
+                                {filteredItems.map(({ driver, user, truck, tracking, trailer, link }) => {
+                                    const values = {
+                                        truck,
+                                        trailer,
+                                        link,
+                                        driver,
+                                        user,
+                                        tracking
+                                    }
+                                    return <GridCard key={truck.id} values={values} />
+                                })}
                             </div>
                         )
                     }

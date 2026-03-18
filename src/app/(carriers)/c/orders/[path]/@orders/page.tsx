@@ -5,8 +5,12 @@ import { DEFAULT_PAGE_LIMIT } from "@/constants"
 import { ORDERS_PATH } from "@/modules/app/routes/carrier/types/types"
 import { OrdersView } from "@/modules/app/routes/carrier/pages/orders/views/orders-view"
 
-export default async function Page({ params }: { params: Promise<{ path: ORDERS_PATH }> }) {
+export default async function Page({ params, searchParams }: {
+    params: Promise<{ path: ORDERS_PATH }>
+    searchParams: Promise<{ search?: string, "cargo-type"?: string }>
+}) {
     const { path } = await params
+    const { search, "cargo-type": cargoType } = await searchParams
 
     const client = getQueryClient()
 
@@ -29,7 +33,7 @@ export default async function Page({ params }: { params: Promise<{ path: ORDERS_
 
     return (
         <HydrateClient>
-            <OrdersView path={path} />
+            <OrdersView path={path} search={search} cargoType={cargoType} />
         </HydrateClient>
     )
 }

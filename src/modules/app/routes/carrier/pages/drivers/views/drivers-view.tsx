@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
 
@@ -18,9 +18,10 @@ import { GridCard } from "../components/card/grid-card"
 interface Props {
     status: typeof FLEET_STATUS[number] | undefined
     view: LAYOUT_VIEW | undefined
+    search?: string
 }
 
-export function DriversView({ status, view }: Props) {
+export function DriversView({ status, view, search }: Props) {
     const trpc = useTRPC()
 
     const {
@@ -39,6 +40,17 @@ export function DriversView({ status, view }: Props) {
 
     if (drivers.pages[0].items.length === 0) return <div />
 
+    // Normalize and early-return for empty search
+    const raw = (search ?? "").trim()
+
+    const items = drivers.pages.flatMap((page) => page.items)
+
+    const filteredItems = useMemo(() => {
+        if (raw === "") return items
+        const q = raw.toLowerCase()
+        return items.filter(({ user }) => !!user?.name && user.name.toLowerCase().includes(q))
+    }, [drivers.pages, search])
+
     return (
         <Suspense fallback={"Loading..."}>
             <ErrorBoundary fallback={"Error fetching"}>
@@ -46,31 +58,27 @@ export function DriversView({ status, view }: Props) {
                     {(!view || view === "list")
                         ? (
                             <div className="grid grid-rows-1 w-full gap-4">
-                                {drivers.pages.flatMap((page) =>
-                                    page.items.map(({ driver, user, truck, tracking }) => {
-                                        const values = {
-                                            driver,
-                                            user,
-                                            truck,
-                                            tracking
-                                        }
-                                        return <ListCard key={driver.id} values={values} />
-                                    })
-                                )}
+                                {filteredItems.map(({ driver, user, truck, tracking }) => {
+                                    const values = {
+                                        driver,
+                                        user,
+                                        truck,
+                                        tracking
+                                    }
+                                    return <ListCard key={driver.id} values={values} />
+                                })}
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {drivers.pages.flatMap((page) =>
-                                    page.items.map(({ driver, user, truck, tracking }) => {
-                                        const values = {
-                                            driver,
-                                            user,
-                                            truck,
-                                            tracking
-                                        }
-                                        return <GridCard key={driver.id} values={values} />
-                                    })
-                                )}
+                                {filteredItems.map(({ driver, user, truck, tracking }) => {
+                                    const values = {
+                                        driver,
+                                        user,
+                                        truck,
+                                        tracking
+                                    }
+                                    return <GridCard key={driver.id} values={values} />
+                                })}
                             </div>
                         )
                     }

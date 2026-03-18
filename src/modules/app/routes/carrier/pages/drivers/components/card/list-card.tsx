@@ -107,7 +107,7 @@ export function ListCard({ values }: Props) {
 
                     <div className="flex flex-col gap-1 truncate">
                         <span className="text-muted-foreground text-xs">
-                            {t("trips")}
+                            {t("trip")}
                         </span>
                         <span className="font-medium text-center">
                             {0}

@@ -4,7 +4,7 @@ import { ClientsView } from "@/modules/app/routes/carrier/pages/clients/views/cl
 
 import { DEFAULT_PAGE_LIMIT } from "@/constants";
 
-export default async function Page() {
+export default async function Page({ searchParams }: { searchParams: Promise<{ search?: string }> }) {
     const client = getQueryClient()
 
     await client.prefetchInfiniteQuery(
@@ -15,9 +15,11 @@ export default async function Page() {
         })
     )
 
+    const { search } = await searchParams
+
     return (
         <HydrateClient>
-            <ClientsView />
+            <ClientsView search={search} />
         </HydrateClient>
     )
 }
