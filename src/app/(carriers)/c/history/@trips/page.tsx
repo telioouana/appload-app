@@ -4,7 +4,13 @@ import { DEFAULT_PAGE_LIMIT } from "@/constants"
 
 import { HistoryView } from "@/modules/app/routes/carrier/pages/history/views/history-view"
 
-export default async function Page() {
+export default async function Page({
+    searchParams,
+}: {
+    searchParams: Promise<{ search?: string, "cargo-type"?: string }>
+}) {
+    const { search, "cargo-type": cargoType } = await searchParams
+
     const client = getQueryClient()
 
     await client.prefetchInfiniteQuery(
@@ -17,7 +23,7 @@ export default async function Page() {
 
     return (
         <HydrateClient>
-            <HistoryView/>
+            <HistoryView search={search} cargoType={cargoType} />
         </HydrateClient>
     )
 }

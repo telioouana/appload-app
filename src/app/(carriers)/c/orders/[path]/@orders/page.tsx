@@ -10,7 +10,7 @@ export default async function Page({ params, searchParams }: {
     searchParams: Promise<{ search?: string, "cargo-type"?: string }>
 }) {
     const { path } = await params
-    const { search } = await searchParams
+    const { search, "cargo-type": cargoType } = await searchParams
 
     const client = getQueryClient()
 
@@ -33,7 +33,7 @@ export default async function Page({ params, searchParams }: {
 
     return (
         <HydrateClient>
-            <OrdersView path={path} search={search} />
+            <OrdersView path={path} search={search} cargoType={cargoType} />
         </HydrateClient>
     )
 }

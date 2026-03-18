@@ -20,7 +20,7 @@ import { OrdersLoadingFallback } from "@/modules/app/ui/components/states/orders
 import { CreateOfferDialog } from "../../../ui/components/dialog/create-offer-dialog"
 
 
-export function OrdersView({ path, search }: { path: ORDERS_PATH, search?: string }) {
+export function OrdersView({ path, search, cargoType }: { path: ORDERS_PATH, search?: string, cargoType?: string }) {
     const trpc = useTRPC()
 
     const {
@@ -49,12 +49,41 @@ export function OrdersView({ path, search }: { path: ORDERS_PATH, search?: strin
         trpc.driver.offer.queryOptions()
     )
 
-    const filteredOrders = useMemo(() => {
-        const data = orders.pages.flatMap((page) => page.items.filter((values) => values.order.loadingAddress?.[0]?.state.toLowerCase().includes(search?.toLowerCase() ?? "")))
-        return data
-    }, [orders.pages, search])
+    const filteredItems = useMemo(() => {
+        const cargoRaw = (cargoType ?? "").trim()
+        const cargoFilter = cargoRaw === "" ? null : cargoRaw.toLowerCase()
 
-    if (orders.pages[0].items.length === 0) return <EmptyOrders />
+        const raw = (search ?? "").trim()
+        const items = orders.pages.flatMap((page) => page.items)
+
+        if (raw === "" && cargoFilter == null) return items
+
+        const q = raw.toLowerCase()
+
+        return items.filter((values) => {
+            if (cargoFilter != null) {
+                const cat = values.cargo?.category?.toLowerCase()
+                if (cat !== cargoFilter) return false
+            }
+
+            // If there's no search query but cargo matched, include the item
+            if (raw === "") return true
+
+            const loadingState = values.order.loadingAddress?.[0]?.state?.toLowerCase()
+            const offloadingState = values.order.offloadingAddress?.[0]?.state?.toLowerCase()
+
+            const matchesLocation =
+                loadingState?.includes(q) ||
+                offloadingState?.includes(q)
+
+            const legacyId = values.order.legacyId
+            const matchesLegacyId =
+                legacyId != null &&
+                (legacyId.toString() === raw || legacyId.toString().padStart(4, "0") === raw)
+
+            return matchesLocation || matchesLegacyId
+        })
+    }, [orders.pages, search, cargoType])
 
     return (
         <Suspense fallback={<OrdersLoadingFallback />} >
@@ -64,26 +93,34 @@ export function OrdersView({ path, search }: { path: ORDERS_PATH, search?: strin
 
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full w-full">
-                        {filteredOrders.map(({ order, cargo, organizationId, organizationName, fiscalRegime }) => {
-                            const values = {
-                                fleet,
-                                order,
-                                cargo,
-                                drivers,
-                                organizationId,
-                                organizationName,
-                                fiscalRegime: fiscalRegime as typeof FISCAL_REGIME[number]
-                            }
+                        {filteredItems.length === 0 ? (
+                            <div className="col-span-full">
+                                <EmptyOrders />
+                            </div>
+                        ) : (
+                            filteredItems.map(({ order, cargo, organizationId, organizationName, fiscalRegime }) => {
+                                const values = {
+                                    fleet,
+                                    order,
+                                    cargo,
+                                    drivers,
+                                    organizationId,
+                                    organizationName,
+                                    fiscalRegime: fiscalRegime as typeof FISCAL_REGIME[number]
+                                }
 
-                            return <OrderCard key={order.id} values={values} />
-                        })}
+                                return <OrderCard key={order.id} values={values} />
+                            })
+                        )}
                     </div>
 
-                    <InfiniteScroll
-                        hasNextPage={hasNextPage}
-                        isFetchingNextPage={isFetchingNextPage}
-                        fetchNextPage={fetchNextPage}
-                    />
+                    {filteredItems.length > 0 && (
+                        <InfiniteScroll
+                            hasNextPage={hasNextPage}
+                            isFetchingNextPage={isFetchingNextPage}
+                            fetchNextPage={fetchNextPage}
+                        />
+                    )}
                 </div>
 
             </ErrorBoundary>

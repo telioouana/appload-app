@@ -6,8 +6,8 @@ import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server"
 import { LAYOUT_VIEW, STATUS_FILTER } from "@/modules/app/routes/carrier/types/types"
 import { DriversView } from "@/modules/app/routes/carrier/pages/drivers/views/drivers-view"
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ status?: STATUS_FILTER, view?: LAYOUT_VIEW }> }) {
-    const { status: filter, view } = await searchParams
+export default async function Page({ searchParams }: { searchParams: Promise<{ status?: STATUS_FILTER, view?: LAYOUT_VIEW, search?: string }> }) {
+    const { status: filter, view, search } = await searchParams
     const client = getQueryClient()
 
     const status = filter as typeof FLEET_STATUS[number] | undefined
@@ -20,7 +20,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
 
     return (
         <HydrateClient>
-            <DriversView status={status} view={view} />
+            <DriversView status={status} view={view} search={search} />
         </HydrateClient>
     )
 }
