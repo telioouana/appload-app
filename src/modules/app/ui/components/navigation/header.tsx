@@ -22,6 +22,7 @@ import { locales } from "@/i18n/config"
 import { cn } from "@/lib/utils";
 
 import { Language } from "../button/language";
+import { ThemeToggle } from "@/theme/theme-toggle";
 
 export function Header() {
     const [isLoading, setLoading] = useState<boolean>(false)
@@ -34,6 +35,8 @@ export function Header() {
     if (isPending || !data) {
         return (
             <div className="flex items-center gap-2">
+                <Skeleton className="size-9 rounded-md border" />
+
                 <div className="flex gap-2 rounded-md items-center h-9 bg-muted px-2 border">
                     <Skeleton className="size-4" />
                     <IconSelector className="size-4 text-muted-foreground" />
@@ -80,6 +83,8 @@ export function Header() {
 
     return (
         <div className="flex items-center gap-2">
+            <ThemeToggle />
+
             <Language
                 items={locales.map(code => ({
                     flag: `/flags/${code === "en-US" ? "GB" : "PT"}.svg`,
@@ -87,7 +92,7 @@ export function Header() {
                 }))}
             />
 
-            <Button 
+            <Button
                 size="icon"
                 variant="outline"
                 className="hidden"

@@ -282,12 +282,15 @@ export const market = pgTable(
     {
         id: text("id").primaryKey().$default(() => randomUUID()),
         legacyId: serial("legacy_id").unique().notNull(),
+        shipperId: text("shipper_id")
+            .notNull()
+            .references(() => organization.id, { onDelete: "cascade" }),
+
         loading: jsonb("loading").$type<Location>(),
         offloading: jsonb("offloading").$type<Location>(),
-
         category: categoriesEnum("category").notNull(),
         quantity: decimal("quantity"),
-        unit: weightUnitEnum("unit").default("ton").notNull(),
+        unit: weightUnitEnum("unit").default("ton"),
 
         hasData: boolean("has_data").default(false),
         data: jsonb("data").$type<MarketResponse>(),
