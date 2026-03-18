@@ -2,14 +2,16 @@ import { randomUUID } from "crypto";
 import { boolean, decimal, index, integer, jsonb, pgEnum, pgTable, numeric, text, timestamp, serial, } from "drizzle-orm/pg-core";
 
 import { driver, link, organization, trailer, truck } from "@/backend/db/schema";
-import { INSURANCE_PAYMENT_STATUS, Location, PAYMENT_STATUS, FISCAL_REGIME, ORDER_STATUS, TRIP_STATUS, TRIP_TYPE, ROUTE_TYPE, TRUCK_AGE, WEIGHT_UNIT, POD_STATUS, CURRENCY, SHARE } from "@/backend/db/types";
+import { INSURANCE_PAYMENT_STATUS, Location, PAYMENT_STATUS, FISCAL_REGIME, ORDER_STATUS, TRIP_STATUS, TRIP_TYPE, ROUTE_TYPE, TRUCK_AGE, WEIGHT_UNIT, POD_STATUS, CURRENCY, SHARE, CATEGORIES, MARKET_STATUS, MarketResponse } from "@/backend/db/types";
 
 export const shareEnum = pgEnum("share_enum", SHARE)
 export const currencyEnum = pgEnum("currency_enum", CURRENCY)
+export const marketEnum = pgEnum("market_enum", MARKET_STATUS)
 export const tripTypeEnum = pgEnum("trip_type_enum", TRIP_TYPE)
 export const truckAgeEnum = pgEnum("truck_age_enum", TRUCK_AGE)
 export const podStatusEnum = pgEnum("pod_status_enum", POD_STATUS)
 export const routeTypeEnum = pgEnum("route_type_enum", ROUTE_TYPE)
+export const categoriesEnum = pgEnum("categories_enum", CATEGORIES)
 export const weightUnitEnum = pgEnum("weight_unit_enum", WEIGHT_UNIT)
 export const tripStatusEnum = pgEnum("trip_status_enum", TRIP_STATUS)
 export const orderStatusEnum = pgEnum("order_status_enum", ORDER_STATUS)
@@ -272,5 +274,30 @@ export const timeline = pgTable(
             .defaultNow()
             .$onUpdate(() => /* @__PURE__ */ new Date())
             .notNull(),
+    }
+)
+
+export const market = pgTable(
+    "market",
+    {
+        id: text("id").primaryKey().$default(() => randomUUID()),
+        legacyId: serial("legacy_id").unique().notNull(),
+        loading: jsonb("loading").$type<Location>(),
+        offloading: jsonb("offloading").$type<Location>(),
+
+        category: categoriesEnum("category").notNull(),
+        quantity: decimal("quantity"),
+        unit: weightUnitEnum("unit").default("ton").notNull(),
+
+        hasData: boolean("has_data").default(false),
+        data: jsonb("data").$type<MarketResponse>(),
+        status: marketEnum("status").notNull(),
+
+        createdAt: timestamp("created_at").defaultNow().notNull(),
+        updatedAt: timestamp("updated_at")
+            .defaultNow()
+            .$onUpdate(() => /* @__PURE__ */ new Date())
+            .notNull(),
+
     }
 )

@@ -7,7 +7,7 @@ import { OrdersView } from "@/modules/app/routes/carrier/pages/orders/views/orde
 
 export default async function Page({ params, searchParams }: {
     params: Promise<{ path: ORDERS_PATH }>
-    searchParams: Promise<{ search?: string }>
+    searchParams: Promise<{ search?: string, "cargo-type"?: string }>
 }) {
     const { path } = await params
     const { search } = await searchParams

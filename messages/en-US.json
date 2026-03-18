@@ -1973,6 +1973,39 @@
                     }
                 }
             }
+        },
+        "market-data": {
+            "page": {
+                "title": "Market Data",
+                "description": "Check market prices for your routes"
+            },
+            "form": {
+                "header": {
+                    "title": "Request Market Price"
+                },
+                "loading": {
+                    "label": "Origin",
+                    "placeholder": "Enter origin address",
+                    "error": "Origin was not provided"
+                },
+                "offloading": {
+                    "label": "Destination",
+                    "placeholder": "Enter destination address",
+                    "error": "Destination was not provided"
+                },
+                "cargo-type": {
+                    "label": "Cargo Type",
+                    "placeholder": "Select the cargo category",
+                    "error": "Cargo type type was not provided"
+                },
+                "weight": {
+                    "label": "Weight (ton) - (optional)",
+                    "placeholder": "e.g., 30"
+                },
+                "footer": {
+                    "submit": "Submit request"
+                }
+            }
         }
     },
     "User": {
