@@ -11,7 +11,9 @@
         "db:studio": "drizzle-kit studio",
         "db:migrate": "drizzle-kit migrate",
         "db:generate": "drizzle-kit generate",
-        "lint": "eslint"
+        "lint": "eslint",
+        "db:seed:users": "tsx src/backend/db/seed-users.ts",
+        "db:seed:orgs": "tsx src/backend/db/seed-orgs.ts"
     },
     "dependencies": {
         "@arcjet/ip": "1.0.0-beta.17",
