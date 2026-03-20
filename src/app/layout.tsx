@@ -3,7 +3,11 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale, getMessages } from "next-intl/server"
+import { headers } from "next/headers"
 import { Montserrat, Playfair_Display, Source_Code_Pro } from "next/font/google";
+import { UAParser } from "ua-parser-js"
+
+import { SafariBlock } from "@/components/safari-block"
 
 import "./globals.css";
 
@@ -33,6 +37,12 @@ export const metadata: Metadata = {
     description: "Going the extra mile",
 };
 
+function isSafari(userAgent: string | null): boolean {
+    if (!userAgent) return false
+    const browser = new UAParser(userAgent).getBrowser()
+    return browser.name === "Safari" || browser.name === "Mobile Safari"
+}
+
 export default async function RootLayout({
     children,
 }: Readonly<{
@@ -40,6 +50,8 @@ export default async function RootLayout({
 }>) {
     const locale = await getLocale()
     const messages = await getMessages()
+    const headersList = await headers()
+    const safari = isSafari(headersList.get("user-agent"))
 
     return (
         <html lang={locale} suppressHydrationWarning>
@@ -51,13 +63,17 @@ export default async function RootLayout({
                     enableColorScheme
                 >
                     <NextIntlClientProvider messages={messages}>
-                        <TooltipProvider>
-                            <EdgeStoreProvider>
-                                <Analytics />
-                                <Toaster />
-                                {children}
-                            </EdgeStoreProvider>
-                        </TooltipProvider>
+                        {safari ? (
+                            <SafariBlock />
+                        ) : (
+                            <TooltipProvider>
+                                <EdgeStoreProvider>
+                                    <Analytics />
+                                    <Toaster />
+                                    {children}
+                                </EdgeStoreProvider>
+                            </TooltipProvider>
+                        )}
                     </NextIntlClientProvider>
                 </ThemeProvider>
             </body>
