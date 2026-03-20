@@ -34,15 +34,33 @@ export const auth = betterAuth({
 
                     const ip = session.ipAddress || "127.0.0.1";
 
-                    const geoRes = await fetch(`http://ip-api.com/json/${ip}`); // Added /json/ for the API endpoint
-                    const geoData = await geoRes.json();
+                    let city = "Unknown";
+                    let country = "Unknown";
+
+                    try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+                        const geoRes = await fetch(`https://ip-api.com/json/${ip}`, {
+                            signal: controller.signal
+                        });
+                        clearTimeout(timeoutId);
+
+                        if (geoRes.ok) {
+                            const geoData = await geoRes.json();
+                            city = geoData.city || "Unknown";
+                            country = geoData.country || "Unknown";
+                        }
+                    } catch {
+                        // Geolocation lookup failed, continue with defaults
+                    }
 
                     return {
                         data: {
                             ...session,
                             activeOrganizationId: membership?.organizationId,
-                            city: geoData.city || "Unknown",
-                            country: geoData.country || "Unknown",
+                            city,
+                            country,
                         }
                     }
                 }

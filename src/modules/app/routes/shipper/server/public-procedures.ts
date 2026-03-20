@@ -40,7 +40,7 @@ export const publicRouter = createTRPCRouter({
                         ne(order.status, "prospect")
                     ));
                 } else if (path === "history") {
-                    filters.push(and(
+                    filters.push(or(
                         eq(order.status, "completed"),
                         eq(order.status, "cancelled")
                     ));
