@@ -11,7 +11,7 @@ import { useTRPC } from "@/backend/trpc/client"
 import { InfiniteScroll } from "@/components/customs/scroll"
 import { TransportersCard } from "../components/card/transporters-card"
 
-export function TransportersView() {
+export function TransportersListView() {
     const trpc = useTRPC()
 
     const {

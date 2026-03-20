@@ -1435,6 +1435,40 @@
                 }
             }
         },
+        "marketplace": {
+            "actions": {
+                "search": "Search order by id, loading or offloading location",
+                "view": {
+                    "grid": "Switch to grid view",
+                    "list": "Switch to list view"
+                },
+                "button": "Create a new order",
+                "filters": {
+                    "title": "Filter by",
+                    "cargo-type": {
+                        "label": "Cargo type",
+                        "placeholder": "Select one of the options to filter",
+                        "options": {
+                            "agriculture-inputs": "Agriculture Inputs",
+                            "agriculture-products": "Agriculture Products",
+                            "construction": "Construction",
+                            "machinery-equipment": "Machinery Equipment",
+                            "fmcg": "FMCG",
+                            "general-cargo": "General Cargo",
+                            "medicine": "Medicine",
+                            "mining": "Mining",
+                            "oil-gas": "Oil & Gas",
+                            "vehicles": "Vehicles",
+                            "other": "Other",
+                            "none": "Clear filter"
+                        }
+                    },
+                    "status": {
+                        "label": "Status"
+                    }
+                }
+            }
+        },
         "private": {
             "marketplace": {
                 "page": {
@@ -1471,38 +1505,6 @@
                     "orders": "Total orders",
                     "total": "Total value (MZN)",
                     "distance": "Total distance (km)"
-                },
-                "actions": {
-                    "search": "Search order by id, loading or offloading location",
-                    "view": {
-                        "grid": "Switch to grid view",
-                        "list": "Switch to list view"
-                    },
-                    "button": "Create a new order",
-                    "filters": {
-                        "title": "Filter by",
-                        "cargo-type": {
-                            "label": "Cargo type",
-                            "placeholder": "Select one of the options to filter",
-                            "options": {
-                                "agriculture-inputs": "Agriculture Inputs",
-                                "agriculture-products": "Agriculture Products",
-                                "construction": "Construction",
-                                "machinery-equipment": "Machinery Equipment",
-                                "fmcg": "FMCG",
-                                "general-cargo": "General Cargo",
-                                "medicine": "Medicine",
-                                "mining": "Mining",
-                                "oil-gas": "Oil & Gas",
-                                "vehicles": "Vehicles",
-                                "other": "Other",
-                                "none": "Clear filter"
-                            }
-                        },
-                        "status": {
-                            "label": "Status"
-                        }
-                    }
                 }
             },
             "transporters": {
@@ -2081,9 +2083,113 @@
                 },
                 "pages": {
                     "profile": "Your info",
-                    "company": "Company",
+                    "organization": "Organization",
                     "security-and-privacy": "Security & Privacy",
                     "billing": "Billing"
+                }
+            },
+            "profile": {
+                "picture-card": {
+                    "title": "Profile Picture",
+                    "instruction": "Upload a new profile picture",
+                    "description": "JPG or PNG. Max size 2MB",
+                    "buttons": {
+                        "upload": "Upload Photo",
+                        "remove": "Remove"
+                    }
+                },
+                "user-information": {
+                    "title": "Personal Information",
+                    "name": "User's full name",
+                    "email": {
+                        "label": "Email address",
+                        "verify": "Verify email",
+                        "verified": "Email verified"
+                    },
+                    "phone": "Phone number",
+                    "gender": {
+                        "label": "Title",
+                        "male": "Mr.",
+                        "female": "Ms.",
+                        "other": "Other"
+                    }
+                }
+            },
+            "security-and-privacy": {
+                "sessions": {
+                    "header": {
+                        "title": "Active Sessions",
+                        "description": "Manage your active sessions across devices",
+                        "button": "Sign out all"
+                    },
+                    "card": {
+                        "device": "{browser} on {os}",
+                        "unknown": "Unknown Device"
+                    }
+                },
+                "security": {
+                    "header": "Security Settings",
+                    "two-factor": {
+                        "title": "2FA - Two-Factor Authentication",
+                        "description": "Add an extra layer of security",
+                        "actions": {
+                            "enable": "Enable",
+                            "disable": "Disable",
+                            "get-codes": "Get backup codes"
+                        },
+                        "dialog": {
+                            "header": {
+                                "title": {
+                                    "false": "Enable 2FA Authenthication",
+                                    "true": "Disable 2FA Authenthication"
+                                }
+                            },
+                            "form": {
+                                "default-view": {
+                                    "password": {
+                                        "label": "Password *",
+                                        "description": "Enter your account password",
+                                        "placeholder": "••••••••••",
+                                        "error": "Password was not provided"
+                                    },
+                                    "actions": {
+                                        "false": "Enable 2FA",
+                                        "true": "Disable 2FA"
+                                    }
+                                },
+                                "verification-view": {
+                                    "code": {
+                                        "label": "Code *",
+                                        "description": "Scan the QR Code below with any authenticator app off your choise and enter the 6-digit code that will appear on the app",
+                                        "error": {
+                                            "empty": "The 6-digit code was not provided",
+                                            "invalid": "Please enter all 6-digit code"
+                                        }
+                                    },
+                                    "actions": {
+                                        "verify": "Verify"
+                                    }
+                                },
+                                "backup-codes-view": {
+                                    "title": "Account Recovery Codes",
+                                    "note": "Save these backup codes in a safe place. You can use them to recover your account",
+                                    "actions": {
+                                        "done": "Done"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": {
+                            "never": "Never changed",
+                            "updated-at": "Last updated: {updatedAt, date, medium}"
+                        },
+                        "actions": {
+                            "change": "Change"
+                        }
+                    }
                 }
             }
         },
@@ -2112,6 +2218,10 @@
                 "title": "Failed to load orders",
                 "description": "There was an error while trying to load the orders, please check your connection and try again",
                 "button": "Retry"
+            },
+            "search": {
+                "title": "No results found",
+                "description": "We couldn't find any orders matching your search criteria. Try a different keyword or filter."
             },
             "empty": {
                 "shipper": {

@@ -1,35 +1,56 @@
-import { useTranslations } from "next-intl"
-import { IconPackages } from "@tabler/icons-react"
+"use client"
 
-import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
+import { useTranslations } from "next-intl"
+import { IconPackages, IconSearchOff } from "@tabler/icons-react" // Added search off icon
+
 import { authClient } from "@/backend/auth/auth-client"
+
 import { Spinner } from "@/components/ui/spinner"
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
 
 type User = "shipper" | "carrier"
 
-export function EmptyOrders() {
-    const { data, isPending } = authClient.useSession()
-
-    if (isPending || !data?.user) return <Spinner />
-
-    return <Render type={data.user.type as User} />
+interface EmptyOrdersProps {
+    isSearch?: boolean
 }
 
-function Render({ type }: { type: User }) {
-    const t = useTranslations(`States.orders.empty.${type}`)
+export function EmptyOrders({ isSearch = false }: EmptyOrdersProps) {
+    const { data, isPending } = authClient.useSession()
+
+    if (isPending || !data?.user) return (
+        <div className="flex h-30 w-full items-center justify-center">
+            <Spinner />
+        </div>
+    )
+
+    return <Render type={data.user.type as User} isSearch={isSearch} />
+}
+
+function Render({ type, isSearch }: { type: User; isSearch: boolean }) {
+    // Switch the translation namespace based on whether we are searching or not
+    const namespace = isSearch
+        ? `States.orders.search` // Make sure to add this to your JSON
+        : `States.orders.empty.${type}`
+
+    const t = useTranslations(namespace)
 
     return (
         <div className="h-full w-full items-center justify-center flex flex-col">
             <Empty>
                 <EmptyHeader>
-                    <EmptyMedia variant="icon" className="size-36 rounded-full">
-                        <IconPackages className="size-24" />
+                    <EmptyMedia variant="icon" className="size-30 rounded-full bg-muted/30">
+                        {isSearch ? (
+                            <IconSearchOff className="size-20 text-muted-foreground" stroke={1.2} />
+                        ) : (
+                            <IconPackages className="size-20 text-muted-foreground" stroke={1.2} />
+                        )}
                     </EmptyMedia>
-                    <EmptyTitle>{t("title")}</EmptyTitle>
+                    <EmptyTitle className="mt-4">{t("title")}</EmptyTitle>
                     <EmptyDescription>{t("description")}</EmptyDescription>
-                    <EmptyDescription>{t("note")}</EmptyDescription>
+                    {/* Only show the note if it's not a search result */}
+                    {!isSearch && <EmptyDescription className="text-xs">{t("note")}</EmptyDescription>}
                 </EmptyHeader>
             </Empty>
-        </div >
+        </div>
     )
 }

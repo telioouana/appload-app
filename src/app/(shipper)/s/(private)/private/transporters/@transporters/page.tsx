@@ -1,6 +1,6 @@
 import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server";
 
-import { TransportersView } from "@/modules/app/routes/shipper/pages/private/pages/transporters/views/transporters-view";
+import { TransportersListView } from "@/modules/app/routes/shipper/pages/private/pages/transporters/views/transporters-list-view";
 
 import { DEFAULT_PAGE_LIMIT } from "@/constants";
 
@@ -17,7 +17,7 @@ export default async function Page() {
 
     return (
         <HydrateClient>
-            <TransportersView />
+            <TransportersListView />
         </HydrateClient>
     )
 }

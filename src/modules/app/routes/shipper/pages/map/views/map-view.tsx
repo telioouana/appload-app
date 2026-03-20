@@ -5,46 +5,53 @@ import { ErrorBoundary } from "react-error-boundary"
 import { Suspense, useEffect, useState } from "react"
 import { useSuspenseQuery } from "@tanstack/react-query"
 
-import { useTRPC } from "@/backend/trpc/client";
+import { useTRPC } from "@/backend/trpc/client"
 
 import { Map, Marker } from "@/components/map/map"
 
 import { getLocation } from "@/lib/google";
 
-export function MapView() {
+interface MapViewProps {
+    search?: string;
+    filterBy?: string;
+}
+
+export function MapView({ search, filterBy }: MapViewProps) {
     return (
         <ErrorBoundary fallback={<div>Failed to load map</div>}>
             <Suspense fallback={<div>Loading map...</div>}>
-                <div className="w-full h-full max-h-[65vh]">
-                    <MapComponent />
+                <div className="w-full h-full max-h-[60vh]">
+                    <MapComponent search={search} filterBy={filterBy} />
                 </div>
             </Suspense>
         </ErrorBoundary>
     )
 }
 
-function MapComponent() {
+function MapComponent({ search, filterBy }: MapViewProps) {
     const [markers, setMarkers] = useState<Marker[]>([])
     const f = useFormatter();
     const trpc = useTRPC()
 
     const { data } = useSuspenseQuery(
-        trpc.shipperMap.positions.queryOptions()
+        trpc.shipperMap.positions.queryOptions({
+            search,
+            filterBy: filterBy || "all"
+        })
     )
 
     useEffect(() => {
         let cancelled = false;
-        // Guard clause: Ensure data exists before proceeding
+
         async function truckPosition() {
             try {
-                // Call your utility function (ensure it's exported from a file)
-                const newMarkers = await Promise.all(
+                const results = await Promise.all(
                     data
                         .filter(p => p.location?.[0]?.placeId && p.updatedAt && p.status)
                         .map(async (position) => {
-                            const { location, status, updatedAt } = position;
+                            const { location, status, updatedAt, truckInternalId, regPlate } = position;
 
-                            if (!location || location.length === 0) return null; // Skip if no location data
+                            if (!location || location.length === 0) return null;
 
                             const { placeId } = location[0];
                             const locationData = await getLocation(placeId);
@@ -52,6 +59,7 @@ function MapComponent() {
                             if (locationData?.[0]) {
                                 const firstResult = locationData[0];
                                 return {
+                                    id: truckInternalId || regPlate || "unknown",
                                     location: firstResult.address_components[0].long_name,
                                     lat: firstResult.geometry.location.lat,
                                     lng: firstResult.geometry.location.lng,
@@ -62,8 +70,12 @@ function MapComponent() {
                             return null;
                         })
                 );
+
                 if (cancelled) return;
-                setMarkers(newMarkers.filter((m): m is Marker => m !== null));
+
+                const validMarkers = results.filter((m): m is Marker => m !== null);
+
+                setMarkers(validMarkers);
             } catch (error) {
                 if (cancelled) return;
                 console.error("Failed to fetch location:", error);

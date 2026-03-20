@@ -8,37 +8,33 @@ import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export function AccountHeader() {
-    const t = useTranslations("Shipper.account.header")
+export function AccountHeader({ user }: { user: "s" | "c" }) {
+    const t = useTranslations("User.account.header")
     const pathname = usePathname()
     const router = useRouter()
 
     const pages = [
         {
-            path: "/u/account/profile",
+            path: `/u/${user}/account/profile`,
             label: t("pages.profile"),
         },
         {
-            path: "/u/account/company",
-            label: t("pages.company"),
+            path: `/u/${user}/account/organization`,
+            label: t("pages.organization"),
         },
         {
-            path: "/u/account/security-and-privacy",
+            path: `/u/${user}/account/security-and-privacy`,
             label: t("pages.security-and-privacy"),
-        },
-        {
-            path: "/u/account/billing",
-            label: t("pages.billing"),
-        },
+        }
     ]
 
     return (
-        <header className="bg-sidebar sticky top-0 z-50 flex items-center border border-sidebar-border shadow-sm">
-            <div className="flex flex-col h-(--header-height) max-w-5xl mx-auto w-full gap-4 justify-start pt-4">
+        <header className="bg-sidebar sticky top-0 z-50 items-center border border-sidebar-border shadow-sm">
+            <div className="flex flex-col h-(--header-height) max-w-5xl mx-auto px-4 md:px-6 lg:px-8 py-4">
                 <div className="flex items-center gap-6">
                     <Button
                         variant="ghost"
-                        onClick={() => router.back()}
+                        onClick={() => router.push(`/${user}/dashboard`)}
                     >
                         <IconArrowLeft />
                         {t("buttons.back")}
@@ -49,15 +45,17 @@ export function AccountHeader() {
                         <h5 className="text-sm text-muted-foreground">{t("description")}</h5>
                     </div>
                 </div>
+            </div>
 
-                <div className="flex">
+            <div className="max-w-5xl mx-auto px-4 md:px-6 lg:px-8">
+                <div className="flex gap-2 overflow-x-auto">
                     {pages.map(({ path, label }) => (
                         <Link
                             key={path}
                             href={path}
                             className={cn(
-                                "flex px-4 pb-2 text-sm text-muted-foreground items-center",
-                                pathname.startsWith(path) && "border-b-2 border-primary"
+                                "px-4 py-2 text-sm font-medium whitespace-nowrap border-b-2 transition-colors border-transparent text-muted-foreground hover:text-foreground",
+                                pathname.startsWith(path) && "border-primary text-primary dark:text-primary/80"
                             )}
                         >
                             {label}

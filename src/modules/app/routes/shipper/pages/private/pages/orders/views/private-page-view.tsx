@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 import { ORDERS_PATH } from "@/modules/app/routes/shipper/types/types"
 
-export function PageView({ path }: { path: ORDERS_PATH }) {
+export function PrivatePageView({ path }: { path: ORDERS_PATH }) {
     const t = useTranslations(`Shipper.private.marketplace.page.${path}`)
     const { data, isPending } = authClient.useActiveOrganization()
 

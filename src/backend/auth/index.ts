@@ -2,7 +2,7 @@ import { desc, eq } from "drizzle-orm";
 import { nextCookies } from "better-auth/next-js"
 import { APIError, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { admin, organization, phoneNumber } from "better-auth/plugins";
+import { admin, organization, phoneNumber, twoFactor } from "better-auth/plugins";
 
 import { db } from "@/backend/db";
 import { sms } from "@/backend/twilio";
@@ -32,10 +32,17 @@ export const auth = betterAuth({
                         .orderBy(desc(memberSchema.createdAt))
                         .limit(1)
 
+                    const ip = session.ipAddress || "127.0.0.1";
+
+                    const geoRes = await fetch(`http://ip-api.com/json/${ip}`); // Added /json/ for the API endpoint
+                    const geoData = await geoRes.json();
+
                     return {
                         data: {
                             ...session,
                             activeOrganizationId: membership?.organizationId,
+                            city: geoData.city || "Unknown",
+                            country: geoData.country || "Unknown",
                         }
                     }
                 }
@@ -60,7 +67,11 @@ export const auth = betterAuth({
         cookieCache: {
             enabled: true,
             maxAge: 60 * 5 // 5 Minutes
-        }
+        },
+        additionalFields: {
+            city: { type: "string" },
+            country: { type: "string" },
+        },
     },
     user: {
         changeEmail: {
@@ -226,6 +237,7 @@ export const auth = betterAuth({
                 })
             }
         }),
+        twoFactor(),
         nextCookies(),
     ]
 });

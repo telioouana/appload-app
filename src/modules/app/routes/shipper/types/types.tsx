@@ -1,4 +1,4 @@
-import type { cargo, order, tracking, trip } from "@/backend/db/schema"
+import type { cargo, order, timeline, tracking, trip } from "@/backend/db/schema"
 
 export type LAYOUT_VIEW = "list" | "grid"
 export type PERIOD = "week" | "month" | "quarter" | "year"
@@ -11,6 +11,8 @@ export type Values = {
     cargo: typeof cargo.$inferSelect,
     trip: typeof trip.$inferSelect | null,
     tracking: typeof tracking.$inferSelect | null,
+    // Add the timeline status field (it's the result of your lateral join)
+    status: typeof timeline.$inferSelect | null, 
 }
 
 export type TransporterValues = {

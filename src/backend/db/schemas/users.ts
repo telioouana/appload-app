@@ -23,6 +23,7 @@ export const user = pgTable(
         banned: boolean("banned").default(false),
         banReason: text("ban_reason"),
         banExpires: timestamp("ban_expires"),
+        twoFactorEnabled: boolean("two_factor_enabled").default(false),
         type: text("type", { enum: ["appload", "shipper", "carrier", "driver"] }).notNull(),
         gender: text("gender", { enum: ["male", "female", "other"] }),
         status: text("status", { enum: ["active", "closed"] })
@@ -42,6 +43,8 @@ export const session = pgTable(
             .notNull(),
         ipAddress: text("ip_address"),
         userAgent: text("user_agent"),
+        city: text("city"),
+        country: text("country"),
         userId: text("user_id")
             .notNull()
             .references(() => user.id, { onDelete: "cascade" }),
@@ -184,6 +187,22 @@ export const invitation = pgTable(
     (table) => [
         index("invitation_organizationId_idx").on(table.organizationId),
         index("invitation_email_idx").on(table.email),
+    ],
+);
+
+export const twoFactor = pgTable(
+    "two_factor",
+    {
+        id: text("id").primaryKey(),
+        secret: text("secret").notNull(),
+        backupCodes: text("backup_codes").notNull(),
+        userId: text("user_id")
+            .notNull()
+            .references(() => user.id, { onDelete: "cascade" }),
+    },
+    (table) => [
+        index("twoFactor_secret_idx").on(table.secret),
+        index("twoFactor_userId_idx").on(table.userId),
     ],
 );
 
