@@ -57,6 +57,7 @@ export function VerificationView({ tfd, setView }: Props) {
                     description={t("code.description")}
                     isPending={form.formState.isSubmitting}
                     length={6}
+                    isNumber={false}
                 />
 
                 <div className="flex justify-center items-center p-4 bg-white w-full">

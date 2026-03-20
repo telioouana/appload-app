@@ -8,7 +8,7 @@ export function TwoFactorPassword(t: (key: string) => string) {
 
 export function TwoFactorCode(t: (key: string) => string) {
     return z.object({
-        code: z.number({ error: t("code.error.empty") }).min(100000,{ error: t("code.error.invalid") }).max(999999,{ error: t("code.error.invalid") })
+        code: z.string({ error: t("code.error.empty") }).regex(/^\d{6}$/, { error: t("code.error.invalid") })
     })
 }
 

@@ -8,7 +8,9 @@ import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/
 
 export const NumberInput: ControlFunc<{
     length?: number
+    isNumber?: boolean
 }> = ({
+    isNumber = true,
     length,
     ...props
 }) => {
@@ -32,8 +34,12 @@ export const NumberInput: ControlFunc<{
                                 e.target.value = sanitized;
 
                                 // Pass it to React Hook Form
-                                const val = e.target.value;
-                                field.onChange(val === "" ? undefined : Number(val));
+                                if (isNumber) {
+                                    const val = e.target.value;
+                                    field.onChange(val === "" ? undefined : Number(val));
+                                } else {
+                                    field.onChange(e)
+                                }
                             }}
                             disabled={props.isPending}
                             placeholder={props.placeholder}
