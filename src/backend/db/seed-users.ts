@@ -10,19 +10,29 @@ const COUNT = 10;
 type UserType = 'shipper' | 'carrier';
 
 function buildUsers() {
-  const users: { id: string; name: string; email: string; type: UserType }[] = [];
+  type Gender = 'male' | 'female' | 'other';
+  const users: { id: string; name: string; email: string; type: UserType; phoneNumber: string; gender: Gender }[] = [];
   for (let n = 1; n <= COUNT; n++) {
+    const shipperPhone = `+25884${String(n).padStart(7, '0')}`;
+    const carrierPhone = `+25886${String(n).padStart(7, '0')}`;
+    const gender: Gender = n % 2 === 0 ? 'female' : 'male';
+
     users.push({
       id: generateRandomString(32),
       name: `Testador ${n}`,
       email: `testador${n}+shipper@appload.co.mz`,
       type: 'shipper',
+      phoneNumber: shipperPhone,
+      gender,
     });
+
     users.push({
       id: generateRandomString(32),
       name: `Testador ${n}`,
       email: `testador${n}+carrier@appload.co.mz`,
       type: 'carrier',
+      phoneNumber: carrierPhone,
+      gender,
     });
   }
   return users;
@@ -37,7 +47,7 @@ async function main() {
 
   for (const u of users) {
     try {
-      await db
+      const [{ id: userId }] = await db
         .insert(user)
         .values({
           id: u.id,
@@ -47,18 +57,35 @@ async function main() {
           type: u.type,
           role: 'user',
           status: 'active',
+          phoneNumber: u.phoneNumber,
+          phoneNumberVerified: true,
+          gender: u.gender,
           createdAt: now,
           updatedAt: now,
         })
-        .onConflictDoNothing();
+        .onConflictDoUpdate({
+          target: user.email,
+          set: {
+            name: u.name,
+            emailVerified: true,
+            type: u.type,
+            role: 'user',
+            status: 'active',
+            phoneNumber: u.phoneNumber,
+            phoneNumberVerified: true,
+            gender: u.gender,
+            updatedAt: now,
+          },
+        })
+        .returning({ id: user.id });
 
       await db
         .insert(account)
         .values({
           id: generateRandomString(32),
-          accountId: u.id,
+          accountId: userId,
           providerId: 'credential',
-          userId: u.id,
+          userId: userId,
           password: hashedPassword,
           createdAt: now,
           updatedAt: now,
