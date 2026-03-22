@@ -77,33 +77,26 @@ export function CreateOrganizationDialog({ type }: Props) {
     const kyc = useMutation(
         trpc.organization.legal.mutationOptions({
             onSuccess: async () => {
-                await Promise.all([
-                    form.getValues().kyc.idCard.map(({ url }) =>
-                        edgestore.apploadFiles.confirmUpload({ url })
-                    ),
-                    form.getValues().kyc.nuit.map(({ url }) =>
-                        edgestore.apploadFiles.confirmUpload({ url })
-                    ),
-                    (form.getValues().info.type == "shipper" || form.getValues().kyc.commercialCertificate.length > 0)
-                        ? (
-                            form.getValues().kyc.commercialCertificate.map(({ url }) =>
-                                edgestore.apploadFiles.confirmUpload({ url })
-                            )
-                        ) : (
-                            form.getValues().kyc.alvara.map(({ url }) =>
-                                edgestore.apploadFiles.confirmUpload({ url })
-                            ),
-                            form.getValues().kyc.bankLetter.map(({ url }) =>
-                                edgestore.apploadFiles.confirmUpload({ url })
-                            ),
-                            form.getValues().kyc.republicBulletin.map(({ url }) =>
-                                edgestore.apploadFiles.confirmUpload({ url })
-                            ),
-                            form.getValues().kyc.commercialExercise.map(({ url }) =>
-                                edgestore.apploadFiles.confirmUpload({ url })
-                            )
-                        )
-                ])
+                const kyc = form.getValues().kyc;
+                const isShipper = form.getValues().info.type === "shipper";
+
+                const uploads = [
+                    ...kyc.idCard.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                    ...kyc.nuit.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                ];
+
+                if (isShipper || kyc.commercialCertificate.length > 0) {
+                    uploads.push(...kyc.commercialCertificate.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })));
+                } else {
+                    uploads.push(
+                        ...kyc.alvara.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                        ...kyc.bankLetter.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                        ...kyc.republicBulletin.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                        ...kyc.commercialExercise.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                    );
+                }
+
+                await Promise.all(uploads);
             },
             onError: (error) => {
                 // TODO: Implement localization
@@ -164,7 +157,6 @@ export function CreateOrganizationDialog({ type }: Props) {
 
     async function handleSubmit() {
         form.clearErrors()
-        setSubmitting(true)
         let fields: FieldPath<CreateOrganizationForm>[] = []
 
         if (form.getValues().info.type === "shipper") {
@@ -175,53 +167,53 @@ export function CreateOrganizationDialog({ type }: Props) {
 
         const isValid = await form.trigger(fields, { shouldFocus: true });
 
-        if (isValid) {
+        if (!isValid) return
+        
+        setSubmitting(true)
+        const org = {
+            type: form.getValues().info.type,
+            name: form.getValues().info.name,
+            slug: form.getValues().info.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+            nuit: form.getValues().info.nuit,
+            email: form.getValues().info.email,
+            phoneNumber: `${countryCodes.find(({ country }) => country === form.getValues().info.country)?.code ?? ""}${form.getValues().info.phoneNumber}`,
+            billingAddress: form.getValues().info.billingAddress,
+            physicalAddress: form.getValues().info.physicalAddress,
+        }
+        let organizationId: string | undefined
 
-            const org = {
-                type: form.getValues().info.type,
-                name: form.getValues().info.name,
-                slug: form.getValues().info.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-                nuit: form.getValues().info.nuit,
-                email: form.getValues().info.email,
-                phoneNumber: `${countryCodes.find(({ country }) => country === form.getValues().info.country)?.code ?? ""}${form.getValues().info.phoneNumber}`,
-                billingAddress: form.getValues().info.billingAddress,
-                physicalAddress: form.getValues().info.physicalAddress,
-            }
-            let organizationId: string | undefined
+        try {
+            const { data, error } = await authClient.organization.create({
+                status: "pending",
+                subscriptionPlan: "free",
+                ...org
+            })
 
-            try {
-                const { data, error } = await authClient.organization.create({
-                    status: "pending",
-                    subscriptionPlan: "free",
-                    ...org
-                })
-
-                if (error) {
-                    // TODO: Implement localization
-                    toast.error(error.message || "Something went wrong")
-                    return
-                }
-
-                organizationId = data.id
-
-                await kyc.mutateAsync({
-                    organizationId,
-                    values: form.getValues().kyc
-                })
-
-                await authClient.organization.setActive({
-                    organizationId
-                })
-            } catch (error) {
-                console.error(error)
-                if (organizationId) {
-                    await authClient.organization.delete({ organizationId })
-                }
+            if (error) {
                 // TODO: Implement localization
-                toast.error("Something went wrong")
-            } finally {
-                setSubmitting(false)
+                toast.error(error.message || "Something went wrong")
+                return
             }
+
+            organizationId = data.id
+
+            await kyc.mutateAsync({
+                organizationId,
+                values: form.getValues().kyc
+            })
+
+            await authClient.organization.setActive({
+                organizationId
+            })
+        } catch (error) {
+            console.error(error)
+            if (organizationId) {
+                await authClient.organization.delete({ organizationId })
+            }
+            // TODO: Implement localization
+            toast.error("Something went wrong")
+        } finally {
+            setSubmitting(false)
         }
     }
 

@@ -2157,10 +2157,10 @@
                     "dialog": {
                         "title": "Add your company",
                         "actions": {
-                            "cancel": "Cancelar",
-                            "back": "Voltar",
-                            "next": "Próximo",
-                            "register": "Registar"
+                            "cancel": "Cancel",
+                            "back": "Back",
+                            "next": "Next",
+                            "register": "Register"
                         }
                     }
                 },

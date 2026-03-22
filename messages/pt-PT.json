@@ -201,8 +201,7 @@
                         "label": "Viagens",
                         "all": "Todas as viagens",
                         "booked": "Confirmadas",
-                        "on-going": "Em curso",
-                        "delivered": "Entregues"
+                        "on-going": "Em curso"
                     },
                     "history": "Histórico",
                     "clients": "Meus Clientes"
@@ -271,14 +270,15 @@
         "kpis": {
             "page": {
                 "header": {
-                    "title": "KPIs e Análises",
+                    "title": "KPIs & Insights",
                     "description": "Análise de desempenho e relatórios",
-                    "button": "Gerar Relatório de KPI"
+                    "button": "Gerar Relatório de KPIs"
                 },
                 "data-window": {
-                    "month": "Último mês",
-                    "quarter": "Último trimestre",
-                    "year": "Último ano"
+                    "week": "Últimos 7 dias",
+                    "month": "Últimos 30 dias",
+                    "quarter": "Últimos 3 meses",
+                    "year": "Últimos 12 meses"
                 },
                 "data": {
                     "triggers": {
@@ -290,7 +290,7 @@
                     "tabs": {
                         "operational": {
                             "on-time-loading": {
-                                "label": "Chegada pontual ao carregamento",
+                                "label": "Chegada pontual no carregamento",
                                 "unit": "%"
                             },
                             "average-loading-time": {
@@ -306,19 +306,19 @@
                                 "unit": "km"
                             },
                             "on-time-offloading": {
-                                "label": "Chegada pontual à descarga",
+                                "label": "Chegada pontual no descarregamento",
                                 "unit": "%"
                             },
                             "average-offloading-time": {
-                                "label": "Duração média da descarga",
+                                "label": "Duração média do descarregamento",
                                 "unit": "dias/viagem"
                             },
                             "demurages-occurrences": {
-                                "label": "Ocorrências de sobrestadias",
+                                "label": "Ocorrências de demurrage",
                                 "unit": "%"
                             },
                             "damurages-charged-days": {
-                                "label": "Total de dias de sobrestadia cobrados",
+                                "label": "Total de dias de demurrage cobrados",
                                 "unit": "dias"
                             }
                         },
@@ -336,7 +336,7 @@
                                 "unit": "incidentes"
                             },
                             "police-issues": {
-                                "label": "Paragens para inspecções/multas",
+                                "label": "Paragens para inspecção/multas",
                                 "unit": "paragens"
                             },
                             "total-delays": {
@@ -362,26 +362,22 @@
                                 "unit": "ton"
                             },
                             "cost-per-unit-km": {
-                                "label": "Custo por tonelada-km",
+                                "label": "Custo por ton-km",
                                 "unit": "ton/km"
                             }
                         },
                         "efficiency": {
                             "backload": {
-                                "label": "Viagens com retorno (backload)",
+                                "label": "Viagens com backload",
                                 "unit": "%"
                             },
                             "emissions": {
                                 "label": "Redução de CO₂ via backload",
                                 "unit": "g/km"
                             },
-                            "saved-with-backload": {
-                                "label": "Poupança total via optimização de backload",
-                                "unit": {
-                                    "MZN": "MZN",
-                                    "ZAR": "ZAR",
-                                    "USD": "USD"
-                                }
+                            "margin-over-fuel": {
+                                "label": "Margem sobre o custo de combustível em viagens com backload",
+                                "unit": "%"
                             }
                         }
                     }
@@ -389,11 +385,11 @@
             },
             "tendencies": {
                 "title": "Tendências de Desempenho",
-                "performance": {
-                    "title": "Tempos de carga e descarga",
-                    "load": "Duração do carregamento",
-                    "offload": "Duração da descarga",
-                    "unit": "dias"
+                "on-time": {
+                    "title": "Chegada pontual",
+                    "total-on-time": "Chegaram a tempo",
+                    "total": "Total de pedidos",
+                    "unit": "pedidos"
                 },
                 "incidents": {
                     "title": "Distribuição de Incidentes",
@@ -402,15 +398,15 @@
                     "docummentation": "Documentação",
                     "inspection": "Inspecção"
                 },
-                "emissions": {
-                    "title": "Pegada de carbono",
-                    "carbon": "Redução de CO₂ via backload",
-                    "unit": "g/km"
+                "loading": {
+                    "title": "Tempo médio de carregamento",
+                    "load": "Duração do carregamento",
+                    "unit": "dias"
                 },
-                "savings": {
-                    "title": "Reduções de custos",
-                    "saved": "Poupado com backload",
-                    "unit": "MZN"
+                "offloading": {
+                    "title": "Tempo médio de descarregamento",
+                    "offload": "Duração do descarregamento",
+                    "unit": "dias"
                 }
             }
         },
@@ -520,12 +516,12 @@
                         "agriculture-inputs": "Insumos Agrícolas",
                         "agriculture-products": "Produtos Agrícolas",
                         "construction": "Construção",
-                        "machinery-equipment": "Maquinaria e Equipamento",
+                        "machinery-equipment": "Máquinas e Equipamentos",
                         "fmcg": "Bens de Consumo (FMCG)",
                         "general-cargo": "Carga Geral",
                         "medicine": "Medicamentos",
                         "mining": "Mineração",
-                        "oil-gas": "Óleo e Gás",
+                        "oil-gas": "Petróleo e Gás",
                         "vehicles": "Veículos",
                         "other": "Outros"
                     },
@@ -534,15 +530,15 @@
                         "prospect": "Prospecção",
                         "open": "Aberto",
                         "booked": "Transporte confirmado",
-                        "to-loading": "A caminho da carga",
-                        "at-loading": "No local de carga",
-                        "loading": "A carregar",
-                        "on-route": "A caminho da descarga",
+                        "to-loading": "Em rota para carregamento",
+                        "at-loading": "No carregamento",
+                        "loading": "Em carregamento",
+                        "on-route": "Em rota para descarregamento",
                         "at-border": "Na fronteira",
                         "stopped": "Parado",
                         "issue": "Problema reportado",
-                        "at-offloading": "No local de descarga",
-                        "offloading": "A descarregar",
+                        "at-offloading": "No descarregamento",
+                        "offloading": "Em descarregamento",
                         "delivered": "Entregue",
                         "completed": "Concluído",
                         "cancelled": "Cancelado",
@@ -552,14 +548,14 @@
                 "content": {
                     "weight": "Peso:",
                     "distance": "Distância:",
-                    "loading-date": "Data de carga:",
+                    "loading-date": "Data de carregamento:",
                     "refrigerated": "Refrigerado",
-                    "hazarduos": "Perigosa",
-                    "price": "Valor de transporte:"
+                    "hazarduos": "Perigoso",
+                    "price": "Preço de transporte:"
                 },
                 "footer": {
                     "accept": "Aceitar",
-                    "place-bid": "Fazer proposta",
+                    "place-bid": "Submeter proposta",
                     "manage": "Gerir",
                     "view": "Ver",
                     "upload-proof": "Concluir viagem"
@@ -574,15 +570,15 @@
                             "prospect": "Prospecção",
                             "open": "Aberto",
                             "booked": "Transporte confirmado",
-                            "to-loading": "A caminho da carga",
-                            "at-loading": "No local de carga",
-                            "loading": "A carregar",
-                            "on-route": "A caminho da descarga",
+                            "to-loading": "Em rota para carregamento",
+                            "at-loading": "No carregamento",
+                            "loading": "Em carregamento",
+                            "on-route": "Em rota para descarregamento",
                             "at-border": "Na fronteira",
                             "stopped": "Parado",
                             "issue": "Problema reportado",
-                            "at-offloading": "No local de descarga",
-                            "offloading": "A descarregar",
+                            "at-offloading": "No descarregamento",
+                            "offloading": "Em descarregamento",
                             "delivered": "Entregue",
                             "completed": "Concluído",
                             "cancelled": "Cancelado",
@@ -591,11 +587,11 @@
                     },
                     "tabs": {
                         "triggers": {
-                            "overview": "Visão Geral",
-                            "tracking": "Rastreamento",
+                            "overview": "Visão geral",
+                            "tracking": "Rastreio",
                             "documents": "Documentos",
                             "financial": "Financeiro",
-                            "timeline": "Linha do Tempo"
+                            "timeline": "Linha temporal"
                         },
                         "content": {
                             "overview": {
@@ -607,8 +603,8 @@
                                 "info": {
                                     "order": {
                                         "title": "Informação do pedido",
-                                        "loading": "Data de carga",
-                                        "offloading": "Data de descarga",
+                                        "loading": "Data de carregamento",
+                                        "offloading": "Data de descarregamento",
                                         "route": "Rota"
                                     },
                                     "cargo": {
@@ -617,24 +613,558 @@
                                             "agriculture-inputs": "Insumos Agrícolas",
                                             "agriculture-products": "Produtos Agrícolas",
                                             "construction": "Construção",
-                                            "machinery-equipment": "Maquinaria e Equipamento",
+                                            "machinery-equipment": "Máquinas e Equipamentos",
                                             "fmcg": "Bens de Consumo (FMCG)",
                                             "general-cargo": "Carga Geral",
                                             "medicine": "Medicamentos",
                                             "mining": "Mineração",
-                                            "oil-gas": "Óleo e Gás",
+                                            "oil-gas": "Petróleo e Gás",
                                             "vehicles": "Veículos",
                                             "other": "Outros"
                                         },
                                         "description": "Descrição",
                                         "refrigerated": "Refrigerado",
-                                        "hazarduos": "Perigosa"
+                                        "hazarduos": "Perigoso"
                                     }
                                 }
                             }
                         }
                     }
+                },
+                "accept": {
+                    "header": {
+                        "title": "Aceitação do pedido",
+                        "description": "Preencha o formulário para aceitar este pedido"
+                    },
+                    "form": {
+                        "order": {
+                            "title": "Resumo do pedido",
+                            "fields": {
+                                "info": {
+                                    "order": {
+                                        "route": "Rota"
+                                    },
+                                    "cargo": {
+                                        "category": {
+                                            "label": "Categoria",
+                                            "agriculture-inputs": "Insumos Agrícolas",
+                                            "agriculture-products": "Produtos Agrícolas",
+                                            "construction": "Construção",
+                                            "machinery-equipment": "Máquinas e Equipamentos",
+                                            "fmcg": "Bens de Consumo (FMCG)",
+                                            "general-cargo": "Carga Geral",
+                                            "medicine": "Medicamentos",
+                                            "mining": "Mineração",
+                                            "oil-gas": "Petróleo e Gás",
+                                            "vehicles": "Veículos",
+                                            "other": "Outros"
+                                        },
+                                        "refrigerated": "Refrigerado",
+                                        "hazarduos": "Perigoso"
+                                    }
+                                },
+                                "dates": {
+                                    "label": "Datas",
+                                    "description": "Se estiver disponível nas datas do cliente, mantenha como está",
+                                    "proposed-loading-date": {
+                                        "label": "Carregamento",
+                                        "placeholder": "Seleccione uma data"
+                                    },
+                                    "proposed-offloading-date": {
+                                        "label": "Descarregamento",
+                                        "placeholder": "Seleccione uma data"
+                                    }
+                                }
+                            }
+                        },
+                        "fleet": {
+                            "title": "Detalhes do motorista e da frota",
+                            "search": {
+                                "label": "Pesquisar",
+                                "description": "Use os campos abaixo para pesquisar os seus motoristas ou frota.",
+                                "driver": {
+                                    "label": "Pesquisar motorista",
+                                    "placeholder": "Introduza o nome do motorista"
+                                },
+                                "truck": {
+                                    "label": "Pesquisar camião",
+                                    "placeholder": "Introduza a matrícula do camião"
+                                }
+                            }
+                        },
+                        "fields": {
+                            "name": {
+                                "label": "Nome do motorista *",
+                                "placeholder": "Seleccione um motorista da pesquisa",
+                                "error": "O nome do motorista não foi fornecido"
+                            },
+                            "phone-number": {
+                                "label": "Número de telefone *",
+                                "placeholder": "Seleccione um motorista da pesquisa",
+                                "error": {
+                                    "empty": "O número de telefone do motorista não foi fornecido",
+                                    "invalid": "O número introduzido é inválido"
+                                }
+                            },
+                            "passport": {
+                                "label": "Passaporte",
+                                "placeholder": "Seleccione um motorista da pesquisa"
+                            },
+                            "truck-plate": {
+                                "label": "Matrícula do camião *",
+                                "placeholder": "Seleccione um camião da pesquisa",
+                                "error": "A matrícula do camião não foi fornecida"
+                            },
+                            "truck-age": {
+                                "label": "Classificação do camião",
+                                "placeholder": "Seleccione um camião da pesquisa",
+                                "value": {
+                                    "recent": "Recente",
+                                    "not-recent": "Não recente"
+                                },
+                                "error": "A classificação do camião não foi fornecida"
+                            },
+                            "trailer-plate": {
+                                "label": "Matrícula do reboque",
+                                "placeholder": "Seleccione um camião da pesquisa"
+                            },
+                            "link-plate": {
+                                "label": "Matrícula do link",
+                                "placeholder": "Seleccione um camião da pesquisa"
+                            }
+                        }
+                    },
+                    "footer": {
+                        "close": "Fechar",
+                        "accept": "Aceitar pedido"
+                    }
+                },
+                "offer": {
+                    "header": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "footer": {
+                        "close": "Fechar",
+                        "send": "Enviar proposta"
+                    }
                 }
+            }
+        },
+        "trip": {
+            "card": {
+                "header": {
+                    "id": "TRP-{id}",
+                    "category": {
+                        "agriculture-inputs": "Insumos Agrícolas",
+                        "agriculture-products": "Produtos Agrícolas",
+                        "construction": "Construção",
+                        "machinery-equipment": "Máquinas e Equipamentos",
+                        "fmcg": "Bens de Consumo (FMCG)",
+                        "general-cargo": "Carga Geral",
+                        "medicine": "Medicamentos",
+                        "mining": "Mineração",
+                        "oil-gas": "Petróleo e Gás",
+                        "vehicles": "Veículos",
+                        "other": "Outros"
+                    },
+                    "status": {
+                        "drafted": "Rascunho",
+                        "prospect": "Prospecção",
+                        "open": "Aberto",
+                        "booked": "Transporte confirmado",
+                        "to-loading": "Em rota para carregamento",
+                        "at-loading": "No carregamento",
+                        "loading": "Em carregamento",
+                        "on-route": "Em rota para descarregamento",
+                        "at-border": "Na fronteira",
+                        "stopped": "Parado",
+                        "issue": "Problema reportado",
+                        "at-offloading": "No descarregamento",
+                        "offloading": "Em descarregamento",
+                        "delivered": "Entregue",
+                        "completed": "Concluído",
+                        "cancelled": "Cancelado",
+                        "waiting-documents": "A aguardar documentos"
+                    }
+                },
+                "content": {
+                    "route": "Rota",
+                    "distance": "Distância",
+                    "driver": "Motorista",
+                    "truck": "Camião",
+                    "location": "Posição"
+                }
+            }
+        },
+        "company": {
+            "drivers": {
+                "page": {
+                    "title": "Motoristas",
+                    "description": "Gerir a sua lista de motoristas",
+                    "buttons": {
+                        "list": "Mudar para vista de lista",
+                        "grid": "Mudar para vista em grelha",
+                        "add": "Adicionar novo motorista"
+                    }
+                },
+                "resume": {
+                    "total": "Total de motoristas",
+                    "active": "Em movimento",
+                    "idle": "Fora de serviço",
+                    "free": "Em pausa"
+                },
+                "actions": {
+                    "search": "Pesquisar por nome do motorista",
+                    "tabs": {
+                        "all": "Todos",
+                        "active": "Em movimento",
+                        "idle": "Fora de serviço",
+                        "free": "Em pausa"
+                    }
+                },
+                "card": {
+                    "status": {
+                        "active": "Em movimento",
+                        "idle": "Fora de serviço",
+                        "free": "Em pausa"
+                    },
+                    "email": "Email:",
+                    "phone": "Contacto:",
+                    "truck": "Camião atribuído:",
+                    "none": "Nenhum",
+                    "rate": "Avaliação:",
+                    "trip": "Viagens:"
+                },
+                "dialog": {
+                    "register": {
+                        "header": {
+                            "title": "Adicionar novo motorista",
+                            "description": "Introduza os dados do motorista para adicionar à sua equipa"
+                        },
+                        "footer": {
+                            "cancel": "Cancelar",
+                            "register": "Registar"
+                        }
+                    },
+                    "form": {
+                        "name": {
+                            "label": "Nome completo *",
+                            "placeholder": "João Silva",
+                            "error": "Nenhum nome foi fornecido"
+                        },
+                        "email": {
+                            "label": "Email *",
+                            "placeholder": "joao.silva@empresa.com",
+                            "error": {
+                                "empty": "Nenhum email foi fornecido",
+                                "invalid": "Introduza um email válido"
+                            }
+                        },
+                        "phone-number": {
+                            "label": "Número de telefone *",
+                            "error": {
+                                "empty": "Nenhum número de telefone foi fornecido",
+                                "invalid": "Número de telefone inválido"
+                            }
+                        },
+                        "driver-license": {
+                            "label": "Carta de Condução *",
+                            "description": "Apenas ficheiros PDF com 2MB cada e máximo de 2 ficheiros",
+                            "placeholder": {
+                                "front": "Carregue a carta de condução do motorista",
+                                "back": "Carregue o verso da carta de condução"
+                            },
+                            "add-page": "Adicionar página",
+                            "error": "A carta de condução não foi fornecida"
+                        },
+                        "passport-card": {
+                            "label": "Passaporte",
+                            "description": "Apenas ficheiros PDF com 2MB, apenas um ficheiro permitido",
+                            "placeholder": "Carregue o passaporte do motorista"
+                        }
+                    }
+                }
+            },
+            "fleet": {
+                "page": {
+                    "title": "Frota",
+                    "description": "Gerir a sua frota",
+                    "buttons": {
+                        "list": "Mudar para vista em lista",
+                        "grid": "Mudar para vista em grelha",
+                        "add": "Adicionar nova frota"
+                    }
+                },
+                "resume": {
+                    "total": "Tamanho da frota",
+                    "active": "Em movimento",
+                    "idle": "Inactivo",
+                    "free": "Em manutenção"
+                },
+                "actions": {
+                    "search": "Pesquisar por matrícula",
+                    "tabs": {
+                        "all": "Todos",
+                        "active": "Em movimento",
+                        "idle": "Inactivo",
+                        "free": "Em manutenção"
+                    }
+                },
+                "card": {
+                    "type": {
+                        "articulated": "Articulado",
+                        "non-articulated": "Não articulado"
+                    },
+                    "status": {
+                        "active": "Em movimento",
+                        "idle": "Inactivo",
+                        "free": "Em manutenção"
+                    },
+                    "loading-bay": {
+                        "label": "Tipo de camião:",
+                        "flatbed": "Plataforma",
+                        "dropsides": "Báscula lateral",
+                        "tautliner": "Tautliner",
+                        "rigid-body": "Contentor",
+                        "refrigerated": "Refrigerado",
+                        "tipper": "Basculante",
+                        "side-tipper": "Basculante lateral",
+                        "tanker": "Cisterna",
+                        "lowbed": "Prancha baixa"
+                    },
+                    "capacity": "Capacidade:",
+                    "trailer": "Reboque:",
+                    "link": "Link:",
+                    "driver": "Motorista atribuído:",
+                    "none": "Nenhum"
+                },
+                "dialog": {
+                    "register": {
+                        "header": {
+                            "title": "Adicionar nova frota",
+                            "description": "Introduza os dados da frota para adicionar ao seu registo"
+                        },
+                        "footer": {
+                            "cancel": "Cancelar",
+                            "back": "Voltar",
+                            "next": "Seguinte",
+                            "register": "Registar"
+                        }
+                    },
+                    "form": {
+                        "truck": {
+                            "label": "Informação do camião",
+                            "plate-number": {
+                                "label": "Matrícula *",
+                                "placeholder": "ex.: AAA 001 MC",
+                                "error": "A matrícula não foi fornecida"
+                            },
+                            "internal-id": {
+                                "label": "Código interno do camião",
+                                "placeholder": "Introduza o código interno do camião"
+                            },
+                            "brand": {
+                                "label": "Fabricante *",
+                                "placeholder": "ex.: Mercedes-Benz",
+                                "error": "O fabricante não foi fornecido"
+                            },
+                            "model": {
+                                "label": "Modelo *",
+                                "placeholder": "ex.: Actros 2551",
+                                "error": "O modelo não foi fornecido"
+                            },
+                            "year": {
+                                "label": "Ano *",
+                                "placeholder": "ex.: 2020",
+                                "error": "O ano do modelo não foi fornecido"
+                            },
+                            "vin": {
+                                "label": "VIN (Número de Identificação do Veículo) *",
+                                "placeholder": "VIN com 17 caracteres",
+                                "error": {
+                                    "empty": "O VIN não foi fornecido",
+                                    "invalid": "O VIN deve conter 17 caracteres"
+                                }
+                            },
+                            "type": {
+                                "label": "Tipo de camião *",
+                                "description": "Seleccione o tipo de camião",
+                                "articulated": {
+                                    "label": "Articulado",
+                                    "description": "Este camião possui duas partes separadas—um \"cavalo\" que puxa um \"reboque\". Por poder articular, é utilizado para transportar cargas pesadas em longas distâncias nas principais estradas."
+                                },
+                                "non-articulated": {
+                                    "label": "Não articulado",
+                                    "description": "É um veículo de peça única. Como não articula, é mais fácil de conduzir em zonas urbanas e ideal para entregas locais."
+                                }
+                            },
+                            "license": {
+                                "label": "Licença de transporte *",
+                                "description": "Apenas ficheiros PDF até 2MB cada, máximo de 2 ficheiros",
+                                "placeholder": {
+                                    "front": "Carregar a licença do camião",
+                                    "back": "Carregar a outra página da licença"
+                                },
+                                "error": {
+                                    "invalid": "Deve carregar pelo menos um ficheiro",
+                                    "empty": "A licença não foi fornecida"
+                                },
+                                "add-page": "Adicionar página"
+                            },
+                            "booklet": {
+                                "label": "Livrete *",
+                                "description": "Apenas ficheiros PDF até 2MB cada, máximo de 2 ficheiros",
+                                "placeholder": {
+                                    "front": "Carregar o livrete do camião",
+                                    "back": "Carregar a outra página do livrete"
+                                },
+                                "error": {
+                                    "invalid": "Deve carregar pelo menos um ficheiro",
+                                    "empty": "O livrete não foi fornecido"
+                                },
+                                "add-page": "Adicionar página"
+                            }
+                        },
+                        "trailer": {
+                            "label": {
+                                "trailer": "Informação do reboque",
+                                "link": "Informação do link"
+                            },
+                            "buttons": {
+                                "add": "Adicionar link",
+                                "remove": {
+                                    "trailer": "Remover reboque",
+                                    "link": "Remover link"
+                                }
+                            },
+                            "plate-number": {
+                                "label": "Matrícula *",
+                                "placeholder": "ex.: AA 001 MC",
+                                "error": "A matrícula não foi fornecida"
+                            },
+                            "internal-id": {
+                                "label": "Código interno do reboque",
+                                "placeholder": "Introduza o código interno do reboque"
+                            },
+                            "brand": {
+                                "label": "Fabricante *",
+                                "placeholder": "ex.: Henred Fruehauf",
+                                "error": "O fabricante não foi fornecido"
+                            },
+                            "model": {
+                                "label": "Modelo *",
+                                "placeholder": "ex.: Plataformas",
+                                "error": "O modelo não foi fornecido"
+                            },
+                            "year": {
+                                "label": "Ano *",
+                                "placeholder": "ex.: 2020",
+                                "error": "O ano do modelo não foi fornecido"
+                            },
+                            "vin": {
+                                "label": "VIN (Número de Identificação do Veículo) *",
+                                "placeholder": "VIN com 17 caracteres",
+                                "error": {
+                                    "empty": "O VIN não foi fornecido",
+                                    "invalid": "O VIN deve conter 17 caracteres"
+                                }
+                            },
+                            "license": {
+                                "label": "Licença de transporte *",
+                                "description": "Apenas ficheiros PDF até 2MB cada, máximo de 2 ficheiros",
+                                "placeholder": {
+                                    "front": "Carregar a licença do reboque",
+                                    "back": "Carregar a outra página da licença"
+                                },
+                                "error": {
+                                    "invalid": "Deve carregar pelo menos um ficheiro",
+                                    "empty": "A licença não foi fornecida"
+                                },
+                                "add-page": "Adicionar página"
+                            },
+                            "booklet": {
+                                "label": "Livrete *",
+                                "description": "Apenas ficheiros PDF até 2MB cada, máximo de 2 ficheiros",
+                                "placeholder": {
+                                    "front": "Carregar o livrete do reboque",
+                                    "back": "Carregar a outra página do livrete"
+                                },
+                                "error": {
+                                    "invalid": "Deve carregar pelo menos um ficheiro",
+                                    "empty": "O livrete não foi fornecido"
+                                },
+                                "add-page": "Adicionar página"
+                            }
+                        },
+                        "loading-bay": {
+                            "label": "Área de carga",
+                            "width": {
+                                "label": "Largura (m)",
+                                "placeholder": "Introduza a largura da caixa de carga",
+                                "error": "A largura não foi fornecida"
+                            },
+                            "length": {
+                                "label": "Comprimento (m)",
+                                "placeholder": "Introduza o comprimento da caixa de carga",
+                                "error": "O comprimento não foi fornecido"
+                            },
+                            "height": {
+                                "label": "Altura (m)",
+                                "placeholder": "Introduza a altura da caixa de carga",
+                                "error": "A altura não foi fornecida"
+                            },
+                            "volume": {
+                                "label": "Volume (m³)",
+                                "placeholder": "Calcular o volume (A x C x L)",
+                                "error": "O volume não foi fornecido"
+                            },
+                            "capacity": {
+                                "label": "Capacidade de carga (toneladas)",
+                                "placeholder": "ex.: 24",
+                                "error": "A capacidade de carga não foi fornecida"
+                            },
+                            "type": {
+                                "label": "Tipo",
+                                "placeholder": "Seleccione o tipo de caixa de carga",
+                                "options": {
+                                    "flatbed": "Plataforma",
+                                    "dropsides": "Báscula lateral",
+                                    "tautliner": "Tautliner",
+                                    "rigid-body": "Contentor",
+                                    "refrigerated": "Refrigerado",
+                                    "tipper": "Basculante",
+                                    "side-tipper": "Basculante lateral",
+                                    "tanker": "Cisterna",
+                                    "lowbed": "Prancha baixa"
+                                },
+                                "error": "O tipo de caixa de carga não foi fornecido"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "clients": {
+            "page": {
+                "title": "Meus Clientes",
+                "description": "Clientes que o adicionaram à sua rede"
+            },
+            "resume": {
+                "clients": "Clientes",
+                "trips": "Viagens concluídas",
+                "revenue": "Receita (MZN)"
+            },
+            "actions": {
+                "search": "Pesquisar cliente por nome",
+                "view": {
+                    "list": "Mudar para vista em lista",
+                    "grid": "Mudar para vista em grelha"
+                }
+            },
+            "card": {
+                "trips": "Viagens concluídas:",
+                "revenue": "Receita (MZN):"
             }
         }
     },
@@ -1590,8 +2120,34 @@
                     "header": {
                         "title": "Gestão da Empresa",
                         "description": "Gerir a sua empresa, equipa e preferências da aplicação"
+                    },
+                    "organization": {},
+                    "team": {
+                        "header": {
+                            "section-title": "Membros da Equipa",
+                            "description": "Gerir a sua equipa e as suas permissões",
+                            "invitation-title": "Convites pendentes",
+                            "actions": {
+                                "invite": "Convidar membro"
+                            }
+                        },
+                        "member-card": {
+                            "confirm": {
+                                "title": "Confirmação importante",
+                                "description": "Tem a certeza que deseja remover este membro da sua conta?",
+                                "button": {
+                                    "cancel": "Cancelar",
+                                    "confirm": "Tenho a certeza"
+                                }
+                            },
+                            "role": {
+                                "owner": "Proprietário",
+                                "admin": "Administrador",
+                                "member": "Operador"
+                            }
+                        }
                     }
-                }, 
+                },
                 "create": {
                     "state": {
                         "title": "Nenhuma empresa associada a esta conta",

@@ -53,5 +53,9 @@ export const organizationRouter = createTRPCRouter({
                     organizationId,
                     ...values,
                 })
+                .onConflictDoUpdate({
+                    target: kyc.organizationId,
+                    set: values,
+                })
         })
 })
