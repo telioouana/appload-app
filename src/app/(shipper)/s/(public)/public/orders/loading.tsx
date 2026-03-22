@@ -1,5 +1,5 @@
+import { Loader } from "@/components/customs/loader";
+
 export default function Loading() {
-    return (
-        <div>Loading</div>
-    )
+    return <Loader />;
 }

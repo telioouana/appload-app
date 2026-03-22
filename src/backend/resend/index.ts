@@ -37,7 +37,7 @@ type InvitationProps = {
 
 export async function sendInviteEmail({ email, inviter, invitationId, organization, }: InvitationProps) {
     const t = await getTranslations("Emails.invite-email")
-    const url = `${process.env.NEXT_PUBLIC_SITE_URL}/company/invites/${invitationId}`
+    const url = `${process.env.NEXT_PUBLIC_SITE_URL}/organization/invites/${invitationId}`
 
     const { error } = await resend.emails.send({
         from: FROM,

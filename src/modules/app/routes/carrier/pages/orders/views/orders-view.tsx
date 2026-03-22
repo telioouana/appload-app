@@ -19,7 +19,6 @@ import { OrdersErrorFallback } from "@/modules/app/ui/components/states/orders-e
 import { OrdersLoadingFallback } from "@/modules/app/ui/components/states/orders-loading-fallback"
 import { CreateOfferDialog } from "../../../ui/components/dialog/create-offer-dialog"
 
-
 export function OrdersView({ path, search, cargoType }: { path: ORDERS_PATH, search?: string, cargoType?: string }) {
     const trpc = useTRPC()
 
@@ -122,7 +121,6 @@ export function OrdersView({ path, search, cargoType }: { path: ORDERS_PATH, sea
                         />
                     )}
                 </div>
-
             </ErrorBoundary>
         </Suspense>
     )

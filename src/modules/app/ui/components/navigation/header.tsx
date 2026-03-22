@@ -68,7 +68,7 @@ export function Header() {
         })
     }
 
-    const { name, image, email } = data.user
+    const { name, image, email, type } = data.user
 
     function avatar(className?: string) {
         if (image) {
@@ -114,7 +114,7 @@ export function Header() {
                     <Separator />
 
                     <Link
-                        href="/u/account/profile"
+                        href={`/u/${type.charAt(0)}/account/profile`}
                         className={cn(
                             buttonVariants({ variant: "ghost" }),
                             "py-5 font-light justify-start rounded-none"
@@ -125,10 +125,10 @@ export function Header() {
                     </Link>
 
                     <Link
-                        href="/u/preferences"
+                        href={`/u/${type.charAt(0)}/preferences`}
                         className={cn(
                             buttonVariants({ variant: "ghost" }),
-                            "py-5 font-light justify-start rounded-none"
+                            "hidden py-5 font-light justify-start rounded-none"
                         )}
                     >
                         <IconSettings />
@@ -136,7 +136,7 @@ export function Header() {
                     </Link>
 
                     <Link
-                        href="/u/support"
+                        href={`/u/${type.charAt(0)}/support`}
                         className={cn(
                             buttonVariants({ variant: "ghost" }),
                             "py-5 font-light justify-start rounded-none"

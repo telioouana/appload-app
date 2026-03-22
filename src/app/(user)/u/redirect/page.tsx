@@ -12,15 +12,22 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
         headers: await headers()
     })
 
-    if (!session?.user) {
+    if (!session) {
         redirect("/sign-in")
     }
 
-    const { user: { type } } = session
-
-    const callbarkURL = decodeURIComponent(callback)
-
+    const { user: { type, emailVerified }, session: { activeOrganizationId } } = session
     if (type === "shipper" || type === "carrier") {
+        if (!emailVerified) {
+            redirect(`/u/${type.charAt(0)}/account/profile`)
+        }
+
+        if (!activeOrganizationId) {
+            redirect(`/u/${type.charAt(0)}/account/organization`)
+        }
+
+        const callbarkURL = decodeURIComponent(callback)
+
         if (callbarkURL && callbarkURL.startsWith(`/${type.charAt(0)}`)) {
             redirect(callbarkURL)
         }

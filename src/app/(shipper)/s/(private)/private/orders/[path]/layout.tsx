@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 
 export default function PrivateOrdersLayout({
     children,
@@ -6,9 +6,9 @@ export default function PrivateOrdersLayout({
     orders,
     resume,
 }: PropsWithChildren<{
-    actions: React.ReactNode,
-    orders: React.ReactNode,
-    resume: React.ReactNode,
+    actions: ReactNode,
+    orders: ReactNode,
+    resume: ReactNode,
 }>) {
     return (
         <div className="flex flex-col gap-6 w-full h-full">

@@ -19,6 +19,8 @@ import { historyRouter } from "@/modules/app/routes/carrier/server/history-proce
 import { carrierKpisRouter } from "@/modules/app/routes/carrier/server/kpis-procedures";
 import { carrierDashboardRouter } from "@/modules/app/routes/carrier/server/dashboard-procedures";
 
+import { organizationRouter } from "@/modules/app/routes/user/server/organization-procedures";
+
 export const appRouter = createTRPCRouter({
     // merge your routers here
     // Shipper Routers
@@ -41,6 +43,9 @@ export const appRouter = createTRPCRouter({
     carrierMap: carrierMapRouter,
     carrierKpis: carrierKpisRouter,
     carrierDashboard: carrierDashboardRouter,
+
+    // User Routers
+    organization: organizationRouter,
 });
 
 // export type definition of API

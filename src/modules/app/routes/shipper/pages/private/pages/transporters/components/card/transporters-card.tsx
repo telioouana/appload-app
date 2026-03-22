@@ -39,10 +39,13 @@ export function TransportersCard({ values }: Props) {
 
                         <div className="flex flex-col gap-1">
                             <p className="text-sm font-medium truncate">{name}</p>
-                            <p className="text-xs font-medium truncate flex gap-1 items-center text-muted-foreground">
-                                <IconMapPin className="size-3" stroke={1} />
-                                {address}
-                            </p>
+                            {address && (
+                                <p className="text-xs font-medium truncate flex gap-1 items-center text-muted-foreground">
+                                    <IconMapPin className="size-3" stroke={1} />
+                                    {address.state},
+                                    {address.country}
+                                </p>
+                            )}
                         </div>
                     </div>
 

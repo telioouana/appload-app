@@ -37,6 +37,7 @@ export function TrackingOrderTab({ values }: { values: Values }) {
                         setMarkers(prev => [
                             ...prev,
                             {
+                                id: trip?.truckPlate || "unknown",
                                 location: firstResult.address_components[0].long_name,
                                 lat: firstResult.geometry.location.lat,
                                 lng: firstResult.geometry.location.lng,

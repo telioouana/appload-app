@@ -2,7 +2,7 @@ import { desc, eq } from "drizzle-orm";
 import { nextCookies } from "better-auth/next-js"
 import { APIError, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { admin, organization, phoneNumber } from "better-auth/plugins";
+import { admin, organization, phoneNumber, twoFactor } from "better-auth/plugins";
 
 import { db } from "@/backend/db";
 import { sms } from "@/backend/twilio";
@@ -32,10 +32,35 @@ export const auth = betterAuth({
                         .orderBy(desc(memberSchema.createdAt))
                         .limit(1)
 
+                    const ip = session.ipAddress || "127.0.0.1";
+
+                    let city = "Unknown";
+                    let country = "Unknown";
+
+                    try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+                        const geoRes = await fetch(`https://ip-api.com/json/${ip}`, {
+                            signal: controller.signal
+                        });
+                        clearTimeout(timeoutId);
+
+                        if (geoRes.ok) {
+                            const geoData = await geoRes.json();
+                            city = geoData.city || "Unknown";
+                            country = geoData.country || "Unknown";
+                        }
+                    } catch {
+                        // Geolocation lookup failed, continue with defaults
+                    }
+
                     return {
                         data: {
                             ...session,
                             activeOrganizationId: membership?.organizationId,
+                            city,
+                            country,
                         }
                     }
                 }
@@ -60,7 +85,11 @@ export const auth = betterAuth({
         cookieCache: {
             enabled: true,
             maxAge: 60 * 5 // 5 Minutes
-        }
+        },
+        additionalFields: {
+            city: { type: "string" },
+            country: { type: "string" },
+        },
     },
     user: {
         changeEmail: {
@@ -177,7 +206,7 @@ export const auth = betterAuth({
                             defaultValue: "free"
                         },
                         nuit: {
-                            type: "number",
+                            type: "string",
                             required: true,
                             unique: true,
                         },
@@ -199,11 +228,11 @@ export const auth = betterAuth({
                             required: true,
                         },
                         billingAddress: {
-                            type: "string",
+                            type: "json",
                             required: true,
                         },
                         physicalAddress: {
-                            type: "string",
+                            type: "json",
                             required: true,
                         }
                     }
@@ -226,6 +255,7 @@ export const auth = betterAuth({
                 })
             }
         }),
+        twoFactor(),
         nextCookies(),
     ]
 });

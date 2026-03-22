@@ -8,7 +8,7 @@ export function PublicUILayout({ children }: PropsWithChildren) {
         <div className="w-full h-full">
             <PublicThemeProvider>
                 <PublicHeader />
-                <div className="w-full h-full pt-6 pb-2">
+                <div className="w-full h-full max-w-6xl mx-auto pt-6 pb-2 px-2">
                     {children}
                 </div>
             </PublicThemeProvider>

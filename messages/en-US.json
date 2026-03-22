@@ -1435,6 +1435,40 @@
                 }
             }
         },
+        "marketplace": {
+            "actions": {
+                "search": "Search order by id, loading or offloading location",
+                "view": {
+                    "grid": "Switch to grid view",
+                    "list": "Switch to list view"
+                },
+                "button": "Create a new order",
+                "filters": {
+                    "title": "Filter by",
+                    "cargo-type": {
+                        "label": "Cargo type",
+                        "placeholder": "Select one of the options to filter",
+                        "options": {
+                            "agriculture-inputs": "Agriculture Inputs",
+                            "agriculture-products": "Agriculture Products",
+                            "construction": "Construction",
+                            "machinery-equipment": "Machinery Equipment",
+                            "fmcg": "FMCG",
+                            "general-cargo": "General Cargo",
+                            "medicine": "Medicine",
+                            "mining": "Mining",
+                            "oil-gas": "Oil & Gas",
+                            "vehicles": "Vehicles",
+                            "other": "Other",
+                            "none": "Clear filter"
+                        }
+                    },
+                    "status": {
+                        "label": "Status"
+                    }
+                }
+            }
+        },
         "private": {
             "marketplace": {
                 "page": {
@@ -1471,38 +1505,6 @@
                     "orders": "Total orders",
                     "total": "Total value (MZN)",
                     "distance": "Total distance (km)"
-                },
-                "actions": {
-                    "search": "Search order by id, loading or offloading location",
-                    "view": {
-                        "grid": "Switch to grid view",
-                        "list": "Switch to list view"
-                    },
-                    "button": "Create a new order",
-                    "filters": {
-                        "title": "Filter by",
-                        "cargo-type": {
-                            "label": "Cargo type",
-                            "placeholder": "Select one of the options to filter",
-                            "options": {
-                                "agriculture-inputs": "Agriculture Inputs",
-                                "agriculture-products": "Agriculture Products",
-                                "construction": "Construction",
-                                "machinery-equipment": "Machinery Equipment",
-                                "fmcg": "FMCG",
-                                "general-cargo": "General Cargo",
-                                "medicine": "Medicine",
-                                "mining": "Mining",
-                                "oil-gas": "Oil & Gas",
-                                "vehicles": "Vehicles",
-                                "other": "Other",
-                                "none": "Clear filter"
-                            }
-                        },
-                        "status": {
-                            "label": "Status"
-                        }
-                    }
                 }
             },
             "transporters": {
@@ -2081,9 +2083,299 @@
                 },
                 "pages": {
                     "profile": "Your info",
-                    "company": "Company",
+                    "organization": "Organization",
                     "security-and-privacy": "Security & Privacy",
                     "billing": "Billing"
+                }
+            },
+            "profile": {
+                "picture-card": {
+                    "title": "Profile Picture",
+                    "instruction": "Upload a new profile picture",
+                    "description": "JPG or PNG. Max size 2MB",
+                    "buttons": {
+                        "upload": "Upload Photo",
+                        "remove": "Remove"
+                    }
+                },
+                "user-information": {
+                    "title": "Personal Information",
+                    "name": "User's full name",
+                    "email": {
+                        "label": "Email address",
+                        "verify": "Verify email",
+                        "verified": "Email verified"
+                    },
+                    "phone": "Phone number",
+                    "gender": {
+                        "label": "Title",
+                        "male": "Mr.",
+                        "female": "Ms.",
+                        "other": "Other"
+                    }
+                }
+            },
+            "organization": {
+                "views": {
+                    "header": {
+                        "title": "Company management",
+                        "description": "Manage your company, team and app preferences"
+                    },
+                    "organization": {},
+                    "team": {
+                        "header": {
+                            "section-title": "Team Members",
+                            "description": "Manage your team and their permissions",
+                            "invitation-title": "Pending invitations",
+                            "actions": {
+                                "invite": "Invite member"
+                            }
+                        },
+                        "member-card": {
+                            "confirm": {
+                                "title": "Important confirmation",
+                                "description": "Are you sure you want to remove this member from your account?",
+                                "button": {
+                                    "cancel": "Cancel",
+                                    "confirm": "I am sure"
+                                }
+                            },
+                            "role": {
+                                "owner": "Owner",
+                                "admin": "Administrator",
+                                "member": "Operator"
+                            }
+                        }
+                    }
+                },
+                "create": {
+                    "state": {
+                        "title": "No company associated with this account",
+                        "description": "Please add your company or ask a teammate to invite you in to the company account",
+                        "button": "Add company"
+                    },
+                    "dialog": {
+                        "title": "Add your company",
+                        "actions": {
+                            "cancel": "Cancel",
+                            "back": "Back",
+                            "next": "Next",
+                            "register": "Register"
+                        }
+                    }
+                },
+                "form": {
+                    "register": {
+                        "info": {
+                            "title": "Company details",
+                            "description": "Enter your company's legal and operational information. This helps us validate your organization, ensure compliance, and deliver a secure, tailored experience",
+                            "name": {
+                                "label": "Name",
+                                "placeholder": "Enter your company name",
+                                "error": "Company name was not provided"
+                            },
+                            "nuit": {
+                                "label": "VAT Registration number",
+                                "placeholder": "Enter VAT Registration number",
+                                "error": {
+                                    "empty": "VAT Registration number was not provided",
+                                    "length": "VAT Registration number must have 9 digits",
+                                    "conflict": "A company with the provided VAT was already registered"
+                                }
+                            },
+                            "email": {
+                                "label": "Company Email",
+                                "placeholder": "example@company.com",
+                                "error": {
+                                    "empty": "Company's email was not provided",
+                                    "invalid": "Please enter a valid email address",
+                                    "conflict": "A company with the provided email was already registered"
+                                }
+                            },
+                            "phone-number": {
+                                "label": "Company Contact",
+                                "error": {
+                                    "empty": "Phone number was not provided",
+                                    "length": "Phone number must be at least 9 digits long and fewer than 11 digits",
+                                    "conflict": "A company with the provided phone number was already registered"
+                                }
+                            },
+                            "billing-address": {
+                                "label": "Billing address",
+                                "placeholder": "Enter your company's billing address",
+                                "error": "Billing address was not provided"
+                            },
+                            "physical-address": {
+                                "label": "Physical address",
+                                "placeholder": "Enter your company's physical address",
+                                "error": "Physical address was not provided"
+                            }
+                        },
+                        "kyc": {
+                            "title": "Know Your Customer",
+                            "description": "Provide the required identity information to complete our KYC verification. This process helps us meet regulatory obligations and maintain a secure, compliant platform",
+                            "fiscal-regime": {
+                                "label": "Fiscal Regime",
+                                "placeholder": "Select the fiscal regime your company operates under",
+                                "options": {
+                                    "normal": "Normal",
+                                    "simplified-5": "Simplified 5%",
+                                    "simplified-3": "Simplified 3%"
+                                },
+                                "error": "You did not select the fiscal regime your company operates under"
+                            },
+                            "id-card": {
+                                "label": "ID Card",
+                                "description": "Only PDF Files with 2MB size each and max of 2 files",
+                                "placeholder": "Upload the company owner ID Card",
+                                "placeholder-page": "Page #{page}",
+                                "error": {
+                                    "empty": "No document was uploaded",
+                                    "length": "You can only upload up 2 files"
+                                }
+                            },
+                            "nuit": {
+                                "label": "VAT Registration (NUIT)",
+                                "description": "Only PDF Files with 2MB size each and max of 2 files",
+                                "placeholder": "Upload the company VAT Registration or NUIT",
+                                "placeholder-page": "Page #{page}",
+                                "error": {
+                                    "empty": "No document was uploaded",
+                                    "length": "You can only upload up 5 files"
+                                }
+                            },
+                            "alvara": {
+                                "label": "Transport license",
+                                "description": "Only PDF Files with 2MB size each and max of 5 files",
+                                "placeholder": "Upload the company Transport license",
+                                "placeholder-page": "Page #{page}",
+                                "error": {
+                                    "empty": "No document was uploaded",
+                                    "length": "You can only upload up 5 files"
+                                }
+                            },
+                            "bank-letter": {
+                                "label": "Bank Letter",
+                                "description": "Only PDF Files with 2MB size each and max of 2 files",
+                                "placeholder": "Upload the company Bank Letter",
+                                "placeholder-page": "Page #{page}",
+                                "error": {
+                                    "empty": "No document was uploaded",
+                                    "length": "You can only upload up 2 files"
+                                }
+                            },
+                            "republic-bulletin": {
+                                "label": "Republic Bulletin (BR)",
+                                "description": "Only PDF Files with 2MB size each and max of 2 files",
+                                "placeholder": "Upload the company Republic Bulletin (BR)",
+                                "placeholder-page": "Page #{page}",
+                                "error": {
+                                    "empty": "No document was uploaded",
+                                    "length": "You can only upload up 2 files"
+                                }
+                            },
+                            "commercial-exercise": {
+                                "label": "Commercial Exercise",
+                                "description": "Only PDF Files with 2MB size each and max of 2 files",
+                                "placeholder": "Upload the company Commercial Exercise",
+                                "placeholder-page": "Page #{page}",
+                                "error": {
+                                    "empty": "No document was uploaded",
+                                    "length": "You can only upload up 2 files"
+                                }
+                            },
+                            "commercial-certificate": {
+                                "label": "Commercial Certificate",
+                                "description": "Only PDF Files with 2MB size each and max of 5 files",
+                                "placeholder": "Upload the company Commercial Certificate",
+                                "placeholder-page": "Page #{page}",
+                                "error": {
+                                    "empty": "No document was uploaded",
+                                    "length": "You can only upload up 5 files"
+                                }
+                            },
+                            "button": {
+                                "add-page": "Add page"
+                            }
+                        }
+                    }
+                }
+            },
+            "security-and-privacy": {
+                "sessions": {
+                    "header": {
+                        "title": "Active Sessions",
+                        "description": "Manage your active sessions across devices",
+                        "button": "Sign out all"
+                    },
+                    "card": {
+                        "device": "{browser} on {os}",
+                        "unknown": "Unknown Device"
+                    }
+                },
+                "security": {
+                    "header": "Security Settings",
+                    "two-factor": {
+                        "title": "2FA - Two-Factor Authentication",
+                        "description": "Add an extra layer of security",
+                        "actions": {
+                            "enable": "Enable",
+                            "disable": "Disable",
+                            "get-codes": "Get backup codes"
+                        },
+                        "dialog": {
+                            "header": {
+                                "title": {
+                                    "false": "Enable 2FA Authenthication",
+                                    "true": "Disable 2FA Authenthication"
+                                }
+                            },
+                            "form": {
+                                "default-view": {
+                                    "password": {
+                                        "label": "Password *",
+                                        "description": "Enter your account password",
+                                        "placeholder": "••••••••••",
+                                        "error": "Password was not provided"
+                                    },
+                                    "actions": {
+                                        "false": "Enable 2FA",
+                                        "true": "Disable 2FA"
+                                    }
+                                },
+                                "verification-view": {
+                                    "code": {
+                                        "label": "Code *",
+                                        "description": "Scan the QR Code below with any authenticator app off your choise and enter the 6-digit code that will appear on the app",
+                                        "error": {
+                                            "empty": "The 6-digit code was not provided",
+                                            "invalid": "Please enter all 6-digit code"
+                                        }
+                                    },
+                                    "actions": {
+                                        "verify": "Verify"
+                                    }
+                                },
+                                "backup-codes-view": {
+                                    "title": "Account Recovery Codes",
+                                    "note": "Save these backup codes in a safe place. You can use them to recover your account",
+                                    "actions": {
+                                        "done": "Done"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": {
+                            "never": "Never changed",
+                            "updated-at": "Last updated: {updatedAt, date, medium}"
+                        },
+                        "actions": {
+                            "change": "Change"
+                        }
+                    }
                 }
             }
         },
@@ -2112,6 +2404,10 @@
                 "title": "Failed to load orders",
                 "description": "There was an error while trying to load the orders, please check your connection and try again",
                 "button": "Retry"
+            },
+            "search": {
+                "title": "No results found",
+                "description": "We couldn't find any orders matching your search criteria. Try a different keyword or filter."
             },
             "empty": {
                 "shipper": {
