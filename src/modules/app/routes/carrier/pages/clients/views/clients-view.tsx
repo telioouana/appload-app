@@ -36,10 +36,10 @@ export function ClientsView({ search }: { search?: string }) {
         if (raw === "") return items
         const q = raw.toLowerCase()
         return items.filter((values) => {
-            const candidates: Array<string | undefined> = [values.name, values.address]
+            const candidates: Array<string | undefined> = [values.name, values.address?.state]
             return candidates.some((c) => c && c.toLowerCase().includes(q))
         })
-    }, [items, search])
+    }, [items, raw])
 
     // If there are no items at all, render a small placeholder (do not change hook ordering)
     if (items.length === 0) return <div />

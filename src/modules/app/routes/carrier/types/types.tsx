@@ -1,4 +1,4 @@
-import { FISCAL_REGIME } from "@/backend/db/types"
+import { Address, FISCAL_REGIME } from "@/backend/db/types"
 import type { cargo, driver, link, order, tracking, trailer, trip, truck, user } from "@/backend/db/schema"
 
 export type LAYOUT_VIEW = "list" | "grid"
@@ -59,7 +59,7 @@ export type ClientValues = {
     id: string;
     name: string;
     logo: string | null;
-    address: string;
+    address: Address | null;
     trips: number;
     revenue: number;
     createdAt: Date;

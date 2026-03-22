@@ -34,7 +34,7 @@ export function AccountHeader({ user }: { user: "s" | "c" }) {
                 <div className="flex items-center gap-6">
                     <Button
                         variant="ghost"
-                        onClick={() => router.push(`/${user}/dashboard`)}
+                        onClick={() => router.push("/u/redirect")}
                     >
                         <IconArrowLeft />
                         {t("buttons.back")}
@@ -42,7 +42,7 @@ export function AccountHeader({ user }: { user: "s" | "c" }) {
 
                     <div className="flex flex-col gap-1">
                         <h3 className="text-base font-bold">{t("title")}</h3>
-                        <h5 className="text-sm text-muted-foreground">{t("description")}</h5>
+                        <p className="text-sm text-muted-foreground">{t("description")}</p>
                     </div>
                 </div>
             </div>

@@ -206,7 +206,7 @@ export const auth = betterAuth({
                             defaultValue: "free"
                         },
                         nuit: {
-                            type: "number",
+                            type: "string",
                             required: true,
                             unique: true,
                         },
@@ -228,11 +228,11 @@ export const auth = betterAuth({
                             required: true,
                         },
                         billingAddress: {
-                            type: "string",
+                            type: "json",
                             required: true,
                         },
                         physicalAddress: {
-                            type: "string",
+                            type: "json",
                             required: true,
                         }
                     }

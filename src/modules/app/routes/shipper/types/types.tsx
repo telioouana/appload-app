@@ -1,3 +1,4 @@
+import { Address } from "@/backend/db/types"
 import type { cargo, order, timeline, tracking, trip } from "@/backend/db/schema"
 
 export type LAYOUT_VIEW = "list" | "grid"
@@ -19,7 +20,7 @@ export type TransporterValues = {
     id: string;
     name: string;
     logo: string | null;
-    address: string;
+    address: Address | null;
     trips: number;
     paid: number;
     createdAt: Date;

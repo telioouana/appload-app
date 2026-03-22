@@ -1,8 +1,8 @@
 import { randomUUID } from "crypto";
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, integer, index, uniqueIndex, jsonb, primaryKey, } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, index, uniqueIndex, jsonb, primaryKey, } from "drizzle-orm/pg-core";
 
-import { Urls } from "@/backend/db/types";
+import { Address, Urls } from "@/backend/db/types";
 
 export const user = pgTable(
     "user",
@@ -106,15 +106,15 @@ export const organization = pgTable(
         subscriptionPlan: text("subscription_plan", { enum: ["free", "pro"] })
             .default("free")
             .notNull(),
-        nuit: integer("nuit").notNull().unique(),
+        nuit: text("nuit").notNull().unique(),
         type: text("type", { enum: ["shipper", "carrier"] }).notNull(),
         status: text("status", { enum: ["pending", "active", "closed"] })
             .default("pending")
             .notNull(),
-        email: text("email").notNull(),
-        phoneNumber: text("phone_number").notNull(),
-        billingAddress: text("billing_address").notNull(),
-        physicalAddress: text("physical_address").notNull(),
+        email: text("email").notNull().unique(),
+        phoneNumber: text("phone_number").notNull().unique(),
+        billingAddress: jsonb("billing_address").$type<Address>(),
+        physicalAddress: jsonb("physical_address").$type<Address>(),
     },
     (table) => [uniqueIndex("organization_slug_uidx").on(table.slug)],
 );

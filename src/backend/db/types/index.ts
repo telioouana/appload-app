@@ -38,12 +38,14 @@ export const loadingBaySchema = z.object({
     type: z.enum(LOADING_BAY)
 })
 
-export const LocationSchema = z.array(z.object({
-    address: z.string(),
-    placeId: z.string(),
-    country: z.string(),
-    state: z.string(),
-})).length(1)
+export const AddressSchema = z.object({
+    address: z.string().nonempty(),
+    placeId: z.string().nonempty(),
+    country: z.string().nonempty(),
+    state: z.string().nonempty(),
+});
+
+export const LocationSchema = z.array(AddressSchema).length(1)
 
 export const MarketResponse = z.object({
     minPrice: z.number().positive(),
@@ -257,6 +259,7 @@ export const RegisterLinkSchema = z.object({
 })
 
 export type Urls = z.infer<typeof urlSchema>
+export type Address = z.infer<typeof AddressSchema>
 export type Location = z.infer<typeof LocationSchema>
 export type StatusSchema = z.infer<typeof statusSchema>
 export type LoadingBay = z.infer<typeof loadingBaySchema>

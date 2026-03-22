@@ -9,7 +9,7 @@ export default function Layout({
     form: ReactNode
 }>) {
     return (
-        <div className="w-full h-full max-w-2xl mx-auto space-y-6">
+        <div className="w-full h-full max-w-3xl mx-auto space-y-6">
             {children}
             {form}
             {data}
