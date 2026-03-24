@@ -2079,7 +2079,7 @@
                 "title": "Perfil & Configurações",
                 "description": "Gerir a sua conta, empresa e preferências",
                 "buttons": {
-                    "back": "Voltar"
+                    "back": "Ir ao Painel de controle"
                 },
                 "pages": {
                     "profile": "Suas informações",

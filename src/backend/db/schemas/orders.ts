@@ -29,9 +29,9 @@ export const order = pgTable(
             .references(() => organization.id, { onDelete: "cascade" }),
         shipperName: text("shipper_name").notNull(),
 
-        loadingAddress: jsonb("loading_address").$type<Location>(),
+        loadingAddress: jsonb("loading_address").$type<Location>().notNull(),
         expectedLoadingDate: timestamp("expected_loading_date").notNull(),
-        offloadingAddress: jsonb("offloading_address").$type<Location>(),
+        offloadingAddress: jsonb("offloading_address").$type<Location>().notNull(),
         expectedOffloadingDate: timestamp("expected_offloading_date").notNull(),
         distance: integer("distance"),
 
@@ -39,6 +39,7 @@ export const order = pgTable(
 
         status: orderStatusEnum("status"),
         route: routeTypeEnum("route").default("national"),
+        tripType: tripTypeEnum("trip_type").default("normal").notNull(),
         share: shareEnum("share").default("non-subscribers"),
         price: integer("price"),
         currency: currencyEnum("currency").default("MZN"),
@@ -219,6 +220,8 @@ export const offer = pgTable(
             .references(() => organization.id, { onDelete: "cascade" }),
         proposedLoadingDate: timestamp("proposed_loading_date"),
         proposedOffloadingDate: timestamp("proposed_offloading_date"),
+        price: decimal("price").notNull(),
+        currency: currencyEnum("currency").default("MZN").notNull(),
 
         driverId: text("driver_id")
             .references(() => driver.id, { onDelete: "set null" }),

@@ -12,11 +12,9 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { useCreateOffer } from "../../../hooks/use-create-offer";
 
 export function Schema(t: (key: string) => string) {
-    const OfferSchema = z.object({
+    return z.object({
         
     })
-
-    return OfferSchema
 }
 
 export const OfferSchema = Schema((k: string) => k)
@@ -38,9 +36,14 @@ export function CreateOfferDialog() {
         window.alert(values)
     }
 
+    function handleClose() {
+        form.reset()
+        onClose()
+    }
+
     return (
         <Dialog open={isOpen}>
-            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl" >
+            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl max-h-[70vh]" >
                 <DialogHeader className="border-b p-6">
                     <div className="flex items-center gap-3">
                         <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -53,7 +56,7 @@ export function CreateOfferDialog() {
                     </div>
 
                     <DialogClose
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="absolute right-6 top-6 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-0 focus:ring-ring focus:ring-offset-0 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
                     >
                         <IconX className="size-5 text-primary-foreground" />
@@ -63,7 +66,7 @@ export function CreateOfferDialog() {
 
                 <FormProvider {...form} >
                     <form onSubmit={form.handleSubmit(handleSubmit)}>
-                        <div className="flex max-h-[60vh] px-6 overflow-y-scroll container-snap">
+                        <div className="flex max-h-[50vh] px-6 overflow-y-scroll container-snap">
                             text
                         </div>
 
@@ -72,7 +75,7 @@ export function CreateOfferDialog() {
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    onClick={onClose}
+                                    onClick={handleClose}
                                 >
                                     <IconX />
                                     {t("footer.close")}

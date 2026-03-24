@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { and, avg, between, count, countDistinct, eq, sql, sum } from "drizzle-orm";
 
 import { db } from "@/backend/db";
-import { order, trip, truck } from "@/backend/db/schema";
+import { network, order, trip, truck } from "@/backend/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init";
 
 
@@ -16,7 +16,7 @@ export const carrierDashboardRouter = createTRPCRouter({
 
             const [stats] = await db
                 .select({
-                    orders: sql<number>`count(${order.id}) filter (where ${order.status} = 'open')`.mapWith(Number),
+                    orders: sql<number>`count(distinct${order.id}) filter (where ${order.status} = 'open' )`.mapWith(Number),
                     trips: sql<number>`count(${order.id}) filter (where ${order.status} = 'on-going' and ${trip.carrierId} = ${session.activeOrganizationId})`.mapWith(Number),
                     fleet: countDistinct(truck.id).mapWith(Number),
                     revenue: sql<number>`sum(${trip.carrierTotal}) filter (where ${order.status} = 'on-going' and ${trip.carrierId} = ${session.activeOrganizationId})`.mapWith(Number),
@@ -24,6 +24,10 @@ export const carrierDashboardRouter = createTRPCRouter({
                 .from(order)
                 .leftJoin(trip, eq(trip.orderId, order.id))
                 .leftJoin(truck, eq(truck.carrierId, session.activeOrganizationId))
+                .leftJoin(network, and(
+                    eq(network.shipperId, order.shipperId),
+                    eq(network.carrierId, session.activeOrganizationId)
+                ))
 
             return stats
         }),

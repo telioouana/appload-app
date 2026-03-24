@@ -52,8 +52,11 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
             carrierId: values.organizationId ?? "",
             carrierName: values.organizationName ?? "",
 
+            loading: values.order.loadingAddress[0],
             proposedLoadingDate: values.order.expectedLoadingDate,
+            offloading: values.order.offloadingAddress[0],
             proposedOffloadingDate: values.order.expectedOffloadingDate,
+            distance: values.order.distance ?? 0,
 
             weightUnit: values.cargo.unit as typeof WEIGHT_UNIT[number],
 

@@ -26,7 +26,7 @@ export function PageView({ path }: { path: TRIPS_PATH }) {
     return (
         <div className="flex flex-col gap-0.5">
             <h2 className="font-bold text-2xl leading-normal">{t("title")}</h2>
-            <h4 className="text-sm text-muted-foreground">{t("description", { company: name })}</h4>
+            <p className="text-sm text-muted-foreground">{t("description", { company: name })}</p>
         </div>
     )
 }

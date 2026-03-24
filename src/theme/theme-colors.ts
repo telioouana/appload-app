@@ -1245,7 +1245,7 @@ export const themes = {
     },
 };
 
-export default function setGlobalColorTheme(
+export function setGlobalColorTheme(
     themeMode: "light" | "dark" ,
     color: ThemeColors,
 ) {

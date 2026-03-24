@@ -1,21 +1,28 @@
 "use client"
 
+import { useTheme } from "next-themes";
+import { IconBuilding, IconEdit } from "@tabler/icons-react";
+
 import { Organization } from "@/backend/auth/types";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { themes } from "@/theme/theme-colors";
 
-import { ThemeColors } from "@/theme/theme-types";
-import { IconBuilding, IconEdit } from "@tabler/icons-react";
+import { themes } from "@/theme/theme-colors";
+import { getSafePrivateColor } from "@/theme/theme-provider";
 
 interface Props {
     company: Organization
 }
 
 export function DetailsSection({ company }: Props) {
-    const color = localStorage.getItem("privateThemeColor") as ThemeColors
-    const mode = localStorage.getItem("theme") as "light" | "dark"
-    const theme = themes[color][mode]
+    const { resolvedTheme } = useTheme();
+    
+    // Read directly from our safe utility (no useState, no useEffect)
+    const color = getSafePrivateColor();
+    
+    const mode = (resolvedTheme === "dark" ? "dark" : "light");
+    const theme = themes[color][mode] || themes["amber"]["light"];
 
     return (
         <Card className="p-0 border-2 border-primary">

@@ -15,7 +15,7 @@ export function PageView({ path }: { path: ORDERS_PATH }) {
     if (isPending || !data) {
         return (
             <div className="flex flex-col gap-0.5">
-                <Skeleton className="h-[calc(var(--text-2xl)+1rem)] w-36" />
+                <Skeleton className="h-[calc(var(--text-xl)+1rem)] w-36" />
                 <Skeleton className="h-(--text-sm) w-64" />
             </div>
         )
@@ -26,7 +26,7 @@ export function PageView({ path }: { path: ORDERS_PATH }) {
     return (
         <div className="flex flex-col gap-0.5">
             <h2 className="font-bold text-2xl leading-normal">{t("title")}</h2>
-            <h4 className="text-sm text-muted-foreground">{t("description", { company: name })}</h4>
+            <p className="text-sm text-muted-foreground">{t("description", { company: name })}</p>
         </div>
     )
 }

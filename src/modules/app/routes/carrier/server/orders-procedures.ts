@@ -4,10 +4,11 @@ import { and, count, desc, eq, lt, or, sql, sum } from "drizzle-orm"
 
 import { db } from "@/backend/db"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
-import { FISCAL_REGIME, TRUCK_AGE, WEIGHT_UNIT } from "@/backend/db/types"
+import { FISCAL_REGIME, TRIP_TYPE, TRUCK_AGE, WEIGHT_UNIT } from "@/backend/db/types"
 import { cargo, kyc, network, order, organization, trip } from "@/backend/db/schema"
 
 import { TripSchema } from "../schemas/trip"
+import { getLogisticsTripType } from "@/lib/google"
 
 const PATHS = ["all", "private", "public"] as const
 
@@ -40,7 +41,7 @@ export const ordersRouter = createTRPCRouter({
                 .from(order)
                 .innerJoin(cargo, eq(cargo.orderId, order.id))
                 .innerJoin(organization, eq(organization.id, session.activeOrganizationId))
-                .innerJoin(kyc, eq(kyc.organizationId, session.activeOrganizationId))
+                .leftJoin(kyc, eq(kyc.organizationId, session.activeOrganizationId))
                 .leftJoin(network, and(
                     eq(network.shipperId, order.shipperId),
                     eq(network.carrierId, session.activeOrganizationId)
@@ -128,8 +129,11 @@ export const ordersRouter = createTRPCRouter({
                         : path === "public"
                             ? eq(order.share, "non-subscribers")
                             : or(
-                                eq(order.share, "subscribers"),
-                                eq(network.carrierId, session.activeOrganizationId)
+                                eq(order.share, "non-subscribers"),
+                                and(
+                                    eq(order.share, "subscribers"),
+                                    eq(network.carrierId, session.activeOrganizationId)
+                                )
                             ),
                 ))
 
@@ -147,6 +151,8 @@ export const ordersRouter = createTRPCRouter({
             const { session } = ctx.auth
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+
+            const tripType = await getLogisticsTripType(values.loading.placeId, values.offloading.placeId)
 
             const [data] = await db
                 .insert(trip)
@@ -170,6 +176,7 @@ export const ordersRouter = createTRPCRouter({
                     weightUnit: values.weightUnit as typeof WEIGHT_UNIT[number],
 
                     status: "booked",
+                    tripType: tripType.tripType as typeof TRIP_TYPE[number],
 
                     fiscalRegime: values.fiscalRegime as typeof FISCAL_REGIME[number],
                     carrierSubtotal: String(values.carrierSubtotal),
@@ -181,7 +188,12 @@ export const ordersRouter = createTRPCRouter({
                     shipperVAT: String(values.shipperVAT),
                     shipperTotal: String(values.shipperTotal),
                     shipperCurrency: values.shipperCurrency,
-                })
+
+                    ageFactor: values.truckAge === "recent" ? "1" : "1.2",
+                    loadFactor: tripType.tripType === "backload" ? "0.8" : tripType.tripType === "normal" ? "1" : "",
+                    defaultCoefficient: tripType.tripType === "backload" ? "0.03" : tripType.tripType === "normal" ? "0.12" : "",
+                    totalFuelCost: tripType.tripType === "backload" ? String((values.distance / 1000) * 0.5 * 86) : "0"
+                 })
                 .returning()
 
             if (!data) throw new TRPCError({ code: "BAD_REQUEST" })

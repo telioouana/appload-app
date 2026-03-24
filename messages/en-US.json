@@ -2079,7 +2079,7 @@
                 "title": "Profile & Settings",
                 "description": "Manage your account, company, and preferences",
                 "buttons": {
-                    "back": "Back"
+                    "back": "Go to Dashboard"
                 },
                 "pages": {
                     "profile": "Your info",
