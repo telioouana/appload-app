@@ -25,7 +25,7 @@ export const driver = pgTable(
         passport: text("passport"),
         driverLicense: jsonb("driver_card").$type<Urls>(),
         passportCard: jsonb("passport_card").$type<Urls>(),
-        status: fleetEnum("status").default("idle"),
+        status: fleetEnum("status").default("idle").notNull(),
         createdAt: timestamp("created_at").defaultNow().notNull(),
         updatedAt: timestamp("updated_at")
             .defaultNow()
@@ -53,7 +53,7 @@ export const truck = pgTable(
         vin: text("vin").notNull().unique(),
         booklet: jsonb("booklet").$type<Urls>(),
         license: jsonb("license").$type<Urls>(),
-        status: fleetEnum("status").default("idle"),
+        status: fleetEnum("status").default("idle").notNull(),
         createdAt: timestamp("created_at").defaultNow().notNull(),
         updatedAt: timestamp("updated_at")
             .defaultNow()
@@ -86,7 +86,7 @@ export const trailer = pgTable(
         vin: text("vin").notNull().unique(),
         booklet: jsonb("booklet").$type<Urls>(),
         license: jsonb("license").$type<Urls>(),
-        status: fleetEnum("status").default("idle"),
+        status: fleetEnum("status").default("idle").notNull(),
         createdAt: timestamp("created_at").defaultNow().notNull(),
         updatedAt: timestamp("updated_at")
             .defaultNow()
@@ -119,7 +119,7 @@ export const link = pgTable(
         vin: text("vin").notNull().unique(),
         booklet: jsonb("booklet").$type<Urls>(),
         license: jsonb("license").$type<Urls>(),
-        status: fleetEnum("status").default("idle"),
+        status: fleetEnum("status").default("idle").notNull(),
         createdAt: timestamp("created_at").defaultNow().notNull(),
         updatedAt: timestamp("updated_at")
             .defaultNow()

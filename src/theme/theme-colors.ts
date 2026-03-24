@@ -1,6 +1,6 @@
 import { ThemeColors } from "./theme-types";
 
-const themes = {
+export const themes = {
     amber: {
         light: {
             background: "oklch(1 0 0)",

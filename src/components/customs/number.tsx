@@ -6,30 +6,51 @@ import { Base } from "@/components/customs/base";
 import { ControlFunc } from "@/components/customs/types";
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group";
 
-export const NumberInput: ControlFunc = (props) => {
-    return (
-        <Base {...props}>
-            {(field) => (
-                <InputGroup>
-                    <InputGroupInput
-                        {...field}
-                        type="number"
-                        className="w-full"
-                        autoComplete="off"
-                        value={field.value ?? ""}
-                        onChange={(e) => {
-                            const val = e.target.value;
-                            field.onChange(val === "" ? undefined : Number(val));
-                        }}
-                        disabled={props.isPending}
-                        placeholder={props.placeholder}
-                    />
+export const NumberInput: ControlFunc<{
+    length?: number
+    isNumber?: boolean
+}> = ({
+    isNumber = true,
+    length,
+    ...props
+}) => {
+        return (
+            <Base {...props}>
+                {(field) => (
+                    <InputGroup>
+                        <InputGroupInput
+                            {...field}
+                            type="text"
+                            // Use * for zero or more, or + for one or more numbers
+                            pattern="[0-9]*"
+                            className="w-full"
+                            autoComplete="off"
+                            value={field.value ?? ""}
+                            onChange={(e) => {
+                                // This regex removes anything that is NOT (^) a digit (0-9)
+                                const sanitized = e.target.value.replace(/[^0-9]/g, "");
 
-                    <InputGroupAddon>
-                        <InputGroupText><IconHash /></InputGroupText>
-                    </InputGroupAddon>
-                </InputGroup>
-            )}
-        </Base>
-    )
-}
+                                // Update the value directly
+                                e.target.value = sanitized;
+
+                                // Pass it to React Hook Form
+                                const val = e.target.value;
+                                if (isNumber) {
+                                    field.onChange(val === "" ? undefined : Number(val));
+                                } else {
+                                    field.onChange(val)
+                                }
+                            }}
+                            disabled={props.isPending}
+                            placeholder={props.placeholder}
+                            maxLength={length}
+                        />
+
+                        <InputGroupAddon>
+                            <InputGroupText><IconHash /></InputGroupText>
+                        </InputGroupAddon>
+                    </InputGroup>
+                )}
+            </Base>
+        )
+    }

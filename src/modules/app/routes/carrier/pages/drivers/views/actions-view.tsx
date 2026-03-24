@@ -11,9 +11,9 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/in
 
 import { STATUS_FILTER } from "../../../types/types";
 
-export function ActionsView() {
+export function ActionsView({ initialSearch }: { initialSearch?: string }) {
     const [tab, setTab] = useState<STATUS_FILTER>("all")
-    const [value, setValue] = useState<string>("")
+    const [value, setValue] = useState<string>(initialSearch ?? "")
 
     const t = useTranslations(`Carrier.company.drivers.actions`)
     const router = useRouter()
@@ -59,7 +59,7 @@ export function ActionsView() {
                     />
                 </InputGroup>
 
-                <Tabs value={tab} onValueChange={(value) => status(value as STATUS_FILTER)}>
+                <Tabs className="hidden" value={tab} onValueChange={(value) => status(value as STATUS_FILTER)}>
                     <TabsList>
                         <TabsTrigger value="all">{t("tabs.all")}</TabsTrigger>
                         <TabsTrigger value="active">{t("tabs.active")}</TabsTrigger>

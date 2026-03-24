@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server"
 import { and, count, desc, eq, lt, ne, or, sql, sum } from "drizzle-orm"
 
 import { db } from "@/backend/db"
-import { cargo, order, trip } from "@/backend/db/schema"
+import { cargo, order, tracking, trip } from "@/backend/db/schema"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
 
 const PATHS = ["all", "booked", "on-going"] as const
@@ -26,17 +26,20 @@ export const tripsRouter = createTRPCRouter({
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
+            const location = db.select().from(tracking).where(eq(tracking.tripId, trip.id)).orderBy(desc(tracking.createdAt)).limit(1).as("location")
+
             const trips = await db
                 .select()
                 .from(trip)
                 .innerJoin(order, eq(trip.orderId, order.id))
                 .innerJoin(cargo, eq(cargo.orderId, order.id))
+                .leftJoinLateral(location, sql`true`)
                 .where(and(
                     ne(trip.status, "cancelled"),
                     ne(trip.status, "completed"),
                     eq(trip.carrierId, session.activeOrganizationId),
                     path === "on-going"
-                        ? and(
+                        ? or(
                             eq(trip.status, "to-loading"),
                             eq(trip.status, "at-loading"),
                             eq(trip.status, "loading"),
@@ -108,6 +111,7 @@ export const tripsRouter = createTRPCRouter({
                 .where(and(
                     ne(trip.status, "cancelled"),
                     ne(trip.status, "completed"),
+                    eq(trip.carrierId, session.activeOrganizationId),
                     path === "on-going"
                         ? and(
                             eq(trip.status, "to-loading"),

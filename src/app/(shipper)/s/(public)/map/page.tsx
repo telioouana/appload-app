@@ -1,7 +1,7 @@
-import { PageView } from "@/modules/app/routes/shipper/pages/map/views/page-view";
+import { MapPageView } from "@/modules/app/routes/shipper/pages/map/views/map-page-view";
 
 export default function Page() {
     return (
-        <PageView />
+        <MapPageView />
     )
 }

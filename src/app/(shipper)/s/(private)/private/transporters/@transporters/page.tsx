@@ -1,5 +1,23 @@
-export default function Page() {
+import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server";
+
+import { TransportersListView } from "@/modules/app/routes/shipper/pages/private/pages/transporters/views/transporters-list-view";
+
+import { DEFAULT_PAGE_LIMIT } from "@/constants";
+
+export default async function Page() {
+    const client = getQueryClient()
+
+    await client.prefetchInfiniteQuery(
+        trpc.transporters.transporters.infiniteQueryOptions({
+            limit: DEFAULT_PAGE_LIMIT
+        }, {
+            getNextPageParam: (lastPage) => lastPage.nextCursor,
+        })
+    )
+
     return (
-        <div>Page</div>
+        <HydrateClient>
+            <TransportersListView />
+        </HydrateClient>
     )
 }

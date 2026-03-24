@@ -16,6 +16,7 @@ import { SelectInput } from "@/components/customs/select";
 import { FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from "@/components/ui/field";
 
 import { LoadingBayForm } from "./loading-bay-form";
+import { FullFleetForm } from "../dialog/register-fleet-dialog";
 
 interface Props {
     name: "truck" | "trailer" | "link"
@@ -27,7 +28,7 @@ interface Props {
 export function RegisterTrailerForm({ name, hasLink, addLink, remove }: Props) {
     const t = useTranslations("Carrier.company.fleet.dialog.form.trailer")
 
-    const { control, watch, formState: { isSubmitting } } = useFormContext()
+    const { control, watch, formState: { isSubmitting } } = useFormContext<FullFleetForm>()
 
     const licenseRef = [
         useRef<HTMLInputElement | null>(null),
@@ -139,9 +140,14 @@ export function RegisterTrailerForm({ name, hasLink, addLink, remove }: Props) {
                     <TextInput
                         control={control}
                         name={`${name}.vin`}
-                        label={t("vin.label")}
                         isPending={isSubmitting}
+                        label={t("vin.label")}
                         placeholder={t("vin.placeholder")}
+                        hasPattern
+                        // Alphanumeric, exactly 17, excludes I, O, Q
+                        pattern="^[A-HJ-NPR-Z0-9]{17}$" 
+                        regex={/[^a-zA-Z0-9]/g}
+                        length={17}
                     />
                 </div>
             </FieldSet>
@@ -178,7 +184,7 @@ export function RegisterTrailerForm({ name, hasLink, addLink, remove }: Props) {
                         name={`${name}.license.${index}.url`}
                         placeholder={index === 0 ? t("license.placeholder.front") : t("license.placeholder.back")}
 
-                        owner={watch(`${name}.regPlate`)}
+                        owner={`${watch(`${name}.regPlate`)}`}
                         path={`${name}-license`}
 
                         index={index}
@@ -216,7 +222,7 @@ export function RegisterTrailerForm({ name, hasLink, addLink, remove }: Props) {
                         name={`${name}.booklet.${index}.url`}
                         placeholder={index === 0 ? t("booklet.placeholder.front") : t("booklet.placeholder.back")}
 
-                        owner={watch(`${name}.regPlate`)}
+                        owner={`${watch(`${name}.regPlate`)}`}
                         path={`${name}-booklet`}
 
                         index={index}

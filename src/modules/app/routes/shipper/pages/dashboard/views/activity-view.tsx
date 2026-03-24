@@ -27,7 +27,7 @@ export function ActivityView() {
                     <div className="flex flex-col gap-4">
                         <h2 className="font-medium">{t("private")}</h2>
 
-                        <div className="grid grid-cols-1 md:grid-col-3 lg:grid-cols-6 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6">
                             <ActivityCard
                                 Icon={IconPackages}
                                 value={data.private.orders}
@@ -81,7 +81,7 @@ export function ActivityView() {
                     <div className="flex flex-col gap-3">
                         <h2 className="font-medium">{t("public")}</h2>
 
-                        <div className="grid grid-cols-1 md:grid-col-3 lg:grid-cols-6 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6">
                             <ActivityCard
                                 Icon={IconPackages}
                                 value={data.public.orders}

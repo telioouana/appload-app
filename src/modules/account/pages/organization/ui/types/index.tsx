@@ -1,1 +1,0 @@
-export type CompanyTab = "members" | "invitations" | "subscriptions" | "marketplace" | "settings"

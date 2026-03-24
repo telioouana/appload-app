@@ -5,6 +5,7 @@ export const TRIP_TYPE = ["backload", "normal"] as const
 export const TRUCK_AGE = ["recent", "not-recent"] as const
 export const WEIGHT_UNIT = ["ton", "kg", "liter"] as const
 export const ROUTE_TYPE = ["national", "regional"] as const
+export const MARKET_STATUS = ["pending", "completed"] as const
 export const FLEET_STATUS = ["active", "idle", "free"] as const
 export const SHARE = ["subscribers", "non-subscribers"] as const
 export const TRUCK_TYPE = ["articulated", "non-articulated"] as const
@@ -37,12 +38,22 @@ export const loadingBaySchema = z.object({
     type: z.enum(LOADING_BAY)
 })
 
-export const LocationSchema = z.array(z.object({
-    address: z.string(),
-    placeId: z.string(),
-    country: z.string(),
-    state: z.string(),
-})).length(1)
+export const AddressSchema = z.object({
+    address: z.string().nonempty(),
+    placeId: z.string().nonempty(),
+    country: z.string().nonempty(),
+    state: z.string().nonempty(),
+});
+
+export const LocationSchema = z.array(AddressSchema).length(1)
+
+export const MarketResponse = z.object({
+    minPrice: z.number().positive(),
+    maxPrice: z.number().positive(),
+    currency: z.enum(CURRENCY),
+    unit: z.enum(WEIGHT_UNIT),
+    from: z.date().nullable()
+})
 
 export const CargoSchema = z.object({
     category: z.enum(CATEGORIES),
@@ -247,9 +258,11 @@ export const RegisterLinkSchema = z.object({
     license: urlSchema,
 })
 
-export type Urls = z.infer<typeof urlSchema>;
+export type Urls = z.infer<typeof urlSchema>
+export type Address = z.infer<typeof AddressSchema>
 export type Location = z.infer<typeof LocationSchema>
 export type StatusSchema = z.infer<typeof statusSchema>
 export type LoadingBay = z.infer<typeof loadingBaySchema>
+export type MarketResponse = z.infer<typeof MarketResponse>
 export type CreateOrderForm = z.infer<typeof CreateOrderSchema>
 export type RegisterDriverForm = z.infer<typeof RegisterDriverSchema>

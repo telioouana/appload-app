@@ -8,7 +8,7 @@ import { IconLanguage } from "@tabler/icons-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { setUserLocale } from "@/i18n/locale";
-import { defaultLocale, Locale } from "@/i18n/config";
+import { Locale } from "@/i18n/config";
 
 import { cn } from "@/lib/utils";
 
@@ -28,7 +28,7 @@ export function Language({ items }: { items: Array<{ flag: string, locale: strin
     }
 
     return (
-        <Select defaultValue={defaultLocale} onValueChange={onChange}>
+        <Select defaultValue={locale} onValueChange={onChange}>
             <SelectTrigger
                 className={cn("flex rounded-md shadow-md border bg-muted")}
                 disabled={isPending}

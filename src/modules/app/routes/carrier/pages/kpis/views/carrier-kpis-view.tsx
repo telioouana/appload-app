@@ -7,12 +7,12 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { CURRENCY } from "@/backend/db/types";
 import { useTRPC } from "@/backend/trpc/client";
 
-import { KPIs_TABS } from "@/modules/app/routes/shipper/types/types";
-import { KPIsDataSection } from "@/modules/app/routes/shipper/pages/kpis/sections/kpis-data-section";
-import { KPIsHeaderSection } from "@/modules/app/routes/shipper/pages/kpis/sections/kpis-header-section";
-import { KPIsDataWindowSection } from "@/modules/app/routes/shipper/pages/kpis/sections/kpis-data-window-section";
+import { KPIs_TABS, PERIOD } from "@/modules/app/routes/carrier/types/types";
+import { KPIsDataSection } from "@/modules/app/routes/carrier/pages/kpis/sections/kpis-data-section";
+import { KPIsHeaderSection } from "@/modules/app/routes/carrier/pages/kpis/sections/kpis-header-section";
+import { KPIsDataWindowSection } from "@/modules/app/routes/carrier/pages/kpis/sections/kpis-data-window-section";
 
-export function CarrierKPIsView({ endDate: initialEndDate, startDate: initialStartDate }: { endDate: Date, startDate: Date }) {
+export function CarrierKPIsView({ endDate: initialEndDate, startDate: initialStartDate, time }: { endDate: Date, startDate: Date, time?: PERIOD }) {
     const [dates, setDates] = useState({ start: initialStartDate, end: initialEndDate });
     const [currency, setCurrency] = useState<typeof CURRENCY[number]>("MZN")
     const [tab, setTab] = useState<KPIs_TABS>("operational")
@@ -31,7 +31,7 @@ export function CarrierKPIsView({ endDate: initialEndDate, startDate: initialSta
     return (
         <div className="flex flex-col gap-6">
             <KPIsHeaderSection />
-            <KPIsDataWindowSection setDates={setDates} />
+            <KPIsDataWindowSection setDates={setDates} time={time} />
             <Suspense fallback={<div>Loading activity...</div>}>
                 <ErrorBoundary fallback={<div>Error loading activity.</div>}>
                     <KPIsDataSection

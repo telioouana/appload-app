@@ -17,10 +17,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 import { LAYOUT_VIEW } from "../../../types/types";
 
-export function ActionsView() {
+export function ActionsView({ initialSearch }: { initialSearch?: string }) {
     const [cargo, setCargo] = useState<typeof CATEGORIES[number] | "none" | "">("")
     const [tab, setTab] = useState<LAYOUT_VIEW>("grid")
-    const [value, setValue] = useState<string>("")
+    const [value, setValue] = useState<string>(initialSearch ?? "")
 
     const t = useTranslations(`Carrier.marketplace.orders.actions`)
     const router = useRouter()
@@ -61,8 +61,8 @@ export function ActionsView() {
     }
 
     return (
-        <Card>
-            <CardContent className="flex flex-col gap-3">
+        <Card className="p-0">
+            <CardContent className="flex flex-col gap-3 p-4">
                 <div className="flex justify-between gap-4 items-center">
                     <InputGroup className="h-11">
                         <InputGroupAddon>
@@ -76,7 +76,7 @@ export function ActionsView() {
                         />
                     </InputGroup>
 
-                    <Tabs value={tab} onValueChange={(value) => view(value as LAYOUT_VIEW)}>
+                    <Tabs className="hidden" value={tab} onValueChange={(value) => view(value as LAYOUT_VIEW)}>
                         <TabsList className="rounded-md">
                             <TabsTrigger value="grid" className="rounded-md">
                                 <Tooltip>

@@ -6,10 +6,10 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { useTRPC } from "@/backend/trpc/client";
 
-import { TendenciesOnTimeCard } from "@/modules/app/routes/shipper/pages/kpis/components/cards/tendencies-on-time-card";
-import { TendenciesLoadingCard } from "@/modules/app/routes/shipper/pages/kpis/components/cards/tendencies-loading-card";
-import { TendenciesIncidentsCard } from "@/modules/app/routes/shipper/pages/kpis/components/cards/tendencies-incidents-card";
-import { TendenciesOffloadingCard } from "@/modules/app/routes/shipper/pages/kpis/components/cards/tendencies-offloading-card";
+import { TendenciesOnTimeCard } from "@/modules/app/routes/carrier/pages/kpis/components/cards/tendencies-on-time-card";
+import { TendenciesLoadingCard } from "@/modules/app/routes/carrier/pages/kpis/components/cards/tendencies-loading-card";
+import { TendenciesIncidentsCard } from "@/modules/app/routes/carrier/pages/kpis/components/cards/tendencies-incidents-card";
+import { TendenciesOffloadingCard } from "@/modules/app/routes/carrier/pages/kpis/components/cards/tendencies-offloading-card";
 
 export function CarrierTendenciesView({ endDate, startDate }: { endDate: Date, startDate: Date }) {
     const trpc = useTRPC()

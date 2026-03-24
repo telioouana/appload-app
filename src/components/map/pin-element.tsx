@@ -12,7 +12,7 @@ export const PinElement = (status: Status, color: Color) => {
     pulse.className = `absolute inset-0 ${color} rounded-full animate-ping opacity-75`;
 
     const icon = document.createElement("img");
-    icon.src = '/truck-delivery.svg';
+    icon.src = '/trucks/truck-delivery.svg';
     icon.className = "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 size-6";
 
     if(status === "to-loading" || status === "on-route") {

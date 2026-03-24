@@ -1,22 +1,36 @@
 import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server"
 
 import { ORDERS_PATH } from "@/modules/app/routes/shipper/types/types"
-import { ResumeView } from "@/modules/app/routes/shipper/pages/public/pages/orders/views/resume-view"
+import { PublicResumeView } from "@/modules/app/routes/shipper/pages/public/pages/orders/views/public-resume-view"
 
-export default async function Page({ params }: { params: Promise<{ path: ORDERS_PATH }> }) {
+type Props = {
+    params: Promise<{ path: ORDERS_PATH }>
+    searchParams: Promise<{ 
+        search?: string; 
+        "cargo-type"?: string;
+    }>
+}
+
+export default async function Page({ params, searchParams }: Props) {
     const { path } = await params
+    const resolvedSearchParams = await searchParams
+    
+    const search = resolvedSearchParams.search?.trim() || undefined
+    const cargoType = resolvedSearchParams["cargo-type"]?.trim() || undefined
 
     const client = getQueryClient()
 
     await client.prefetchQuery(
         trpc.public.resume.queryOptions({
-            path
+            path,
+            search,
+            cargoType,
         })
     )
 
     return (
         <HydrateClient>
-            <ResumeView path={path} />
+            <PublicResumeView path={path} search={search} cargoType={cargoType} />
         </HydrateClient>
     )
 }

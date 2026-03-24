@@ -27,7 +27,7 @@ export function OrderCard({ values }: Props) {
     const { onOpenChange: viewDetails } = useOrderDetails()
     const { onOpenChange: updateOrder } = useUpdateOrder()
 
-    const { order, cargo, trip } = values
+    const { order, cargo, trip, status: liveStatus } = values // Extract liveStatus
 
     const defaultValues = {
         loadingAddress: [{
@@ -63,18 +63,32 @@ export function OrderCard({ values }: Props) {
         currency: order.currency ?? CURRENCY[0]
     }
 
-    const status = trip ? trip.status : order.status
+    /**
+     * PRIORITY LOGIC:
+     * 1. If we have a live timeline status (from lateral join), use it.
+     * 2. Else if we have a trip but no timeline, use trip status.
+     * 3. Fallback to order status.
+     */
+    const displayStatus = liveStatus?.status ?? trip?.status ?? order.status
 
     return (
         <Card className="border border-card hover:border-primary">
             <CardHeader className="gap-2.5">
                 <div className="flex justify-between items-start gap-4">
                     <div className="flex flex-col gap-0.5">
-                        <span className="text-muted-foreground leading-tight">{t("header.id", { id: order.legacyId.toString().padStart(4, '0') })}</span>
-                        <span className="text-base font-semibold">{t(`header.category.${cargo.category}`)}</span>
+                        <span className="text-muted-foreground leading-tight">
+                            {t("header.id", { id: order.legacyId.toString().padStart(4, '0') })}
+                        </span>
+                        <span className="text-base font-semibold">
+                            {t(`header.category.${cargo.category}`)}
+                        </span>
                     </div>
 
-                    <StatusBadge label={t(`header.status.${status}`)} status={status as StatusKey} />
+                    {/* Use the new displayStatus here */}
+                    <StatusBadge 
+                        label={t(`header.status.${displayStatus}`)} 
+                        status={displayStatus as StatusKey} 
+                    />
                 </div>
 
                 <div className="flex flex-col gap-1.5">

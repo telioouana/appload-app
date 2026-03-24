@@ -30,7 +30,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
             endDate = new Date();
             break;
         default:
-            return;
+            // Fallback to month for invalid query values
+            startDate = new Date(now.setDate(now.getDate() - 30));
+            endDate = new Date();
+            break;
     }
 
     // if (!period || period === "month") {

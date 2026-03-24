@@ -22,6 +22,7 @@ import { locales } from "@/i18n/config"
 import { cn } from "@/lib/utils";
 
 import { Language } from "../button/language";
+import { ThemeToggle } from "@/theme/theme-toggle";
 
 export function Header() {
     const [isLoading, setLoading] = useState<boolean>(false)
@@ -34,6 +35,8 @@ export function Header() {
     if (isPending || !data) {
         return (
             <div className="flex items-center gap-2">
+                <Skeleton className="size-9 rounded-md border" />
+
                 <div className="flex gap-2 rounded-md items-center h-9 bg-muted px-2 border">
                     <Skeleton className="size-4" />
                     <IconSelector className="size-4 text-muted-foreground" />
@@ -65,7 +68,7 @@ export function Header() {
         })
     }
 
-    const { name, image, email } = data.user
+    const { name, image, email, type } = data.user
 
     function avatar(className?: string) {
         if (image) {
@@ -80,6 +83,8 @@ export function Header() {
 
     return (
         <div className="flex items-center gap-2">
+            <ThemeToggle />
+
             <Language
                 items={locales.map(code => ({
                     flag: `/flags/${code === "en-US" ? "GB" : "PT"}.svg`,
@@ -88,8 +93,9 @@ export function Header() {
             />
 
             <Button
-                variant="outline"
                 size="icon"
+                variant="outline"
+                className="hidden"
             >
                 <IconBell />
             </Button>
@@ -108,7 +114,7 @@ export function Header() {
                     <Separator />
 
                     <Link
-                        href="/u/account/profile"
+                        href={`/u/${type.charAt(0)}/account/profile`}
                         className={cn(
                             buttonVariants({ variant: "ghost" }),
                             "py-5 font-light justify-start rounded-none"
@@ -119,10 +125,10 @@ export function Header() {
                     </Link>
 
                     <Link
-                        href="/u/preferences"
+                        href={`/u/${type.charAt(0)}/preferences`}
                         className={cn(
                             buttonVariants({ variant: "ghost" }),
-                            "py-5 font-light justify-start rounded-none"
+                            "hidden py-5 font-light justify-start rounded-none"
                         )}
                     >
                         <IconSettings />
@@ -130,7 +136,7 @@ export function Header() {
                     </Link>
 
                     <Link
-                        href="/u/support"
+                        href={`/u/${type.charAt(0)}/support`}
                         className={cn(
                             buttonVariants({ variant: "ghost" }),
                             "py-5 font-light justify-start rounded-none"

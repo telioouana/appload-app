@@ -1,21 +1,21 @@
-import React, { PropsWithChildren } from 'react'
+import { PropsWithChildren, ReactNode } from "react";
 
 export default function Layout({
     children,
     actions,
-    resume,
-    transporters
+    transporters,
+    resume
 }: PropsWithChildren<{
-    actions: React.ReactNode,
-    resume: React.ReactNode,
-    transporters: React.ReactNode
+    actions: ReactNode
+    transporters: ReactNode
+    resume: ReactNode
 }>) {
   return (
     <div className="flex flex-col gap-6 w-full h-full">
-        {children}
-        {resume}
-        {actions}
-        {transporters}
-    </div>
+            {children}
+            {resume}
+            {actions}
+            {transporters}
+        </div>
   )
 }

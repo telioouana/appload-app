@@ -1,5 +1,5 @@
 import { createAuthClient } from "better-auth/react";
-import { adminClient, inferAdditionalFields, inferOrgAdditionalFields, organizationClient, phoneNumberClient } from "better-auth/client/plugins";
+import { adminClient, inferAdditionalFields, inferOrgAdditionalFields, organizationClient, phoneNumberClient, twoFactorClient } from "better-auth/client/plugins";
 
 import { auth } from "@/backend/auth";
 import { admin as userAdmin, manager, uac, user } from "@/backend/auth/permissions/user.permissions"
@@ -25,6 +25,11 @@ export const authClient = createAuthClient({
                 member
             },
             schema: inferOrgAdditionalFields<typeof auth>(),
+        }),
+        twoFactorClient({
+            onTwoFactorRedirect: () => {
+                window.location.href = "/2fa"
+            },
         }),
         inferAdditionalFields<typeof auth>(),
     ],

@@ -22,12 +22,12 @@ import { DEFAULT_PAGE_LIMIT } from "@/constants"
 
 function DriverSchema(t: (key: string) => string) {
     const schema = z.object({
-        name: z.string({ error: t("") }).nonempty({ error: t("") }),
-        email: z.email({ error: t("") }),
+        name: z.string({ error: t("form.name.error") }).nonempty({ error: t("form.name.error") }),
+        email: z.email({ error: t("form.email.error") }),
         country: z.string(),
-        phoneNumber: z.string({ error: t("") }).min(9, { error: t("") }).max(15, { error: t("") }),
-        driverLicense: z.array(z.object({ url: z.url({ error: t("") }) })).min(1, { error: t("") }).max(2, { error: t("") }),
-        passportCard: z.array(z.object({ url: z.url({ error: t("") }) })).length(1).optional(),
+        phoneNumber: z.string({ error: t("form.phone-number.error.empty") }).min(9, { error: t("form.phone-number.error.invalid") }).max(15, { error: t("form.phone-number.error.invalid") }),
+        driverLicense: z.array(z.object({ url: z.url({ error: t("form.driver-license.error") }) })).min(1).max(2),
+        passportCard: z.array(z.object({ url: z.url() })).length(1).optional(),
     })
 
     return schema
@@ -37,7 +37,7 @@ export const RegisterDriverSchema = DriverSchema((k: string) => k)
 export type RegisterDriverForm = z.infer<typeof RegisterDriverSchema>
 
 export function RegisterDriverDialog() {
-    const t = useTranslations("Carrier.company.drivers.dialog.register")
+    const t = useTranslations("Carrier.company.drivers.dialog")
     const { isOpen, onClose } = useRegisterDriver()
 
     const RegisterDriverSchema = useMemo(() => DriverSchema(t), [t])
@@ -109,8 +109,8 @@ export function RegisterDriverDialog() {
                             <IconTruck className="size-5 text-primary" />
                         </div>
                         <div>
-                            <DialogTitle className="text-xl font-semibold">{t("header.title")}</DialogTitle>
-                            <DialogDescription className="text-muted-foreground mt-0.5">{t("header.description")}</DialogDescription>
+                            <DialogTitle className="text-xl font-semibold">{t("register.header.title")}</DialogTitle>
+                            <DialogDescription className="text-muted-foreground mt-0.5">{t("register.header.description")}</DialogDescription>
                         </div>
                     </div>
                     <DialogClose
@@ -133,14 +133,14 @@ export function RegisterDriverDialog() {
                                     variant="outline"
                                     onClick={handleClose}
                                 >
-                                    {t("footer.cancel")}
+                                    {t("register.footer.cancel")}
                                 </Button>
 
                                 <Button
                                     type="submit"
                                 >
                                     <IconUser />
-                                    {t("footer.register")}
+                                    {t("register.footer.register")}
                                 </Button>
                             </div>
                         </DialogFooter>

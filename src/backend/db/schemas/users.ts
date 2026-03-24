@@ -1,8 +1,8 @@
 import { randomUUID } from "crypto";
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, integer, index, uniqueIndex, jsonb, primaryKey, } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, index, uniqueIndex, jsonb, primaryKey, } from "drizzle-orm/pg-core";
 
-import { Urls } from "@/backend/db/types";
+import { Address, Urls } from "@/backend/db/types";
 
 export const user = pgTable(
     "user",
@@ -23,6 +23,7 @@ export const user = pgTable(
         banned: boolean("banned").default(false),
         banReason: text("ban_reason"),
         banExpires: timestamp("ban_expires"),
+        twoFactorEnabled: boolean("two_factor_enabled").default(false),
         type: text("type", { enum: ["appload", "shipper", "carrier", "driver"] }).notNull(),
         gender: text("gender", { enum: ["male", "female", "other"] }),
         status: text("status", { enum: ["active", "closed"] })
@@ -42,6 +43,8 @@ export const session = pgTable(
             .notNull(),
         ipAddress: text("ip_address"),
         userAgent: text("user_agent"),
+        city: text("city"),
+        country: text("country"),
         userId: text("user_id")
             .notNull()
             .references(() => user.id, { onDelete: "cascade" }),
@@ -103,15 +106,15 @@ export const organization = pgTable(
         subscriptionPlan: text("subscription_plan", { enum: ["free", "pro"] })
             .default("free")
             .notNull(),
-        nuit: integer("nuit").notNull().unique(),
+        nuit: text("nuit").notNull().unique(),
         type: text("type", { enum: ["shipper", "carrier"] }).notNull(),
         status: text("status", { enum: ["pending", "active", "closed"] })
             .default("pending")
             .notNull(),
-        email: text("email").notNull(),
-        phoneNumber: text("phone_number").notNull(),
-        billingAddress: text("billing_address").notNull(),
-        physicalAddress: text("physical_address").notNull(),
+        email: text("email").notNull().unique(),
+        phoneNumber: text("phone_number").notNull().unique(),
+        billingAddress: jsonb("billing_address").$type<Address>(),
+        physicalAddress: jsonb("physical_address").$type<Address>(),
     },
     (table) => [uniqueIndex("organization_slug_uidx").on(table.slug)],
 );
@@ -184,6 +187,22 @@ export const invitation = pgTable(
     (table) => [
         index("invitation_organizationId_idx").on(table.organizationId),
         index("invitation_email_idx").on(table.email),
+    ],
+);
+
+export const twoFactor = pgTable(
+    "two_factor",
+    {
+        id: text("id").primaryKey(),
+        secret: text("secret").notNull(),
+        backupCodes: text("backup_codes").notNull(),
+        userId: text("user_id")
+            .notNull()
+            .references(() => user.id, { onDelete: "cascade" }),
+    },
+    (table) => [
+        index("twoFactor_secret_idx").on(table.secret),
+        index("twoFactor_userId_idx").on(table.userId),
     ],
 );
 

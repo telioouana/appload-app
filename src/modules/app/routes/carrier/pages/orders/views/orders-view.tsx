@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { useSuspenseInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query"
 
@@ -19,8 +19,7 @@ import { OrdersErrorFallback } from "@/modules/app/ui/components/states/orders-e
 import { OrdersLoadingFallback } from "@/modules/app/ui/components/states/orders-loading-fallback"
 import { CreateOfferDialog } from "../../../ui/components/dialog/create-offer-dialog"
 
-
-export function OrdersView({ path }: { path: ORDERS_PATH }) {
+export function OrdersView({ path, search, cargoType }: { path: ORDERS_PATH, search?: string, cargoType?: string }) {
     const trpc = useTRPC()
 
     const {
@@ -49,7 +48,41 @@ export function OrdersView({ path }: { path: ORDERS_PATH }) {
         trpc.driver.offer.queryOptions()
     )
 
-    if (orders.pages[0].items.length === 0) return <EmptyOrders />
+    const filteredItems = useMemo(() => {
+        const cargoRaw = (cargoType ?? "").trim()
+        const cargoFilter = cargoRaw === "" ? null : cargoRaw.toLowerCase()
+
+        const raw = (search ?? "").trim()
+        const items = orders.pages.flatMap((page) => page.items)
+
+        if (raw === "" && cargoFilter == null) return items
+
+        const q = raw.toLowerCase()
+
+        return items.filter((values) => {
+            if (cargoFilter != null) {
+                const cat = values.cargo?.category?.toLowerCase()
+                if (cat !== cargoFilter) return false
+            }
+
+            // If there's no search query but cargo matched, include the item
+            if (raw === "") return true
+
+            const loadingState = values.order.loadingAddress?.[0]?.state?.toLowerCase()
+            const offloadingState = values.order.offloadingAddress?.[0]?.state?.toLowerCase()
+
+            const matchesLocation =
+                loadingState?.includes(q) ||
+                offloadingState?.includes(q)
+
+            const legacyId = values.order.legacyId
+            const matchesLegacyId =
+                legacyId != null &&
+                (legacyId.toString() === raw || legacyId.toString().padStart(4, "0") === raw)
+
+            return matchesLocation || matchesLegacyId
+        })
+    }, [orders.pages, search, cargoType])
 
     return (
         <Suspense fallback={<OrdersLoadingFallback />} >
@@ -59,8 +92,12 @@ export function OrdersView({ path }: { path: ORDERS_PATH }) {
 
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full w-full">
-                        {orders.pages.flatMap((page) =>
-                            page.items.map(({ order, cargo, organizationId, organizationName, fiscalRegime }) => {
+                        {filteredItems.length === 0 ? (
+                            <div className="col-span-full">
+                                <EmptyOrders />
+                            </div>
+                        ) : (
+                            filteredItems.map(({ order, cargo, organizationId, organizationName, fiscalRegime }) => {
                                 const values = {
                                     fleet,
                                     order,
@@ -76,13 +113,14 @@ export function OrdersView({ path }: { path: ORDERS_PATH }) {
                         )}
                     </div>
 
-                    <InfiniteScroll
-                        hasNextPage={hasNextPage}
-                        isFetchingNextPage={isFetchingNextPage}
-                        fetchNextPage={fetchNextPage}
-                    />
+                    {filteredItems.length > 0 && (
+                        <InfiniteScroll
+                            hasNextPage={hasNextPage}
+                            isFetchingNextPage={isFetchingNextPage}
+                            fetchNextPage={fetchNextPage}
+                        />
+                    )}
                 </div>
-
             </ErrorBoundary>
         </Suspense>
     )

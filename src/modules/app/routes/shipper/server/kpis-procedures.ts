@@ -59,11 +59,6 @@ export const shipperKpisRouter = createTRPCRouter({
                                 : {
                                     trips: count().mapWith(Number),
                                     backload: sql<number>`count(${trip.id}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
-                                    backloadDistance: sql<number>`sum(distinct ${order.distance}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
-                                    ageFactor: sql<number>`sum(${trip.ageFactor}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
-                                    loadFactor: sql<number>`sum(${trip.loadFactor}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
-                                    defaultCoefficient: sql<number>`sum(${trip.defaultCoefficient}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
-                                    loadedWeight: sql<number>`sum(${trip.loadedWeight}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
                                     emissions: sql<number>`sum(${trip.defaultCoefficient} * ${trip.loadFactor} * ${trip.ageFactor} * (${order.distance} / 1000) * ${trip.loadedWeight}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
                                     total: sql<number>`sum(${trip.shipperTotal} / 0.7 - ${trip.shipperTotal}) filter (where ${trip.tripType} = 'backload')`.mapWith(Number),
                                 }

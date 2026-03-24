@@ -1,16 +1,32 @@
 import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server";
-
 import { MapView } from "@/modules/app/routes/shipper/pages/map/views/map-view";
 
-export default async function Page() {
-    const client = getQueryClient()
+type Props = {
+    searchParams: Promise<{
+        search?: string;
+        filterBy?: string;
+    }>;
+};
+
+export default async function Page({ searchParams }: Props) {
+    const { search, filterBy } = await searchParams;
+    const client = getQueryClient();
+
+    const filters = {
+        search: search?.trim() || undefined,
+        filterBy: filterBy || "all",
+    };
 
     await client.prefetchQuery(
-        trpc.shipperMap.positions.queryOptions()
-    )
+        trpc.shipperMap.positions.queryOptions(filters)
+    );
+
     return (
         <HydrateClient>
-            <MapView />
+            <MapView
+                search={filters.search}
+                filterBy={filters.filterBy}
+            />
         </HydrateClient>
-    )
+    );
 }

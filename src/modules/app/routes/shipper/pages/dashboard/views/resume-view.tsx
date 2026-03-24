@@ -76,13 +76,13 @@ export function ResumeView({ endDate: initialEndDate, startDate: initialStartDat
                         <CardContent>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                                 <ResumeCard
-                                    value={data.trips}
+                                    value={data.trips ?? 0}
                                     unit={t("card.trips.unit")}
                                     label={t("card.trips.label")}
                                 />
 
                                 <ResumeCard
-                                    value={data.deliveries}
+                                    value={data.deliveries ?? 0}
                                     unit={t("card.deliveries.unit")}
                                     label={t("card.deliveries.label")}
                                 />

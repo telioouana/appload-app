@@ -5,7 +5,8 @@ import { and, count, desc, eq, lt, or, sql } from "drizzle-orm"
 import { db } from "@/backend/db"
 import { FLEET_STATUS, LOADING_BAY } from "@/backend/db/types"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
-import { driver, link, truck, trailer, user, tracking, trip } from "@/backend/db/schema"
+import { driver, link, truck, trailer, user, tracking } from "@/backend/db/schema"
+
 import { TrailerSchema, TruckSchema } from "../schemas/fleet"
 
 export const fleetRouter = createTRPCRouter({
@@ -65,11 +66,10 @@ export const fleetRouter = createTRPCRouter({
             const fleet = await db
                 .select()
                 .from(truck)
-                .innerJoin(driver, and(eq(driver.truckId, truck.id), eq(driver.carrierId, session.activeOrganizationId)))
-                .innerJoin(user, and(eq(user.id, driver.userId), eq(user.type, "driver")))
+                .leftJoin(driver, and(eq(driver.truckId, truck.id), eq(driver.carrierId, session.activeOrganizationId)))
+                .leftJoin(user, and(eq(user.id, driver.userId), eq(user.type, "driver")))
                 .leftJoin(trailer, and(eq(trailer.truckId, truck.id), eq(trailer.carrierId, session.activeOrganizationId)))
                 .leftJoin(link, and(eq(link.trailerId, trailer.id), eq(link.carrierId, session.activeOrganizationId)))
-                .leftJoin(trip, eq(trip.truckPlate, truck.regPlate))
                 .leftJoin(tracking, eq(tracking.truckPlate, truck.regPlate))
                 .where(and(
                     eq(truck.carrierId, session.activeOrganizationId),
@@ -86,8 +86,8 @@ export const fleetRouter = createTRPCRouter({
                         )
                         : undefined,
                 ))
-                .orderBy(desc(truck.legacyId), desc(driver.updatedAt))
-                // Checking if there are more orders from the current user
+                .orderBy(desc(truck.legacyId), desc(truck.updatedAt))
+                // Checking if there are more fleet from the current user
                 .limit(limit + 1)
 
             const hasMore = fleet.length > limit
@@ -147,7 +147,7 @@ export const fleetRouter = createTRPCRouter({
                 .insert(truck)
                 .values({
                     carrierId: session.activeOrganizationId,
-                    status: FLEET_STATUS[2],
+                    status: FLEET_STATUS[1],
 
                     internalId: vehicle.internalId,
                     regPlate: vehicle.regPlate,
@@ -170,7 +170,7 @@ export const fleetRouter = createTRPCRouter({
                     .values({
                         truckId: insertTruck.id,
                         carrierId: session.activeOrganizationId,
-                        status: FLEET_STATUS[2],
+                        status: FLEET_STATUS[1],
 
                         internalId: atrelado.internalId ?? null,
                         regPlate: atrelado.regPlate ?? "",
@@ -192,7 +192,7 @@ export const fleetRouter = createTRPCRouter({
                         .values({
                             trailerId: insertTrailer.id,
                             carrierId: session.activeOrganizationId,
-                            status: FLEET_STATUS[2],
+                            status: FLEET_STATUS[1],
 
                             internalId: connection.internalId,
                             regPlate: connection.regPlate ?? "",

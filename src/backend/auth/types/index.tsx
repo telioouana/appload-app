@@ -1,5 +1,6 @@
+import { Address } from "@/backend/db/types";
+import { InvitationStatus } from "better-auth/plugins";
 import { Account as UserAccount, User as UserData } from "better-auth";
-import { Organization as UserOrganization } from "better-auth/plugins";
 
 export type User = UserData & {
     banned: boolean | null | undefined;
@@ -14,42 +15,52 @@ export type User = UserData & {
 
 export type Account = UserAccount
 
-export type Company = UserOrganization & {
-    nuit: number;
+export type Organization = {
+    id: string;
+    name: string;
+    slug: string;
+    createdAt: Date;
+    logo?: string | null | undefined | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    metadata?: any;
+    nuit: string;
     type: "shipper" | "carrier";
     status: "active" | "closed" | "pending";
     email: string;
     phoneNumber: string;
-    billingAddress: string;
-    physicalAddress: string;
+    billingAddress: Address | null;
+    physicalAddress: Address | null;
     subscriptionPlan: "free" | "pro"
     subscriber?: string | null;
 }
 
-export type Organization = Company & {
-    members: {
+export type Member = {
+    id: string;
+    organizationId: string;
+    role: "member" | "admin" | "owner";
+    createdAt: Date;
+    userId: string;
+    user: {
         id: string;
-        organizationId: string;
-        role: "admin" | "member" | "owner";
-        createdAt: Date;
-        userId: string;
-        user: {
-            id: string;
-            email: string;
-            name: string;
-            image?: string | undefined;
-        };
-    }[]
-    invitations: {
-        id: string;
-        organizationId: string;
         email: string;
         name: string;
-        role: string;
-        status: "pending" | "accepted" | "rejected" | "canceled";
-        inviterId: string;
-        expiresAt: Date;
-        createdAt: Date;
-        teamId?: string | null | undefined;
-    }[]
+        image?: string | undefined;
+    };
 }
+
+export type Invitation = {
+    id: string;
+    organizationId: string;
+    email: string;
+    role: "member" | "admin" | "owner";
+    status: InvitationStatus;
+    inviterId: string;
+    expiresAt: Date;
+    createdAt: Date;
+    name: string;
+}
+export type FullOrganization = {
+    members: Member[];
+    invitations: Invitation[];
+} & Organization
+
