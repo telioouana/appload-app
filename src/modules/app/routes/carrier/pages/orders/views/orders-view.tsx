@@ -88,7 +88,7 @@ export function OrdersView({ path, search, cargoType }: { path: ORDERS_PATH, sea
         <Suspense fallback={<OrdersLoadingFallback />} >
             <ErrorBoundary fallback={<OrdersErrorFallback />} >
                 <AcceptOrderDialog path={path} />
-                <CreateOfferDialog />
+                <CreateOfferDialog path={path} />
 
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full w-full">
@@ -97,11 +97,12 @@ export function OrdersView({ path, search, cargoType }: { path: ORDERS_PATH, sea
                                 <EmptyOrders />
                             </div>
                         ) : (
-                            filteredItems.map(({ order, cargo, organizationId, organizationName, fiscalRegime }) => {
+                            filteredItems.map(({ order, cargo, offer, organizationId, organizationName, fiscalRegime }) => {
                                 const values = {
                                     fleet,
                                     order,
                                     cargo,
+                                    offer,
                                     drivers,
                                     organizationId,
                                     organizationName,

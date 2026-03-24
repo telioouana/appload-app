@@ -5,7 +5,7 @@ import { and, count, desc, eq, lt, or, sql, sum } from "drizzle-orm"
 import { db } from "@/backend/db"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
 import { FISCAL_REGIME, TRIP_TYPE, TRUCK_AGE, WEIGHT_UNIT } from "@/backend/db/types"
-import { cargo, kyc, network, order, organization, trip } from "@/backend/db/schema"
+import { cargo, kyc, network, offer, order, organization, trip } from "@/backend/db/schema"
 
 import { TripSchema } from "../schemas/trip"
 import { getLogisticsTripType } from "@/lib/google"
@@ -34,6 +34,7 @@ export const ordersRouter = createTRPCRouter({
                 .select({
                     order: order,
                     cargo: cargo,
+                    offer: offer,
                     organizationId: organization.id,
                     organizationName: organization.name,
                     fiscalRegime: kyc.fiscalRegime,
@@ -41,10 +42,14 @@ export const ordersRouter = createTRPCRouter({
                 .from(order)
                 .innerJoin(cargo, eq(cargo.orderId, order.id))
                 .innerJoin(organization, eq(organization.id, session.activeOrganizationId))
-                .leftJoin(kyc, eq(kyc.organizationId, session.activeOrganizationId))
+                .innerJoin(kyc, eq(kyc.organizationId, session.activeOrganizationId))
                 .leftJoin(network, and(
                     eq(network.shipperId, order.shipperId),
                     eq(network.carrierId, session.activeOrganizationId)
+                ))
+                .leftJoin(offer, and(
+                    eq(offer.orderId, order.id),
+                    eq(offer.carrierId, session.activeOrganizationId)
                 ))
                 .where(and(
                     eq(order.status, "open"),
@@ -170,7 +175,7 @@ export const ordersRouter = createTRPCRouter({
                     trailerPlate: values.trailerPlate,
                     linkPlate: values.linkPlate,
 
-                    proposedLoadingDate: values.proposedLoadingDate, arrivalAtLoading: null,
+                    proposedLoadingDate: values.proposedLoadingDate,
                     proposedOffloadingDate: values.proposedOffloadingDate,
 
                     weightUnit: values.weightUnit as typeof WEIGHT_UNIT[number],

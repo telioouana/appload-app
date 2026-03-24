@@ -2421,6 +2421,11 @@
                     "note": "Isto pode variar consoante os filtros aplicados"
                 }
             }
+        },
+        "safari": {
+            "availability": "Brevemente",
+            "title": "O suporte para Safari está a caminho",
+            "description": "Estamos a trabalhar para disponibilizar o Appload no Safari. Entretanto, utilize o Chrome ou o Microsoft Edge para a melhor experiência."
         }
     },
     "Emails": {

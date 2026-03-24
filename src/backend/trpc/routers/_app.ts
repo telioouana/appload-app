@@ -10,6 +10,7 @@ import { transportersRouter } from "@/modules/app/routes/shipper/server/transpor
 import { shipperDashboardRouter } from "@/modules/app/routes/shipper/server/dashboard-procedures";
 
 import { fleetRouter } from "@/modules/app/routes/carrier/server/fleet-procedures";
+import { offerRouter } from "@/modules/app/routes/carrier/server/offer-procedures";
 import { tripsRouter } from "@/modules/app/routes/carrier/server/trips-procedures";
 import { driverRouter } from "@/modules/app/routes/carrier/server/driver-procedures";
 import { ordersRouter } from "@/modules/app/routes/carrier/server/orders-procedures";
@@ -34,8 +35,9 @@ export const appRouter = createTRPCRouter({
     shipperDashboard: shipperDashboardRouter,
 
     // Carrier Routers
-    trips: tripsRouter,
     fleet: fleetRouter,
+    offer: offerRouter,
+    trips: tripsRouter,
     driver: driverRouter,
     orders: ordersRouter,
     clients: clientsRouter,

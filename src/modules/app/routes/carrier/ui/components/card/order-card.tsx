@@ -1,7 +1,7 @@
 "use client"
 
 import { useFormatter, useTranslations } from "next-intl";
-import { IconBiohazard, IconCancel, IconContract, IconEdit, IconEye, IconInvoice, IconMapPin, IconMapX, IconSnowflake } from "@tabler/icons-react";
+import { IconBiohazard, IconContract, IconEye, IconInvoice, IconMapPin, IconMapX, IconSnowflake } from "@tabler/icons-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button"
@@ -24,7 +24,8 @@ export function OrderCard({ values }: Props) {
     const t = useTranslations("Carrier.order.card")
     const f = useFormatter()
 
-    const { order, cargo } = values
+    const { order, cargo, offer } = values
+    console.log(offer)
 
     return (
         <Card className={cn("border border-card hover:border-primary", order.share === "subscribers" && "bg-orange-50 dark:bg-orange-50/20")}>
@@ -132,58 +133,32 @@ export function OrderCard({ values }: Props) {
                     </Button>
                 </div>
 
-                {order.status === "open" && (
-                    <div className="w-full">
-                        {order.share === "subscribers"
-                            ? (
-                                <Button
-                                    variant="success"
-                                    className="w-full cursor-pointer font-normal"
-                                    onClick={() => acceptOrder(values)}
-                                >
-                                    <IconContract />
-                                    {t("footer.accept")}
-                                </Button>
-                            ) : (
-                                <Button
-                                    variant="default"
-                                    className="w-full cursor-pointer font-normal"
-                                    onClick={() => makeOffer()}
-                                >
-                                    <IconInvoice />
-                                    {t("footer.place-bid")}
-                                </Button>
-                            )
-                        }
-                    </div>
-                )}
-
-                {order.status === "on-going" && (
+                {order.share === "subscribers" && (
                     <div className="w-full">
                         <Button
-                            variant="outline"
+                            variant="success"
                             className="w-full cursor-pointer font-normal"
-                            onClick={() => { }}
+                            onClick={() => acceptOrder(values)}
                         >
-                            <IconEdit />
-                            {t("footer.manage")}
+                            <IconContract />
+                            {t("footer.accept")}
                         </Button>
                     </div>
                 )}
 
-                {order.status === "delivered" && (
+                {!offer && (
                     <div className="w-full">
                         <Button
-                            variant="destructive"
+                            variant="default"
                             className="w-full cursor-pointer font-normal"
+                            onClick={() => makeOffer(values)}
                         >
-                            <IconCancel />
-                            {t("footer.upload-proof")}
+                            <IconInvoice />
+                            {t("footer.place-bid")}
                         </Button>
                     </div>
                 )}
             </CardFooter>
-
         </Card >
     )
 }

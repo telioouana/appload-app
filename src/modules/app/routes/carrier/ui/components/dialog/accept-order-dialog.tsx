@@ -15,8 +15,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 import { createTripSchema } from "../../../schemas/trip"
-import { ORDERS_PATH, OrderValues } from "../../../types/types"
 import { AcceptOrderForm } from "../form/accept-order-form"
+import { ORDERS_PATH, OrderValues } from "../../../types/types"
 import { useAcceptOrder } from "../../../hooks/use-accept-order"
 
 import { DEFAULT_PAGE_LIMIT } from "@/constants"
@@ -97,7 +97,6 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
     async function handleSubmit(values: TripSchemaForm) {
         form.clearErrors()
 
-        console.log(values)
         accept.mutateAsync({
             values
         })
@@ -105,7 +104,7 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
 
     return (
         <Dialog open={isOpen}>
-            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl" >
+            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl max-h-[70vh]" >
                 <DialogHeader className="border-b p-6">
                     <div className="flex items-center gap-3">
                         <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -128,7 +127,7 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
 
                 <FormProvider {...form} >
                     <form onSubmit={form.handleSubmit(handleSubmit)}>
-                        <div className="flex max-h-[60vh] px-6 pb-6 overflow-y-scroll container-snap">
+                        <div className="flex max-h-[50vh] px-6 pb-6 overflow-y-scroll container-snap">
                             <AcceptOrderForm values={values} />
                         </div>
 

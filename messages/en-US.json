@@ -738,16 +738,122 @@
                         "close": "Close",
                         "accept": "Accept order"
                     }
+                }
+            }
+        },
+        "offer": {
+            "create": {
+                "header": {
+                    "title": "Create new offer",
+                    "description": "Fill the form to make a quote for this order"
                 },
-                "offer": {
-                    "header": {
-                        "title": "",
-                        "description": ""
+                "form": {
+                    "order": {
+                        "title": "Summary of the order",
+                        "fields": {
+                            "info": {
+                                "order": {
+                                    "route": "Route"
+                                },
+                                "cargo": {
+                                    "category": {
+                                        "label": "Category",
+                                        "agriculture-inputs": "Agriculture Inputs",
+                                        "agriculture-products": "Agriculture Products",
+                                        "construction": "Construction",
+                                        "machinery-equipment": "Machinery Equipment",
+                                        "fmcg": "FMCG",
+                                        "general-cargo": "General Cargo",
+                                        "medicine": "Medicine",
+                                        "mining": "Mining",
+                                        "oil-gas": "Oil & Gas",
+                                        "vehicles": "Vehicles",
+                                        "other": "Other"
+                                    },
+                                    "refrigerated": "Refrigerated",
+                                    "hazarduos": "Hazardous"
+                                }
+                            },
+                            "dates": {
+                                "label": "Dates",
+                                "description": "If you are available with client's dates please leave as it is",
+                                "proposed-loading-date": {
+                                    "label": "Loading",
+                                    "placeholder": "Select a date"
+                                },
+                                "proposed-offloading-date": {
+                                    "label": "Offloading",
+                                    "placeholder": "Select a date"
+                                }
+                            }
+                        }
                     },
-                    "footer": {
-                        "close": "Close",
-                        "send": "Send offer"
+                    "price": {
+                        "label": "Price (MZN) *",
+                        "description": "Appload will add on top of your price the commission, meaning that the client will se total price with the commission included.",
+                        "placeholder": "Enter your price to dothis shipment",
+                        "error": "You did not provide your price for this shipment"
+                    },
+                    "fleet": {
+                        "title": "Driver & Fleet details",
+                        "search": {
+                            "label": "Search",
+                            "description": "Use the fields below to search for your drivers or fleet.",
+                            "driver": {
+                                "label": "Search driver",
+                                "placeholder": "Enter driver's name"
+                            },
+                            "truck": {
+                                "label": "Search truck",
+                                "placeholder": "Type truck's plate number"
+                            }
+                        }
+                    },
+                    "fields": {
+                        "name": {
+                            "label": "Driver name *",
+                            "placeholder": "Select a driver from the search",
+                            "error": "Driver's name was not provided"
+                        },
+                        "phone-number": {
+                            "label": "Phone number *",
+                            "placeholder": "Select a driver from the search",
+                            "error": {
+                                "empty": "Driver's phone number was not provided",
+                                "invalid": "The number provided is invalid"
+                            }
+                        },
+                        "passport": {
+                            "label": "Passport",
+                            "placeholder": "Select a driver from the search"
+                        },
+                        "truck-plate": {
+                            "label": "Truck plate number *",
+                            "placeholder": "Select a truck from the search",
+                            "error": "Truck's plate number was not provided"
+                        },
+                        "truck-age": {
+                            "label": "Truck classification",
+                            "placeholder": "Select a truck from the search",
+                            "value": {
+                                "recent": "Recent",
+                                "not-recent": "Not recent"
+                            },
+                            "error": "Truck's age was not provided"
+                        },
+                        "trailer-plate": {
+                            "label": "Trailer plate number",
+                            "placeholder": "Select a truck from the search"
+                        },
+                        "link-plate": {
+                            "label": "Link plate number",
+                            "placeholder": "Select a truck from the search"
+                        }
                     }
+                },
+                "footer": {
+                    "close": "Close",
+                    "send": "Send offer"
                 }
             }
         },
@@ -2421,6 +2527,11 @@
                     "note": "This may vary based on filters applied"
                 }
             }
+        },
+        "safari": {
+            "availability": "Coming Soon",
+            "title": "Safari support is on its way",
+            "description": "We're working hard to bring Appload to Safari. In the meantime, use Chrome or Microsoft Edge for the full experience."
         }
     },
     "Emails": {

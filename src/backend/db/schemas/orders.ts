@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 import { boolean, decimal, index, integer, jsonb, pgEnum, pgTable, numeric, text, timestamp, serial, } from "drizzle-orm/pg-core";
 
 import { driver, link, organization, trailer, truck } from "@/backend/db/schema";
-import { INSURANCE_PAYMENT_STATUS, Location, PAYMENT_STATUS, FISCAL_REGIME, ORDER_STATUS, TRIP_STATUS, TRIP_TYPE, ROUTE_TYPE, TRUCK_AGE, WEIGHT_UNIT, POD_STATUS, CURRENCY, SHARE, CATEGORIES, MARKET_STATUS, MarketResponse } from "@/backend/db/types";
+import { INSURANCE_PAYMENT_STATUS, Location, PAYMENT_STATUS, FISCAL_REGIME, ORDER_STATUS, TRIP_STATUS, TRIP_TYPE, ROUTE_TYPE, TRUCK_AGE, WEIGHT_UNIT, POD_STATUS, CURRENCY, SHARE, CATEGORIES, MARKET_STATUS, MarketResponse, LOADING_BAY } from "@/backend/db/types";
 
 export const shareEnum = pgEnum("share_enum", SHARE)
 export const currencyEnum = pgEnum("currency_enum", CURRENCY)
@@ -12,6 +12,7 @@ export const truckAgeEnum = pgEnum("truck_age_enum", TRUCK_AGE)
 export const podStatusEnum = pgEnum("pod_status_enum", POD_STATUS)
 export const routeTypeEnum = pgEnum("route_type_enum", ROUTE_TYPE)
 export const categoriesEnum = pgEnum("categories_enum", CATEGORIES)
+export const loadingBayEnum = pgEnum("loading_bay_enum", LOADING_BAY)
 export const weightUnitEnum = pgEnum("weight_unit_enum", WEIGHT_UNIT)
 export const tripStatusEnum = pgEnum("trip_status_enum", TRIP_STATUS)
 export const orderStatusEnum = pgEnum("order_status_enum", ORDER_STATUS)
@@ -235,7 +236,8 @@ export const offer = pgTable(
             .references(() => trailer.regPlate, { onDelete: "set null" }),
         linkPlate: text("link_plate")
             .references(() => link.regPlate, { onDelete: "set null" }),
-
+        type: loadingBayEnum("type").notNull(),
+        
         status: text("status").default("pending"),
 
         createdAt: timestamp("created_at").defaultNow().notNull(),
