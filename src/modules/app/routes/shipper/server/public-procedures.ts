@@ -120,7 +120,11 @@ export const publicRouter = createTRPCRouter({
                         )`.as("data"),
                 })
                 .from(offer)
-                .where(eq(offer.orderId, order.id))
+                .where(and(
+                    eq(offer.orderId, order.id),
+                    eq(offer.status, "pending"),
+                    eq(offer.status, "updated"),
+                ))
                 .as("offers_subquery");
 
             // 7. Main Execution

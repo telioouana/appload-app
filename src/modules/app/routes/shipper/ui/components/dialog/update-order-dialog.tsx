@@ -109,7 +109,7 @@ export function UpdateOrderDialog({ path, share, search, cargoType }: Props) {
         onClose()
     }
 
-    const [ConfirmDialog, confirm] = useConfirm(`Shipper.main.order.dialog.update.confirm.${form.watch().share as string}`) as [React.ComponentType, () => Promise<boolean>]
+    const [ConfirmDialog, confirm] = useConfirm(`Shipper.order.dialog.update.confirm.${form.watch().share as string}`) as [React.ComponentType, () => Promise<boolean>]
 
     async function handleNext() {
         form.clearErrors()
