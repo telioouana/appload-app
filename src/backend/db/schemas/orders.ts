@@ -99,16 +99,16 @@ export const trip = pgTable(
         carrierName: text("carrier_name").notNull(),
 
         driverId: text("driver_id")
-            .references(() => driver.id, { onDelete: "set null" }),
+            .references(() => driver.id, { onDelete: "cascade" }),
         driverName: text("driver_name"),
         driverPassport: text("driver_passport"),
         driverPhoneNumber: text("driver_phone_number"),
         truckPlate: text("truck_plate")
-            .references(() => truck.regPlate, { onDelete: "set null" }),
+            .references(() => truck.regPlate, { onDelete: "cascade" }),
         trailerPlate: text("trailer_plate")
-            .references(() => trailer.regPlate, { onDelete: "set null" }),
+            .references(() => trailer.regPlate, { onDelete: "cascade" }),
         linkPlate: text("link_plate")
-            .references(() => link.regPlate, { onDelete: "set null" }),
+            .references(() => link.regPlate, { onDelete: "cascade" }),
         truckAge: truckAgeEnum("truck_age"),
 
         proposedLoadingDate: timestamp("proposed_loading_date").notNull(),

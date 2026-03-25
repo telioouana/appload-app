@@ -122,8 +122,10 @@ export const publicRouter = createTRPCRouter({
                 .from(offer)
                 .where(and(
                     eq(offer.orderId, order.id),
-                    eq(offer.status, "pending"),
-                    eq(offer.status, "updated"),
+                    or(
+                        eq(offer.status, "pending"),
+                        eq(offer.status, "updated"),
+                    )
                 ))
                 .as("offers_subquery");
 
@@ -193,7 +195,7 @@ export const publicRouter = createTRPCRouter({
                     ne(order.status, "prospect")
                 ));
             } else if (path === "history") {
-                filters.push(and(
+                filters.push(or(
                     eq(order.status, "completed"),
                     eq(order.status, "cancelled")
                 ));

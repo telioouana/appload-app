@@ -16,10 +16,10 @@ export const carrierDashboardRouter = createTRPCRouter({
 
             const [stats] = await db
                 .select({
-                    orders: sql<number>`count(distinct${order.id}) filter (where ${order.status} = 'open' )`.mapWith(Number),
-                    trips: sql<number>`count(distinct${order.id}) filter (where ${order.status} <> 'open' and ${trip.carrierId} = ${session.activeOrganizationId})`.mapWith(Number),
+                    orders: sql<number>`count(distinct ${order.id}) filter (where ${order.status} = 'open' )`.mapWith(Number),
+                    trips: sql<number>`count(distinct ${order.id}) filter (where ${order.status} <> 'open' and ${trip.carrierId} = ${session.activeOrganizationId})`.mapWith(Number),
                     fleet: countDistinct(truck.id).mapWith(Number),
-                    revenue: sql<number>`sum(distinct${trip.carrierTotal}) filter (where ${order.status} <> 'open' and ${trip.carrierId} = ${session.activeOrganizationId})`.mapWith(Number),
+                    revenue: sql<number>`sum(distinct ${trip.carrierTotal}) filter (where ${order.status} <> 'open' and ${trip.carrierId} = ${session.activeOrganizationId})`.mapWith(Number),
                 })
                 .from(order)
                 .leftJoin(trip, eq(trip.orderId, order.id))
