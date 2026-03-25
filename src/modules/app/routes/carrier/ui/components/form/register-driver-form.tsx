@@ -51,7 +51,7 @@ export function RegisterDriverForm() {
     const removeField = (index: number) => remove(index)
 
     return (
-        <FieldGroup className="max-h-3/5 overflow-y-scroll container-snap p-6">
+        <FieldGroup className="max-h-[50vh] overflow-y-scroll container-snap p-6">
             <TextInput
                 control={control}
                 name="name"

@@ -21,7 +21,7 @@ export default async function Page() {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 h-full overflow-y-scroll container-snap">
             <HeaderView />
             <OrganizationManagementView organization={organization as FullOrganization} />
             <TeamManagementView members={organization.members} invitations={organization.invitations}/>

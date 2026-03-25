@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { CURRENCY, FISCAL_REGIME, TRUCK_AGE, WEIGHT_UNIT } from "@/backend/db/types";
+import { AddressSchema, CURRENCY, FISCAL_REGIME, TRIP_TYPE, TRUCK_AGE, WEIGHT_UNIT } from "@/backend/db/types";
 
 export function createTripSchema(t: (key: string) => string) {
     const schema = z.object({
@@ -17,8 +17,12 @@ export function createTripSchema(t: (key: string) => string) {
         trailerPlate: z.string().optional(),
         linkPlate: z.string().optional(),
 
+        loading: AddressSchema,
         proposedLoadingDate: z.date(),
+        offloading: AddressSchema,
         proposedOffloadingDate: z.date(),
+        distance: z.number(),
+        tripType: z.enum(TRIP_TYPE),
 
         weightUnit: z.enum(WEIGHT_UNIT),
 

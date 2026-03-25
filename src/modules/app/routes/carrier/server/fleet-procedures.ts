@@ -42,7 +42,6 @@ export const fleetRouter = createTRPCRouter({
                 .leftJoin(link, eq(link.trailerId, trailer.id))
                 .where(eq(truck.carrierId, session.activeOrganizationId))
 
-            console.log()
             return fleet
         }),
 

@@ -26,9 +26,11 @@ import { UpdateOrderPreviewForm } from "../form/update-order-preview-form"
 type Props = {
     path: ORDERS_PATH
     share: typeof SHARE[number]
+    search?: string
+    cargoType?: string
 }
 
-export function UpdateOrderDialog({ path, share }: Props) {
+export function UpdateOrderDialog({ path, share, search, cargoType }: Props) {
     const [view, setView] = useState<"form" | "preview">("form")
 
     const { action, isOpen, onClose, orderId, values } = useUpdateOrder()
@@ -107,8 +109,8 @@ export function UpdateOrderDialog({ path, share }: Props) {
         onClose()
     }
 
-    const [ConfirmDialog, confirm] = useConfirm(`Shipper.main.order.dialog.update.confirm.${form.watch().share as string}`) as [React.ComponentType, () => Promise<boolean>]
-    
+    const [ConfirmDialog, confirm] = useConfirm(`Shipper.order.dialog.update.confirm.${form.watch().share as string}`) as [React.ComponentType, () => Promise<boolean>]
+
     async function handleNext() {
         form.clearErrors()
 
@@ -157,6 +159,8 @@ export function UpdateOrderDialog({ path, share }: Props) {
                     queryClient.invalidateQueries(trpc.private.orders.infiniteQueryOptions({
                         path,
                         limit: DEFAULT_PAGE_LIMIT,
+                        search: search?.trim() || undefined,
+                        cargoType: cargoType?.trim() || undefined,
                     }))
                     queryClient.invalidateQueries(trpc.private.resume.queryOptions({ path }))
                 }

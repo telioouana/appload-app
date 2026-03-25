@@ -17,17 +17,18 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { RegisterDriverForm } from "../form/register-driver-form"
 import { useRegisterDriver } from "../../../hooks/use-register-driver"
 
+import { useEdgeStore } from "@/lib/edgestore"
 import { countryCodes } from "@/lib/country-codes"
 import { DEFAULT_PAGE_LIMIT } from "@/constants"
 
 function DriverSchema(t: (key: string) => string) {
     const schema = z.object({
         name: z.string({ error: t("form.name.error") }).nonempty({ error: t("form.name.error") }),
-        email: z.email({ error: t("form.email.error") }),
+        email: z.email({ error: t("form.email.error.empty") }),
         country: z.string(),
         phoneNumber: z.string({ error: t("form.phone-number.error.empty") }).min(9, { error: t("form.phone-number.error.invalid") }).max(15, { error: t("form.phone-number.error.invalid") }),
         driverLicense: z.array(z.object({ url: z.url({ error: t("form.driver-license.error") }) })).min(1).max(2),
-        passportCard: z.array(z.object({ url: z.url() })).length(1).optional(),
+        passportCard: z.array(z.object({ url: z.url() })).max(1),
     })
 
     return schema
@@ -52,11 +53,25 @@ export function RegisterDriverDialog() {
     })
 
     const queryClient = useQueryClient()
+    const { edgestore } = useEdgeStore()
     const trpc = useTRPC()
 
     const register = useMutation(
         trpc.driver.register.mutationOptions({
-            onSuccess: () => {
+            onSuccess: async () => {
+                const { driverLicense, passportCard } = form.getValues()
+                const uploads = [
+                    ...driverLicense.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                ]
+
+                if (passportCard && passportCard.length > 0) {
+                    uploads.push(
+                        ...passportCard.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                    )
+                }
+
+                await Promise.all(uploads)
+
                 queryClient.invalidateQueries(trpc.driver.drivers.infiniteQueryOptions({
                     limit: DEFAULT_PAGE_LIMIT
                 }))
@@ -102,7 +117,7 @@ export function RegisterDriverDialog() {
 
     return (
         <Dialog open={isOpen}>
-            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl gap-0 flex flex-col max-h-9/12">
+            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl gap-0 flex flex-col max-h-[70vh]">
                 <DialogHeader className="border-b p-6">
                     <div className="flex items-center gap-3">
                         <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center">

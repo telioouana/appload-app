@@ -13,11 +13,13 @@ import { useTRPC } from "@/backend/trpc/client"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
+import { DynamicFleetSchema } from "../../../schemas/fleet"
 import { RegisterTruckForm } from "../form/register-truck-form"
 import { useRegisterFleet } from "../../../hooks/use-register-fleet"
 import { RegisterTrailerForm } from "../form/register-trailer-form"
+
+import { useEdgeStore } from "@/lib/edgestore"
 import { DEFAULT_PAGE_LIMIT } from "@/constants"
-import { DynamicFleetSchema } from "../../../schemas/fleet"
 
 export const BaseSchema = DynamicFleetSchema(true, true, (k: string) => k);
 export type FullFleetForm = z.infer<typeof BaseSchema>
@@ -30,11 +32,36 @@ export function RegisterFleetDialog() {
     const t = useTranslations("Carrier.company.fleet.dialog")
     const { isOpen, onClose } = useRegisterFleet()
     const queryClient = useQueryClient()
+    const { edgestore } = useEdgeStore()
     const trpc = useTRPC()
 
     const save = useMutation(
         trpc.fleet.add.mutationOptions({
-            onSuccess: () => {
+            onSuccess: async () => {
+                const truck = form.getValues().truck
+                const trailer = form.getValues().trailer
+                const link = form.getValues().link
+
+                const uploads = [
+                    ...truck.booklet.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                    ...truck.license.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                ]
+
+                if (hasTrailer && trailer) {
+                    uploads.push(
+                        ...trailer.booklet.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                        ...trailer.license.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                    )
+                    if (hasLink && link) {
+                        uploads.push(
+                            ...link.booklet.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                            ...link.license.map(({ url }) => edgestore.apploadFiles.confirmUpload({ url })),
+                        )
+                    }
+                }
+
+                await Promise.all(uploads)
+
                 queryClient.invalidateQueries(
                     trpc.fleet.fleet.infiniteQueryOptions({
                         limit: DEFAULT_PAGE_LIMIT
@@ -231,7 +258,7 @@ export function RegisterFleetDialog() {
 
     return (
         <Dialog open={isOpen}>
-            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl gap-0 flex flex-col max-h-9/12">
+            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl gap-0 flex flex-col max-h-[70vh]">
                 <DialogHeader className="border-b p-6">
                     <div className="flex items-center gap-3">
                         <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center">

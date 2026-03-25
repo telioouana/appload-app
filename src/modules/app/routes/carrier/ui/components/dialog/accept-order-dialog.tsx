@@ -15,8 +15,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 import { createTripSchema } from "../../../schemas/trip"
-import { ORDERS_PATH, OrderValues } from "../../../types/types"
 import { AcceptOrderForm } from "../form/accept-order-form"
+import { ORDERS_PATH, OrderValues } from "../../../types/types"
 import { useAcceptOrder } from "../../../hooks/use-accept-order"
 
 import { DEFAULT_PAGE_LIMIT } from "@/constants"
@@ -48,12 +48,15 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
     const form = useForm<TripSchemaForm>({
         resolver: zodResolver(TripSchema),
         defaultValues: {
-            orderId: values.order.id ?? "",
-            carrierId: values.organizationId ?? "",
-            carrierName: values.organizationName ?? "",
+            orderId: values.order.id,
+            carrierId: values.organizationId,
+            carrierName: values.organizationName,
 
+            loading: values.order.loadingAddress[0],
             proposedLoadingDate: values.order.expectedLoadingDate,
+            offloading: values.order.offloadingAddress[0],
             proposedOffloadingDate: values.order.expectedOffloadingDate,
+            distance: values.order.distance ?? 0,
 
             weightUnit: values.cargo.unit as typeof WEIGHT_UNIT[number],
 
@@ -63,8 +66,8 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
             carrierTotal: Number(values.order.price),
             carrierCurrency: values.order.currency as typeof CURRENCY[number],
 
-            shipperSubtotal: values.fiscalRegime === "normal" ? (Number(values.order.price) / 1.16) : Number(values.order.price),
-            shipperVAT: values.fiscalRegime === "normal" ? (Number(values.order.price) * (0.16 / 1.16)) : 0,
+            shipperSubtotal: Number(values.order.price) / 1.16,
+            shipperVAT: Number(values.order.price) * (0.16 / 1.16),
             shipperTotal: Number(values.order.price),
             shipperCurrency: values.order.currency as typeof CURRENCY[number]
         },
@@ -94,7 +97,6 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
     async function handleSubmit(values: TripSchemaForm) {
         form.clearErrors()
 
-        console.log(values)
         accept.mutateAsync({
             values
         })
@@ -102,7 +104,7 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
 
     return (
         <Dialog open={isOpen}>
-            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl" >
+            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl max-h-[70vh]" >
                 <DialogHeader className="border-b p-6">
                     <div className="flex items-center gap-3">
                         <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -125,7 +127,7 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
 
                 <FormProvider {...form} >
                     <form onSubmit={form.handleSubmit(handleSubmit)}>
-                        <div className="flex max-h-[60vh] px-6 pb-6 overflow-y-scroll container-snap">
+                        <div className="flex max-h-[50vh] px-6 pb-6 overflow-y-scroll container-snap">
                             <AcceptOrderForm values={values} />
                         </div>
 

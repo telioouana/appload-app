@@ -55,7 +55,10 @@ export function PrivateOrdersSection({ path, search, cargoType }: Props) {
                     items.map((values) => (
                         <OrderCard
                             key={values.order.id}
-                            values={values}
+                            values={{
+                                offers: [],
+                                ...values
+                            }}
                         />
                     ))
                 )}

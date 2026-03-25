@@ -3,11 +3,11 @@ import { eq } from "drizzle-orm"
 import { TRPCError } from "@trpc/server"
 
 import { db } from "@/backend/db"
-import { cargo, order, organization, trip } from "@/backend/db/schema"
+import { cargo, offer, order, organization, trip } from "@/backend/db/schema"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
-import { CreateOrderSchema, ORDER_STATUS, TripSchema } from "@/backend/db/types"
+import { CreateOrderSchema, ORDER_STATUS, TRIP_TYPE, TripSchema } from "@/backend/db/types"
 
-import { distanceCalculator } from "@/lib/google"
+import { distanceCalculator, getLogisticsTripType } from "@/lib/google"
 
 export const shipperOrderRouter = createTRPCRouter({
     create: protectedProcedure
@@ -32,16 +32,18 @@ export const shipperOrderRouter = createTRPCRouter({
             const distance = result?.[0]?.elements?.[0]?.distance?.value ?? 0
 
             values.price = values.price ?? 0
+            const tripType = await getLogisticsTripType(values.loadingAddress[0].placeId, values.offloadingAddress[0].placeId)
 
             if (orderId) {
                 const existing = await db.query.order.findFirst({ where: eq(order.id, orderId) })
                 if (!existing || existing.shipperId !== session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
-                
+
                 await db
                     .update(order)
                     .set({
                         status,
                         distance: distance,
+                        tripType: tripType.tripType as typeof TRIP_TYPE[number],
                         ...values
                     })
                     .where(eq(order.id, orderId))
@@ -82,10 +84,10 @@ export const shipperOrderRouter = createTRPCRouter({
                             expectedLoadingDate: values.expectedLoadingDate,
                             expectedOffloadingDate: values.expectedOffloadingDate,
                             expectedTrucks: values.expectedTrucks,
+                            tripType: tripType.tripType as typeof TRIP_TYPE[number],
                             share: values.share,
                             price: values.price,
                             currency: values.currency,
-
                         })
                         .returning()
 
@@ -113,12 +115,14 @@ export const shipperOrderRouter = createTRPCRouter({
     accept: protectedProcedure
         .input(
             z.object({
+                offerId: z.string(),
+                orderId: z.string(),
                 values: TripSchema
             })
         )
         .mutation(async ({ ctx, input }) => {
-            const { values } = input
             const { session } = ctx.auth
+            const { offerId, orderId, values } = input
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
@@ -127,5 +131,33 @@ export const shipperOrderRouter = createTRPCRouter({
                 .values({
                     ...values
                 })
+
+            await db
+                .update(order)
+                .set({ status: "booked" })
+                .where(eq(order.id, orderId))
+
+            await db
+                .update(offer)
+                .set({ status: "accepted" })
+                .where(eq(offer.id, offerId))
+        }),
+
+    reject: protectedProcedure
+        .input(
+            z.object({
+                offerId: z.string()
+            })
+        )
+        .mutation(async ({ ctx, input }) => {
+            const { session } = ctx.auth
+            const { offerId } = input
+
+            if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+
+            await db
+                .update(offer)
+                .set({ status: "rejected" })
+                .where(eq(offer.id, offerId))
         })
 })

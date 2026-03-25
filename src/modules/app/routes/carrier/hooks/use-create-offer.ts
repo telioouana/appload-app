@@ -1,13 +1,23 @@
 import { create } from "zustand"
+import { OrderValues } from "../types/types"
 
 interface Props {
     isOpen: boolean
-    onOpenChange: () => void
+    values: OrderValues | undefined
+
     onClose: () => void
+    onOpenChange: (values: OrderValues) => void
 }
 
-export const useCreateOffer = create<Props>(( set) => ({
+export const useCreateOffer = create<Props>((set) => ({
     isOpen: false,
-    onOpenChange: () => set({ isOpen: true }),
-    onClose: () => set({ isOpen: false }),
+    values: undefined,
+    onOpenChange: (values: OrderValues) => set({
+        isOpen: true,
+        values: values
+    }),
+    onClose: () => set({
+        isOpen: false,
+        values: undefined
+    }),
 }))

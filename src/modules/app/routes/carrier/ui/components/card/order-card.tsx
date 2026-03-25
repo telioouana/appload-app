@@ -1,7 +1,7 @@
 "use client"
 
 import { useFormatter, useTranslations } from "next-intl";
-import { IconBiohazard, IconCancel, IconContract, IconEdit, IconEye, IconInvoice, IconMapPin, IconMapX, IconSnowflake } from "@tabler/icons-react";
+import { IconBiohazard, IconContract, IconEye, IconInvoice, IconMapDown, IconMapPin, IconMapUp, IconMapX, IconSnowflake } from "@tabler/icons-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button"
@@ -24,7 +24,7 @@ export function OrderCard({ values }: Props) {
     const t = useTranslations("Carrier.order.card")
     const f = useFormatter()
 
-    const { order, cargo } = values
+    const { order, cargo, offer } = values
 
     return (
         <Card className={cn("border border-card hover:border-primary", order.share === "subscribers" && "bg-orange-50 dark:bg-orange-50/20")}>
@@ -99,10 +99,10 @@ export function OrderCard({ values }: Props) {
                     </div>
                 </div>
 
-                {(order.share === "subscribers" || order.status !== "open") && (
-                    <>
-                        <Separator className={cn(order.share === "subscribers" && "bg-orange-300")} />
+                <Separator className={cn(order.share === "subscribers" && "bg-orange-300")} />
 
+                {(order.share === "subscribers")
+                    ? (
                         <div className="flex justify-between items-center gap-2 py-2">
                             <div className="text-muted-foreground">{t("content.price")}</div>
                             <div className="font-medium text-xl text-primary space-x-1">
@@ -116,8 +116,19 @@ export function OrderCard({ values }: Props) {
                                 <span>{order.currency ?? "MZN"}</span>
                             </div>
                         </div>
-                    </>
-                )}
+                    ) : (
+                            <Badge
+                                variant="default"
+                                className={cn(
+                                    "w-full py-4 gap-1.5 inline-flex items-center rounded-sm border-none justify-center text-center font-semibold",
+                                    order.tripType === "backload" ? "bg-orange-300/20 text-orange-600" : "bg-teal-300/20 text-teal-600"
+                                )}
+                            >
+                                {order.tripType === "normal" ? <IconMapUp /> : <IconMapDown />}
+                                {t(`content.type.${order.tripType}`)}
+                            </Badge>
+                    )
+                }
 
                 <Separator className={cn(order.share === "subscribers" && "bg-orange-300")} />
             </CardContent>
@@ -132,58 +143,45 @@ export function OrderCard({ values }: Props) {
                     </Button>
                 </div>
 
-                {order.status === "open" && (
-                    <div className="w-full">
-                        {order.share === "subscribers"
-                            ? (
-                                <Button
-                                    variant="success"
-                                    className="w-full cursor-pointer font-normal"
-                                    onClick={() => acceptOrder(values)}
-                                >
-                                    <IconContract />
-                                    {t("footer.accept")}
-                                </Button>
-                            ) : (
-                                <Button
-                                    variant="default"
-                                    className="w-full cursor-pointer font-normal"
-                                    onClick={() => makeOffer()}
-                                >
-                                    <IconInvoice />
-                                    {t("footer.place-bid")}
-                                </Button>
-                            )
-                        }
-                    </div>
-                )}
-
-                {order.status === "on-going" && (
+                {order.share === "subscribers" && (
                     <div className="w-full">
                         <Button
-                            variant="outline"
+                            variant="success"
                             className="w-full cursor-pointer font-normal"
-                            onClick={() => { }}
+                            onClick={() => acceptOrder(values)}
                         >
-                            <IconEdit />
-                            {t("footer.manage")}
+                            <IconContract />
+                            {t("footer.accept")}
                         </Button>
                     </div>
                 )}
 
-                {order.status === "delivered" && (
+                {(!offer) && (
                     <div className="w-full">
                         <Button
-                            variant="destructive"
+                            variant="default"
                             className="w-full cursor-pointer font-normal"
+                            onClick={() => makeOffer(values)}
                         >
-                            <IconCancel />
-                            {t("footer.upload-proof")}
+                            <IconInvoice />
+                            {t("footer.place-bid")}
+                        </Button>
+                    </div>
+                )}
+
+                {offer?.status === "rejected" && (
+                    <div className="w-full">
+                        <Button
+                            variant="default"
+                            className="w-full cursor-pointer font-normal"
+                            onClick={() => makeOffer(values)}
+                        >
+                            <IconInvoice />
+                            {t("footer.update-bid")}
                         </Button>
                     </div>
                 )}
             </CardFooter>
-
         </Card >
     )
 }

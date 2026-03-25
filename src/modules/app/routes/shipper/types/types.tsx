@@ -1,5 +1,5 @@
 import { Address } from "@/backend/db/types"
-import type { cargo, order, timeline, tracking, trip } from "@/backend/db/schema"
+import type { cargo, offer, order, timeline, tracking, trip } from "@/backend/db/schema"
 
 export type LAYOUT_VIEW = "list" | "grid"
 export type PERIOD = "week" | "month" | "quarter" | "year"
@@ -8,13 +8,20 @@ export type MAP_FILTER = "all" | "loading" | "moving" | "stopped" | "issue" | "o
 export type ORDERS_PATH = "all" | "drafted" | "open" | "booked" | "on-going" | "delivered" | "history"
 
 export type Values = {
-    order: typeof order.$inferSelect,
-    cargo: typeof cargo.$inferSelect,
-    trip: typeof trip.$inferSelect | null,
-    tracking: typeof tracking.$inferSelect | null,
-    // Add the timeline status field (it's the result of your lateral join)
-    status: typeof timeline.$inferSelect | null, 
+    order: Order
+    cargo: Cargo
+    trip: Trip | null
+    status: Status | null
+    tracking: Tracking | null
+    offers: Offer[] | []
 }
+
+export type Tracking = typeof tracking.$inferSelect
+export type Status = typeof timeline.$inferSelect
+export type Offer = typeof offer.$inferSelect
+export type Order = typeof order.$inferSelect
+export type Cargo = typeof cargo.$inferSelect
+export type Trip = typeof trip.$inferSelect
 
 export type TransporterValues = {
     id: string;

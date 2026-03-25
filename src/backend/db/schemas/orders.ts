@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 import { boolean, decimal, index, integer, jsonb, pgEnum, pgTable, numeric, text, timestamp, serial, } from "drizzle-orm/pg-core";
 
 import { driver, link, organization, trailer, truck } from "@/backend/db/schema";
-import { INSURANCE_PAYMENT_STATUS, Location, PAYMENT_STATUS, FISCAL_REGIME, ORDER_STATUS, TRIP_STATUS, TRIP_TYPE, ROUTE_TYPE, TRUCK_AGE, WEIGHT_UNIT, POD_STATUS, CURRENCY, SHARE, CATEGORIES, MARKET_STATUS, MarketResponse } from "@/backend/db/types";
+import { INSURANCE_PAYMENT_STATUS, Location, PAYMENT_STATUS, FISCAL_REGIME, ORDER_STATUS, TRIP_STATUS, TRIP_TYPE, ROUTE_TYPE, TRUCK_AGE, WEIGHT_UNIT, POD_STATUS, CURRENCY, SHARE, CATEGORIES, MARKET_STATUS, MarketResponse, LOADING_BAY } from "@/backend/db/types";
 
 export const shareEnum = pgEnum("share_enum", SHARE)
 export const currencyEnum = pgEnum("currency_enum", CURRENCY)
@@ -12,6 +12,7 @@ export const truckAgeEnum = pgEnum("truck_age_enum", TRUCK_AGE)
 export const podStatusEnum = pgEnum("pod_status_enum", POD_STATUS)
 export const routeTypeEnum = pgEnum("route_type_enum", ROUTE_TYPE)
 export const categoriesEnum = pgEnum("categories_enum", CATEGORIES)
+export const loadingBayEnum = pgEnum("loading_bay_enum", LOADING_BAY)
 export const weightUnitEnum = pgEnum("weight_unit_enum", WEIGHT_UNIT)
 export const tripStatusEnum = pgEnum("trip_status_enum", TRIP_STATUS)
 export const orderStatusEnum = pgEnum("order_status_enum", ORDER_STATUS)
@@ -29,9 +30,9 @@ export const order = pgTable(
             .references(() => organization.id, { onDelete: "cascade" }),
         shipperName: text("shipper_name").notNull(),
 
-        loadingAddress: jsonb("loading_address").$type<Location>(),
+        loadingAddress: jsonb("loading_address").$type<Location>().notNull(),
         expectedLoadingDate: timestamp("expected_loading_date").notNull(),
-        offloadingAddress: jsonb("offloading_address").$type<Location>(),
+        offloadingAddress: jsonb("offloading_address").$type<Location>().notNull(),
         expectedOffloadingDate: timestamp("expected_offloading_date").notNull(),
         distance: integer("distance"),
 
@@ -39,6 +40,7 @@ export const order = pgTable(
 
         status: orderStatusEnum("status"),
         route: routeTypeEnum("route").default("national"),
+        tripType: tripTypeEnum("trip_type").default("normal").notNull(),
         share: shareEnum("share").default("non-subscribers"),
         price: integer("price"),
         currency: currencyEnum("currency").default("MZN"),
@@ -97,16 +99,16 @@ export const trip = pgTable(
         carrierName: text("carrier_name").notNull(),
 
         driverId: text("driver_id")
-            .references(() => driver.id, { onDelete: "set null" }),
+            .references(() => driver.id, { onDelete: "cascade" }),
         driverName: text("driver_name"),
         driverPassport: text("driver_passport"),
         driverPhoneNumber: text("driver_phone_number"),
         truckPlate: text("truck_plate")
-            .references(() => truck.regPlate, { onDelete: "set null" }),
+            .references(() => truck.regPlate, { onDelete: "cascade" }),
         trailerPlate: text("trailer_plate")
-            .references(() => trailer.regPlate, { onDelete: "set null" }),
+            .references(() => trailer.regPlate, { onDelete: "cascade" }),
         linkPlate: text("link_plate")
-            .references(() => link.regPlate, { onDelete: "set null" }),
+            .references(() => link.regPlate, { onDelete: "cascade" }),
         truckAge: truckAgeEnum("truck_age"),
 
         proposedLoadingDate: timestamp("proposed_loading_date").notNull(),
@@ -217,21 +219,32 @@ export const offer = pgTable(
         carrierId: text("carrier_id")
             .notNull()
             .references(() => organization.id, { onDelete: "cascade" }),
-        proposedLoadingDate: timestamp("proposed_loading_date"),
-        proposedOffloadingDate: timestamp("proposed_offloading_date"),
+        carrierName: text("carrier_name").notNull(),
+        fiscalRegime: fiscalRegimeEnum("fiscal_regime").notNull().default("normal"),
+
+        proposedLoadingDate: timestamp("proposed_loading_date").notNull(),
+        proposedOffloadingDate: timestamp("proposed_offloading_date").notNull(),
+        price: decimal("price").notNull(),
+        currency: currencyEnum("currency").default("MZN").notNull(),
 
         driverId: text("driver_id")
+            .notNull()
             .references(() => driver.id, { onDelete: "set null" }),
-        driverName: text("driver_name"),
+        driverName: text("driver_name")
+            .notNull(),
         driverPassport: text("driver_passport"),
-        driverPhoneNumber: text("driver_phone_number"),
+        driverPhoneNumber: text("driver_phone_number")
+            .notNull(),
         truckPlate: text("truck_plate")
+            .notNull()
             .references(() => truck.regPlate, { onDelete: "set null" }),
-        truckAge: truckAgeEnum("truck_age"),
+        truckAge: truckAgeEnum("truck_age")
+            .notNull(),
         trailerPlate: text("trailer_plate")
             .references(() => trailer.regPlate, { onDelete: "set null" }),
         linkPlate: text("link_plate")
             .references(() => link.regPlate, { onDelete: "set null" }),
+        type: loadingBayEnum("type").notNull(),
 
         status: text("status").default("pending"),
 

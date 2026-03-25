@@ -6,10 +6,8 @@ import { authClient } from "@/backend/auth/auth-client"
 
 import { Skeleton } from "@/components/ui/skeleton"
 
-import { ORDERS_PATH } from "../../../types/types"
-
-export function PageView({ path }: { path: ORDERS_PATH }) {
-    const t = useTranslations(`Carrier.marketplace.page.orders.${path}`)
+export function HistoryPageView() {
+    const t = useTranslations(`Carrier.marketplace.page.history`)
     const { data, isPending } = authClient.useActiveOrganization()
 
     if (isPending || !data) {
@@ -26,7 +24,7 @@ export function PageView({ path }: { path: ORDERS_PATH }) {
     return (
         <div className="flex flex-col gap-0.5">
             <h2 className="font-bold text-2xl leading-normal">{t("title")}</h2>
-            <h4 className="text-sm text-muted-foreground">{t("description", { company: name })}</h4>
+            <p className="text-sm text-muted-foreground">{t("description", { company: name })}</p>
         </div>
     )
 }

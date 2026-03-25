@@ -1,5 +1,5 @@
 import { Address, FISCAL_REGIME } from "@/backend/db/types"
-import type { cargo, driver, link, order, tracking, trailer, trip, truck, user } from "@/backend/db/schema"
+import type { cargo, driver, link, offer, order, tracking, trailer, trip, truck, user } from "@/backend/db/schema"
 
 export type LAYOUT_VIEW = "list" | "grid"
 export type ORDERS_PATH = "all" | "private" | "public"
@@ -10,10 +10,10 @@ export type KPIs_TABS = "operational" | "incidents" | "costs" | "efficiency"
 export type MAP_FILTER = "all" | "loading" | "moving" | "stopped" | "issue" | "offloading"
 
 export type Driver = {
-    id: string;
-    name: string;
-    phone: string | null;
-    passport: string | null;
+    id: string
+    name: string
+    phone: string | null
+    passport: string | null
 }
 
 export type DriverValues = {
@@ -39,28 +39,29 @@ export type Fleet = {
 }
 
 export type OrderValues = {
-    order: typeof order.$inferSelect,
-    cargo: typeof cargo.$inferSelect,
-    organizationId: string,
-    organizationName: string,
-    fiscalRegime: typeof FISCAL_REGIME[number],
+    order: typeof order.$inferSelect
+    cargo: typeof cargo.$inferSelect
+    offer: typeof offer.$inferSelect | null
+    organizationId: string
+    organizationName: string
+    fiscalRegime: typeof FISCAL_REGIME[number]
     fleet: Fleet[]
     drivers: Driver[]
 }
 
 export type TripValues = {
-    order: typeof order.$inferSelect,
-    cargo: typeof cargo.$inferSelect,
-    trip: typeof trip.$inferSelect,
+    order: typeof order.$inferSelect
+    cargo: typeof cargo.$inferSelect
+    trip: typeof trip.$inferSelect
     tracking: typeof tracking.$inferSelect | null
 }
 
 export type ClientValues = {
-    id: string;
-    name: string;
-    logo: string | null;
-    address: Address | null;
-    trips: number;
-    revenue: number;
-    createdAt: Date;
+    id: string
+    name: string
+    logo: string | null
+    address: Address | null
+    trips: number
+    revenue: number
+    createdAt: Date
 }
