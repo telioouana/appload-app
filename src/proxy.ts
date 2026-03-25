@@ -9,10 +9,11 @@ export async function proxy(request: NextRequest) {
     const { nextUrl } = request
 
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
+    const isPublicApiRoute = nextUrl.pathname.startsWith("/api/feedback")
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname)
     const isAuthRoute = authRoutes.includes(nextUrl.pathname)
 
-    if (isApiAuthRoute) return NextResponse.next()
+    if (isApiAuthRoute || isPublicApiRoute) return NextResponse.next()
 
     if (isPublicRoute) {
         return NextResponse.redirect(new URL(

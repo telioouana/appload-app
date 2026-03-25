@@ -16,6 +16,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 
 import { EdgeStoreProvider } from "@/lib/edgestore"
+import FeedbackMount from "@/components/feedback/mount"
 
 const montserrat = Montserrat({
     variable: "--font-sans",
@@ -71,6 +72,8 @@ export default async function RootLayout({
                                     <Analytics />
                                     <Toaster />
                                     {children}
+                                    {/* feedback bubble — client-only, lazy-loads html2canvas */}
+                                    <FeedbackMount />
                                 </EdgeStoreProvider>
                             </TooltipProvider>
                         )}
