@@ -48,9 +48,9 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
     const form = useForm<TripSchemaForm>({
         resolver: zodResolver(TripSchema),
         defaultValues: {
-            orderId: values.order.id ?? "",
-            carrierId: values.organizationId ?? "",
-            carrierName: values.organizationName ?? "",
+            orderId: values.order.id,
+            carrierId: values.organizationId,
+            carrierName: values.organizationName,
 
             loading: values.order.loadingAddress[0],
             proposedLoadingDate: values.order.expectedLoadingDate,
@@ -66,8 +66,8 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
             carrierTotal: Number(values.order.price),
             carrierCurrency: values.order.currency as typeof CURRENCY[number],
 
-            shipperSubtotal: values.fiscalRegime === "normal" ? (Number(values.order.price) / 1.16) : Number(values.order.price),
-            shipperVAT: values.fiscalRegime === "normal" ? (Number(values.order.price) * (0.16 / 1.16)) : 0,
+            shipperSubtotal: Number(values.order.price) / 1.16,
+            shipperVAT: Number(values.order.price) * (0.16 / 1.16),
             shipperTotal: Number(values.order.price),
             shipperCurrency: values.order.currency as typeof CURRENCY[number]
         },

@@ -1,11 +1,13 @@
 import { z } from "zod";
 
-import { CURRENCY, LOADING_BAY, TRUCK_AGE } from "@/backend/db/types";
+import { CURRENCY, FISCAL_REGIME, LOADING_BAY, TRUCK_AGE } from "@/backend/db/types";
 
 export function createOfferSchema(t: (key: string) => string) {
     const schema = z.object({
         orderId: z.string().nonempty(),
         carrierId: z.string().nonempty(),
+        carrierName: z.string().nonempty(),
+        fiscalRegime: z.enum(FISCAL_REGIME),
 
         driverId: z.string().nonempty(),
         driverName: z.string({ error: t("form.fields.name.error") }).nonempty({ error: t("form.fields.name.error") }),

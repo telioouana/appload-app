@@ -4,20 +4,26 @@ import { DEFAULT_PAGE_LIMIT } from "@/constants"
 
 import { HistoryView } from "@/modules/app/routes/carrier/pages/history/views/history-view"
 
-export default async function Page({
-    searchParams,
-}: {
-    searchParams: Promise<{ search?: string, "cargo-type"?: string }>
-}) {
-    const { search, "cargo-type": cargoType } = await searchParams
+type Props = {
+    searchParams: Promise<{
+        search?: string;
+        "cargo-type"?: string;
+    }>
+}
+
+export default async function Page({ searchParams }: Props) {
+    const resolvedSearchParams = await searchParams
+
+    const search = resolvedSearchParams.search?.trim() || undefined
+    const cargoType = resolvedSearchParams["cargo-type"]?.trim() || undefined
 
     const client = getQueryClient()
 
-    await client.prefetchInfiniteQuery(
-        trpc.history.all.infiniteQueryOptions({
-            limit: DEFAULT_PAGE_LIMIT
-        }, {
-            getNextPageParam: (lastPage) => lastPage.nextCursor
+    await client.prefetchQuery(
+        trpc.history.all.queryOptions({
+            search,
+            cargoType,
+            limit: DEFAULT_PAGE_LIMIT,
         })
     )
 

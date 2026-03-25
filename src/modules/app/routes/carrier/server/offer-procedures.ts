@@ -26,6 +26,7 @@ export const offerRouter = createTRPCRouter({
                 .values({
                     orderId: values.orderId,
                     carrierId: values.carrierId,
+                    carrierName: values.carrierName,
 
                     driverId: values.driverId,
                     driverName: values.driverName,

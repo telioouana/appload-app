@@ -219,25 +219,33 @@ export const offer = pgTable(
         carrierId: text("carrier_id")
             .notNull()
             .references(() => organization.id, { onDelete: "cascade" }),
-        proposedLoadingDate: timestamp("proposed_loading_date"),
-        proposedOffloadingDate: timestamp("proposed_offloading_date"),
+        carrierName: text("carrier_name").notNull(),
+        fiscalRegime: fiscalRegimeEnum("fiscal_regime").notNull().default("normal"),
+
+        proposedLoadingDate: timestamp("proposed_loading_date").notNull(),
+        proposedOffloadingDate: timestamp("proposed_offloading_date").notNull(),
         price: decimal("price").notNull(),
         currency: currencyEnum("currency").default("MZN").notNull(),
 
         driverId: text("driver_id")
+            .notNull()
             .references(() => driver.id, { onDelete: "set null" }),
-        driverName: text("driver_name"),
+        driverName: text("driver_name")
+            .notNull(),
         driverPassport: text("driver_passport"),
-        driverPhoneNumber: text("driver_phone_number"),
+        driverPhoneNumber: text("driver_phone_number")
+            .notNull(),
         truckPlate: text("truck_plate")
+            .notNull()
             .references(() => truck.regPlate, { onDelete: "set null" }),
-        truckAge: truckAgeEnum("truck_age"),
+        truckAge: truckAgeEnum("truck_age")
+            .notNull(),
         trailerPlate: text("trailer_plate")
             .references(() => trailer.regPlate, { onDelete: "set null" }),
         linkPlate: text("link_plate")
             .references(() => link.regPlate, { onDelete: "set null" }),
         type: loadingBayEnum("type").notNull(),
-        
+
         status: text("status").default("pending"),
 
         createdAt: timestamp("created_at").defaultNow().notNull(),

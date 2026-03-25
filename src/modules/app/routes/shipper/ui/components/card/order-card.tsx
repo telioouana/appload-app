@@ -1,7 +1,7 @@
 "use client"
 
 import { useFormatter, useTranslations } from "next-intl";
-import { IconBiohazard, IconCancel, IconEdit, IconEye, IconMapPin, IconMapX, IconSnowflake } from "@tabler/icons-react";
+import { IconBiohazard, IconCancel, IconEdit, IconEye, IconMapDown, IconMapPin, IconMapUp, IconMapX, IconSnowflake } from "@tabler/icons-react";
 
 import { CATEGORIES, CURRENCY, PACKING, SHARE, WEIGHT_UNIT } from "@/backend/db/types";
 
@@ -11,8 +11,9 @@ import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 
 import { Values } from "../../../types/types";
-import { useOrderDetails } from "../../../hooks/use-order-details";
+import { useOffersList } from "../../../hooks/use-offers-list";
 import { useUpdateOrder } from "../../../hooks/use-update-order";
+import { useOrderDetails } from "../../../hooks/use-order-details";
 import { StatusBadge, StatusKey } from "@/modules/app/ui/components/badge/status-badge";
 
 import { cn } from "@/lib/utils"
@@ -26,8 +27,9 @@ export function OrderCard({ values }: Props) {
 
     const { onOpenChange: viewDetails } = useOrderDetails()
     const { onOpenChange: updateOrder } = useUpdateOrder()
+    const { onOpenChange: viewOffers } = useOffersList()
 
-    const { order, cargo, trip, status: liveStatus } = values // Extract liveStatus
+    const { order, cargo, trip, status: liveStatus, offers } = values // Extract liveStatus
 
     const defaultValues = {
         loadingAddress: [{
@@ -85,9 +87,9 @@ export function OrderCard({ values }: Props) {
                     </div>
 
                     {/* Use the new displayStatus here */}
-                    <StatusBadge 
-                        label={t(`header.status.${displayStatus}`)} 
-                        status={displayStatus as StatusKey} 
+                    <StatusBadge
+                        label={t(`header.status.${displayStatus}`)}
+                        status={displayStatus as StatusKey}
                     />
                 </div>
 
@@ -145,22 +147,34 @@ export function OrderCard({ values }: Props) {
 
                 <Separator />
 
-                <div className="flex justify-between items-center gap-2 py-2">
-                    <div className="text-muted-foreground">{t("content.price")}</div>
-                    <div className="font-medium text-xl text-primary space-x-1">
-                        <span>
-                            {order.price == null
-                                ? "0"
-                                : f.number(order.price, {
-                                    currency: order.currency ?? "MZN",
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                })
-                            }
-                        </span>
-                        <span>{order.currency ?? "MZN"}</span>
-                    </div>
-                </div>
+                {(order.share === "subscribers")
+                    ? (
+                        <div className="flex justify-between items-center gap-2 py-2">
+                            <div className="text-muted-foreground">{t("content.price")}</div>
+                            <div className="font-medium text-xl text-primary space-x-1">
+                                <span>
+                                    {f.number(order.price ?? 0, {
+                                        currency: order.currency ?? "MZN",
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    })}
+                                </span>
+                                <span>{order.currency ?? "MZN"}</span>
+                            </div>
+                        </div>
+                    ) : (
+                        <Badge
+                            variant="default"
+                            className={cn(
+                                "w-full py-4 gap-1.5 inline-flex items-center rounded-sm border-none justify-center text-center font-semibold",
+                                order.tripType === "backload" ? "bg-orange-300/20 text-orange-600" : "bg-teal-300/20 text-teal-600"
+                            )}
+                        >
+                            {order.tripType === "normal" ? <IconMapUp /> : <IconMapDown />}
+                            {t(`content.type.${order.tripType}`)}
+                        </Badge>
+                    )
+                }
 
                 <Separator />
             </CardContent>
@@ -190,14 +204,27 @@ export function OrderCard({ values }: Props) {
 
                 {order.status === "open" && (
                     <div className="w-full">
-                        <Button
-                            variant="outline"
-                            className="w-full cursor-pointer font-normal"
-                            onClick={() => updateOrder(defaultValues, "update", order.id)}
-                        >
-                            <IconEdit />
-                            {t("footer.update")}
-                        </Button>
+                        {offers.length > 0
+                            ? (
+                                <Button
+                                    variant="success"
+                                    className="w-full cursor-pointer font-normal"
+                                    onClick={() => viewOffers(offers, order)}
+                                >
+                                    <IconEdit />
+                                    {t("footer.offers", {offers: offers.length})}
+                                </Button>
+                            ) : (
+                                <Button
+                                    variant="outline"
+                                    className="w-full cursor-pointer font-normal"
+                                    onClick={() => updateOrder(defaultValues, "update", order.id)}
+                                >
+                                    <IconEdit />
+                                    {t("footer.update")}
+                                </Button>
+                            )
+                        }
                     </div>
                 )}
 

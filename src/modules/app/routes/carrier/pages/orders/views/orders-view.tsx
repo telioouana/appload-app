@@ -1,127 +1,23 @@
 "use client"
 
-import { Suspense, useMemo } from "react"
+import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
-import { useSuspenseInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query"
-
-import { DEFAULT_PAGE_LIMIT } from "@/constants"
-
-import { useTRPC } from "@/backend/trpc/client"
-import { FISCAL_REGIME } from "@/backend/db/types"
-
-import { InfiniteScroll } from "@/components/customs/scroll"
 
 import { ORDERS_PATH } from "../../../types/types"
-import { OrderCard } from "../../../ui/components/card/order-card"
-import { EmptyOrders } from "@/modules/app/ui/components/states/empty-orders"
+import { OrdersSection } from "../section/orders-section"
 import { AcceptOrderDialog } from "../../../ui/components/dialog/accept-order-dialog"
+import { CreateOfferDialog } from "../../../ui/components/dialog/create-offer-dialog"
 import { OrdersErrorFallback } from "@/modules/app/ui/components/states/orders-error-fallback"
 import { OrdersLoadingFallback } from "@/modules/app/ui/components/states/orders-loading-fallback"
-import { CreateOfferDialog } from "../../../ui/components/dialog/create-offer-dialog"
 
 export function OrdersView({ path, search, cargoType }: { path: ORDERS_PATH, search?: string, cargoType?: string }) {
-    const trpc = useTRPC()
-
-    const {
-        data: orders,
-        hasNextPage,
-        isFetchingNextPage,
-        fetchNextPage,
-    } = useSuspenseInfiniteQuery(
-        trpc.orders.all.infiniteQueryOptions({
-            path,
-            limit: DEFAULT_PAGE_LIMIT,
-        }, {
-            getNextPageParam: (lastPage) => lastPage.nextCursor,
-        })
-    )
-
-    const {
-        data: fleet
-    } = useSuspenseQuery(
-        trpc.fleet.offer.queryOptions()
-    )
-
-    const {
-        data: drivers
-    } = useSuspenseQuery(
-        trpc.driver.offer.queryOptions()
-    )
-
-    const filteredItems = useMemo(() => {
-        const cargoRaw = (cargoType ?? "").trim()
-        const cargoFilter = cargoRaw === "" ? null : cargoRaw.toLowerCase()
-
-        const raw = (search ?? "").trim()
-        const items = orders.pages.flatMap((page) => page.items)
-
-        if (raw === "" && cargoFilter == null) return items
-
-        const q = raw.toLowerCase()
-
-        return items.filter((values) => {
-            if (cargoFilter != null) {
-                const cat = values.cargo?.category?.toLowerCase()
-                if (cat !== cargoFilter) return false
-            }
-
-            // If there's no search query but cargo matched, include the item
-            if (raw === "") return true
-
-            const loadingState = values.order.loadingAddress?.[0]?.state?.toLowerCase()
-            const offloadingState = values.order.offloadingAddress?.[0]?.state?.toLowerCase()
-
-            const matchesLocation =
-                loadingState?.includes(q) ||
-                offloadingState?.includes(q)
-
-            const legacyId = values.order.legacyId
-            const matchesLegacyId =
-                legacyId != null &&
-                (legacyId.toString() === raw || legacyId.toString().padStart(4, "0") === raw)
-
-            return matchesLocation || matchesLegacyId
-        })
-    }, [orders.pages, search, cargoType])
-
     return (
         <Suspense fallback={<OrdersLoadingFallback />} >
             <ErrorBoundary fallback={<OrdersErrorFallback />} >
                 <AcceptOrderDialog path={path} />
                 <CreateOfferDialog path={path} />
 
-                <div className="flex flex-col">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full w-full">
-                        {filteredItems.length === 0 ? (
-                            <div className="col-span-full">
-                                <EmptyOrders />
-                            </div>
-                        ) : (
-                            filteredItems.map(({ order, cargo, offer, organizationId, organizationName, fiscalRegime }) => {
-                                const values = {
-                                    fleet,
-                                    order,
-                                    cargo,
-                                    offer,
-                                    drivers,
-                                    organizationId,
-                                    organizationName,
-                                    fiscalRegime: fiscalRegime as typeof FISCAL_REGIME[number]
-                                }
-
-                                return <OrderCard key={order.id} values={values} />
-                            })
-                        )}
-                    </div>
-
-                    {filteredItems.length > 0 && (
-                        <InfiniteScroll
-                            hasNextPage={hasNextPage}
-                            isFetchingNextPage={isFetchingNextPage}
-                            fetchNextPage={fetchNextPage}
-                        />
-                    )}
-                </div>
+                <OrdersSection path={path} search={search} cargoType={cargoType} />
             </ErrorBoundary>
         </Suspense>
     )

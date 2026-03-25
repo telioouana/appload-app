@@ -1,7 +1,7 @@
 "use client"
 
 import { useFormatter, useTranslations } from "next-intl";
-import { IconBiohazard, IconContract, IconEye, IconInvoice, IconMapPin, IconMapX, IconSnowflake } from "@tabler/icons-react";
+import { IconBiohazard, IconContract, IconEye, IconInvoice, IconMapDown, IconMapPin, IconMapUp, IconMapX, IconSnowflake } from "@tabler/icons-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button"
@@ -25,7 +25,6 @@ export function OrderCard({ values }: Props) {
     const f = useFormatter()
 
     const { order, cargo, offer } = values
-    console.log(offer)
 
     return (
         <Card className={cn("border border-card hover:border-primary", order.share === "subscribers" && "bg-orange-50 dark:bg-orange-50/20")}>
@@ -100,10 +99,10 @@ export function OrderCard({ values }: Props) {
                     </div>
                 </div>
 
-                {(order.share === "subscribers" || order.status !== "open") && (
-                    <>
-                        <Separator className={cn(order.share === "subscribers" && "bg-orange-300")} />
+                <Separator className={cn(order.share === "subscribers" && "bg-orange-300")} />
 
+                {(order.share === "subscribers")
+                    ? (
                         <div className="flex justify-between items-center gap-2 py-2">
                             <div className="text-muted-foreground">{t("content.price")}</div>
                             <div className="font-medium text-xl text-primary space-x-1">
@@ -117,8 +116,19 @@ export function OrderCard({ values }: Props) {
                                 <span>{order.currency ?? "MZN"}</span>
                             </div>
                         </div>
-                    </>
-                )}
+                    ) : (
+                            <Badge
+                                variant="default"
+                                className={cn(
+                                    "w-full py-4 gap-1.5 inline-flex items-center rounded-sm border-none justify-center text-center font-semibold",
+                                    order.tripType === "backload" ? "bg-orange-300/20 text-orange-600" : "bg-teal-300/20 text-teal-600"
+                                )}
+                            >
+                                {order.tripType === "normal" ? <IconMapUp /> : <IconMapDown />}
+                                {t(`content.type.${order.tripType}`)}
+                            </Badge>
+                    )
+                }
 
                 <Separator className={cn(order.share === "subscribers" && "bg-orange-300")} />
             </CardContent>
@@ -146,7 +156,7 @@ export function OrderCard({ values }: Props) {
                     </div>
                 )}
 
-                {!offer && (
+                {(!offer) && (
                     <div className="w-full">
                         <Button
                             variant="default"
@@ -155,6 +165,19 @@ export function OrderCard({ values }: Props) {
                         >
                             <IconInvoice />
                             {t("footer.place-bid")}
+                        </Button>
+                    </div>
+                )}
+
+                {offer?.status === "rejected" && (
+                    <div className="w-full">
+                        <Button
+                            variant="default"
+                            className="w-full cursor-pointer font-normal"
+                            onClick={() => makeOffer(values)}
+                        >
+                            <IconInvoice />
+                            {t("footer.update-bid")}
                         </Button>
                     </div>
                 )}

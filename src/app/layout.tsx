@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 function isSafari(userAgent: string | null): boolean {
     if (!userAgent) return false
     const browser = new UAParser(userAgent).getBrowser()
-    return browser.name === "Chrome" || browser.name === "Mobile Chrome"
+    return browser.name === "Safari" || browser.name === "Mobile Safari"
 }
 
 export default async function RootLayout({

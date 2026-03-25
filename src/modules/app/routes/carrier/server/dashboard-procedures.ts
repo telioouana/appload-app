@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { and, avg, between, count, countDistinct, eq, sql, sum } from "drizzle-orm";
+import { and, avg, between, count, countDistinct, eq, ne, or, sql, sum } from "drizzle-orm";
 
 import { db } from "@/backend/db";
 import { network, order, trip, truck } from "@/backend/db/schema";
@@ -17,9 +17,9 @@ export const carrierDashboardRouter = createTRPCRouter({
             const [stats] = await db
                 .select({
                     orders: sql<number>`count(distinct${order.id}) filter (where ${order.status} = 'open' )`.mapWith(Number),
-                    trips: sql<number>`count(${order.id}) filter (where ${order.status} = 'on-going' and ${trip.carrierId} = ${session.activeOrganizationId})`.mapWith(Number),
+                    trips: sql<number>`count(distinct${order.id}) filter (where ${order.status} <> 'open' and ${trip.carrierId} = ${session.activeOrganizationId})`.mapWith(Number),
                     fleet: countDistinct(truck.id).mapWith(Number),
-                    revenue: sql<number>`sum(${trip.carrierTotal}) filter (where ${order.status} = 'on-going' and ${trip.carrierId} = ${session.activeOrganizationId})`.mapWith(Number),
+                    revenue: sql<number>`sum(distinct${trip.carrierTotal}) filter (where ${order.status} <> 'open' and ${trip.carrierId} = ${session.activeOrganizationId})`.mapWith(Number),
                 })
                 .from(order)
                 .leftJoin(trip, eq(trip.orderId, order.id))
@@ -27,6 +27,17 @@ export const carrierDashboardRouter = createTRPCRouter({
                 .leftJoin(network, and(
                     eq(network.shipperId, order.shipperId),
                     eq(network.carrierId, session.activeOrganizationId)
+                ))
+                .where(and(
+                    ne(order.status, "completed"),
+                    ne(order.status, "cancelled"),
+                    or(
+                        eq(order.share, "non-subscribers"),
+                        and(
+                            eq(order.share, "subscribers"),
+                            eq(network.carrierId, session.activeOrganizationId)
+                        )
+                    )
                 ))
 
             return stats

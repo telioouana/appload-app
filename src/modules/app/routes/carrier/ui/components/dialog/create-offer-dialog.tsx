@@ -48,8 +48,10 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
     const form = useForm<OfferSchemaForm>({
         resolver: zodResolver(OfferSchema),
         defaultValues: {
-            orderId: values.order.id ?? "",
-            carrierId: values.organizationId ?? "",
+            orderId: values.order.id,
+            carrierId: values.organizationId,
+            carrierName: values.organizationName,
+            fiscalRegime: values.fiscalRegime,
 
             proposedLoadingDate: values.order.expectedLoadingDate,
             proposedOffloadingDate: values.order.expectedOffloadingDate,

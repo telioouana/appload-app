@@ -6,7 +6,7 @@ import { authClient } from "@/backend/auth/auth-client"
 
 import { Skeleton } from "@/components/ui/skeleton"
 
-export function PageView() {
+export function HistoryPageView() {
     const t = useTranslations(`Carrier.marketplace.page.history`)
     const { data, isPending } = authClient.useActiveOrganization()
 

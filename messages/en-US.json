@@ -473,7 +473,7 @@
             },
             "orders": {
                 "resume": {
-                    "orders": "Total orders",
+                    "global": "Total orders",
                     "total": "Total value (MZN)",
                     "distance": "Total distance (km)"
                 },
@@ -483,7 +483,41 @@
                         "grid": "Switch to grid view",
                         "list": "Switch to list view"
                     },
-                    "button": "Create a new order",
+                    "filters": {
+                        "title": "Filter by",
+                        "cargo-type": {
+                            "label": "Cargo type",
+                            "placeholder": "Select one of the options to filter",
+                            "options": {
+                                "agriculture-inputs": "Agriculture Inputs",
+                                "agriculture-products": "Agriculture Products",
+                                "construction": "Construction",
+                                "machinery-equipment": "Machinery Equipment",
+                                "fmcg": "FMCG",
+                                "general-cargo": "General Cargo",
+                                "medicine": "Medicine",
+                                "mining": "Mining",
+                                "oil-gas": "Oil & Gas",
+                                "vehicles": "Vehicles",
+                                "other": "Other",
+                                "none": "Clear filter"
+                            }
+                        }
+                    }
+                }
+            },
+            "trips": {
+                "resume": {
+                    "global": "Total trips",
+                    "total": "Total value (MZN)",
+                    "distance": "Total distance (km)"
+                },
+                "actions": {
+                    "search": "Search trip by id, loading, offloading location, driver name or truck plate number",
+                    "view": {
+                        "grid": "Switch to grid view",
+                        "list": "Switch to list view"
+                    },
                     "filters": {
                         "title": "Filter by",
                         "cargo-type": {
@@ -551,11 +585,16 @@
                     "loading-date": "Loading date:",
                     "refrigerated": "Refrigerated",
                     "hazarduos": "Hazardous",
+                    "type": {
+                        "normal": "Normal trip",
+                        "backload": "Backload trip"
+                    },
                     "price": "Transport price:"
                 },
                 "footer": {
                     "accept": "Accept",
                     "place-bid": "Place bid",
+                    "update-bid": "Update bid",
                     "manage": "Manage",
                     "view": "View",
                     "upload-proof": "Complete trip"
@@ -1758,12 +1797,17 @@
                     "loading-date": "Loading date:",
                     "refrigerated": "Refrigerated",
                     "hazarduos": "Hazardous",
+                    "type": {
+                        "normal": "Normal trip",
+                        "backload": "Backload trip"
+                    },
                     "price": "Amount:"
                 },
                 "footer": {
                     "cancel": "Cancel",
                     "view": "View",
-                    "update": "Update"
+                    "update": "Update",
+                    "offers": "Offers ({offers})"
                 }
             },
             "dialog": {
@@ -2079,6 +2123,32 @@
                             }
                         }
                     }
+                }
+            }
+        },
+        "offers": {
+            "header": {
+                "title": "Offers list",
+                "description": "Offers received for this order will be listed here"
+            },
+            "card": {
+                "header": {
+                    "id": "FP-{id}",
+                    "status": {
+                        "pending": "New",
+                        "updated": "Updated",
+                        "rejected": "Rejected",
+                        "accepted": "Accepted"
+                    }
+                },
+                "content": {
+                    "load": "Can load on",
+                    "offload": "Can offload on",
+                    "quote": "Total for this offer"
+                },
+                "footer": {
+                    "reject": "Reject",
+                    "accept": "Accept"
                 }
             }
         },

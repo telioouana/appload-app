@@ -1,17 +1,32 @@
 import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server"
 
-import { ResumeView } from "@/modules/app/routes/carrier/pages/history/views/resume-view"
+import { HistoryResumeView } from "@/modules/app/routes/carrier/pages/history/views/history-resume-view"
 
-export default async function Page() {
+type Props = {
+    searchParams: Promise<{ 
+        search?: string; 
+        "cargo-type"?: string;
+    }>
+}
+
+export default async function Page({ searchParams }: Props) {
+    const resolvedSearchParams = await searchParams
+    
+    const search = resolvedSearchParams.search?.trim() || undefined
+    const cargoType = resolvedSearchParams["cargo-type"]?.trim() || undefined
+
     const client = getQueryClient()
 
     await client.prefetchQuery(
-        trpc.history.resume.queryOptions()
+        trpc.history.resume.queryOptions({
+            search,
+            cargoType,
+        })
     )
 
     return (
         <HydrateClient>
-            <ResumeView/>
+            <HistoryResumeView search={search} cargoType={cargoType} />
         </HydrateClient>
     )
 }

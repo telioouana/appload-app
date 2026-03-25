@@ -1,7 +1,6 @@
-import { ActionsView } from "@/modules/app/routes/carrier/pages/orders/views/actions-view"
+import { OrdersActionsView } from "@/modules/app/routes/carrier/ui/views/orders-actions-view"
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ search?: string }> }) {
-    const { search } = await searchParams
+export default async function Page() {
 
-    return <ActionsView initialSearch={search} />
+    return <OrdersActionsView source="orders" />
 }

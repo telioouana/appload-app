@@ -5,31 +5,42 @@ import { DEFAULT_PAGE_LIMIT } from "@/constants"
 import { ORDERS_PATH } from "@/modules/app/routes/carrier/types/types"
 import { OrdersView } from "@/modules/app/routes/carrier/pages/orders/views/orders-view"
 
-export default async function Page({ params, searchParams }: {
+type Props = {
     params: Promise<{ path: ORDERS_PATH }>
-    searchParams: Promise<{ search?: string, "cargo-type"?: string }>
-}) {
+    searchParams: Promise<{
+        search?: string;
+        "cargo-type"?: string;
+        view?: string; // Good to include if you're using it
+    }>
+}
+
+export default async function Page({ params, searchParams }: Props) {
     const { path } = await params
-    const { search, "cargo-type": cargoType } = await searchParams
+    const resolvedSearchParams = await searchParams
+
+    const search = resolvedSearchParams.search?.trim() || undefined
+    const cargoType = resolvedSearchParams["cargo-type"]?.trim() || undefined
 
     const client = getQueryClient()
 
-    await client.prefetchInfiniteQuery(
-        trpc.orders.all.infiniteQueryOptions({
-            limit: DEFAULT_PAGE_LIMIT,
-            path
-        }, {
-            getNextPageParam: (lastPage) => lastPage.nextCursor
-        })
-    )
-
-    await client.prefetchQuery(
-        trpc.fleet.offer.queryOptions()
-    )
-
-    await client.prefetchQuery(
-        trpc.driver.offer.queryOptions()
-    )
+    await Promise.all([
+        client.prefetchInfiniteQuery(
+            trpc.orders.all.infiniteQueryOptions({
+                path,
+                search,
+                cargoType,
+                limit: DEFAULT_PAGE_LIMIT,
+            }, {
+                getNextPageParam: (lastPage) => lastPage.nextCursor
+            })
+        ),
+        client.prefetchQuery(
+            trpc.fleet.offer.queryOptions()
+        ),
+        client.prefetchQuery(
+            trpc.driver.offer.queryOptions()
+        )
+    ])
 
     return (
         <HydrateClient>

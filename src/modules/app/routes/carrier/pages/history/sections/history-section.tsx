@@ -1,34 +1,31 @@
-"use-client"
+"use client"
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
 
 import { DEFAULT_PAGE_LIMIT } from "@/constants"
+
 import { useTRPC } from "@/backend/trpc/client"
+
 import { InfiniteScroll } from "@/components/customs/scroll"
 
-import { ORDERS_PATH } from "@/modules/app/routes/shipper/types/types"
+import { TripCard } from "../../../ui/components/card/trip-card"
 import { EmptyOrders } from "@/modules/app/ui/components/states/empty-orders"
-import { OrderCard } from "@/modules/app/routes/shipper/ui/components/card/order-card"
 
 interface Props {
-    path: ORDERS_PATH
     search?: string
     cargoType?: string
 }
 
-export function PrivateOrdersSection({ path, search, cargoType }: Props) {
+export function HistorySection({ search, cargoType }: Props) {
     const trpc = useTRPC()
 
-    // 1. Fetch data from the server using the filters. 
-    // This ensures we search the entire database, not just loaded items.
     const {
         data: orders,
         hasNextPage,
         isFetchingNextPage,
         fetchNextPage,
     } = useSuspenseInfiniteQuery(
-        trpc.private.orders.infiniteQueryOptions({
-            path,
+        trpc.history.all.infiniteQueryOptions({
             limit: DEFAULT_PAGE_LIMIT,
             search: search?.trim() || undefined,
             cargoType: cargoType?.trim() || undefined,
@@ -44,23 +41,16 @@ export function PrivateOrdersSection({ path, search, cargoType }: Props) {
     const isSearching = !!(search?.trim() || cargoType?.trim())
 
     return (
-        <div className="flex flex-col gap-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+        <div className="flex flex-col">
+            <div className="grid grid-cols-1 gap-6 h-full w-full">
                 {items.length === 0 ? (
-                    <div className="col-span-full py-10">
-                        {/* Pass the search state to the empty component */}
+                    <div className="col-span-full">
                         <EmptyOrders isSearch={isSearching} />
                     </div>
                 ) : (
-                    items.map((values) => (
-                        <OrderCard
-                            key={values.order.id}
-                            values={{
-                                offers: [],
-                                ...values
-                            }}
-                        />
-                    ))
+                    items.map((values) => {
+                        return <TripCard key={values.trip.id} values={values} />
+                    })
                 )}
             </div>
 

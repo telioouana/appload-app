@@ -483,7 +483,41 @@
                         "grid": "Mudar para vista em grelha",
                         "list": "Mudar para vista em lista"
                     },
-                    "button": "Criar um novo pedido",
+                    "filters": {
+                        "title": "Filtrar por",
+                        "cargo-type": {
+                            "label": "Tipo de carga",
+                            "placeholder": "Seleccione uma das opções para filtrar",
+                            "options": {
+                                "agriculture-inputs": "Insumos Agrícolas",
+                                "agriculture-products": "Produtos Agrícolas",
+                                "construction": "Construção",
+                                "machinery-equipment": "Maquinaria e Equipamento",
+                                "fmcg": "Bens de Consumo (FMCG)",
+                                "general-cargo": "Carga Geral",
+                                "medicine": "Medicamentos",
+                                "mining": "Mineração",
+                                "oil-gas": "Óleo e Gás",
+                                "vehicles": "Veículos",
+                                "other": "Outros",
+                                "none": "Limpar filtro"
+                            }
+                        }
+                    }
+                }
+            },
+            "trips": {
+                "resume": {
+                    "orders": "Total de viagens",
+                    "total": "Valor total (MZN)",
+                    "distance": "Distância total (km)"
+                },
+                "actions": {
+                    "search": "Pesquisar viagem por ID, local de cargarregamento ou descargarregamento, motorista ou matricula do camião",
+                    "view": {
+                        "grid": "Mudar para vista em grelha",
+                        "list": "Mudar para vista em lista"
+                    },
                     "filters": {
                         "title": "Filtrar por",
                         "cargo-type": {
@@ -551,11 +585,16 @@
                     "loading-date": "Data de carregamento:",
                     "refrigerated": "Refrigerado",
                     "hazarduos": "Perigoso",
+                    "type": {
+                        "normal": "Viagen normal",
+                        "backload": "Viagen de Backload"
+                    },
                     "price": "Preço de transporte:"
                 },
                 "footer": {
                     "accept": "Aceitar",
                     "place-bid": "Submeter proposta",
+                    "update-bid": "Actualizar proposta",
                     "manage": "Gerir",
                     "view": "Ver",
                     "upload-proof": "Concluir viagem"
@@ -738,16 +777,122 @@
                         "close": "Fechar",
                         "accept": "Aceitar pedido"
                     }
+                }
+            }
+        },
+        "offer": {
+            "create": {
+                "header": {
+                    "title": "Criar nova proposta",
+                    "description": "Preencha o formulário para submeter uma proposta para este pedido"
                 },
-                "offer": {
-                    "header": {
-                        "title": "",
-                        "description": ""
+                "form": {
+                    "order": {
+                        "title": "Resumo do pedido",
+                        "fields": {
+                            "info": {
+                                "order": {
+                                    "route": "Rota"
+                                },
+                                "cargo": {
+                                    "category": {
+                                        "label": "Categoria",
+                                        "agriculture-inputs": "Insumos agrícolas",
+                                        "agriculture-products": "Produtos agrícolas",
+                                        "construction": "Construção",
+                                        "machinery-equipment": "Máquinas e equipamentos",
+                                        "fmcg": "Bens de consumo rápido",
+                                        "general-cargo": "Carga geral",
+                                        "medicine": "Medicamentos",
+                                        "mining": "Mineração",
+                                        "oil-gas": "Petróleo e gás",
+                                        "vehicles": "Veículos",
+                                        "other": "Outros"
+                                    },
+                                    "refrigerated": "Refrigerado",
+                                    "hazarduos": "Perigoso"
+                                }
+                            },
+                            "dates": {
+                                "label": "Datas",
+                                "description": "Se estiver disponível nas datas do cliente, mantenha como está",
+                                "proposed-loading-date": {
+                                    "label": "Carregamento",
+                                    "placeholder": "Seleccione uma data"
+                                },
+                                "proposed-offloading-date": {
+                                    "label": "Descarga",
+                                    "placeholder": "Seleccione uma data"
+                                }
+                            }
+                        }
                     },
-                    "footer": {
-                        "close": "Fechar",
-                        "send": "Enviar proposta"
+                    "price": {
+                        "label": "Preço (MZN) *",
+                        "description": "A Appload adicionará a comissão ao seu preço, ou seja, o cliente verá o preço total com a comissão incluída.",
+                        "placeholder": "Introduza o seu preço para este transporte",
+                        "error": "Não indicou o preço para este transporte"
+                    },
+                    "fleet": {
+                        "title": "Detalhes do motorista e da frota",
+                        "search": {
+                            "label": "Pesquisar",
+                            "description": "Utilize os campos abaixo para pesquisar os seus motoristas ou frota.",
+                            "driver": {
+                                "label": "Pesquisar motorista",
+                                "placeholder": "Introduza o nome do motorista"
+                            },
+                            "truck": {
+                                "label": "Pesquisar camião",
+                                "placeholder": "Introduza a matrícula do camião"
+                            }
+                        }
+                    },
+                    "fields": {
+                        "name": {
+                            "label": "Nome do motorista *",
+                            "placeholder": "Seleccione um motorista da pesquisa",
+                            "error": "O nome do motorista não foi fornecido"
+                        },
+                        "phone-number": {
+                            "label": "Número de telefone *",
+                            "placeholder": "Seleccione um motorista da pesquisa",
+                            "error": {
+                                "empty": "O número de telefone do motorista não foi fornecido",
+                                "invalid": "O número fornecido é inválido"
+                            }
+                        },
+                        "passport": {
+                            "label": "Passaporte",
+                            "placeholder": "Seleccione um motorista da pesquisa"
+                        },
+                        "truck-plate": {
+                            "label": "Matrícula do camião *",
+                            "placeholder": "Seleccione um camião da pesquisa",
+                            "error": "A matrícula do camião não foi fornecida"
+                        },
+                        "truck-age": {
+                            "label": "Classificação do camião",
+                            "placeholder": "Seleccione um camião da pesquisa",
+                            "value": {
+                                "recent": "Recente",
+                                "not-recent": "Não recente"
+                            },
+                            "error": "A classificação do camião não foi fornecida"
+                        },
+                        "trailer-plate": {
+                            "label": "Matrícula do reboque",
+                            "placeholder": "Seleccione um camião da pesquisa"
+                        },
+                        "link-plate": {
+                            "label": "Matrícula do link",
+                            "placeholder": "Seleccione um camião da pesquisa"
+                        }
                     }
+                },
+                "footer": {
+                    "close": "Fechar",
+                    "send": "Enviar proposta"
                 }
             }
         },
@@ -1652,12 +1797,17 @@
                     "loading-date": "Data de carregamento:",
                     "refrigerated": "Refrigerado",
                     "hazarduos": "Carga perigosa",
+                    "type": {
+                        "normal": "Viagen normal",
+                        "backload": "Viagen de Backload"
+                    },
                     "price": "Montante:"
                 },
                 "footer": {
                     "cancel": "Cancelar",
                     "view": "Ver",
-                    "update": "Atualizar"
+                    "update": "Atualizar",
+                    "offers": "Cotações ({offers})"
                 }
             },
             "dialog": {
@@ -1973,6 +2123,32 @@
                             }
                         }
                     }
+                }
+            }
+        },
+        "offers": {
+            "header": {
+                "title": "Lista de propostas",
+                "description": "As propostas recebidas para este pedido serão apresentadas aqui"
+            },
+            "card": {
+                "header": {
+                    "id": "FP-{id}",
+                    "status": {
+                        "pending": "Nova",
+                        "updated": "Actualizada",
+                        "rejected": "Rejeitada",
+                        "accepted": "Aceite"
+                    }
+                },
+                "content": {
+                    "load": "Pode carregar em",
+                    "offload": "Pode descarregar em",
+                    "quote": "Total desta proposta"
+                },
+                "footer": {
+                    "reject": "Rejeitar",
+                    "accept": "Aceitar"
                 }
             }
         },

@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm"
 import { TRPCError } from "@trpc/server"
 
 import { db } from "@/backend/db"
-import { cargo, order, organization, trip } from "@/backend/db/schema"
+import { cargo, offer, order, organization, trip } from "@/backend/db/schema"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
 import { CreateOrderSchema, ORDER_STATUS, TRIP_TYPE, TripSchema } from "@/backend/db/types"
 
@@ -115,12 +115,14 @@ export const shipperOrderRouter = createTRPCRouter({
     accept: protectedProcedure
         .input(
             z.object({
+                offerId: z.string(),
+                orderId: z.string(),
                 values: TripSchema
             })
         )
         .mutation(async ({ ctx, input }) => {
-            const { values } = input
             const { session } = ctx.auth
+            const { offerId, orderId, values } = input
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
@@ -129,5 +131,33 @@ export const shipperOrderRouter = createTRPCRouter({
                 .values({
                     ...values
                 })
+
+            await db
+                .update(order)
+                .set({ status: "booked" })
+                .where(eq(order.id, orderId))
+
+            await db
+                .update(offer)
+                .set({ status: "accepted" })
+                .where(eq(offer.id, offerId))
+        }),
+
+    reject: protectedProcedure
+        .input(
+            z.object({
+                offerId: z.string()
+            })
+        )
+        .mutation(async ({ ctx, input }) => {
+            const { session } = ctx.auth
+            const { offerId } = input
+
+            if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+
+            await db
+                .update(offer)
+                .set({ status: "rejected" })
+                .where(eq(offer.id, offerId))
         })
 })

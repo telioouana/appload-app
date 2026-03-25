@@ -6,16 +6,16 @@ import { authClient } from "@/backend/auth/auth-client"
 
 import { Skeleton } from "@/components/ui/skeleton"
 
-import { ORDERS_PATH } from "../../../types/types"
+import { TRIPS_PATH } from "../../../types/types"
 
-export function PageView({ path }: { path: ORDERS_PATH }) {
-    const t = useTranslations(`Carrier.marketplace.page.orders.${path}`)
+export function TripsPageView({ path }: { path: TRIPS_PATH }) {
+    const t = useTranslations(`Carrier.marketplace.page.trips.${path}`)
     const { data, isPending } = authClient.useActiveOrganization()
 
     if (isPending || !data) {
         return (
             <div className="flex flex-col gap-0.5">
-                <Skeleton className="h-[calc(var(--text-xl)+1rem)] w-36" />
+                <Skeleton className="h-[calc(var(--text-2xl)+1rem)] w-36" />
                 <Skeleton className="h-(--text-sm) w-64" />
             </div>
         )

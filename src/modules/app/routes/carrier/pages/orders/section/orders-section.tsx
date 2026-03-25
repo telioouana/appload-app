@@ -1,14 +1,17 @@
-"use-client"
+"use client"
 
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
+import { useSuspenseInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query"
 
 import { DEFAULT_PAGE_LIMIT } from "@/constants"
+
 import { useTRPC } from "@/backend/trpc/client"
+import { FISCAL_REGIME } from "@/backend/db/types"
+
 import { InfiniteScroll } from "@/components/customs/scroll"
 
-import { ORDERS_PATH } from "@/modules/app/routes/shipper/types/types"
+import { ORDERS_PATH } from "../../../types/types"
+import { OrderCard } from "../../../ui/components/card/order-card"
 import { EmptyOrders } from "@/modules/app/ui/components/states/empty-orders"
-import { OrderCard } from "@/modules/app/routes/shipper/ui/components/card/order-card"
 
 interface Props {
     path: ORDERS_PATH
@@ -16,18 +19,16 @@ interface Props {
     cargoType?: string
 }
 
-export function PrivateOrdersSection({ path, search, cargoType }: Props) {
+export function OrdersSection({ path, search, cargoType }: Props) {
     const trpc = useTRPC()
 
-    // 1. Fetch data from the server using the filters. 
-    // This ensures we search the entire database, not just loaded items.
     const {
         data: orders,
         hasNextPage,
         isFetchingNextPage,
         fetchNextPage,
     } = useSuspenseInfiniteQuery(
-        trpc.private.orders.infiniteQueryOptions({
+        trpc.orders.all.infiniteQueryOptions({
             path,
             limit: DEFAULT_PAGE_LIMIT,
             search: search?.trim() || undefined,
@@ -43,24 +44,40 @@ export function PrivateOrdersSection({ path, search, cargoType }: Props) {
     // 3. Determine if the user is currently filtering/searching
     const isSearching = !!(search?.trim() || cargoType?.trim())
 
+    const {
+        data: fleet
+    } = useSuspenseQuery(
+        trpc.fleet.offer.queryOptions()
+    )
+
+    const {
+        data: drivers
+    } = useSuspenseQuery(
+        trpc.driver.offer.queryOptions()
+    )
+
     return (
         <div className="flex flex-col gap-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                 {items.length === 0 ? (
-                    <div className="col-span-full py-10">
-                        {/* Pass the search state to the empty component */}
+                    <div className="col-span-full">
                         <EmptyOrders isSearch={isSearching} />
                     </div>
                 ) : (
-                    items.map((values) => (
-                        <OrderCard
-                            key={values.order.id}
-                            values={{
-                                offers: [],
-                                ...values
-                            }}
-                        />
-                    ))
+                    items.map(({ order, cargo, offer, organizationId, organizationName, fiscalRegime }) => {
+                        const values = {
+                            fleet,
+                            order,
+                            cargo,
+                            offer,
+                            drivers,
+                            organizationId,
+                            organizationName,
+                            fiscalRegime: fiscalRegime as typeof FISCAL_REGIME[number]
+                        }
+
+                        return <OrderCard key={order.id} values={values} />
+                    })
                 )}
             </div>
 

@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { TRPCError } from "@trpc/server"
-import { and, count, desc, eq, lt, or, sql, sum } from "drizzle-orm"
+import { and, count, desc, eq, lt, or, SQL, sql, sum } from "drizzle-orm"
 
 import { db } from "@/backend/db"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
@@ -16,8 +16,10 @@ export const ordersRouter = createTRPCRouter({
     all: protectedProcedure
         .input(
             z.object({
-                limit: z.number().min(1).max(8),
+                limit: z.number().min(1).max(20),
                 path: z.enum(PATHS),
+                search: z.string().optional(),
+                cargoType: z.string().optional(),
                 cursor: z.object({
                     id: z.number(),
                     updatedAt: z.date(),
@@ -25,124 +27,186 @@ export const ordersRouter = createTRPCRouter({
             })
         )
         .query(async ({ ctx, input }) => {
-            const { session } = ctx.auth
-            const { cursor, path, limit } = input
+            const { session } = ctx.auth;
+            const { cursor, path, limit, search, cargoType } = input;
 
-            if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+            if (!session.activeOrganizationId) {
+                throw new TRPCError({ code: "UNAUTHORIZED" });
+            }
 
-            const orders = await db
+            // 1. Core Filter: Only show 'open' orders for the Carrier Marketplace
+            const filters: (SQL | undefined)[] = [
+                eq(order.status, "open")
+            ];
+
+            // 2. Path-based Access Logic
+            const isPublic = eq(order.share, "non-subscribers");
+            const isPrivate = and(
+                eq(order.share, "subscribers"),
+                eq(network.carrierId, session.activeOrganizationId)
+            );
+
+            if (path === "private") {
+                filters.push(isPrivate);
+            } else if (path === "public") {
+                filters.push(isPublic);
+            } else {
+                // path === "all"
+                filters.push(or(isPublic, isPrivate));
+            }
+
+            // 3. Robust Search Logic (ID and Address States)
+            if (search?.trim()) {
+                const searchTerm = `%${search.trim().toLowerCase()}%`;
+                const searchId = parseInt(search.trim());
+
+                filters.push(
+                    or(
+                        sql`${order.loadingAddress}->0->>'state' ILIKE ${searchTerm}`,
+                        sql`${order.offloadingAddress}->0->>'state' ILIKE ${searchTerm}`,
+                        !isNaN(searchId) ? eq(order.legacyId, searchId) : undefined
+                    )
+                );
+            }
+
+            // 4. Cargo Category Filter
+            if (cargoType?.trim()) {
+                filters.push(eq(cargo.category, cargoType.trim()));
+            }
+
+            // 5. Cursor Pagination Logic
+            if (cursor) {
+                filters.push(
+                    or(
+                        lt(order.updatedAt, cursor.updatedAt),
+                        and(
+                            eq(order.updatedAt, cursor.updatedAt),
+                            lt(order.legacyId, cursor.id)
+                        )
+                    )
+                );
+            }
+
+            // 6. Execute Query with Carrier Identity Joins
+            const result = await db
                 .select({
                     order: order,
                     cargo: cargo,
                     offer: offer,
+                    // These fields reflect the Carrier for cross-screen state persistence
                     organizationId: organization.id,
                     organizationName: organization.name,
                     fiscalRegime: kyc.fiscalRegime,
                 })
                 .from(order)
                 .innerJoin(cargo, eq(cargo.orderId, order.id))
+                // Joins to Carrier's own profile for organization/fiscal data
                 .innerJoin(organization, eq(organization.id, session.activeOrganizationId))
                 .innerJoin(kyc, eq(kyc.organizationId, session.activeOrganizationId))
+                // Left join to network to validate private access
                 .leftJoin(network, and(
                     eq(network.shipperId, order.shipperId),
                     eq(network.carrierId, session.activeOrganizationId)
                 ))
+                // Left join to offer to see if current carrier already bid
                 .leftJoin(offer, and(
                     eq(offer.orderId, order.id),
                     eq(offer.carrierId, session.activeOrganizationId)
                 ))
-                .where(and(
-                    eq(order.status, "open"),
-                    path === "private"
-                        ? and(
-                            eq(order.share, "subscribers"),
-                            eq(network.carrierId, session.activeOrganizationId)
-                        )
-                        : path === "public"
-                            ? eq(order.share, "non-subscribers")
-                            : or(
-                                eq(order.share, "non-subscribers"),
-                                and(
-                                    eq(order.share, "subscribers"),
-                                    eq(network.carrierId, session.activeOrganizationId)
-                                )
-                            ),
-                    cursor
-                        ? or(
-                            lt(order.updatedAt, cursor.updatedAt),
-                            and(
-                                eq(order.updatedAt, cursor.updatedAt),
-                                lt(order.legacyId, cursor.id),
-                            )
-                        )
-                        : undefined,
-                ))
-                .orderBy(desc(order.legacyId), desc(order.updatedAt))
-                // Checking if there are more orders from the current user
-                .limit(limit + 1)
+                .where(and(...filters))
+                .orderBy(desc(order.updatedAt), desc(order.legacyId))
+                .limit(limit + 1);
 
-            const hasMore = orders.length > limit
-            // Removing the last item if there are more orders
-            const items = hasMore ? orders.slice(0, - 1) : orders
-            // Setting the next cursor to the last item if there are more orders
-            const lastItem = items[items.length - 1]
-            const nextCursor =
-                hasMore
-                    ? {
-                        id: lastItem.order.legacyId,
-                        updatedAt: lastItem.order.updatedAt,
-                    }
-                    : null
+            const hasMore = result.length > limit;
+            const items = hasMore ? result.slice(0, -1) : result;
+
+            const nextCursor = (hasMore && items.length > 0)
+                ? {
+                    id: items[items.length - 1].order.legacyId,
+                    updatedAt: items[items.length - 1].order.updatedAt,
+                }
+                : null;
 
             return {
                 items,
                 nextCursor
-            }
+            };
         }),
 
     resume: protectedProcedure
         .input(
             z.object({
                 path: z.enum(PATHS),
+                search: z.string().optional(),
+                cargoType: z.string().optional(),
             })
         )
         .query(async ({ ctx, input }) => {
-            const { path } = input
-            const { session } = ctx.auth
+            const { path, search, cargoType } = input;
+            const { session } = ctx.auth;
 
-            if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+            if (!session.activeOrganizationId) {
+                throw new TRPCError({ code: "UNAUTHORIZED" });
+            }
 
-            const [orders] = await db
+            // 1. Initial Filter: Only 'open' orders
+            const filters: (SQL | undefined)[] = [
+                eq(order.status, "open")
+            ];
+
+            // 2. Access Logic (Public vs Private)
+            const isPublic = eq(order.share, "non-subscribers");
+            const isPrivate = and(
+                eq(order.share, "subscribers"),
+                eq(network.carrierId, session.activeOrganizationId)
+            );
+
+            if (path === "private") {
+                filters.push(isPrivate);
+            } else if (path === "public") {
+                filters.push(isPublic);
+            } else {
+                filters.push(or(isPublic, isPrivate));
+            }
+
+            // 3. Robust Search Logic (Matching the availableOrders procedure)
+            if (search?.trim()) {
+                const searchTerm = `%${search.trim().toLowerCase()}%`;
+                const searchId = parseInt(search.trim());
+
+                filters.push(
+                    or(
+                        sql`${order.loadingAddress}->0->>'state' ILIKE ${searchTerm}`,
+                        sql`${order.offloadingAddress}->0->>'state' ILIKE ${searchTerm}`,
+                        !isNaN(searchId) ? eq(order.legacyId, searchId) : undefined
+                    )
+                );
+            }
+
+            // 4. Cargo Category Filter
+            if (cargoType?.trim()) {
+                filters.push(eq(cargo.category, cargoType.trim()));
+            }
+
+            // 5. Aggregate Query
+            const [stats] = await db
                 .select({
                     orders: count(order).mapWith(Number),
                     total: sum(order.price).mapWith(Number),
-                    distance: sql<number>`sum(${order.distance}) / 1000`.mapWith(Number)
+                    // Converting meters to KM and ensuring numeric return
+                    distance: sql<number>`COALESCE(SUM(${order.distance}), 0) / 1000`.mapWith(Number)
                 })
                 .from(order)
                 .innerJoin(cargo, eq(cargo.orderId, order.id))
+                // Join network to validate private load access
                 .leftJoin(network, and(
                     eq(network.shipperId, order.shipperId),
                     eq(network.carrierId, session.activeOrganizationId)
                 ))
-                .where(and(
-                    eq(order.status, "open"),
-                    path === "private"
-                        ? and(
-                            eq(order.share, "subscribers"),
-                            eq(network.carrierId, session.activeOrganizationId)
-                        )
-                        : path === "public"
-                            ? eq(order.share, "non-subscribers")
-                            : or(
-                                eq(order.share, "non-subscribers"),
-                                and(
-                                    eq(order.share, "subscribers"),
-                                    eq(network.carrierId, session.activeOrganizationId)
-                                )
-                            ),
-                ))
+                .where(and(...filters));
 
-            return orders
+            // Fallback for when no orders match the filter
+            return stats || { orders: 0, total: 0, distance: 0 };
         }),
 
     accept: protectedProcedure
@@ -164,7 +228,6 @@ export const ordersRouter = createTRPCRouter({
                 .values({
                     orderId: values.orderId,
                     carrierId: values.carrierId,
-                    carrierName: values.carrierName,
 
                     driverId: values.driverId,
                     driverName: values.driverName,
@@ -183,6 +246,7 @@ export const ordersRouter = createTRPCRouter({
                     status: "booked",
                     tripType: tripType.tripType as typeof TRIP_TYPE[number],
 
+                    carrierName: values.carrierName,
                     fiscalRegime: values.fiscalRegime as typeof FISCAL_REGIME[number],
                     carrierSubtotal: String(values.carrierSubtotal),
                     carrierVAT: String(values.carrierVAT),
@@ -198,7 +262,7 @@ export const ordersRouter = createTRPCRouter({
                     loadFactor: tripType.tripType === "backload" ? "0.8" : tripType.tripType === "normal" ? "1" : "",
                     defaultCoefficient: tripType.tripType === "backload" ? "0.03" : tripType.tripType === "normal" ? "0.12" : "",
                     totalFuelCost: tripType.tripType === "backload" ? String((values.distance / 1000) * 0.5 * 86) : "0"
-                 })
+                })
                 .returning()
 
             if (!data) throw new TRPCError({ code: "BAD_REQUEST" })
