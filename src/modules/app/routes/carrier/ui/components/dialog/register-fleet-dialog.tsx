@@ -258,7 +258,7 @@ export function RegisterFleetDialog() {
 
     return (
         <Dialog open={isOpen}>
-            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl gap-0 flex flex-col max-h-[70vh]">
+            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl gap-0 flex flex-col max-h-[80vh]">
                 <DialogHeader className="border-b p-6">
                     <div className="flex items-center gap-3">
                         <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center">

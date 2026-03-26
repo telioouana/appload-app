@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import { useDebouncedCallback } from "@tanstack/react-pacer";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { IconLayoutGrid, IconList, IconPlus, IconSearch, IconLoader2 } from "@tabler/icons-react";
 
 import { CATEGORIES } from "@/backend/db/types";
@@ -20,9 +20,16 @@ import { useCreateOrder } from "@/modules/app/routes/shipper/hooks/use-create-or
 import { CreateOrderDialog } from "@/modules/app/routes/shipper/ui/components/dialog/create-order-dialog";
 
 export function OrdersActionsView({ path }: { path: ORDERS_PATH }) {
-    const router = useRouter();
     const searchParams = useSearchParams();
-    
+    const pathname = usePathname();
+    const router = useRouter();
+
+    const share = pathname.includes("private")
+        ? "subscribers"
+        : pathname.includes("public")
+            ? "non-subscribers"
+            : null
+
     const t = useTranslations("Shipper.marketplace.actions");
     const { onOpenChange } = useCreateOrder();
 
@@ -101,13 +108,15 @@ export function OrdersActionsView({ path }: { path: ORDERS_PATH }) {
                         </Tabs>
                     </div>
 
-                    <div>
-                        <CreateOrderDialog path={path} share="subscribers" search={searchValue} cargoType={cargoValue} />
-                        <Button className="h-11" onClick={onOpenChange}>
-                            <IconPlus className="mr-2 size-4" />
-                            {t("button")}
-                        </Button>
-                    </div>
+                    {share !== null && (
+                        <div>
+                            <CreateOrderDialog path={path} share={share} search={searchValue} cargoType={cargoValue} />
+                            <Button className="h-11" onClick={onOpenChange}>
+                                <IconPlus className="mr-2 size-4" />
+                                {t("button")}
+                            </Button>
+                        </div>
+                    )}
                 </div>
 
                 <Separator />

@@ -8,7 +8,6 @@ import { FISCAL_REGIME, TRIP_TYPE, TRUCK_AGE, WEIGHT_UNIT } from "@/backend/db/t
 import { cargo, kyc, network, offer, order, organization, trip } from "@/backend/db/schema"
 
 import { TripSchema } from "../schemas/trip"
-import { getLogisticsTripType } from "@/lib/google"
 
 const PATHS = ["all", "private", "public"] as const
 
@@ -221,8 +220,6 @@ export const ordersRouter = createTRPCRouter({
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
-            const tripType = await getLogisticsTripType(values.loading.placeId, values.offloading.placeId)
-
             const [data] = await db
                 .insert(trip)
                 .values({
@@ -244,7 +241,7 @@ export const ordersRouter = createTRPCRouter({
                     weightUnit: values.weightUnit as typeof WEIGHT_UNIT[number],
 
                     status: "booked",
-                    tripType: tripType.tripType as typeof TRIP_TYPE[number],
+                    tripType: values.tripType as typeof TRIP_TYPE[number],
 
                     carrierName: values.carrierName,
                     fiscalRegime: values.fiscalRegime as typeof FISCAL_REGIME[number],
@@ -259,9 +256,9 @@ export const ordersRouter = createTRPCRouter({
                     shipperCurrency: values.shipperCurrency,
 
                     ageFactor: values.truckAge === "recent" ? "1" : "1.2",
-                    loadFactor: tripType.tripType === "backload" ? "0.8" : tripType.tripType === "normal" ? "1" : "",
-                    defaultCoefficient: tripType.tripType === "backload" ? "0.03" : tripType.tripType === "normal" ? "0.12" : "",
-                    totalFuelCost: tripType.tripType === "backload" ? String((values.distance / 1000) * 0.5 * 86) : "0"
+                    loadFactor: values.tripType === "backload" ? "0.8" : values.tripType === "normal" ? "1" : "",
+                    defaultCoefficient: values.tripType === "backload" ? "0.03" : values.tripType === "normal" ? "0.12" : "",
+                    totalFuelCost: values.tripType === "backload" ? String((values.distance / 1000) * 0.5 * 86) : "0"
                 })
                 .returning()
 

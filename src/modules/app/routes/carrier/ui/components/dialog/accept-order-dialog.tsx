@@ -9,7 +9,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { IconChecks, IconContract, IconX } from "@tabler/icons-react"
 
 import { useTRPC } from "@/backend/trpc/client"
-import { CURRENCY, FISCAL_REGIME, WEIGHT_UNIT } from "@/backend/db/types"
+import { CURRENCY, FISCAL_REGIME, TRIP_TYPE, WEIGHT_UNIT } from "@/backend/db/types"
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
@@ -57,7 +57,7 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
             offloading: values.order.offloadingAddress[0],
             proposedOffloadingDate: values.order.expectedOffloadingDate,
             distance: values.order.distance ?? 0,
-
+            tripType: values.order.tripType as typeof TRIP_TYPE[number],
             weightUnit: values.cargo.unit as typeof WEIGHT_UNIT[number],
 
             fiscalRegime: values.fiscalRegime as typeof FISCAL_REGIME[number],
@@ -93,7 +93,7 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
         form.reset()
         onClose()
     }
-
+    
     async function handleSubmit(values: TripSchemaForm) {
         form.clearErrors()
 
@@ -104,7 +104,7 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
 
     return (
         <Dialog open={isOpen}>
-            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl max-h-[70vh]" >
+            <DialogContent showCloseButton={false} className="p-0 md:max-w-2xl max-h-[80vh]" >
                 <DialogHeader className="border-b p-6">
                     <div className="flex items-center gap-3">
                         <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center">

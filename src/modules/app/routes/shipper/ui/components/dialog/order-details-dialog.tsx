@@ -29,7 +29,7 @@ export function OrderDetailsDialog() {
 
     return (
         <Dialog open={isOpen}>
-            <DialogContent showCloseButton={false} className="p-0 md:max-w-4xl gap-0 flex flex-col max-h-[70vh]" >
+            <DialogContent showCloseButton={false} className="p-0 md:max-w-4xl gap-0 flex flex-col max-h-[80vh]" >
                 <DialogHeader className="bg-primary/80 flex flex-col gap-4 rounded-t-xl p-6">
                     <div className="flex gap-2 items-center">
                         <div className="flex bg-primary-foreground/40 size-12 rounded-lg items-center justify-center">

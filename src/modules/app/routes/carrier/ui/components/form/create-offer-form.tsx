@@ -96,7 +96,6 @@ export function CreateOfferForm({ values }: Props) {
             setValue("type", value.truck.loadingBay?.type as typeof LOADING_BAY[number])
         }
 
-
         setPlate("")
         setFleet([])
     }

@@ -174,6 +174,18 @@ export function CreateOrderDialog({ path, share, search, cargoType }: Props) {
                         search: search?.trim() || undefined,
                         cargoType: cargoType?.trim() || undefined,
                     }))
+                } else {
+                    queryClient.invalidateQueries(trpc.public.orders.infiniteQueryOptions({
+                        path,
+                        limit: DEFAULT_PAGE_LIMIT,
+                        search: search?.trim() || undefined,
+                        cargoType: cargoType?.trim() || undefined,
+                    }))
+                    queryClient.invalidateQueries(trpc.public.resume.queryOptions({
+                        path,
+                        search: search?.trim() || undefined,
+                        cargoType: cargoType?.trim() || undefined,
+                    }))
                 }
                 handleClose()
             },

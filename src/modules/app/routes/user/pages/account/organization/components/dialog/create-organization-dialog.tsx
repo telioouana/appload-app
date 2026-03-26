@@ -238,7 +238,7 @@ export function CreateOrganizationDialog({ type }: Props) {
     if (isMobile) {
         return (
             <Drawer open={isOpen}>
-                <DrawerContent >
+                <DrawerContent className="max-h-[80vh]">
                     <DrawerHeader>
                         <DrawerTitle className="text-xl font-semibold">{t("title")}</DrawerTitle>
                         <DrawerClose
@@ -250,7 +250,7 @@ export function CreateOrganizationDialog({ type }: Props) {
                         </DrawerClose>
                     </DrawerHeader>
 
-                    <div className="max-h-[70vh]">
+                    <div className="max-h-[80vh]">
                         <FormProvider {...form}>
                             <form onSubmit={form.handleSubmit(handleSubmit)}>
                                 <div className="max-h-[50vh] overflow-y-scroll container-snap mb-6">
@@ -323,7 +323,7 @@ export function CreateOrganizationDialog({ type }: Props) {
 
     return (
         <Dialog open={isOpen} >
-            <DialogContent showCloseButton={false} className="md:max-w-3xl">
+            <DialogContent showCloseButton={false} className="md:max-w-3xl max-h-[80vh]">
                 <DialogHeader>
                     <DialogTitle className="text-xl font-semibold">{t("title")}</DialogTitle>
 
@@ -336,10 +336,10 @@ export function CreateOrganizationDialog({ type }: Props) {
                     </DialogClose>
                 </DialogHeader>
 
-                <div className="max-h-[70vh]">
+                <div className="max-h-[50vh]">
                     <FormProvider {...form}>
                         <form>
-                            <div className="max-h-[60vh] overflow-y-scroll container-snap mb-6">
+                            <div className="max-h-[50vh] overflow-y-scroll container-snap mb-6">
                                 {views.map(({ id, render }) => {
                                     return id === view && render
                                 })}

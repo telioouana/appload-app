@@ -20,7 +20,7 @@ export function MapView({ search, filterBy }: MapViewProps) {
     return (
         <ErrorBoundary fallback={<div>Failed to load map</div>}>
             <Suspense fallback={<div>Loading map...</div>}>
-                <div className="w-full h-full max-h-[60vh]">
+                <div className="w-full h-full max-h-[50vh]">
                     <MapComponent search={search} filterBy={filterBy} />
                 </div>
             </Suspense>
