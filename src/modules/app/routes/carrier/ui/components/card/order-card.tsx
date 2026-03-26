@@ -117,16 +117,16 @@ export function OrderCard({ values }: Props) {
                             </div>
                         </div>
                     ) : (
-                            <Badge
-                                variant="default"
-                                className={cn(
-                                    "w-full py-4 gap-1.5 inline-flex items-center rounded-sm border-none justify-center text-center font-semibold",
-                                    order.tripType === "backload" ? "bg-orange-300/20 text-orange-600" : "bg-teal-300/20 text-teal-600"
-                                )}
-                            >
-                                {order.tripType === "normal" ? <IconMapUp /> : <IconMapDown />}
-                                {t(`content.type.${order.tripType}`)}
-                            </Badge>
+                        <Badge
+                            variant="default"
+                            className={cn(
+                                "w-full py-4 gap-1.5 inline-flex items-center rounded-sm border-none justify-center text-center font-semibold",
+                                order.tripType === "backload" ? "bg-orange-300/20 text-orange-600" : "bg-teal-300/20 text-teal-600"
+                            )}
+                        >
+                            {order.tripType === "normal" ? <IconMapUp /> : <IconMapDown />}
+                            {t(`content.type.${order.tripType}`)}
+                        </Badge>
                     )
                 }
 
@@ -143,44 +143,49 @@ export function OrderCard({ values }: Props) {
                     </Button>
                 </div>
 
-                {order.share === "subscribers" && (
-                    <div className="w-full">
-                        <Button
-                            variant="success"
-                            className="w-full cursor-pointer font-normal"
-                            onClick={() => acceptOrder(values)}
-                        >
-                            <IconContract />
-                            {t("footer.accept")}
-                        </Button>
-                    </div>
-                )}
+                {order.share === "subscribers"
+                    ? (
+                        <div className="w-full">
+                            <Button
+                                variant="success"
+                                className="w-full cursor-pointer font-normal"
+                                onClick={() => acceptOrder(values)}
+                            >
+                                <IconContract />
+                                {t("footer.accept")}
+                            </Button>
+                        </div>
+                    ) : (
+                        <>
+                            {(!offer) && (
+                                <div className="w-full">
+                                    <Button
+                                        variant="default"
+                                        className="w-full cursor-pointer font-normal"
+                                        onClick={() => makeOffer(values)}
+                                    >
+                                        <IconInvoice />
+                                        {t("footer.place-bid")}
+                                    </Button>
+                                </div>
+                            )}
 
-                {(!offer) && (
-                    <div className="w-full">
-                        <Button
-                            variant="default"
-                            className="w-full cursor-pointer font-normal"
-                            onClick={() => makeOffer(values)}
-                        >
-                            <IconInvoice />
-                            {t("footer.place-bid")}
-                        </Button>
-                    </div>
-                )}
+                            {offer?.status === "rejected" && (
+                                <div className="w-full">
+                                    <Button
+                                        variant="default"
+                                        className="w-full cursor-pointer font-normal"
+                                        onClick={() => makeOffer(values)}
+                                    >
+                                        <IconInvoice />
+                                        {t("footer.update-bid")}
+                                    </Button>
+                                </div>
+                            )}
+                        </>
+                    )}
 
-                {offer?.status === "rejected" && (
-                    <div className="w-full">
-                        <Button
-                            variant="default"
-                            className="w-full cursor-pointer font-normal"
-                            onClick={() => makeOffer(values)}
-                        >
-                            <IconInvoice />
-                            {t("footer.update-bid")}
-                        </Button>
-                    </div>
-                )}
+
             </CardFooter>
         </Card >
     )

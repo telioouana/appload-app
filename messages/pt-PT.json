@@ -473,7 +473,7 @@
             },
             "orders": {
                 "resume": {
-                    "orders": "Total de pedidos",
+                    "global": "Total de pedidos",
                     "total": "Valor total (MZN)",
                     "distance": "Distância total (km)"
                 },
@@ -508,7 +508,7 @@
             },
             "trips": {
                 "resume": {
-                    "orders": "Total de viagens",
+                    "global": "Total de viagens",
                     "total": "Valor total (MZN)",
                     "distance": "Distância total (km)"
                 },
