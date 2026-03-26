@@ -3,6 +3,7 @@
 import { z } from "zod"
 import { toast } from "sonner";
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { IconX } from "@tabler/icons-react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,6 +42,7 @@ export function CreateOrganizationDialog({ type }: Props) {
     const { edgestore } = useEdgeStore()
     const client = useQueryClient()
     const isMobile = useIsMobile()
+    const router = useRouter()
     const trpc = useTRPC()
 
     const { isOpen, onClose } = useCreateOrganization()
@@ -60,11 +62,11 @@ export function CreateOrganizationDialog({ type }: Props) {
                 type,
             },
             kyc: {
+                fiscalRegime: "normal",
                 nuit: [{ url: "" }],
                 idCard: [{ url: "" }],
                 commercialCertificate: [{ url: "" }],
                 ...(type === "carrier" && {
-                    fiscalRegime: "normal",
                     alvara: [{ url: "" }],
                     bankLetter: [{ url: "" }],
                     republicBulletin: [{ url: "" }],
@@ -199,12 +201,11 @@ export function CreateOrganizationDialog({ type }: Props) {
 
             await kyc.mutateAsync({
                 organizationId,
-                values: form.getValues().kyc
+                type,
+                values: form.getValues()
             })
 
-            await authClient.organization.setActive({
-                organizationId
-            })
+            handleClose()
         } catch (error) {
             console.error(error)
             if (organizationId) {
@@ -214,6 +215,12 @@ export function CreateOrganizationDialog({ type }: Props) {
             toast.error("Something went wrong")
         } finally {
             setSubmitting(false)
+        
+            await authClient.organization.setActive({
+                organizationId
+            })
+
+            router.refresh()
         }
     }
 

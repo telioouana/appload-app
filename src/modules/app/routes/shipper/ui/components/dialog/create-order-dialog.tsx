@@ -26,9 +26,11 @@ import { CreateOrderPreviewForm } from "../form/create-order-preview-form"
 type Props = {
     path: ORDERS_PATH
     share: typeof SHARE[number]
+    search?: string
+    cargoType?: string
 }
 
-export function CreateOrderDialog({ path, share }: Props) {
+export function CreateOrderDialog({ path, share, search, cargoType }: Props) {
     const [view, setView] = useState<"form" | "preview">("form")
 
     const t = useTranslations("Shipper.order.dialog")
@@ -164,8 +166,14 @@ export function CreateOrderDialog({ path, share }: Props) {
                     queryClient.invalidateQueries(trpc.private.orders.infiniteQueryOptions({
                         path,
                         limit: DEFAULT_PAGE_LIMIT,
+                        search: search?.trim() || undefined,
+                        cargoType: cargoType?.trim() || undefined,
                     }))
-                    queryClient.invalidateQueries(trpc.private.resume.queryOptions({ path }))
+                    queryClient.invalidateQueries(trpc.private.resume.queryOptions({
+                        path,
+                        search: search?.trim() || undefined,
+                        cargoType: cargoType?.trim() || undefined,
+                    }))
                 }
                 handleClose()
             },

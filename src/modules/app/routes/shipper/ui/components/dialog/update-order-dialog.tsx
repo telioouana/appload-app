@@ -162,7 +162,11 @@ export function UpdateOrderDialog({ path, share, search, cargoType }: Props) {
                         search: search?.trim() || undefined,
                         cargoType: cargoType?.trim() || undefined,
                     }))
-                    queryClient.invalidateQueries(trpc.private.resume.queryOptions({ path }))
+                    queryClient.invalidateQueries(trpc.private.resume.queryOptions({
+                        path,
+                        search: search?.trim() || undefined,
+                        cargoType: cargoType?.trim() || undefined,
+                    }))
                 }
                 setView("form")
                 onClose()

@@ -32,7 +32,7 @@ export const shipperOrderRouter = createTRPCRouter({
             const distance = result?.[0]?.elements?.[0]?.distance?.value ?? 0
 
             values.price = values.price ?? 0
-            const tripType = await getLogisticsTripType(values.loadingAddress[0].placeId, values.offloadingAddress[0].placeId)
+            const tripType = await getLogisticsTripType(loadingPlace, offloadingPlace)
 
             if (orderId) {
                 const existing = await db.query.order.findFirst({ where: eq(order.id, orderId) })
@@ -43,7 +43,7 @@ export const shipperOrderRouter = createTRPCRouter({
                     .set({
                         status,
                         distance: distance,
-                        tripType: tripType.tripType as typeof TRIP_TYPE[number],
+                        tripType: tripType.tripType.toLowerCase() as typeof TRIP_TYPE[number],
                         ...values
                     })
                     .where(eq(order.id, orderId))
@@ -84,7 +84,7 @@ export const shipperOrderRouter = createTRPCRouter({
                             expectedLoadingDate: values.expectedLoadingDate,
                             expectedOffloadingDate: values.expectedOffloadingDate,
                             expectedTrucks: values.expectedTrucks,
-                            tripType: tripType.tripType as typeof TRIP_TYPE[number],
+                            tripType: tripType.tripType.toLowerCase() as typeof TRIP_TYPE[number],
                             share: values.share,
                             price: values.price,
                             currency: values.currency,

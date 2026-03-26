@@ -39,17 +39,15 @@ export const auth = betterAuth({
 
                     try {
                         const controller = new AbortController();
-                        const timeoutId = setTimeout(() => controller.abort(), 3000);
 
                         const geoRes = await fetch(`https://ip-api.com/json/${ip}`, {
                             signal: controller.signal
                         });
-                        clearTimeout(timeoutId);
 
                         if (geoRes.ok) {
                             const geoData = await geoRes.json();
-                            city = geoData.city || "Unknown";
-                            country = geoData.country || "Unknown";
+                            city = geoData.city;
+                            country = geoData.country;
                         }
                     } catch {
                         // Geolocation lookup failed, continue with defaults

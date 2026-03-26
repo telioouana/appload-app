@@ -41,21 +41,33 @@ export const organizationRouter = createTRPCRouter({
         .input(
             z.object({
                 organizationId: z.string().nonempty(),
-                values: CreateOrganizationSchema.shape.kyc
+                type: z.enum(["shipper", "carrier"]),
+                values: CreateOrganizationSchema
             })
         )
         .mutation(async ({ input }) => {
-            const { organizationId, values } = input
+            const { organizationId, type, values: { kyc: files } } = input
 
             await db
                 .insert(kyc)
                 .values({
                     organizationId,
-                    ...values,
+                    idCard: files.idCard,
+                    nuit: files.nuit,
+                    ...(type === "carrier") && {
+                        fiscalReginme: files.fiscalRegime,
+                        alvara: files.alvara,
+                        bankLetter: files.bankLetter,
+                        republicBulletin: files.republicBulletin,
+                        commercialExercise: files.commercialExercise,
+                    },
+                    ...(files.commercialCertificate[0].url !== "") && {
+                        commercialCertificate: files.commercialCertificate
+                    }
                 })
                 .onConflictDoUpdate({
                     target: kyc.organizationId,
-                    set: values,
+                    set: files,
                 })
         })
 })

@@ -59,7 +59,6 @@ export function KYCDetailsForm() {
             control,
             name: "kyc.alvara",
             rules: {
-                minLength: 1,
                 maxLength: 5
             }
         })

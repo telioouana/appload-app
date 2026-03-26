@@ -102,7 +102,7 @@ export function OrdersActionsView({ path }: { path: ORDERS_PATH }) {
                     </div>
 
                     <div>
-                        <CreateOrderDialog path={path} share="subscribers" />
+                        <CreateOrderDialog path={path} share="subscribers" search={searchValue} cargoType={cargoValue} />
                         <Button className="h-11" onClick={onOpenChange}>
                             <IconPlus className="mr-2 size-4" />
                             {t("button")}

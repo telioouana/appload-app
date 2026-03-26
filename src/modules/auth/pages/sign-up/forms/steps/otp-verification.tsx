@@ -83,11 +83,10 @@ export function OTPVerification({ callbackURL, changeStep }: Props) {
 
         await authClient.signIn.email({
             email: values.step2.email,
-            password: values.step3.password,
-            callbackURL
+            password: values.step3.password
         }, {
             onSuccess: () => {
-                router.push(callbackURL)
+                router.push(`/u/redirect?callback=${callbackURL}`)
                 setPending(false)
             },
             onError: (error) => {

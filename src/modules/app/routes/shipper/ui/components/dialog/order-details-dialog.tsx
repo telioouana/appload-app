@@ -29,7 +29,7 @@ export function OrderDetailsDialog() {
 
     return (
         <Dialog open={isOpen}>
-            <DialogContent showCloseButton={false} className="p-0 md:max-w-4xl gap-0 flex flex-col max-h-9/12" >
+            <DialogContent showCloseButton={false} className="p-0 md:max-w-4xl gap-0 flex flex-col max-h-[70vh]" >
                 <DialogHeader className="bg-primary/80 flex flex-col gap-4 rounded-t-xl p-6">
                     <div className="flex gap-2 items-center">
                         <div className="flex bg-primary-foreground/40 size-12 rounded-lg items-center justify-center">
@@ -73,18 +73,18 @@ export function OrderDetailsDialog() {
                     </DialogClose>
                 </DialogHeader>
 
-                <Tabs value={tab} onValueChange={(value) => setTab(value as TAB)} className="flex-1">
+                <Tabs value={tab} onValueChange={(value) => setTab(value as TAB)} className="flex-1 pb-6">
                     <div className="p-6 border-b">
                         <TabsList>
                             <TabsTrigger value="overview">{t("tabs.triggers.overview")}</TabsTrigger>
                             <TabsTrigger value="tracking">{t("tabs.triggers.tracking")}</TabsTrigger>
-                            <TabsTrigger value="documents">{t("tabs.triggers.documents")}</TabsTrigger>
-                            <TabsTrigger value="financial">{t("tabs.triggers.financial")}</TabsTrigger>
-                            <TabsTrigger value="timeline">{t("tabs.triggers.timeline")}</TabsTrigger>
+                            <TabsTrigger value="documents" className="hidden">{t("tabs.triggers.documents")}</TabsTrigger>
+                            <TabsTrigger value="financial" className="hidden">{t("tabs.triggers.financial")}</TabsTrigger>
+                            <TabsTrigger value="timeline" className="hidden">{t("tabs.triggers.timeline")}</TabsTrigger>
                         </TabsList>
                     </div>
 
-                    <div className="no-scrollbar p-6 h-full max-h-[40vh] overflow-y-auto">
+                    <div className="no-scrollbar p-6 h-full max-h-[50vh] overflow-y-auto">
                         <TabsContent value="overview" className="h-full">
                             <OverviewOrderTab values={values} />
                         </TabsContent>
@@ -116,7 +116,7 @@ export function OrderDetailsDialog() {
                     </div>
                 </Tabs>
 
-                <DialogFooter className="p-6 border-t">
+                <DialogFooter className="p-6 hidden">
                     <Button>Update</Button>
                     <Button>Cancel</Button>
                 </DialogFooter>

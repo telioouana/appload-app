@@ -35,11 +35,11 @@ export function OrganizationSchema(t: (key: string) => string) {
             fiscalRegime: z.enum(FISCAL_REGIME, { error: t("kyc.fiscal-regime.error") }),
             idCard: z.array(z.object({ url: z.url({ error: t("kyc.id-card.error.empty") }) })).min(1, { error: t("kyc.id-card.error.length") }).max(2, { error: t("kyc.id-card.error.length") }),
             nuit: z.array(z.object({ url: z.url({ error: t("kyc.nuit.error.empty") }) })).min(1, { error: t("kyc.nuit.error.length") }).max(2, { error: t("kyc.nuit.error.length") }),
-            alvara: z.array(z.object({ url: z.url({ error: t("kyc.alvara.error.empty") }) })).min(1, { error: t("kyc.alvara.error.length") }).max(5, { error: t("kyc.alvara.error.length") }),
-            bankLetter: z.array(z.object({ url: z.url({ error: t("kyc.bank-letter.error.empty") }) })).min(1, { error: t("kyc.bank-letter.error.length") }).max(2, { error: t("kyc.bank-letter.error.length") }),
-            republicBulletin: z.array(z.object({ url: z.url({ error: t("kyc.republic-bulletin.error.empty") }) })).min(1, { error: t("kyc.republic-bulletin.error.length") }).max(2, { error: t("kyc.republic-bulletin.error.length") }),
-            commercialExercise: z.array(z.object({ url: z.url({ error: t("kyc.commercial-exercise.error.empty") }) })).min(1, { error: t("kyc.commercial-exercise.error.length") }).max(2, { error: t("kyc.commercial-exercise.error.length") }),
-            commercialCertificate: z.array(z.object({ url: z.url({ error: t("kyc.commercial-certificate.error.empty") }) })).min(1, { error: t("kyc.commercial-certificate.error.length") }).max(5, { error: t("kyc.commercial-certificate.error.length") }),
+            alvara: z.array(z.object({ url: z.url({ error: t("kyc.alvara.error.empty") }) })).max(5, { error: t("kyc.alvara.error.length") }),
+            bankLetter: z.array(z.object({ url: z.url({ error: t("kyc.bank-letter.error.empty") }) })).max(2, { error: t("kyc.bank-letter.error.length") }),
+            republicBulletin: z.array(z.object({ url: z.url({ error: t("kyc.republic-bulletin.error.empty") }) })).max(2, { error: t("kyc.republic-bulletin.error.length") }),
+            commercialExercise: z.array(z.object({ url: z.url({ error: t("kyc.commercial-exercise.error.empty") }) })).max(2, { error: t("kyc.commercial-exercise.error.length") }),
+            commercialCertificate: z.array(z.object({ url: z.url({ error: t("kyc.commercial-certificate.error.empty") }) })).max(5, { error: t("kyc.commercial-certificate.error.length") }),
         })
     })
 }
