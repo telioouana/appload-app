@@ -90,7 +90,7 @@ export function SignInForm({
 
         if (result.error) {
             const { error } = result
-            if (error.message) setStatus(error.message)
+            if (error.message === "Invalid email or password") setStatus("INVALID_CREDENTIALS")
             else if (error.status === 403) setStatus("FORBIDEN_ACCESS")
             else if (error.status === 404) setStatus("INVALID_CREDENTIALS")
             else setStatus("OTHER")
