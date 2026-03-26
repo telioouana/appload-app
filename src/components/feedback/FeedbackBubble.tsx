@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
-export default function FeedbackBubble({ toEmail = "info@apploadafrica.com" }: { toEmail?: string }) {
+export default function FeedbackBubble({ toEmail = "telio@apploadafrica.com" }: { toEmail?: string }) {
   const [open, setOpen] = useState(false)
   const [message, setMessage] = useState("")
   const [sending, setSending] = useState(false)
