@@ -24,7 +24,13 @@ import { DEFAULT_PAGE_LIMIT } from "@/constants"
 export const TripSchema = createTripSchema((k: string) => k)
 export type TripSchemaForm = z.infer<typeof TripSchema>
 
-export function AcceptOrderDialog({ path }: { path: ORDERS_PATH }) {
+type Props = {
+    path: ORDERS_PATH
+    search?: string
+    cargoType?: string
+}
+
+export function AcceptOrderDialog({ path, search, cargoType }: Props) {
     const { isOpen, onClose, values } = useAcceptOrder()
 
     if (!values) return null
@@ -35,11 +41,13 @@ export function AcceptOrderDialog({ path }: { path: ORDERS_PATH }) {
             onClose={onClose}
             values={values}
             path={path}
+            cargoType={cargoType}
+            search={search}
         />
     )
 }
 
-function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: () => void, path: ORDERS_PATH, values: OrderValues }) {
+function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: boolean, onClose: () => void, path: ORDERS_PATH, values: OrderValues, search?: string, cargoType?: string }) {
     const t = useTranslations("Carrier.order.dialog.accept")
 
     const TripSchema = useMemo(() => createTripSchema(t), [t])
@@ -80,10 +88,16 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
         trpc.orders.accept.mutationOptions({
             onSuccess: () => {
                 queryClient.invalidateQueries(trpc.orders.all.infiniteQueryOptions({
-                    limit: DEFAULT_PAGE_LIMIT,
                     path,
+                    limit: DEFAULT_PAGE_LIMIT,
+                    search: search?.trim() || undefined,
+                    cargoType: cargoType?.trim() || undefined,
                 }))
-                queryClient.invalidateQueries(trpc.orders.resume.queryOptions({ path }))
+                queryClient.invalidateQueries(trpc.orders.resume.queryOptions({
+                    path,
+                    search: search?.trim() || undefined,
+                    cargoType: cargoType?.trim() || undefined,
+                }))
                 handleClose()
             }
         })
@@ -93,7 +107,7 @@ function Render({ isOpen, onClose, path, values }: { isOpen: boolean, onClose: (
         form.reset()
         onClose()
     }
-    
+
     async function handleSubmit(values: TripSchemaForm) {
         form.clearErrors()
 

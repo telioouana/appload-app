@@ -69,7 +69,7 @@ export const shipperKpisRouter = createTRPCRouter({
                     eq(order.status, "completed"),
                     eq(trip.status, "completed"),
                     eq(order.currency, currency),
-                    between(trip.createdAt, startDate, endDate),
+                    between(trip.updatedAt, startDate, endDate),
                     eq(order.shipperId, session.activeOrganizationId)
                 ))
 
@@ -196,7 +196,7 @@ export const shipperKpisRouter = createTRPCRouter({
             const kpis = await db
                 .select({
                     offload: avg(trip.daysSpendOffloading).mapWith(Number),
-                    date: trip.arrivalAtLoading
+                    date: trip.arrivalAtOffloading
                 })
                 .from(order)
                 .innerJoin(trip, eq(trip.orderId, order.id))
@@ -207,7 +207,7 @@ export const shipperKpisRouter = createTRPCRouter({
                     between(trip.createdAt, startDate, endDate),
                     eq(order.shipperId, session.activeOrganizationId)
                 ))
-                .groupBy(trip.arrivalAtLoading)
+                .groupBy(trip.arrivalAtOffloading)
 
 
             return kpis

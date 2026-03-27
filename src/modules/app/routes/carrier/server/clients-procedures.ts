@@ -41,11 +41,11 @@ export const clientsRouter = createTRPCRouter({
                     eq(network.shipperId, shippers.id),
                     eq(network.carrierId, session.activeOrganizationId)
                 ))
-                .innerJoin(order, and(
+                .leftJoin(order, and(
                     eq(order.shipperId, shippers.id),
                     eq(order.share, "subscribers")
                 ))
-                .innerJoin(trip, and(
+                .leftJoin(trip, and(
                     eq(trip.orderId, order.id),
                     eq(trip.carrierId, session.activeOrganizationId),
                     eq(trip.status, "completed")

@@ -1,89 +1,76 @@
 "use client"
 
 import { z } from "zod"
-import { useMemo } from "react";
-import { useTranslations } from "next-intl";
+import { useMemo } from "react"
+import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormProvider, useForm } from "react-hook-form"
-import { IconInvoice, IconSend, IconX } from "@tabler/icons-react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { IconChecks, IconContract, IconX } from "@tabler/icons-react"
 
-import { CURRENCY } from "@/backend/db/types";
 import { useTRPC } from "@/backend/trpc/client"
+import { CURRENCY, FISCAL_REGIME, TRIP_TYPE, WEIGHT_UNIT } from "@/backend/db/types"
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
-import { createOfferSchema } from "../../../schemas/offer";
-import { CreateOfferForm } from "../form/create-offer-form";
-import { ORDERS_PATH, OrderValues } from "../../../types/types";
-import { useCreateOffer } from "../../../hooks/use-create-offer";
+import { manageTripSchema } from "../../../schemas/trip"
+import { TRIPS_PATH, TripValues } from "../../../types/types"
 
-import { DEFAULT_PAGE_LIMIT } from "@/constants";
+import { DEFAULT_PAGE_LIMIT } from "@/constants"
+import { useManageTrip } from "../../../hooks/use-manage-trip"
 
-type Props = {
-    path: ORDERS_PATH
-    search?: string
-    cargoType?: string
-}
+export const TripSchema = manageTripSchema((k: string) => k)
+export type TripSchemaForm = z.infer<typeof TripSchema>
 
-export function CreateOfferDialog({ path, search, cargoType }: Props) {
-    const { isOpen, onClose, values } = useCreateOffer()
+export function ManageTripDialog({ path, search, cargoType }: { path: TRIPS_PATH, search?: string, cargoType?: string }) {
+    const { isOpen, onClose, values } = useManageTrip()
 
     if (!values) return null
 
     return (
         <Render
-            isOpen={isOpen}
-            onClose={onClose}
-            values={values}
             path={path}
-            cargoType={cargoType}
+            isOpen={isOpen}
+            values={values}
             search={search}
+            onClose={onClose}
+            cargoType={cargoType}
         />
     )
 }
 
-function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: boolean, onClose: () => void, path: ORDERS_PATH, values: OrderValues, search?: string, cargoType?: string }) {
-    const t = useTranslations("Carrier.offer.create")
+function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: boolean, onClose: () => void, path: TRIPS_PATH, values: TripValues, search?: string, cargoType?: string }) {
+    const t = useTranslations("Carrier.trip.dialog.manage")
 
-    const OfferSchema = useMemo(
-        () => createOfferSchema(t),
-        [t]
-    )
-    type OfferSchemaForm = z.infer<typeof OfferSchema>
+    const TripSchema = useMemo(() => manageTripSchema(t), [t])
+    type TripSchemaForm = z.infer<typeof TripSchema>
 
-    const form = useForm<OfferSchemaForm>({
-        resolver: zodResolver(OfferSchema),
+    const form = useForm<TripSchemaForm>({
+        resolver: zodResolver(TripSchema),
         defaultValues: {
-            orderId: values.order.id,
-            carrierId: values.organizationId,
-            carrierName: values.organizationName,
-            fiscalRegime: values.fiscalRegime,
-
-            proposedLoadingDate: values.order.expectedLoadingDate,
-            proposedOffloadingDate: values.order.expectedOffloadingDate,
-            currency: values.order.currency as typeof CURRENCY[number],
-        },
+            tripId: values.trip.id,
+        }
     })
 
     const queryClient = useQueryClient()
     const trpc = useTRPC()
 
-    const send = useMutation(
-        trpc.offer.send.mutationOptions({
+    const accept = useMutation(
+        trpc.orders.accept.mutationOptions({
             onSuccess: () => {
-                queryClient.invalidateQueries(trpc.orders.all.infiniteQueryOptions({
+                queryClient.invalidateQueries(trpc.trips.all.infiniteQueryOptions({
                     path,
                     limit: DEFAULT_PAGE_LIMIT,
                     search: search?.trim() || undefined,
                     cargoType: cargoType?.trim() || undefined,
                 }))
-                queryClient.invalidateQueries(trpc.orders.resume.queryOptions({
+                queryClient.invalidateQueries(trpc.trips.resume.queryOptions({
                     path,
                     search: search?.trim() || undefined,
                     cargoType: cargoType?.trim() || undefined,
                 }))
+                handleClose()
             }
         })
     )
@@ -93,9 +80,9 @@ function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: 
         onClose()
     }
 
-    async function handleSubmit(values: OfferSchemaForm) {
+    async function handleSubmit(values: TripSchemaForm) {
         form.clearErrors()
-        await send.mutateAsync({ values })
+        
     }
 
     return (
@@ -104,7 +91,7 @@ function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: 
                 <DialogHeader className="border-b p-6">
                     <div className="flex items-center gap-3">
                         <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                            <IconInvoice className="size-5 text-primary" />
+                            <IconContract className="size-5 text-primary" />
                         </div>
                         <div>
                             <DialogTitle className="text-xl font-semibold">{t("header.title")}</DialogTitle>
@@ -124,7 +111,7 @@ function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: 
                 <FormProvider {...form} >
                     <form onSubmit={form.handleSubmit(handleSubmit)}>
                         <div className="flex max-h-[50vh] px-6 pb-6 overflow-y-scroll container-snap">
-                            <CreateOfferForm values={values} />
+
                         </div>
 
                         <DialogFooter className="flex justify-end items-center border-t p-6 gap-2">
@@ -133,7 +120,7 @@ function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: 
                                     type="button"
                                     variant="outline"
                                     onClick={handleClose}
-                                    disabled={send.isPending || form.formState.isSubmitting}
+                                    disabled={accept.isPending || form.formState.isSubmitting}
                                 >
                                     <IconX />
                                     {t("footer.close")}
@@ -144,10 +131,10 @@ function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: 
                                 <Button
                                     type="submit"
                                     variant="success"
-                                    disabled={send.isPending || form.formState.isSubmitting}
+                                    disabled={accept.isPending || form.formState.isSubmitting}
                                 >
-                                    <IconSend />
-                                    {t("footer.send")}
+                                    <IconChecks />
+                                    {t("footer.accept")}
                                 </Button>
                             </div>
                         </DialogFooter>
@@ -157,4 +144,3 @@ function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: 
         </Dialog>
     )
 }
-

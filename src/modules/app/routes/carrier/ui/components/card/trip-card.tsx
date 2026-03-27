@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { TripValues } from "../../../types/types"
 import { StatusBadge, StatusKey } from "@/modules/app/ui/components/badge/status-badge";
 import { IconArrowRight, IconClock, IconLineDashed, IconMapPin, IconRoute, IconUser } from "@tabler/icons-react";
+import { Button } from "@/components/ui/button";
 
 interface Props {
     values: TripValues
@@ -19,9 +20,9 @@ export function TripCard({ values }: Props) {
 
     return (
         <Card className="border border-card hover:border-primary p-0">
-            <div className="flex gap-2">
+            <CardContent className="p-4 flex gap-4">
                 <div className="flex flex-col flex-1 gap-4 w-full">
-                    <CardHeader className="pt-4 px-4">
+                    <CardHeader className="p-0">
                         <div className="flex justify-between items-start gap-4">
                             <div className="flex flex-col gap-1.5 text-sm">
                                 <div className="flex gap-4 items-center leading-tight">
@@ -52,14 +53,15 @@ export function TripCard({ values }: Props) {
                                 </div>
 
                                 <div className="flex gap-1 items-center leading-tight text-xs justify-end">
-                                    <span className="text-sm text-muted-foreground text-end">{trip.loadedWeight ?? cargo.quantity}</span>
+                                    <span className="text-sm text-muted-foreground text-end">{trip.loadedWeight ??
+                                        cargo.quantity}</span>
                                     <span className="text-sm text-muted-foreground text-end">{trip.weightUnit}</span>
                                 </div>
                             </div>
                         </div>
                     </CardHeader>
 
-                    <CardContent className="grid grid-cols-5 items-start gap-8 pb-4 px-4">
+                    <div className="grid grid-cols-5 items-start gap-8">
                         <div className="flex items-start gap-2 w-full">
                             <IconRoute className="text-primary size-5" stroke={1.5} />
                             <div className="flex flex-col gap-1 w-full">
@@ -120,13 +122,17 @@ export function TripCard({ values }: Props) {
                                 </div>
                             </div>
                         )}
-                    </CardContent>
+                    </div>
                 </div>
-
-                <div className="flex flex-col gap2">
-
+    
+                <div className="space-y-4 hidden">
+                    <Button
+                        className="bg-orange-300/80 text-primary font-normal"
+                    >
+                        Manage
+                    </Button>
                 </div>
-            </div>
+            </CardContent>
         </Card>
     )
 }
