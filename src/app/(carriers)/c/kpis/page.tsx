@@ -1,4 +1,7 @@
-import { getQueryClient, HydrateClient, trpc } from "@/backend/trpc/server";
+import { getQueryClient, HydrateClient, trpc } from '@/backend/trpc/server';
+
+import { CarrierKPIsView } from '@/modules/app/routes/carrier/pages/kpis/views/carrier-kpis-view';
+import { CarrierTendenciesView } from '@/modules/app/routes/carrier/pages/kpis/views/carrier-tendencies-view';
 
 import { PERIOD } from "@/modules/app/routes/carrier/types/types";
 import { CarrierKPIsView } from "@/modules/app/routes/carrier/pages/kpis/views/carrier-kpis-view";

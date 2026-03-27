@@ -5,7 +5,11 @@ import { UAParser } from "ua-parser-js"
 import { Analytics } from "@vercel/analytics/next"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale, getMessages } from "next-intl/server"
+import { headers } from "next/headers"
 import { Montserrat, Playfair_Display, Source_Code_Pro } from "next/font/google";
+import { UAParser } from "ua-parser-js"
+
+import { SafariBlock } from "@/components/safari-block"
 
 import "./globals.css";
 
