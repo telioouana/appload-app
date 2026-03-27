@@ -13,9 +13,19 @@ type Props = {
     }[]
 }
 
+function pickEvenly<T>(arr: T[], count: number): T[] {
+    if (arr.length <= count) return arr
+    return Array.from({ length: count }, (_, i) =>
+        arr[Math.round(i * (arr.length - 1) / (count - 1))]
+    )
+}
+
+
 export function TendenciesOffloadingCard({ data }: Props) {
     const t = useTranslations("Shipper.kpis.tendencies.offloading")
     const locale = useLocale()
+
+    const xTicks = pickEvenly(data.map(d => d.date), 5)
 
     const chartConfig = {
         offload: {
@@ -57,11 +67,12 @@ export function TendenciesOffloadingCard({ data }: Props) {
                             tickLine={false}
                             axisLine={false}
                             tickMargin={8}
+                            ticks={xTicks as unknown as string[]}
                             tickFormatter={(value) => {
                                 const date = new Date(value)
                                 return date.toLocaleDateString(locale, {
-                                    month: "short",
-                                    day: "numeric",
+                                    month: "2-digit",
+                                    day: "2-digit",
                                 })
                             }}
                         />

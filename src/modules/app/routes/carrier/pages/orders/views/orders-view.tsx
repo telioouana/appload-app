@@ -14,8 +14,8 @@ export function OrdersView({ path, search, cargoType }: { path: ORDERS_PATH, sea
     return (
         <Suspense fallback={<OrdersLoadingFallback />} >
             <ErrorBoundary fallback={<OrdersErrorFallback />} >
-                <AcceptOrderDialog path={path} />
-                <CreateOfferDialog path={path} />
+                <AcceptOrderDialog path={path} search={search} cargoType={cargoType} />
+                <CreateOfferDialog path={path} search={search} cargoType={cargoType} />
 
                 <OrdersSection path={path} search={search} cargoType={cargoType} />
             </ErrorBoundary>

@@ -6,7 +6,6 @@ import { TailwindProvider } from "@/components/providers/tailwind";
 type Props = {
     url: string,
     name: string,
-
 }
 
 export async function VerificationEmail({ name, url }: Props) {

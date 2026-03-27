@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { AddressSchema, CURRENCY, FISCAL_REGIME, TRIP_TYPE, TRUCK_AGE, WEIGHT_UNIT } from "@/backend/db/types";
+import { AddressSchema, CURRENCY, FISCAL_REGIME, TRIP_STATUS, TRIP_TYPE, TRUCK_AGE, WEIGHT_UNIT } from "@/backend/db/types";
 
 export function createTripSchema(t: (key: string) => string) {
     const schema = z.object({
@@ -39,6 +39,21 @@ export function createTripSchema(t: (key: string) => string) {
     })
 
     return schema
+}
+
+export function manageTripSchema(t: (key: string) => string) {
+    return z.object({
+        tripId: z.string().nonempty(),
+        trackingId: z.string().optional(),
+        truckPlate: z.string().nonempty(),
+        location: z.object({
+            address: z.string({ error: t("") }).nonempty({ error: t("") }),
+            placeId: z.string().nonempty(),
+            country: z.string().nonempty(),
+            state: z.string().nonempty(),
+        }),
+        status: z.enum(TRIP_STATUS, { error: t("") })
+    })
 }
 
 export const TripSchema = createTripSchema((k) => k)

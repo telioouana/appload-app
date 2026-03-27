@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
-import { apiAuthPrefix, authRoutes, publicRoutes } from "@/routes"
+import { apiAuthPrefix, apiFeedbackPrefix, authRoutes, publicRoutes } from "@/routes"
 
 // This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {
@@ -9,10 +9,11 @@ export async function proxy(request: NextRequest) {
     const { nextUrl } = request
 
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
+    const isApiFeedbackRoute = nextUrl.pathname.startsWith(apiFeedbackPrefix)
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname)
     const isAuthRoute = authRoutes.includes(nextUrl.pathname)
 
-    if (isApiAuthRoute) return NextResponse.next()
+    if (isApiAuthRoute || isApiFeedbackRoute) return NextResponse.next()
 
     if (isPublicRoute) {
         return NextResponse.redirect(new URL(

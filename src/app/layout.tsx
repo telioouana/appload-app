@@ -11,6 +11,7 @@ import "./globals.css";
 
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { FeedbackMount } from "@/components/feedback/mount";
 import { ThemeProvider } from "@/components/providers/theme-provider"
 
 import { EdgeStoreProvider } from "@/lib/edgestore"
@@ -71,6 +72,7 @@ export default async function RootLayout({
                                     <Analytics />
                                     <Toaster />
                                     {children}
+                                    <FeedbackMount />
                                 </EdgeStoreProvider>
                             </TooltipProvider>
                         )}

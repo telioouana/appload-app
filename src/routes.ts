@@ -27,5 +27,6 @@ export const authRoutes: string[] = [
  * @type { string }
  */
 export const apiAuthPrefix: string = "/api/auth"
+export const apiFeedbackPrefix: string = "/api/feedback"
 
 export const DEFAULT_LOGIN_REDIRECT = "/dashboard"
