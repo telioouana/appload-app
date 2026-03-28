@@ -84,6 +84,7 @@ function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: 
                     search: search?.trim() || undefined,
                     cargoType: cargoType?.trim() || undefined,
                 }))
+                handleClose()
             }
         })
     )

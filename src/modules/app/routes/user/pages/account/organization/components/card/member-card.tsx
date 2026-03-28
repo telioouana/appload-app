@@ -22,7 +22,7 @@ interface Props {
 export function MemberCard({ member }: Props) {
     const t = useTranslations("User.account.organization.views.team.member-card")
 
-    const [isPending, setPending] = useState<boolean>(false)
+    const [isPending, setPending] = useState<boolean>(true)
     const router = useRouter()
 
     const { role, user: { name, email, image } } = member
@@ -86,7 +86,7 @@ export function MemberCard({ member }: Props) {
                         <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs rounded">{t("role.owner")}</span>
                     ) : (
                         <>
-                            <Select value={role} onValueChange={changeRole} disabled={true}>
+                            <Select value={role} onValueChange={changeRole} disabled={isPending}>
                                 <SelectTrigger className="w-40 h-8 text-xs dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                                     <SelectValue />
                                 </SelectTrigger>
@@ -98,7 +98,7 @@ export function MemberCard({ member }: Props) {
 
                             <Button
                                 size="sm"
-                                disabled={true}
+                                disabled={isPending}
                                 variant="destructive"
                                 onClick={removeMember}
                             >

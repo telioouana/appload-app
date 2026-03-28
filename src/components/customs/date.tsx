@@ -10,7 +10,12 @@ import { ControlFunc } from "@/components/customs/types";
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group";
 
-export const DateInput: ControlFunc = (props) => {
+export const DateInput: ControlFunc<{
+    value?: Date
+}> = ({
+    value,
+    ...props
+}) => {
     const [open, setOpen] = useState(false)
 
     const f = useFormatter()
@@ -29,7 +34,8 @@ export const DateInput: ControlFunc = (props) => {
                                 value={field.value ? f.dateTime(field.value, {
                                     day: "2-digit",
                                     month: "short",
-                                    year: "numeric"
+                                    year: "numeric",
+                                    timeZone: "CAT"
                                 }) : ""}
                                 disabled={props.isPending}
                                 placeholder={props.placeholder}
@@ -58,6 +64,7 @@ export const DateInput: ControlFunc = (props) => {
                                 }
                                 setOpen(false)
                             }}
+                            disabled={(date) => date < new Date(value ? value.setHours(0, 0, 0, 0) : new Date().setHours(0, 0, 0, 0))}
                         />
                     </PopoverContent>
                 </Popover>

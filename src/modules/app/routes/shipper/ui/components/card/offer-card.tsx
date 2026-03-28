@@ -56,11 +56,10 @@ export function OfferCard({ offer, order, path, search, cargoType }: Props) {
                     search: search?.trim() || undefined,
                     cargoType: cargoType?.trim() || undefined,
                 }))
+                onClose()
             }
         })
     )
-
-    console.log(offer)
 
     async function handleReply(status: "accepted" | "rejected") {
         if (status === "accepted") {

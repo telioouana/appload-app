@@ -62,6 +62,7 @@ export function OrderFillForm({ isPending, share }: { isPending?: boolean, share
                     label={t("expected-offloading-date.label")}
                     placeholder={t("expected-offloading-date.placeholder")}
                     isPending={form.formState.isSubmitting || isPending}
+                    value={form.watch("expectedLoadingDate")}
                 />
             </div>
 
