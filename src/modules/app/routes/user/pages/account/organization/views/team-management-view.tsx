@@ -26,7 +26,7 @@ export function TeamManagementView({ members, invitations }: Props) {
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{t("description")}</p>
                     </div>
 
-                    <Button size="sm">
+                    <Button size="sm" className="hidden">
                         <IconPlus className="size-4" />
                         {t("actions.invite")}
                     </Button>

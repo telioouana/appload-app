@@ -86,7 +86,7 @@ export function MemberCard({ member }: Props) {
                         <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs rounded">{t("role.owner")}</span>
                     ) : (
                         <>
-                            <Select value={role} onValueChange={changeRole} disabled={isPending}>
+                            <Select value={role} onValueChange={changeRole} disabled={true}>
                                 <SelectTrigger className="w-40 h-8 text-xs dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                                     <SelectValue />
                                 </SelectTrigger>
@@ -98,7 +98,7 @@ export function MemberCard({ member }: Props) {
 
                             <Button
                                 size="sm"
-                                disabled={isPending}
+                                disabled={true}
                                 variant="destructive"
                                 onClick={removeMember}
                             >

@@ -139,7 +139,7 @@ export function Header() {
                         href={`/u/${type.charAt(0)}/support`}
                         className={cn(
                             buttonVariants({ variant: "ghost" }),
-                            "py-5 font-light justify-start rounded-none"
+                            "hidden py-5 font-light justify-start rounded-none"
                         )}
                     >
                         <IconHelpCircle />
