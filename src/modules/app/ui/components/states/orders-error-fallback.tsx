@@ -1,4 +1,7 @@
+"use client"
+
 import Image from "next/image"
+
 import { useTranslations } from "next-intl"
 import { IconRefresh } from "@tabler/icons-react"
 

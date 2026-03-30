@@ -44,16 +44,18 @@ export function createTripSchema(t: (key: string) => string) {
 export function manageTripSchema(t: (key: string) => string) {
     return z.object({
         tripId: z.string().nonempty(),
+        orderId: z.string().nonempty(),
         trackingId: z.string().optional(),
         truckPlate: z.string().nonempty(),
         location: z.object({
-            address: z.string({ error: t("") }).nonempty({ error: t("") }),
+            address: z.string({ error: t("form.location.error") }).nonempty({ error: t("form.location.error") }),
             placeId: z.string().nonempty(),
             country: z.string().nonempty(),
             state: z.string().nonempty(),
         }),
-        status: z.enum(TRIP_STATUS, { error: t("") })
+        status: z.enum(TRIP_STATUS)
     })
 }
 
 export const TripSchema = createTripSchema((k) => k)
+export const ManageSchema = manageTripSchema((k) => k)

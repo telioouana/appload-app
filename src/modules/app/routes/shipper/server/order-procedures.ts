@@ -159,5 +159,31 @@ export const shipperOrderRouter = createTRPCRouter({
                 .update(offer)
                 .set({ status: "rejected" })
                 .where(eq(offer.id, offerId))
-        })
+        }),
+
+    cancel: protectedProcedure
+        .input(
+            z.object({
+                orderId: z.string(),
+                tripId: z.string().optional()
+            })
+        )
+        .mutation(async ({ ctx, input }) => {
+            const { session } = ctx.auth
+            const { orderId, tripId } = input
+
+            if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
+
+            await db
+                .update(order)
+                .set({ status: "cancelled" })
+                .where(eq(order.id, orderId))
+
+            if (tripId) {
+                await db
+                    .update(trip)
+                    .set({ status: "cancelled" })
+                    .where(eq(trip.id, tripId))
+            }
+        }),
 })

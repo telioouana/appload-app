@@ -35,18 +35,24 @@ export const historyRouter = createTRPCRouter({
 
             // 2. Enhanced Search (ID, State, Driver, or Plate)
             if (search?.trim()) {
-                const searchTerm = `%${search.trim().toLowerCase()}%`;
-                const searchId = parseInt(search.trim());
+                const cleanedSearch = search.trim();
+                const searchTerm = `%${cleanedSearch.toLowerCase()}%`;
+                const numericPart = cleanedSearch.replace(/\D/g, "");
+                const numericId = numericPart ? parseInt(numericPart, 10) : null;
 
-                filters.push(
-                    or(
-                        sql`${order.loadingAddress}->0->>'state' ILIKE ${searchTerm}`,
-                        sql`${order.offloadingAddress}->0->>'state' ILIKE ${searchTerm}`,
-                        !isNaN(searchId) ? eq(order.legacyId, searchId) : undefined,
-                        ilike(trip.driverName, searchTerm),
-                        ilike(trip.truckPlate, searchTerm)
-                    )
-                );
+                const searchConditions = [
+                    sql`${order.loadingAddress}->0->>'state' ILIKE ${searchTerm}`,
+                    sql`${order.offloadingAddress}->0->>'state' ILIKE ${searchTerm}`,
+                    ilike(trip.driverName, searchTerm),
+                    ilike(trip.truckPlate, searchTerm)
+                ];
+
+                if (numericId !== null) {
+                    searchConditions.push(eq(order.legacyId, numericId));
+                    searchConditions.push(sql`CAST(${order.legacyId} AS TEXT) LIKE ${numericPart + '%'}`);
+                    searchConditions.push(sql`('TRP-' || LPAD(CAST(${order.legacyId} AS TEXT), 4, '0')) ILIKE ${searchTerm}`);
+                }
+                filters.push(or(...searchConditions));
             }
 
             if (cargoType?.trim()) {

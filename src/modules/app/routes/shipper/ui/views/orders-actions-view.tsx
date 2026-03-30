@@ -76,8 +76,8 @@ export function OrdersActionsView({ path }: { path: ORDERS_PATH }) {
     }
 
     return (
-        <Card className="h-fit">
-            <CardContent className="flex flex-col gap-3 h-fit">
+        <Card className="min-h-fit">
+            <CardContent className="flex flex-col gap-3 min-h-fit">
                 <div className="flex justify-between gap-4 items-center">
                     <div className="flex flex-1 justify-between gap-4 items-center">
                         <InputGroup className="h-11">

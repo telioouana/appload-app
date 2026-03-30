@@ -6,13 +6,15 @@ import { db } from "@/backend/db"
 import { cargo, order, tracking, trip } from "@/backend/db/schema"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
 
+import { ManageSchema } from "../schemas/trip"
+
 const PATHS = ["all", "booked", "on-going"] as const
 
 export const tripsRouter = createTRPCRouter({
     all: protectedProcedure
         .input(
             z.object({
-                limit: z.number().min(1).max(20).default(8),
+                limit: z.number().min(1).max(20).default(3),
                 path: z.enum(PATHS),
                 search: z.string().optional(),
                 cargoType: z.string().optional(),
@@ -35,28 +37,32 @@ export const tripsRouter = createTRPCRouter({
             ]
 
             if (path === "on-going") {
-                filters.push(ne(trip.status, "booked")) 
+                filters.push(ne(trip.status, "booked"))
             } else if (path === "booked") {
                 filters.push(eq(trip.status, "booked"))
             }
 
-            // 1. Enhanced Search Logic
+            // Enhanced Search Logic
             if (search?.trim()) {
-                const searchTerm = `%${search.trim().toLowerCase()}%`;
-                const searchId = parseInt(search.trim());
+                const cleanedSearch = search.trim();
+                const searchTerm = `%${cleanedSearch.toLowerCase()}%`;
+                const numericPart = cleanedSearch.replace(/\D/g, "");
+                const numericId = numericPart ? parseInt(numericPart, 10) : null;
 
-                filters.push(
-                    or(
-                        // Address Search (JSONB)
-                        sql`${order.loadingAddress}->0->>'state' ILIKE ${searchTerm}`,
-                        sql`${order.offloadingAddress}->0->>'state' ILIKE ${searchTerm}`,
-                        // Trip/Order ID
-                        !isNaN(searchId) ? eq(order.legacyId, searchId) : undefined,
-                        // Driver & Truck Search
-                        ilike(trip.driverName, searchTerm),
-                        ilike(trip.truckPlate, searchTerm)
-                    )
-                );
+                const searchConditions = [
+                    sql`${order.loadingAddress}->0->>'state' ILIKE ${searchTerm}`,
+                    sql`${order.offloadingAddress}->0->>'state' ILIKE ${searchTerm}`,
+                    ilike(trip.driverName, searchTerm),
+                    ilike(trip.truckPlate, searchTerm)
+                ];
+
+                if (numericId !== null) {
+                    searchConditions.push(eq(order.legacyId, numericId));
+                    searchConditions.push(sql`CAST(${order.legacyId} AS TEXT) LIKE ${numericPart + '%'}`);
+                    searchConditions.push(sql`('TRP-' || LPAD(CAST(${order.legacyId} AS TEXT), 4, '0')) ILIKE ${searchTerm}`);
+                }
+
+                filters.push(or(...searchConditions));
             }
 
             if (cargoType?.trim()) {
@@ -133,17 +139,25 @@ export const tripsRouter = createTRPCRouter({
                 filters.push(eq(trip.status, "booked"))
             }
 
-            // 2. Matching Enhanced Search for Stats
             if (search?.trim()) {
-                const searchTerm = `%${search.trim().toLowerCase()}%`;
-                const searchId = parseInt(search.trim());
-                filters.push(or(
+                const cleanedSearch = search.trim();
+                const searchTerm = `%${cleanedSearch.toLowerCase()}%`;
+                const numericPart = cleanedSearch.replace(/\D/g, "");
+                const numericId = numericPart ? parseInt(numericPart, 10) : null;
+
+                const searchConditions = [
                     sql`${order.loadingAddress}->0->>'state' ILIKE ${searchTerm}`,
                     sql`${order.offloadingAddress}->0->>'state' ILIKE ${searchTerm}`,
-                    !isNaN(searchId) ? eq(order.legacyId, searchId) : undefined,
                     ilike(trip.driverName, searchTerm),
                     ilike(trip.truckPlate, searchTerm)
-                ));
+                ];
+
+                if (numericId !== null) {
+                    searchConditions.push(eq(order.legacyId, numericId));
+                    searchConditions.push(sql`CAST(${order.legacyId} AS TEXT) LIKE ${numericPart + '%'}`);
+                    searchConditions.push(sql`('TRP-' || LPAD(CAST(${order.legacyId} AS TEXT), 4, '0')) ILIKE ${searchTerm}`);
+                }
+                filters.push(or(...searchConditions));
             }
 
             if (cargoType?.trim()) {
@@ -163,4 +177,93 @@ export const tripsRouter = createTRPCRouter({
 
             return stats || { trips: 0, total: 0, distance: 0 }
         }),
+
+    manage: protectedProcedure
+        .input(
+            z.object({
+                values: ManageSchema
+            })
+        )
+        .mutation(async ({ ctx, input }) => {
+            const { values } = input;
+            const { session } = ctx.auth;
+
+            if (!session.activeOrganizationId) {
+                throw new TRPCError({ code: "UNAUTHORIZED" });
+            }
+
+            const [existingTrip] = await db
+                .select()
+                .from(trip)
+                .where(eq(trip.id, values.tripId))
+                .limit(1);
+
+            if (!existingTrip) {
+                throw new TRPCError({ code: "NOT_FOUND", message: "Trip not found" });
+            }
+
+            if (values.trackingId) {
+                await db.update(tracking)
+                    .set({
+                        truckPlate: values.truckPlate,
+                        location: values.location,
+                    })
+                    .where(eq(tracking.id, values.trackingId));
+            } else {
+                await db.insert(tracking).values({
+                    tripId: values.tripId,
+                    truckPlate: values.truckPlate,
+                    location: values.location,
+                });
+            }
+
+            const now = new Date();
+            const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+            const getDays = (start: Date | null, end: Date | null): number | null => {
+                if (!start || !end) return null;
+                const diff = end.getTime() - start.getTime();
+                return Math.max(0, Math.ceil(diff / MS_PER_DAY));
+            };
+
+            const tripUpdate: Partial<typeof trip.$inferInsert> = {
+                status: values.status,
+            };
+
+            if (values.status === "at-loading") tripUpdate.arrivalAtLoading = now;
+            if (values.status === "loading") tripUpdate.actualLoadingDate = now;
+            if (values.status === "on-route") tripUpdate.departureLoadingDate = now;
+            if (values.status === "at-offloading") tripUpdate.arrivalAtOffloading = now;
+            if (values.status === "completed") tripUpdate.actualOffloadingDate = now;
+
+            const arrivalLoading = tripUpdate.arrivalAtLoading ?? existingTrip.arrivalAtLoading;
+            const departureLoading = tripUpdate.departureLoadingDate ?? existingTrip.departureLoadingDate;
+            const arrivalOffloading = tripUpdate.arrivalAtOffloading ?? existingTrip.arrivalAtOffloading;
+
+            if (values.status === "on-route") {
+                tripUpdate.daysSpendLoading = getDays(arrivalLoading, now);
+            }
+
+            if (values.status === "at-offloading") {
+                tripUpdate.daysSpendTraveling = getDays(departureLoading, now);
+            }
+
+            if (values.status === "completed") {
+                tripUpdate.daysSpendOffloading = getDays(arrivalOffloading, now);
+            }
+
+            const loadingDelay = getDays(existingTrip.proposedLoadingDate, arrivalLoading) ?? 0;
+            const offloadingDelay = getDays(existingTrip.proposedOffloadingDate, arrivalOffloading) ?? 0;
+            tripUpdate.totalDemurageChargedDays = loadingDelay + offloadingDelay;
+
+            await db.update(trip)
+                .set(tripUpdate)
+                .where(eq(trip.id, values.tripId));
+
+            if (values.status === "to-loading") {
+                await db.update(order)
+                    .set({ status: "on-going" })
+                    .where(eq(order.id, values.orderId));
+            }
+        })
 })

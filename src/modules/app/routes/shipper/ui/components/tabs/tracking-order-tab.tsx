@@ -18,7 +18,7 @@ export function TrackingOrderTab({ values }: { values: Values }) {
     useEffect(() => {
         // Guard clause: Ensure data exists before proceeding
         if (order.status === "on-going") {
-            const loc = tracking?.location?.[0];
+            const loc = tracking?.location;
 
             if (!loc?.placeId || !tracking?.updatedAt || !trip?.status) return;
 
@@ -38,7 +38,7 @@ export function TrackingOrderTab({ values }: { values: Values }) {
                             ...prev,
                             {
                                 id: trip?.truckPlate || "unknown",
-                                location: firstResult.address_components[0].long_name,
+                                location: firstResult.address_components[firstResult.address_components.length - 2].long_name,
                                 lat: firstResult.geometry.location.lat,
                                 lng: firstResult.geometry.location.lng,
                                 updatedAt: f.relativeTime(updatedAt, new Date()),

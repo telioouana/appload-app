@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils"
 import { OrderValues } from "../../../types/types";
 import { useAcceptOrder } from "../../../hooks/use-accept-order";
 import { useCreateOffer } from "../../../hooks/use-create-offer";
+import { useOrderDetails } from "../../../hooks/use-order-details";
 import { StatusBadge, StatusKey } from "@/modules/app/ui/components/badge/status-badge";
 
 type Props = {
@@ -20,7 +21,9 @@ type Props = {
 }
 export function OrderCard({ values }: Props) {
     const { onOpenChange: acceptOrder } = useAcceptOrder()
+    const { onOpenChange: viewOrder } = useOrderDetails()
     const { onOpenChange: makeOffer } = useCreateOffer()
+
     const t = useTranslations("Carrier.order.card")
     const f = useFormatter()
 
@@ -135,7 +138,7 @@ export function OrderCard({ values }: Props) {
             <CardFooter className="flex justify-between gap-2 items-center">
                 <div className="w-full">
                     <Button
-                        onClick={() => { }}
+                        onClick={() => viewOrder(values)}
                         className={cn("w-full bg-orange-200 text-primary hover:bg-orange-300 cursor-pointer font-normal")}
                     >
                         <IconEye />

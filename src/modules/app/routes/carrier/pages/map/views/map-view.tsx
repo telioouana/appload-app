@@ -47,20 +47,18 @@ function MapComponent({ search, filterBy }: MapViewProps) {
             try {
                 const results = await Promise.all(
                     data
-                        .filter(p => p.location?.[0]?.placeId && p.updatedAt && p.status)
+                        .filter(p => p.location.placeId && p.updatedAt && p.status)
                         .map(async (position) => {
                             const { location, status, updatedAt, truckInternalId, regPlate } = position;
 
-                            if (!location || location.length === 0) return null;
-
-                            const { placeId } = location[0];
+                            const { placeId } = location;
                             const locationData = await getLocation(placeId);
 
                             if (locationData?.[0]) {
                                 const firstResult = locationData[0];
                                 return {
                                     id: truckInternalId || regPlate || "unknown",
-                                    location: firstResult.address_components[0].long_name,
+                                    location: firstResult.address_components[firstResult.address_components.length - 3].short_name,
                                     lat: firstResult.geometry.location.lat,
                                     lng: firstResult.geometry.location.lng,
                                     updatedAt: f.relativeTime(updatedAt, new Date()),

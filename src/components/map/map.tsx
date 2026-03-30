@@ -93,7 +93,7 @@ export function Map({ markers }: Props) {
                 const content = document.createElement("div");
                 content.className = "font-sans flex flex-col gap-1 p-1";
 
-                const title = document.createElement("h3");
+                const title = document.createElement("h5");
                 title.className = "font-bold text-slate-400 uppercase text-[10px] tracking-widest";
                 // Show the Truck ID/Plate in the header
                 title.textContent = m.id; 
@@ -103,7 +103,7 @@ export function Map({ markers }: Props) {
                 location.textContent = m.location;
 
                 const updatedAt = document.createElement("p");
-                updatedAt.className = "text-[11px] text-slate-500 italic mt-1";
+                updatedAt.className = "text-[10px] text-slate-500 italic mt-1";
                 updatedAt.textContent = m.updatedAt;
 
                 content.append(title, location, updatedAt);

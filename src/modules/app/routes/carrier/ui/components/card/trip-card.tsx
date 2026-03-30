@@ -1,22 +1,25 @@
 "use client"
 
 import { useFormatter, useTranslations } from "next-intl";
+import { IconArrowRight, IconClock, IconDeviceDesktopCog, IconLineDashed, IconMapPin, IconRoute, IconUser } from "@tabler/icons-react";
 
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 import { TripValues } from "../../../types/types"
+import { useManageTrip } from "../../../hooks/use-manage-trip";
 import { StatusBadge, StatusKey } from "@/modules/app/ui/components/badge/status-badge";
-import { IconArrowRight, IconClock, IconLineDashed, IconMapPin, IconRoute, IconUser } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
 
 interface Props {
     values: TripValues
 }
 export function TripCard({ values }: Props) {
+    const { onOpenChange } = useManageTrip()
+
     const t = useTranslations("Carrier.trip.card")
     const f = useFormatter()
 
-    const { cargo, order, trip } = values
+    const { cargo, order, trip, tracking } = values
 
     return (
         <Card className="border border-card hover:border-primary p-0">
@@ -111,13 +114,13 @@ export function TripCard({ values }: Props) {
                             </div>
                         </div>
 
-                        {values.tracking?.location?.[0] && (
+                        {tracking?.location && (
                             <div className="flex items-start gap-2 w-full">
                                 <IconMapPin className="text-primary size-5" stroke={1.5} />
                                 <div className="flex flex-col gap-1 w-full">
                                     <span className="text-xs text-muted-foreground">{t("content.location")}</span>
                                     <div className="flex gap-2 items-center">
-                                        <span className="font-medium">{values.tracking.location[0].state}</span>
+                                        <span className="font-medium">{tracking.location.state}</span>
                                     </div>
                                 </div>
                             </div>
@@ -125,11 +128,13 @@ export function TripCard({ values }: Props) {
                     </div>
                 </div>
     
-                <div className="space-y-4 hidden">
+                <div className="space-y-4">
                     <Button
+                        onClick={() => onOpenChange(values)}
                         className="bg-orange-300/80 text-primary font-normal"
                     >
-                        Manage
+                        <IconDeviceDesktopCog className="size-4" stroke={1.5} />
+                        {t("actions.manage")}
                     </Button>
                 </div>
             </CardContent>

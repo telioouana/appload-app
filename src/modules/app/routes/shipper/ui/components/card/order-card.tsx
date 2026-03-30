@@ -1,8 +1,10 @@
 "use client"
 
 import { useFormatter, useTranslations } from "next-intl";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IconBiohazard, IconCancel, IconEdit, IconEye, IconMapDown, IconMapPin, IconMapUp, IconMapX, IconSnowflake } from "@tabler/icons-react";
 
+import { useTRPC } from "@/backend/trpc/client";
 import { CATEGORIES, CURRENCY, PACKING, SHARE, WEIGHT_UNIT } from "@/backend/db/types";
 
 import { Badge } from "@/components/ui/badge";
@@ -10,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 
-import { Values } from "../../../types/types";
+import { ORDERS_PATH, Values } from "../../../types/types";
 import { useOffersList } from "../../../hooks/use-offers-list";
 import { useUpdateOrder } from "../../../hooks/use-update-order";
 import { useOrderDetails } from "../../../hooks/use-order-details";
@@ -18,16 +20,24 @@ import { StatusBadge, StatusKey } from "@/modules/app/ui/components/badge/status
 
 import { cn } from "@/lib/utils"
 
+import { DEFAULT_PAGE_LIMIT } from "@/constants"
+
 type Props = {
     values: Values
+    path: ORDERS_PATH
+    search?: string
+    cargoType?: string
 }
-export function OrderCard({ values }: Props) {
+export function OrderCard({ values, path, search, cargoType }: Props) {
     const t = useTranslations("Shipper.order.card")
     const f = useFormatter()
 
     const { onOpenChange: viewDetails } = useOrderDetails()
     const { onOpenChange: updateOrder } = useUpdateOrder()
     const { onOpenChange: viewOffers } = useOffersList()
+
+    const client = useQueryClient()
+    const trpc = useTRPC()
 
     const { order, cargo, trip, status: liveStatus, offers } = values // Extract liveStatus
 
@@ -63,6 +73,45 @@ export function OrderCard({ values }: Props) {
         share: order.share as typeof SHARE[number],
         price: order.price ?? 0,
         currency: order.currency ?? CURRENCY[0]
+    }
+
+    const cancel = useMutation(
+        trpc.shipperOrder.cancel.mutationOptions({
+            onSuccess: () => {
+                if (order.share === "subscribers") {
+                    client.invalidateQueries(trpc.private.orders.infiniteQueryOptions({
+                        path,
+                        limit: DEFAULT_PAGE_LIMIT,
+                        search: search?.trim() || undefined,
+                        cargoType: cargoType?.trim() || undefined,
+                    }))
+                    client.invalidateQueries(trpc.private.resume.queryOptions({
+                        path,
+                        search: search?.trim() || undefined,
+                        cargoType: cargoType?.trim() || undefined,
+                    }))
+                } else {
+                    client.invalidateQueries(trpc.public.orders.infiniteQueryOptions({
+                        path,
+                        limit: DEFAULT_PAGE_LIMIT,
+                        search: search?.trim() || undefined,
+                        cargoType: cargoType?.trim() || undefined,
+                    }))
+                    client.invalidateQueries(trpc.public.resume.queryOptions({
+                        path,
+                        search: search?.trim() || undefined,
+                        cargoType: cargoType?.trim() || undefined,
+                    }))
+                }
+            }
+        })
+    )
+
+    async function handleCancel() {
+        cancel.mutateAsync({
+            orderId: order.id,
+            tripId: trip?.id
+        })
     }
 
     /**
@@ -181,6 +230,7 @@ export function OrderCard({ values }: Props) {
             <CardFooter className="flex justify-between gap-2 items-center">
                 <div className="w-full">
                     <Button
+                        disabled={cancel.isPending}
                         onClick={() => viewDetails(values)}
                         className={cn("w-full bg-primary/40 hover:bg-primary/80 cursor-pointer font-normal")}
                     >
@@ -212,7 +262,7 @@ export function OrderCard({ values }: Props) {
                                     onClick={() => viewOffers(offers, order)}
                                 >
                                     <IconEdit />
-                                    {t("footer.offers", {offers: offers.length})}
+                                    {t("footer.offers", { offers: offers.length })}
                                 </Button>
                             ) : (
                                 <Button
@@ -232,6 +282,8 @@ export function OrderCard({ values }: Props) {
                     <div className="w-full">
                         <Button
                             variant="destructive"
+                            onAbort={handleCancel}
+                            disabled={cancel.isPending}
                             className="w-full cursor-pointer font-normal"
                         >
                             <IconCancel />

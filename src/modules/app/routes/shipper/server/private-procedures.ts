@@ -49,19 +49,25 @@ export const privateRouter = createTRPCRouter({
             }
 
             // 3. Robust Search Logic
-            // Inside your search logic in the tRPC procedure:
             if (search?.trim()) {
-                const searchTerm = `%${search.trim().toLowerCase()}%`; // Ensure lowercase
-                const searchId = parseInt(search.trim());
+                const cleanedSearch = search.trim();
+                const searchTerm = `%${cleanedSearch.toLowerCase()}%`;
 
-                filters.push(
-                    or(
-                        // Target the 'address' or 'state' specifically inside the first element of the JSON array
-                        sql`${order.loadingAddress}->0->>'state' ILIKE ${searchTerm}`,
-                        sql`${order.offloadingAddress}->0->>'state' ILIKE ${searchTerm}`,
-                        !isNaN(searchId) ? eq(order.legacyId, searchId) : undefined
-                    )
-                );
+                const numericPart = cleanedSearch.replace(/\D/g, "");
+                const numericId = numericPart ? parseInt(numericPart, 10) : null;
+
+                const searchOrConditions: (SQL | undefined)[] = [
+                    sql`${order.loadingAddress}->0->>'state' ILIKE ${searchTerm}`,
+                    sql`${order.offloadingAddress}->0->>'state' ILIKE ${searchTerm}`,
+                ];
+
+                if (numericId !== null) {
+                    searchOrConditions.push(eq(order.legacyId, numericId));
+                    searchOrConditions.push(sql`CAST(${order.legacyId} AS TEXT) LIKE ${numericPart + '%'}`);
+                    searchOrConditions.push(sql`('ORD-' || LPAD(CAST(${order.legacyId} AS TEXT), 4, '0')) ILIKE ${searchTerm}`);
+                }
+
+                filters.push(or(...searchOrConditions));
             }
 
             if (cargoType?.trim()) {

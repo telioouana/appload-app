@@ -30,7 +30,7 @@ export const SelectInput: ControlFunc<PropsWithChildren> = ({
                             <SelectValue placeholder={props.placeholder} />
                         </div>
                     </SelectTrigger>
-                    <SelectContent className="w-full">
+                    <SelectContent className="w-full" position="popper">
                         {children}
                     </SelectContent>
                 </Select>

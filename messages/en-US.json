@@ -939,6 +939,47 @@
                     "driver": "Driver",
                     "truck": "Truck",
                     "location": "Position"
+                },
+                "actions": {
+                    "manage": "Manage",
+                    "details": "Details"
+                }
+            },
+            "dialog": {
+                "manage": {
+                    "header": {
+                        "title": "Manage trip TRP-{id}",
+                        "description": "Update trip details, upload documents or report an issue"
+                    },
+                    "form": {
+                        "status": {
+                            "label": "Update trip status",
+                            "placeholder": "Select the new status of this trip",
+                            "options": {
+                                "booked": "Transport confirmed",
+                                "to-loading": "On route to loading",
+                                "at-loading": "At loading",
+                                "loading": "Loading",
+                                "on-route": "On route to offloading",
+                                "at-border": "At border",
+                                "stopped": "Stopped",
+                                "issue": "Report an issue",
+                                "at-offloading": "At offloading",
+                                "offloading": "Offloading",
+                                "completed": "Delivered",
+                                "waiting-documents": "Waiting documents"
+                            }
+                        },
+                        "location": {
+                            "label": "Update current location",
+                            "placeholder": "Enter the current location of the truck",
+                            "error": "Location was not provided"
+                        }
+                    },
+                    "footer": {
+                        "close": "Close",
+                        "update": "Update trip"
+                    }
                 }
             }
         },

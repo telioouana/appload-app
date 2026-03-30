@@ -56,6 +56,9 @@ export function PublicOrdersSection({ path, search, cargoType }: OrdersSectionPr
                         <OrderCard
                             key={values.order.id}
                             values={values}
+                            path={path}
+                            search={search}
+                            cargoType={cargoType}
                         />
                     ))
                 )}

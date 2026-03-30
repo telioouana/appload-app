@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 import { boolean, decimal, index, integer, jsonb, pgEnum, pgTable, numeric, text, timestamp, serial, } from "drizzle-orm/pg-core";
 
 import { driver, link, organization, trailer, truck } from "@/backend/db/schema";
-import { INSURANCE_PAYMENT_STATUS, Location, PAYMENT_STATUS, FISCAL_REGIME, ORDER_STATUS, TRIP_STATUS, TRIP_TYPE, ROUTE_TYPE, TRUCK_AGE, WEIGHT_UNIT, POD_STATUS, CURRENCY, SHARE, CATEGORIES, MARKET_STATUS, MarketResponse, LOADING_BAY } from "@/backend/db/types";
+import { INSURANCE_PAYMENT_STATUS, Location, PAYMENT_STATUS, FISCAL_REGIME, ORDER_STATUS, TRIP_STATUS, TRIP_TYPE, ROUTE_TYPE, TRUCK_AGE, WEIGHT_UNIT, POD_STATUS, CURRENCY, SHARE, CATEGORIES, MARKET_STATUS, MarketResponse, LOADING_BAY, Address } from "@/backend/db/types";
 
 export const shareEnum = pgEnum("share_enum", SHARE)
 export const currencyEnum = pgEnum("currency_enum", CURRENCY)
@@ -264,7 +264,7 @@ export const tracking = pgTable(
             .references(() => trip.id, { onDelete: "cascade" }),
         truckPlate: text("truck_plate")
             .references(() => truck.regPlate, { onDelete: "set null" }),
-        location: jsonb("loading_address").$type<Location>(),
+        location: jsonb("location").$type<Address>().notNull(),
         createdAt: timestamp("created_at").defaultNow().notNull(),
         updatedAt: timestamp("updated_at")
             .defaultNow()

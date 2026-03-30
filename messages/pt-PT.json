@@ -939,6 +939,47 @@
                     "driver": "Motorista",
                     "truck": "Camião",
                     "location": "Posição"
+                },
+                "actions": {
+                    "manage": "Gerir",
+                    "details": "Detalhes"
+                }
+            },
+            "dialog": {
+                "manage": {
+                    "header": {
+                        "title": "Gerir viagem TRP-{id}",
+                        "description": "Actualize o estado da viagem, envie provas ou deixe uma avaliação"
+                    },
+                    "form": {
+                        "status": {
+                            "label": "Estado da viagem",
+                            "placeholder": "Seleccione o estado actual da viagem",
+                            "options": {
+                                "booked": "Transporte confirmado",
+                                "to-loading": "Em rota para carregamento",
+                                "at-loading": "No carregamento",
+                                "loading": "Em carregamento",
+                                "on-route": "Em rota para descarregamento",
+                                "at-border": "Na fronteira",
+                                "stopped": "Parado",
+                                "issue": "Reportar um problema",
+                                "at-offloading": "No descarregamento",
+                                "offloading": "Em descarregamento",
+                                "completed": "Entregue",
+                                "waiting-documents": "A aguardar documentos"
+                            }
+                        },
+                        "location": {
+                            "label": "Localização actual",
+                            "placeholder": "Introduza a localização actual do camião",
+                            "error": "Não foi fornecida a localização actual do camião"
+                        }
+                    },
+                    "footer": {
+                        "close": "Fechar",
+                        "update": "Actualizar viagem"
+                    }
                 }
             }
         },
