@@ -2721,6 +2721,20 @@
             "loading": "Loading data...",
             "more": "Load more",
             "end": "Nothing more to show as of now."
+        },
+        "feedback": {
+            "label": "Report an issue — a screenshot will be attached",
+            "placeholder": "What happened? Be brief.",
+            "actions": {
+                "open": "Open feedback",
+                "close": "Close feedback",
+                "close-window": "Close",
+                "send": "Send feedback"
+            },
+            "status": {
+                "success": "Thank you for your feedback! Our team will look into it as soon as possible.",
+                "error": "Failed to send feedback, please try again later"
+            }
         }
     }
 }

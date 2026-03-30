@@ -15,13 +15,10 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { AvatarGenerator } from "@/components/customs/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { LocaleSwitcher } from "@/components/locale/locale-switcher";
 import { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from "@/components/ui/popover";
 
-import { locales } from "@/i18n/config"
-
 import { cn } from "@/lib/utils";
-
-import { Language } from "../button/language";
 import { ThemeToggle } from "@/theme/theme-toggle";
 
 export function Header() {
@@ -85,12 +82,7 @@ export function Header() {
         <div className="flex items-center gap-2">
             <ThemeToggle />
 
-            <Language
-                items={locales.map(code => ({
-                    flag: `/flags/${code === "en-US" ? "GB" : "PT"}.svg`,
-                    locale: code,
-                }))}
-            />
+            <LocaleSwitcher />
 
             <Button
                 size="icon"

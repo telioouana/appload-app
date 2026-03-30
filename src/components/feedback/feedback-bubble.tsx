@@ -1,16 +1,21 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
+
 import { cn } from "@/lib/utils"
+import { Spinner } from "../ui/spinner"
 
 export default function FeedbackBubble({ toEmail = "telio@apploadafrica.com" }: { toEmail?: string }) {
     const [open, setOpen] = useState(false)
     const [message, setMessage] = useState("")
     const [sending, setSending] = useState(false)
     const [status, setStatus] = useState<null | "ok" | "error">(null)
+
+    const t = useTranslations("Miscellaneous.feedback")
 
     async function handleSend() {
         setSending(true)
@@ -50,7 +55,7 @@ export default function FeedbackBubble({ toEmail = "telio@apploadafrica.com" }: 
             {/* Floating icon button using site Button */}
             <div className="flex items-end">
                 <Button
-                    aria-label={open ? "Close feedback" : "Open feedback"}
+                    aria-label={open ? t("actions.close") : t("actions.open")}
                     variant={open ? "secondary" : "default"}
                     size="icon"
                     onClick={() => setOpen((v) => !v)}
@@ -62,28 +67,29 @@ export default function FeedbackBubble({ toEmail = "telio@apploadafrica.com" }: 
 
             {open && (
                 <div className="mt-2 w-80 p-3 rounded-md bg-background shadow-lg text-foreground">
-                    <div className="text-sm mb-2">Report an issue — a screenshot will be attached</div>
+                    <div className="text-sm mb-2">{t("label")}</div>
 
                     <Textarea
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        placeholder="What happened? Be brief."
+                        placeholder={t("placeholder")}
                         className="min-h-22"
                     />
 
                     <div className="flex gap-2 mt-3">
                         <Button variant="outline" size="sm" onClick={() => { setOpen(false); setStatus(null); }}>
-                            Close
+                            {t("actions.close-window")}
                         </Button>
 
                         <Button variant="default" size="sm" onClick={handleSend} disabled={sending}>
-                            {sending ? "Sending…" : "Send"}
+                            {sending && <Spinner />}
+                            {t("actions.send")}
                         </Button>
                     </div>
 
-                    {status === "ok" && <div className="mt-2 text-[13px] text-emerald-600">Thanks — feedback sent.</div>}
+                    {status === "ok" && <div className="mt-2 text-[13px] text-emerald-600">{t("status.success")}</div>}
                     {status === "error" && (
-                        <div className="mt-2 text-[13px] text-destructive">Failed to send. Try again later.</div>
+                        <div className="mt-2 text-[13px] text-destructive">{t("status.error")}</div>
                     )}
                 </div>
             )}

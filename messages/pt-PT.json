@@ -2721,6 +2721,20 @@
             "loading": "A carregar dados...",
             "more": "Carregar mais",
             "end": "Não há mais nada para mostrar neste momento."
+        },
+        "feedback": {
+            "label": "Reportar um problema. Será anexado um screenshot.",
+            "placeholder": "O que aconteceu? Por favor, descreva brevemente.",
+            "actions": {
+                "open": "Abrir feedback",
+                "close": "Fechar feedback",
+                "close-window": "Fechar",
+                "send": "Enviar feedback"
+            },
+            "status": {
+                "success": "Obrigado pelo seu feedback! A nossa equipa irá analisá-lo o mais rapidamente possível.",
+                "error": "Falha ao enviar feedback, por favor tente novamente mais tarde"
+            }
         }
     }
 }

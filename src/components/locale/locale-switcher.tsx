@@ -1,11 +1,10 @@
-import { LocaleSelect } from "@/components/locale/locale-select"
-
 import { locales } from "@/i18n/config"
+import { Language } from "@/components/locale/language"
 
 export function LocaleSwitcher() {
 
     return (
-        <LocaleSelect
+        <Language
             items={locales.map(code => ({
                 flag: `/flags/${code === "en-US" ? "GB" : "PT"}.svg`,
                 locale: code,
