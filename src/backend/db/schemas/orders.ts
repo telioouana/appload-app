@@ -299,8 +299,8 @@ export const market = pgTable(
             .notNull()
             .references(() => organization.id, { onDelete: "cascade" }),
 
-        loading: jsonb("loading").$type<Location>(),
-        offloading: jsonb("offloading").$type<Location>(),
+        loading: jsonb("loading").$type<Location>().notNull(),
+        offloading: jsonb("offloading").$type<Location>().notNull(),
         category: categoriesEnum("category").notNull(),
         quantity: decimal("quantity"),
         unit: weightUnitEnum("unit").default("ton"),

@@ -1,46 +1,48 @@
-import { redirect } from "next/navigation"
-import { cookies, headers } from "next/headers"
+import { redirect } from "next/navigation";
+import { cookies, headers } from "next/headers";
 
-import { auth } from "@/backend/auth"
-
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
+import { auth } from "@/backend/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ callback: string }> }) {
-    const { callback } = await searchParams
-    const sessionCookies = await cookies()
+    const { callback } = await searchParams;
+    const sessionCookies = await cookies();
 
     const session = await auth.api.getSession({
         headers: await headers()
-    })
+    });
 
+    // FIX: Instead of sessionCookies.delete(), redirect to the API handler
     if (!session) {
-        const dont_remember = sessionCookies.get("better-auth.dont_remember")
-        const session_token = sessionCookies.get("better-auth.session_token")
+        const dont_remember = sessionCookies.get("better-auth.dont_remember");
+        const session_token = sessionCookies.get("better-auth.session_token");
 
         if (dont_remember || session_token) {
-            sessionCookies.delete("better-auth.dont_remember")
-            sessionCookies.delete("better-auth.session_token")
+            redirect("/api/session/clear-session"); // Go here to handle the deletion
         }
-        redirect("/sign-in")
+        redirect("/sign-in");
     }
 
-    const { user: { type, emailVerified }, session: { activeOrganizationId } } = session
+    const { user: { type, emailVerified }, session: { activeOrganizationId } } = session;
+
     if (type === "shipper" || type === "carrier") {
+        const prefix = type.charAt(0); // 's' or 'c'
+
         if (!emailVerified) {
-            redirect(`/u/${type.charAt(0)}/account/profile`)
+            redirect(`/u/${prefix}/account/profile`);
         }
 
         if (!activeOrganizationId) {
-            redirect(`/u/${type.charAt(0)}/account/organization`)
+            redirect(`/u/${prefix}/account/organization`);
         }
 
-        const callbarkURL = decodeURIComponent(callback)
+        const callbarkURL = callback ? decodeURIComponent(callback) : null;
 
-        if (callbarkURL && callbarkURL.startsWith(`/${type.charAt(0)}`)) {
-            redirect(callbarkURL)
+        if (callbarkURL && callbarkURL.startsWith(`/${prefix}`)) {
+            redirect(callbarkURL);
         }
-        redirect(`/${type.charAt(0)}${DEFAULT_LOGIN_REDIRECT}`)
+        redirect(`/${prefix}${DEFAULT_LOGIN_REDIRECT}`);
     }
 
-    redirect("/unauthorized")
+    redirect("/unauthorized");
 }

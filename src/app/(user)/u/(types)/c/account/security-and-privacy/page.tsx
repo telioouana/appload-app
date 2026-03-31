@@ -13,7 +13,7 @@ export default async function Page() {
     if (session === null || sessions === null) return redirect("/sign-in")
         
     return (
-        <div className="space-y-6 h-full overflow-y-scroll container-snap">
+        <div className="space-y-6 h-full overflow-y-scroll container-snap px-1">
             <SessionsView session={session.session} sessions={sessions} />
             <SecurityView user={session.user} />
         </div>

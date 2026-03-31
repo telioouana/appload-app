@@ -2338,7 +2338,37 @@
                         "title": "Gestão da Empresa",
                         "description": "Gerir a sua empresa, equipa e preferências da aplicação"
                     },
-                    "organization": {},
+                    "details": {
+                        "main": {
+                            "nuit": "NUIT: {nuit}",
+                            "brand": "Cor da marca",
+                            "actions": {
+                                "edit": "Editar dados da empresa",
+                                "personalize": "Personalizar preferências da empresa"
+                            }
+                        },
+                        "personalization": {
+                            "title": "Preferências da empresa",
+                            "description": "Configure as preferências da sua empresa para personalizar a sua experiência no Appload. Estas preferências ajudam-nos a adaptar os nossos serviços às necessidades da sua empresa e melhorar a sua experiência na plataforma.",
+                            "logo": {
+                                "label": "Logótipo da empresa",
+                                "description": "Carregue o logótipo da sua empresa.",
+                                "instruction": "Formatos suportados: JPG, PNG. Tamanho máximo: 2MB.",
+                                "actions": {
+                                    "upload": "Carregar logótipo",
+                                    "remove": "Remover logótipo"
+                                }
+                            },
+                            "brand-color": {
+                                "label": "Cor da marca",
+                                "description": "Escolha uma cor que represente a sua empresa. Esta cor será utilizada para personalizar o seu marketplace privado e torná-lo mais alinhado com a sua identidade."
+                            },
+                            "actions": {
+                                "close": "Fechar",
+                                "apply": "Aplicar preferências"
+                            }
+                        }
+                    },
                     "team": {
                         "header": {
                             "section-title": "Membros da Equipa",
@@ -2683,6 +2713,38 @@
             },
             "disclaimer": "Se não estava à espera deste convite, poderá ignorar este email com segurança.",
             "signature": "A Equipa Appload",
+            "tagline": "Going the extra mile",
+            "address": "Appload, Lda., 73, Rua Jerónimo Osório, Sommerschild, KaMpfumo, Cidade Maputo, Moçambique"
+        },
+        "market-data-email": {
+            "subject": "Novo pedido de dados de mercado recebido",
+            "preview": "Um novo pedido de dados de mercado foi submetido e requer análise.",
+            "title": "Novo pedido de dados de mercado",
+            "intro": "Foi submetido um novo pedido de dados de mercado por um {name}.",
+            "instructions": "Ação Necessária: Responda a esta mensagem para autorizar o envio do e-mail do requerente.",
+            "section_general": "Informação geral",
+            "request_id": "ID do pedido",
+            "loading": "Local de carregamento",
+            "offloading": "Local de descargarregamento",
+            "section_cargo": "Detalhes da carga",
+            "category": {
+                "label": "Categoria:",
+                "options": {
+                    "agriculture-inputs": "Insumos agrícolas",
+                    "agriculture-products": "Produtos agrícolas",
+                    "construction": "Construção",
+                    "machinery-equipment": "Máquinas e equipamentos",
+                    "fmcg": "Bens de consumo rápido",
+                    "general-cargo": "Carga geral",
+                    "medicine": "Medicamentos",
+                    "mining": "Mineração",
+                    "oil-gas": "Petróleo & Gás",
+                    "vehicles": "Veículos",
+                    "other": "Outro"
+                }
+            },
+            "quantity": "Quantidade:",
+            "footer": "Este é um email automático para notificação interna.",
             "tagline": "Going the extra mile",
             "address": "Appload, Lda., 73, Rua Jerónimo Osório, Sommerschild, KaMpfumo, Cidade Maputo, Moçambique"
         }

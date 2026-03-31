@@ -9,7 +9,7 @@ export function ProfilePageView() {
     const { data, isPending } = authClient.useSession()
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 px-1">
             <PictureCard isPending={isPending} user={data?.user} />
             <UserInformation isPending={isPending} user={data?.user} />
         </div>

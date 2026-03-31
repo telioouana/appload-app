@@ -1,7 +1,7 @@
 import { LocaleSwitcher } from "@/components/locale/locale-switcher"
-import { ThemeToggle } from "@/modules/app/ui/components/button/theme-toggle"
 
 import { AuthLayout } from "@/modules/auth/ui/layout/auth-layout"
+import { ThemeToggle } from "@/modules/app/ui/components/button/theme-toggle"
 
 interface Props {
     children: React.ReactNode

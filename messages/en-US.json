@@ -2338,7 +2338,37 @@
                         "title": "Company management",
                         "description": "Manage your company, team and app preferences"
                     },
-                    "organization": {},
+                    "details": {
+                        "main": {
+                            "nuit": "VAT Registration number: {nuit}",
+                            "brand": "Brand color",
+                            "actions": {
+                                "edit": "Edit company details",
+                                "personalize": "Personalize company preferences"
+                            }
+                        },
+                        "personalization": {
+                            "title": "Company preferences",
+                            "description": "Set up your company preferences to personalize your experience with Appload. These preferences will help us tailor our services to better suit your company's needs and enhance your overall experience on our platform.",
+                            "logo": {
+                                "label": "Brand logo",
+                                "description": "Upload your company logo.",
+                                "instruction": "Supported formats: JPG, PNG. Max size: 2MB.",
+                                "actions": {
+                                    "upload": "Upload Logo",
+                                    "remove": "Remove Logo"
+                                }
+                            },
+                            "brand-color": {
+                                "label": "Brand color",
+                                "description": "Choose a brand color that represents your company. This color will be used to personalize your private marketplace and make it feel more like your own space."
+                            },
+                            "actions": {
+                                "close": "Close",
+                                "apply": "Apply preferences"
+                            }
+                        }
+                    },
                     "team": {
                         "header": {
                             "section-title": "Team Members",
@@ -2683,6 +2713,38 @@
             },
             "disclaimer": "If you were not expecting this invitation, you may safely ignore this email.",
             "signature": "The Appload Team",
+            "tagline": "Going the extra mile",
+            "address": "Appload, Lda., 73, Rua Jerónimo Osório, Sommerschild, KaMpfumo, Cidade Maputo, Moçambique"
+        },
+        "market-data-email": {
+            "subject": "New market data request received",
+            "preview": "A new market data request has been submitted and requires review.",
+            "title": "New market data request",
+            "intro": "A new market data request has been submitted by {name}",
+            "instructions": "Action Required: Reply to this message to authorize the release of the requester's email address.",
+            "section_general": "General information",
+            "request_id": "Request ID: {id}",
+            "loading": "Loading:",
+            "offloading": "Offloading:",
+            "section_cargo": "Cargo details",
+            "category": {
+                "label": "Category:",
+                "options": {
+                    "agriculture-inputs": "Agriculture Inputs",
+                    "agriculture-products": "Agriculture Products",
+                    "construction": "Construction",
+                    "machinery-equipment": "Machinery Equipment",
+                    "fmcg": "FMCG",
+                    "general-cargo": "General Cargo",
+                    "medicine": "Medicine",
+                    "mining": "Mining",
+                    "oil-gas": "Oil & Gas",
+                    "vehicles": "Vehicles",
+                    "other": "Other"
+                }
+            },
+            "quantity": "Quantity:",
+            "footer": "This is an automated internal notification email.",
             "tagline": "Going the extra mile",
             "address": "Appload, Lda., 73, Rua Jerónimo Osório, Sommerschild, KaMpfumo, Cidade Maputo, Moçambique"
         }

@@ -34,6 +34,7 @@ export function CreateOfferDialog({ path, search, cargoType }: Props) {
 
     return (
         <Render
+            key={values.order.id}
             isOpen={isOpen}
             onClose={onClose}
             values={values}
@@ -63,7 +64,19 @@ function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: 
 
             proposedLoadingDate: values.order.expectedLoadingDate,
             proposedOffloadingDate: values.order.expectedOffloadingDate,
-            currency: values.order.currency as typeof CURRENCY[number],
+            currency: values.offer?.currency ?? values.order.currency as typeof CURRENCY[number],
+
+            price: values.offer?.price ?? undefined,
+            driverId: values.offer?.driverId ?? undefined,
+            driverName: values.offer?.driverName ?? undefined,
+            driverPassport: values.offer?.driverPassport ?? undefined,
+            driverPhoneNumber: values.offer?.driverPhoneNumber ?? undefined,
+
+            truckPlate: values.offer?.truckPlate ?? undefined,
+            truckAge: values.offer?.truckAge ?? undefined,
+            type: values.offer?.type ?? undefined,
+            trailerPlate: values.offer?.trailerPlate ?? undefined,
+            linkPlate: values.offer?.linkPlate ?? undefined,
         },
     })
 
@@ -94,9 +107,12 @@ function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: 
         onClose()
     }
 
-    async function handleSubmit(values: OfferSchemaForm) {
+    async function handleSubmit(data: OfferSchemaForm) {
         form.clearErrors()
-        await send.mutateAsync({ values })
+        await send.mutateAsync({
+            offerId: values.offer?.id,
+            values: data
+        })
     }
 
     return (
@@ -107,6 +123,7 @@ function Render({ isOpen, onClose, path, values, search, cargoType }: { isOpen: 
                         <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center">
                             <IconInvoice className="size-5 text-primary" />
                         </div>
+
                         <div>
                             <DialogTitle className="text-xl font-semibold">{t("header.title")}</DialogTitle>
                             <DialogDescription className="text-muted-foreground mt-0.5">{t("header.description")}</DialogDescription>

@@ -187,8 +187,6 @@ export function OrderCard({ values }: Props) {
                             )}
                         </>
                     )}
-
-
             </CardFooter>
         </Card >
     )

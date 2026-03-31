@@ -282,6 +282,78 @@
     }
 }
 
+@layer utilities {
+
+    /* Force Tailwind to bundle these background colors */
+    .bg-amber-500 {
+        background-color: var(--color-amber-500);
+    }
+
+    .bg-blue-500 {
+        background-color: var(--color-blue-500);
+    }
+
+    .bg-cyan-500 {
+        background-color: var(--color-cyan-500);
+    }
+
+    .bg-emerald-500 {
+        background-color: var(--color-emerald-500);
+    }
+
+    .bg-fuchsia-500 {
+        background-color: var(--color-fuchsia-500);
+    }
+
+    .bg-green-500 {
+        background-color: var(--color-green-500);
+    }
+
+    .bg-indigo-500 {
+        background-color: var(--color-indigo-500);
+    }
+
+    .bg-lime-500 {
+        background-color: var(--color-lime-500);
+    }
+
+    .bg-orange-500 {
+        background-color: var(--color-orange-500);
+    }
+
+    .bg-pink-500 {
+        background-color: var(--color-pink-500);
+    }
+
+    .bg-purple-500 {
+        background-color: var(--color-purple-500);
+    }
+
+    .bg-red-500 {
+        background-color: var(--color-red-500);
+    }
+
+    .bg-rose-500 {
+        background-color: var(--color-rose-500);
+    }
+
+    .bg-sky-500 {
+        background-color: var(--color-sky-500);
+    }
+
+    .bg-teal-500 {
+        background-color: var(--color-teal-500);
+    }
+
+    .bg-violet-500 {
+        background-color: var(--color-violet-500);
+    }
+
+    .bg-yellow-500 {
+        background-color: var(--color-yellow-500);
+    }
+}
+
 html {
     font-size: var(--font-size);
 }

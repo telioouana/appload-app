@@ -11,7 +11,7 @@ import { ThemeColors, ThemeColorStateParams } from "./theme-types";
 export const getSafePrivateColor = (): ThemeColors => {
     if (typeof window === "undefined") return "amber";
     const saved = localStorage.getItem("privateThemeColor") as ThemeColors;
-    return (saved && saved !== "gray" && saved) ? (saved as ThemeColors) : "amber";
+    return (saved) ? (saved as ThemeColors) : "amber";
 };
 
 const PrivateThemeContext = createContext<ThemeColorStateParams | undefined>(undefined);

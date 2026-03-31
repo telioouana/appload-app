@@ -29,7 +29,7 @@ export function AccountHeader({ user }: { user: "s" | "c" }) {
     ]
 
     return (
-        <header className="bg-sidebar sticky top-0 z-50 items-center border border-sidebar-border shadow-sm">
+        <header className="bg-sidebar sticky top-0 z-40 items-center shadow-sm">
             <div className="flex flex-col h-(--header-height) max-w-5xl mx-auto px-4 md:px-6 lg:px-8 py-4">
                 <div className="flex items-center gap-6">
                     <Button
@@ -55,7 +55,7 @@ export function AccountHeader({ user }: { user: "s" | "c" }) {
                             href={path}
                             className={cn(
                                 "px-4 py-2 text-sm font-medium whitespace-nowrap border-b-2 transition-colors border-transparent text-muted-foreground hover:text-foreground",
-                                pathname.startsWith(path) && "border-primary text-primary dark:text-primary/80"
+                                pathname.startsWith(path) && "border-orange-500 text-orange-500 dark:text-orange-500/80"
                             )}
                         >
                             {label}

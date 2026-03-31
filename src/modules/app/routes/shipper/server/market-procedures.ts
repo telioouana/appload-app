@@ -4,6 +4,7 @@ import { and, desc, eq, lt, or } from "drizzle-orm"
 
 import { db } from "@/backend/db"
 import { market } from "@/backend/db/schema"
+import { sendMarketDataNotification } from "@/backend/resend"
 import { createTRPCRouter, protectedProcedure } from "@/backend/trpc/init"
 
 import { MarkedDataSchema } from "../schemas/market-data"
@@ -17,17 +18,26 @@ export const marketRouter = createTRPCRouter({
         )
         .mutation(async ({ ctx, input }) => {
             const { values } = input
-            const { session } = ctx.auth
+            const { session, user } = ctx.auth
 
             if (!session.activeOrganizationId) throw new TRPCError({ code: "UNAUTHORIZED" })
 
-            await db
+            const [data] = await db
                 .insert(market)
                 .values({
                     shipperId: session.activeOrganizationId,
                     status: "pending",
                     ...values
                 })
+                .returning()
+
+            await sendMarketDataNotification({
+                requester: {
+                    name: user.name,
+                    email: user.email
+                },
+                data
+            })
         }),
 
     history: protectedProcedure

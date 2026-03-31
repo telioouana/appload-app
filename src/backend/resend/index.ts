@@ -2,7 +2,10 @@ import { Resend } from "resend";
 import { APIError } from "better-auth";
 import { getTranslations } from "next-intl/server";
 
+import { market } from "../db/schema";
+
 import { InvitationEmail } from "@/components/email/invitation-email";
+import { MarketDataEmail } from "@/components/email/marked-data-email";
 import { VerificationEmail } from "@/components/email/verification-email";
 
 const resend = new Resend(process.env.RESEND_API_SECRET)
@@ -44,6 +47,29 @@ export async function sendInviteEmail({ email, inviter, invitationId, organizati
         to: email,
         subject: t("subject", { organization: organization }),
         react: await InvitationEmail({ inviter, organization, url })
+    })
+
+    if (error) throw new APIError("INTERNAL_SERVER_ERROR")
+}
+
+type MarketDataNotificationProps = {
+    requester: {
+        name: string
+        email: string
+    }
+    data: typeof market.$inferSelect
+}
+
+export async function sendMarketDataNotification({ requester, data, }: MarketDataNotificationProps) {
+    const t = await getTranslations("Emails.market-data-email")
+    
+
+    const { error } = await resend.emails.send({
+        from: FROM,
+        to: "team@apploadafrica.com",
+        replyTo: requester.email,
+        subject: t("subject"),
+        react: await MarketDataEmail({ requester, data })
     })
 
     if (error) throw new APIError("INTERNAL_SERVER_ERROR")
