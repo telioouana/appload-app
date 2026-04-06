@@ -40,7 +40,7 @@ export const auth = betterAuth({
                     try {
                         const controller = new AbortController();
 
-                        const geoRes = await fetch(`https://ip-api.com/json/${ip}`, {
+                        const geoRes = await fetch(`http://ip-api.com/json/${ip}`, {
                             signal: controller.signal
                         });
 
